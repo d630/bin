@@ -1,6 +1,6 @@
-#!/usr/bin/python2
-
-# "Helper for setting current desktop's name"
+#!/usr/bin/env python2
+#
+# Helper for setting current desktop's name
 # http://superuser.com/questions/508128/is-it-possible-to-set-the-name-of-the-current-virtual-desktop-via-commandline
 
 import sys
@@ -30,3 +30,5 @@ current_names[desktop_offset] = new_name
 # doesn't work if I only call it once
 c = ewmh.set_desktop_names(current_names)
 c = ewmh.set_desktop_names(current_names)
+
+#  vim: set ts=4 sw=4 tw=0 et :

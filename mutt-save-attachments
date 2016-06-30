@@ -1,4 +1,4 @@
-#! /usr/bin/env dash
+#!/usr/bin/env dash
 #
 # Save attachements in Mutt.
 # Source: https://github.com/vain/bin-pub/blob/master/mutt-save-attachments

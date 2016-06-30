@@ -1,4 +1,4 @@
-#! /usr/bin/env dash
+#!/usr/bin/env dash
 #
 # Wrapper: mutt spool.
 
