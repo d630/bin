@@ -1,0 +1,7 @@
+#!/usr/bin/env dash
+#
+# Wrapper for dmenu2-save.
+
+test -n "$DISPLAY" && menu dmenu2-save "$1" 0<&-;
+
+# vim: set ts=8 sw=8 tw=0 et :

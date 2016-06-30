@@ -1,0 +1,8 @@
+#!/usr/bin/env dash
+#
+# Set DPMS to standby state.
+
+sleep 1
+xset dpms force standby
+
+# vim: set ts=8 sw=8 tw=0 et :

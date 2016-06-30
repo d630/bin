@@ -1,0 +1,36 @@
+#!/usr/bin/env dash
+#
+# Switch keyboard layout and take the necessary actions.
+# and do not use 'setxkbmap -option grp:alt_shift_toggle'.
+
+if
+        xkblayout-state set +1
+then
+        layout="$(xkblayout-state print "%s-%e")"
+        case "$X_XCLIENT" in
+        openbox)
+                for i in "${XDG_CONFIG_HOME}/openbox/${layout}"/*
+                do
+                        ln -vsrf "$i" -t "${XDG_CONFIG_HOME}/openbox"
+                done
+                xdotool key Super_L+q && sleep 1 && xdotool key Super_L+b
+                ln -vsrf "${XDG_CONFIG_HOME}/xbindkeys/${layout}/xbindkeysrc_ob" \
+                        "${XDG_CONFIG_HOME}/xbindkeys/xbindkeysrc";
+                return 0
+        ;;
+        bspwm)
+                rc_file=sxhkdrc_bspwm
+        ;;
+        cwm)
+                rc_file=sxhkdrc_cwm
+        ;;
+        spectrwm)
+                rc_file=sxhkdrc_spectrwm
+        ;;
+        *)
+                return 1
+        esac
+        ln -vsrf "${XDG_CONFIG_HOME}/sxhkd/${layout}/${rc_file}" "${XDG_CONFIG_HOME}/sxhkd/sxhkdrc"
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

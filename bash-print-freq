@@ -1,0 +1,10 @@
+#!/usr/bin/env dash
+#
+# Print frequency of the bash history.
+
+cut -d " " -f1 "$HISTFILE" \
+| sort \
+| uniq -c \
+| sort -nr;
+
+# vim: set ts=8 sw=8 tw=0 et :

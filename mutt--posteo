@@ -1,0 +1,7 @@
+#! /usr/bin/env dash
+#
+# Wrapper: mutt posteo.
+
+LOCAL_CONFIG=posteo mutt -n "$@"
+
+# vim: set ts=8 sw=8 tw=0 et :

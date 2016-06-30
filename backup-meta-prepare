@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+#
+# Prepare the full backup of my system.
+
+cd -- "$HOME"
+
+printf -v horiz '%*s' "80" ''
+
+PrintHeader ()
+{
+        printf '%s\n' "${horiz// /-}" "$1" 1>&2;
+}
+
+#PrintHeader "Bevent"
+bevent -k
+
+update-packages
+
+PrintHeader "Programs"
+backup-meta-bin
+
+PrintHeader "Inits"
+backup-meta-init
+
+PrintHeader "etckeeper"
+(
+        printf -v d '%(%s)T' -1
+        sudo etckeeper commit "${d}: prepare backup"
+)
+
+#PrintHeader "passivedns"
+#passivedns-archive.sh
+#( sudo cp -- /var/log/passivedns-archive/*.gz "${HOME}/local/var/log/passivedns" )
+
+#PrintHeader "firefox-urls"
+#firefox-backup-urls.sh
+
+#PrintHeader "Refresh Firefox Profiles"
+#firefox-refresh-profiles.sh
+
+#PrintHeader "Delete pm-powersave.log"
+#( sudo rm -r -- "/var/log/pm-powersave.log" 2>/dev/null )
+
+PrintHeader "newsbeuter"
+rm -fv "${HOME}/.newsbeuter/newsbeuter_cache.db"
+
+PrintHeader "ccleaner"
+cclean
+
+PrintHeader "Sending Mail"
+printf '%(%Y-%m-%d_%R)T\n' \
+| tee >(mailx -s BackupPreparing-log backup-preparing@backup-preparing) \
+>> "${XDG_VAR_HOME}/log/backup-preparing.log";
+
+PrintHeader "."
+
+# vim: set ts=8 sw=8 tw=0 et :

@@ -1,0 +1,13 @@
+#!/usr/bin/env dash
+#
+# Who.
+
+echo
+uptime
+echo
+who --all -H
+echo
+w
+echo
+
+# vim: set ts=8 sw=8 tw=0 et :

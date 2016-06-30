@@ -1,0 +1,7 @@
+#!/usr/bin/env dash
+#
+# Find file under the current directory with flag -ls.
+
+find . -type f -iname "*${*}" -ls
+
+# vim: set ts=8 sw=8 tw=0 et :

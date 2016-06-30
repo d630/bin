@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+# Default audio player (tui).
+
+IFS=' ' read -r -a opts <<< "$AUDIO_PLAYER_OPTS";
+exec "$AUDIO_PLAYER" "${opts[@]}" "$@"
+
+# vim: et ts=8 sw=8 tw=0 et :

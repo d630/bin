@@ -1,0 +1,17 @@
+#!/usr/bin/gawk -f
+#
+# Sort input by lenght.
+# Source: https://github.com/izabera/bin/blob/master/lsort
+
+{
+        line[length][counter[length]++] = $0
+}
+
+END {
+        for (i in line)
+                for (j in line[i])
+                        print line[i][j]
+}
+
+
+# vim: set ts=8 sw=8 tw=0 et :

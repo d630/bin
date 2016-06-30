@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+# Default audio player (gui).
+
+IFS=' ' read -r -a opts <<< "$X_AUDIO_PLAYER_OPTS"
+exec "$X_AUDIO_PLAYER" "${opts[@]}" "$@"
+
+# vim: set ts=8 sw=8 tw=0 et :

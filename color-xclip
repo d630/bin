@@ -1,0 +1,8 @@
+#!/usr/bin/env dash
+#
+# X-select color code.
+
+color-grab \
+| xclip -i -l 1 -selection clipboard;
+
+# vim: set ts=8 sw=8 tw=0 et :

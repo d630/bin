@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+# Fastest way to get x window ids?
+
+if
+        read -r _ _ _ _ xids < <(
+                xprop -root _NET_CLIENT_LIST
+        )
+then
+        printf '%s\n' ${xids//,/}
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

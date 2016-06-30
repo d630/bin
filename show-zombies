@@ -1,0 +1,14 @@
+#!/usr/bin/env dash
+#
+# List all zombies and their parents to kill.
+# Source: http://chneukirchen.org/dotfiles/bin/zombies
+
+ps f -eo state,pid,ppid,comm \
+| awk '
+        { cmds[$2] = $NF }
+        /^Z/ {
+                print $(NF-1) "/" $2 " zombie child of " cmds[$3] "/" $3;
+        }
+';
+
+# vim: set ts=8 sw=8 tw=0 et :

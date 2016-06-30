@@ -1,0 +1,11 @@
+#!/usr/bin/env dash
+#
+# My suspend wrapper.
+
+bevent -k
+sudo rtcwake -m mem -t "$(date -d year +%s)"
+#sudo systemctl suspend
+sleep 5
+daemonize bevent -Cp
+
+# vim: set ts=8 sw=8 tw=0 et :

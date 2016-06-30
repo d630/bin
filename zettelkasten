@@ -1,0 +1,8 @@
+#!/usr/bin/env dash
+
+# Run Zettelkasten.
+# <http://zettelkasten.danielluedecke.de/en/>
+
+java -jar "/opt/java/Zettelkasten.jar"
+
+# vim: set ts=8 sw=8 tw=0 et :

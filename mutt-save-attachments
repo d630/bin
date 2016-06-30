@@ -1,0 +1,16 @@
+#! /usr/bin/env dash
+#
+# Save attachements in Mutt.
+# Source: https://github.com/vain/bin-pub/blob/master/mutt-save-attachments
+
+d="${XDG_TMP_HOME}/attachments"
+
+mkdir -p -m 755 "$d"
+
+ripmime --no-nameless -i - -d "$d"
+find "$d" -type f -exec chmod 644 '{}' '+'
+find "$d" -mindepth 1 -type d -exec chmod 755 '{}' '+'
+
+printf 'Saved all attachments to: %s\n' "$d"
+
+# vim: set ts=8 sw=8 tw=0 et :

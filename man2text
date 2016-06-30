@@ -1,0 +1,12 @@
+#!/usr/bin/env dash
+#
+# man2text script.
+
+for i in *.1
+do
+        man -l ./${i} \
+        | sed -r 's/\d027\[[0-9]+m//g' \
+        > "${i}.txt";
+done
+
+# vim: set ts=8 sw=8 tw=0 et :

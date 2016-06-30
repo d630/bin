@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+#
+# Getting mail via offlineimap and give notification + sound.
+# Based on http://dev.gentoo.org/~tomka/mail.html
+
+# -- Config.
+
+log_dir=${XDG_VAR_HOME}/log
+longsyncdiff=900
+
+__getmail_long ()
+{
+        offlineimap -c "${HOME}/.offlineimaprc" \
+                -l "${log_dir}/offlineimap.log" -u quiet;
+}
+
+__getmail_short ()
+{
+        offlineimap -o -c "${HOME}/.offlineimaprc" \
+                -l "${log_dir}/offlineimap.log" -f INBOX -u quiet;
+}
+
+# -- Start.
+
+if
+        ! test-inet
+then
+        printf '%s\n' "We are offline" \
+        1>&2;
+        exit 1
+fi
+
+if
+        pgrep -cf "/usr/bin/offlineimap" 1>/dev/null 2>&1;
+then
+        printf '%s\n' "Offlineimap is running" 1>&2;
+        exit 1
+fi
+
+typeset -i \
+        curtime \
+        lastlongsync \
+        timediff;
+
+printf -v curtime '%(%s)T' -1
+if
+        [[ -e ${log_dir}/offlineimap_lastlongsynctime ]]
+then
+        lastlongsync=$(< "${log_dir}/offlineimap_lastlongsynctime")
+        timediff="curtime - lastlongsync"
+        if
+                (( timediff > longsyncdiff ))
+        then
+                printf '%d\n' "$curtime" \
+                > "${log_dir}/offlineimap_lastlongsynctime";
+                __getmail_long
+        else
+                if
+                        __getmail_short
+                then
+                        cp -- "${HOME}/.mutt/_mailboxes.local.posteo" \
+                                "${HOME}/.mutt/mailboxes.local.posteo";
+                fi
+        fi
+else
+        printf '%d\n' "$curtime" \
+        > "${log_dir}/offlineimap_lastlongsynctime";
+        __getmail_long
+fi
+
+mapfile -t newmails < <(
+        find "$X_MAILDIR1" -type f -path "*/new/*"
+)
+
+if
+        (( ${#newmails[@]} ))
+then
+        if
+                [[ -n $DISPLAY ]]
+        then
+                notify-send -u low -h int:value:42 \
+                        "[Posteo] new Mails: ${#newmails[@]}";
+        else
+                printf '[Posteo] new Mails: %d\n' "${#newmails[@]}" 1>&2;
+        fi
+        aplay "${XDG_DATA_HOME}/sounds/mac-sound-pack-new-mail.wav" \
+                1>/dev/null \
+                2>&1;
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

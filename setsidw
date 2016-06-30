@@ -1,0 +1,7 @@
+#!/usr/bin/env dash
+#
+# Wrapper: setsid(1).
+
+setsid "$@" &
+
+# vim: set ts=8 sw=8 tw=0 et :

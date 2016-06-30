@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+#
+# Simple ad- and malware-blocking-list builder for dnsmasq.
+# Inspired by hostblock (http://gaenserich.github.com/hostsblock)
+
+(( $# )) && exec sudo "$(type -p "$0")";
+
+typeset -x \
+        hblock_cachedir=${HOME}/var/cache/hblock \
+        hblock_tmpdir=${TMPDIR:-/tmp}/hblock;
+
+#hostfile_regular=/etc/hosts.regular
+hblock_hlist=/home/user1/etc/hblock/hlist.txt
+hblock_negative=/home/user1/etc/hblock/negative.txt
+hblock_positive=/home/user1/etc/hblock/positive.txt
+hostfile_block=/etc/hosts.block
+
+__hblock_do()
+{
+        typeset outfile=${1//http:\/\//}
+        outfile=${outfile//[\/\%\&\+\?\=\\]/\.}
+
+        wget --no-verbose \
+                --connect-timeout=3 \
+                --content-on-error \
+                --dns-timeout=3 \
+                --ignore-length \
+                --inet4-only \
+                --no-cache \
+                --no-cookies \
+                --no-http-keep-alive \
+                --read-timeout=3 \
+                --tries=1 \
+                -O - \
+                "$1" \
+        | tee "${hblock_cachedir}/${outfile}.data" \
+        | sed -rn '
+                /^(0.0.0.0|127.0.0.1)/ {
+                        s/^127.0.0.1/0.0.0.0/;
+                        s/[[:space:]][[:space:]]*/ /g;
+                        s/[[:space:]]$//;
+                        s/^$//;
+                        s/^#.*//;
+                        p
+                }' \
+        > "${hblock_tmpdir}/${outfile}.clean";
+}
+
+typeset -xf __hblock_do
+trap "{ rm -fr -- "$hblock_tmpdir" ; exit 0 ; }" INT TERM QUIT EXIT
+mkdir -p -- "$hblock_cachedir" "$hblock_tmpdir"
+
+## Do the thing.
+xargs \
+        -a "$hblock_hlist" \
+        -n 1 \
+        -P 8 \
+        -i bash -c '__hblock_do "$@"' _ {};
+
+cat "$hblock_negative" <(
+        sort -u "${hblock_tmpdir}/"*.clean \
+        | egrep -v -f "$hblock_positive";
+) \
+> "$hostfile_block";
+
+systemctl restart dnsmasq.service
+
+# vim: set ts=8 sw=8 tw=0 et :

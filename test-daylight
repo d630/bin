@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+
+<?php
+    // Test daytime.
+    // Source: https://github.com/baskerville/bin/blob/macosx/daytime
+    $now = time();
+    $latitude = getenv('X_MY_LATITUDE1');
+    $longitude = getenv('X_MY_LONGITUDE1');
+    $sunrise = date_sunrise($now, SUNFUNCS_RET_TIMESTAMP, $latitude, $longitude);
+    $sunset = date_sunset($now, SUNFUNCS_RET_TIMESTAMP, $latitude, $longitude);
+    if ($sunrise < $now && $now < $sunset) {
+        exit(0);
+    } else {
+        exit(1);
+    }
+?>
+
+/* vim: set ts=4 sw=4 tw=0 et :*/

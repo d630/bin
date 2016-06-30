@@ -1,0 +1,7 @@
+#!/usr/bin/env dash
+#
+# Start chromium and redirect traffic through a proxy server.
+
+chromium --proxy-server="127.0.0.1:3128" --temp-profile --incognito
+
+# vim: set ts=8 sw=8 tw=0 et :

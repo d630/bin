@@ -1,0 +1,9 @@
+#!/usr/bin/env dash
+#
+# Grep pattern in manpage.
+
+man "$1" \
+| grep -iC2 --color=always "$2" \
+| less -R;
+
+# vim: set ts=8 sw=8 tw=0 et :

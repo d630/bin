@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#
+# rename current desktop; manipulate _NET_DESKTOP_NAMES.
+
+
+read -r _ _ desk_current < <(
+        xprop -root _NET_CURRENT_DESKTOP
+)
+
+xorg-set-desktop-name "$desk_current" "$(menu "dmenu2" ">" 0<&-)"
+
+# vim: set ts=8 sw=8 tw=0 et :

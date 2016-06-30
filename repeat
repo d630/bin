@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# Repeat a command n times.
+
+for (( i=1 ; i <= $1 ; i++ ))
+do
+        ( exec -a "$2" "${@:2}" )
+done
+
+# vim: set ts=8 sw=8 tw=0 et :

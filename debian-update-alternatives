@@ -1,0 +1,37 @@
+#!/usr/bin/env dash
+#
+# Make Debian alternatives.
+
+set -e
+
+while
+        read -r a b c
+do
+        sudo update-alternatives --install "$a" "$b" "$c" 100
+        sudo update-alternatives --set "$b" "$c"
+done <<IN
+/bin/ksh ksh /bin/ksh93
+/usr/bin/awk awk /usr/bin/original-awk
+/usr/bin/csh csh /bin/bsd-csh
+/usr/bin/editor editor /bin/ed
+/usr/bin/ftp ftp /usr/bin/ftp-ssl
+/usr/bin/gnome-www-browser gnome-www-browser /usr/bin/chromium
+/usr/bin/infobrowser infobrowser /usr/bin/info
+/usr/bin/locate locate /usr/bin/mlocate
+/usr/bin/mailx mailx /usr/bin/s-nail
+/usr/bin/mplayer mplayer /usr/bin/mplayer1
+/usr/bin/pager pager /bin/less
+/usr/bin/pico pico /usr/bin/pico.alpine
+/usr/bin/pinentry pinentry /usr/bin/pinentry-tty
+/usr/bin/pinentry-x11 pinentry-x11 /usr/bin/pinentry-gtk-2
+/usr/bin/readline-editor readline-editor /usr/bin/rlwrap
+/usr/bin/rename rename /usr/bin/file-rename
+/usr/bin/rxvt rxvt /usr/bin/urxvt
+/usr/bin/ssh-askpass ssh-askpass /usr/lib/ssh/x11-ssh-askpass
+/usr/bin/www-browser www-browser /usr/bin/elinks
+/usr/bin/x-terminal-emulator x-terminal-emulator /usr/local/bin/st
+/usr/bin/x-window-manager x-window-manager /usr/local/bin/bspwm
+/usr/bin/x-www-browser x-www-browser /usr/bin/chromium
+IN
+
+# vim: set ts=8 sw=8 tw=0 et :

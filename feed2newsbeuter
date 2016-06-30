@@ -1,0 +1,30 @@
+#!/usr/bin/env dash
+#
+# Record url of feed in newsbeuter via dmenu.
+
+cache="${XDG_VAR_HOME}/lib/feedfaetcher/cache"
+tagfile="${HOME}/.newsbeuter/tags"
+feedfile="${HOME}/.newsbeuter/urls"
+stowdir="/home/stow/${HOSTNAME}::${USER}::newsbeuter/.newsbeuter"
+feed="$(
+        find -H "$cache" -type f \
+        | menu "dmenu2" "FEED";
+)"
+tags="$(
+        menu "dmenu2" "TAGS" < "$tagfile";
+)"
+
+if
+        test -n "$tags"
+then
+        printf 'file://%s %s\n' "$feed" "$tags" \
+        | cat "$feedfile" - \
+        | sort -g \
+        > "$feedfile.$$";
+        mv -- "$feedfile.$$" "${stowdir}/urls"
+        cd "/home/stow" && stow-home -R "${HOSTNAME}::${USER}::newsbeuter";
+else
+        printf '%s\n' "No tag has been chosen" 1>&2;
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

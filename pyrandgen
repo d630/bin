@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+#
+# Generate random password.
+# Source: https://github.com/vain/bin-pub/blob/master/randgen
+# Licence: https://github.com/vain/bin-pub/blob/master/LICENSE
+
+import string
+import random
+import sys
+
+if len(sys.argv) > 1:
+    numchars = int(sys.argv[1])
+else:
+    numchars = 64
+
+pool = string.ascii_letters + string.digits
+pwd = ''
+for i in range(numchars):
+    pwd += random.choice(pool)
+
+print(pwd)
+
+#  vim: set ts=4 sw=4 tw=0 et :

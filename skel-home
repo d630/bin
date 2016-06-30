@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+#
+# Prepare home directory.
+
+set -e
+
+typeset -A XDG=(
+        [BIN_HOME]=${HOME}/bin
+        [CACHE_HOME]=${HOME}/var/cache
+        [CONFIG_HOME]=${HOME}/etc
+        [DATA_HOME]=${HOME}/share
+        [DESKTOP_DIR]=${HOME}/share/desktop
+        [DOCUMENTS_DIR]=${HOME}/share/documents
+        [DOWNLOAD_DIR]=${HOME}/tmp/downloads
+        [MUSIC_DIR]=${HOME}/share/music
+        [OPT_HOME]=${HOME}/opt
+        [PICTURES_DIR]=${HOME}/share/pictures
+        [PUBLICSHARE_DIR]=${HOME}/var/public
+        [SRC_DIR]=${HOME}/src
+        [TEMPLATES_DIR]=${HOME}/share/templates
+        [TMP_HOME]=${HOME}/tmp
+        [VAR_HOME]=${HOME}/var
+        [VIDEOS_DIR]=${HOME}/share/videos
+)
+
+for d in "${XDG[@]}" "${HOME}/"{.cabal,.ghc,.cpanm,.vim/{autoload,bundle},.emacs.d/site-lisp,.config,.local,games,include,lib,sbin,man}
+do
+        mkdir -vp "$d"
+        echo \* > "${d}/.gitignore";
+done
+
+for d in "${XDG[TMP_HOME]}/"{attachments,downloads/torrents}
+do
+        mkdir -vp "$d"
+        echo \* > "${d}/.gitignore";
+done
+
+for d in "${XDG[OPT_HOME]}/"{go,npm,perl5,win32,win64}
+do
+        mkdir -vp "$d"
+        echo \* > "${d}/.gitignore";
+done
+
+for d in "${XDG[DATA_HOME]}/"{applications,Trash,cert,fonts,icons,sounds,themes,wallpapers,bash,zsh,desktop,keyrings,texmf/tex/latex,doc,locale,ca-certificates,dircolors,man,mutt,xcolors,source-highlight}
+do
+        mkdir -vp "$d"
+        echo \* > "${d}/.gitignore";
+done
+
+for d in "${XDG[VAR_HOME]}/"{backups,lib,log,mail/{storage,queue},spool,tmp}
+do
+        mkdir -vp "$d"
+        echo \* > "${d}/.gitignore";
+done
+
+# vim: set ts=8 sw=8 tw=0 et :

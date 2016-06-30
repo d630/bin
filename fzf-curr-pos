@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+#
+# Start fzf from current position.
+# Source: https://github.com/junegunn/fzf/issues/405
+#
+# The logic in the getpos function is stolen from
+# http://stackoverflow.com/a/2575525
+# Pass "row" or "col" as an argument to get their positions
+
+getpos ()
+{
+        exec < /dev/tty
+
+        typeset -n arg=$1
+        typeset \
+                col \
+                row \
+                oldstty=$(stty -g);
+
+        stty raw -echo min 0
+
+        printf '%b' "\033[6n" \
+        > /dev/tty;
+        IFS='[;' read -d R _ row col \
+        < /dev/tty;
+
+        stty "$oldstty"
+
+        printf '%d' "$(( arg - 1))"
+
+        unset -n arg
+}
+
+typeset -i \
+        lines=$(tput lines) \
+        row=$(getpos row);
+typeset -i \
+        halfway=lines/2 \
+        start_row=lines-row;
+typeset -x FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS
+
+# Start fzf from the current row
+if
+        (( row < halfway ))
+then
+        FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --reverse --margin $(( row - 1 )),0,0"
+else
+        (( start_row == 1 && (start_row=0) ))
+        FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --no-reverse --margin 0,0,${start_row}"
+fi
+
+fzf
+
+# vim: set ts=8 sw=8 tw=0 et :

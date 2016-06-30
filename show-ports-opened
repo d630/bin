@@ -1,0 +1,7 @@
+#!/usr/bin/env dash
+#
+# Check open network ports.
+
+ss --all --numeric --processes --ipv4 --ipv6
+
+# vim: set ts=8 sw=8 tw=0 et :

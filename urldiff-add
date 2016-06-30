@@ -1,0 +1,16 @@
+#!/usr/bin/env dash
+#
+# Add to urlwatch and urldiff.
+
+if
+        [ -n "$1" ]
+then
+        printf '\n%s\n' "URLDIFF"
+        printf '%s\n' "$1" >> "${XDG_VAR_HOME}/lib/urldiff/urls.txt" && \
+        tail -n2 "${XDG_VAR_HOME}/lib/urldiff/urls.txt";
+else
+        printf '%s\n' "Es muss eine url angegeben werden..." 1>&2;
+        exit 1
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

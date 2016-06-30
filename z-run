@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+#
+# Run z output with file manager.
+
+if
+        test-tty 2>/dev/null;
+then
+        menu=fzf
+        function __nav { exec file-browser "$1" ; }
+elif
+        [[ -n $DISPLAY ]]
+then
+        menu=dmenu2
+        function __nav { setsidw x-file-browser -t "$1" ; }
+else
+        exit 1
+fi
+
+path=$(
+        sort -g "${XDG_VAR_HOME}/lib/z/z.data" \
+        | cut -d '|' -f 1 \
+        | menu "$menu" "OPEN";
+)
+
+[[ -n $path ]] && __nav "$path";
+
+# vim: set ts=8 sw=8 tw=0 et :

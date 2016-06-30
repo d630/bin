@@ -1,0 +1,10 @@
+#!/usr/bin/env dash
+#
+# Using sudo with dmenu2 via SUDO_ASKPASS.
+
+SUDO_ASKPASS=${XDG_BIN_HOME}/smenu
+export SUDO_ASKPASS
+readonly SUDO_ASKPASS
+sudo -A "$@"
+
+# vim: set ts=8 sw=8 tw=0 et :

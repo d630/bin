@@ -1,0 +1,16 @@
+#!/usr/bin/env dash
+#
+# Backup all uris from dnsmasq log.
+
+log="${XDG_VAR_HOME}/log/urls.log"
+
+if
+        fgrep -e 'reply' "/var/log/dnsmasq.log" \
+        | cut -d ' ' -f 6 \
+        | cat "$log" - \
+        | sort -u > "${log}.$$";
+then
+        mv "${log}.$$" "$log"
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

@@ -1,0 +1,24 @@
+#!/usr/bin/env dash
+#
+# Clean up some dirs and files.
+
+rm -rf -- \
+        "${HOME}/.adobe" \
+        "${HOME}/.cache" \
+        "${HOME}/.gconf" \
+        "${HOME}/.git-credential-cache" \
+        "${HOME}/.gnome2" \
+        "${HOME}/.gnome2_private" \
+        "${HOME}/.icedteaplugin" \
+        "${HOME}/.macromedia" \
+        "${HOME}/.thumbnails" \
+        "${XDG_CACHE_HOME}/"*;
+
+rm -f -- \
+        "${HOME}/.gksu.lock" \
+        "${HOME}/.recentf" \
+        "${HOME}/.recently-used" \
+        "${XDG_VAR_HOME}/log/bevent.log" \
+        "${XDG_DATA_HOME}/recently-used.xbel";
+
+# vim: set ts=8 sw=8 tw=0 et :

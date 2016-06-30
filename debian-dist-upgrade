@@ -1,0 +1,7 @@
+#!/usr/bin/env dash
+#
+# Dist-upgrade packages from Debian.
+
+sudo apt-get update && sudo apt-get dist-upgrade;
+
+# vim: set ts=8 sw=8 tw=0 et :

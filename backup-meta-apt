@@ -1,0 +1,35 @@
+#!/usr/bin/env dash
+#
+# Backup infos about installed packages on Debian.
+
+backup_dir="${XDG_VAR_HOME}/backups"
+
+sudo rm -rv -- "${backup_dir}/paketlisten"
+mkdir -pv -- "${backup_dir}/paketlisten"
+
+apt-cache policy > "${backup_dir}/cache.txt";
+
+cd -- "${backup_dir}/paketlisten" || exit 1;
+
+COLUMNS=200 dpkg-query -l > "./query.txt";
+
+dpkg --get-selections \
+| awk '!/deinstall|purge|hold/ { print $1 }' \
+> "./packages.txt";
+
+apt-mark showauto > "./auto.txt";
+
+apt-mark showmanual > "./manual.txt";
+
+find /etc/apt/sources.list* \
+        -type f \
+        -name '*.list' \
+        -exec sh -c '
+                echo -e "\n## $1 "
+                grep "^[[:space:]]*[^#[:space:]]" ${1}
+        ' _ {} \; \
+> "./sources.list";
+
+sudo cp -v -- "/etc/apt/trusted.gpg" "./trusted.gpg"
+
+# vim: set ts=8 sw=8 sts=0 tw=0 et :

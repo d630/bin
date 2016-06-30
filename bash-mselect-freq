@@ -1,0 +1,9 @@
+#!/usr/bin/env dash
+#
+# Print frequency of the bash history and run it from dmenu.
+
+bash-print-freq \
+| menu "dmenu2" "RUN" \
+| awk '{print $2}';
+
+# vim: set ts=8 sw=8 tw=0 et :

@@ -1,0 +1,7 @@
+#!/usr/bin/env dash
+#
+# Wrapper for transmission-cli.
+
+transmission-cli -er -d 400 -u 25 -w "${XDG_DOWNLOAD_DIR}/torrents" "$@"
+
+# vim: set ts=8 sw=8 tw=0 et :

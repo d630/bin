@@ -1,0 +1,22 @@
+#!/usr/bin/env dash
+#
+# Set volume via amixer.
+
+case "$1" in
+\+)
+        amixer -q sset Master 2+
+;;
+\+\+)
+        amixer -q sset Master 2%+
+;;
+-)
+        amixer -q sset Master 2-
+;;
+--)
+        amixer -q sset Master 2%-
+;;
+toggle)
+        amixer -q sset Master toggle
+esac
+
+# vim: set ts=8 sw=8 tw=0 et :

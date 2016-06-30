@@ -1,0 +1,7 @@
+#!/usr/bin/env tcsh
+#
+# Use the printenv builtin command of tcsh.
+
+printenv $argv[*]
+
+# vim: set ts=8 sw=8 tw=0 et :

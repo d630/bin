@@ -1,0 +1,11 @@
+#!/usr/bin/env dash
+#
+# Wrapper for getting my news.
+
+feedfaetcher
+
+newsbeuter -r -l 3 -d "${XDG_VAR_HOME}/log/newsbeuter.log"
+
+urldiff -nv
+
+# vim: set ts=8 sw=8 tw=0 et :

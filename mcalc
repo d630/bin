@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+#
+# Simple calculation with bc and dmenu.
+
+__result ()
+{
+        result=$(
+                xsel -o \
+                | menu "$1" "RESULT" \
+                | xargs echo \
+                | bc \
+                2>&1;
+        )
+
+        printf '%s\n' "$result" \
+        | tee >(xclip -i);
+}
+
+if
+        test-tty 2>/dev/null;
+then
+        menu=slmenu
+else
+        menu=dmenu2
+fi
+
+__result "$menu"
+while
+        [[ -n $result ]]
+do
+        __result "$menu"
+done
+
+# vim: set ts=8 sw=8 tw=0 et :

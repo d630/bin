@@ -1,0 +1,9 @@
+#!/usr/bin/env python2
+#
+# Pick color.
+
+import gtk
+
+gtk.ColorSelectionDialog('Color').run()
+
+#  vim: set ts=4 sw=4 tw=0 et :

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#
+# Add a bookmark to urimark in mutt.
+
+while
+        read -r
+do
+        taskum add uri:"$REPLY"
+done < <(
+        grep -oP -e \
+'((http|https|gopher|ftp|ftps|webdav|webdavs|dav|davs):(//)?[^ <>"\t]*|(www|ftp)[0-9]?\.[-a-z0-9.]+)[^ .,;\t\n\r<">\):]?[^, <>"\t]*[^ .,;\t\n\r<">\):]'
+)
+
+# vim: set ts=8 sw=8 tw=0 et :

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+# Disown job.
+
+set -o monitor
+
+"$1" "${@:2}" &
+pid=$!
+
+jn=$(
+        jobs -lr \
+        | sed "/\[[0-9]*\]+ ${pid}/ s/\[\([0-9]*\)\].*/\1/";
+)
+
+(( jn )) && builtin disown "%$jn"
+
+# vim: set ts=8 sw=8 tw=0 et :

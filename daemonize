@@ -1,0 +1,12 @@
+#!/usr/bin/env dash
+#
+# Daemonize a command.
+
+#( setsid "$@" & )
+#( exec setsid "$@" & )
+#exec setsid "$@" &
+#0</dev/null
+setsid "$@" 1>/dev/null 2>&1 &
+#setsid "$@"
+
+# vim: set ts=8 sw=8 tw=0 et :

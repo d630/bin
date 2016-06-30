@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+#
+# Run that command.
+
+# TODO(D630): revise
+
+OPTIND=1
+OPTERR=1
+opt=
+
+typeset -i \
+        flag_f= \
+        flag_k= \
+        flag_n=;
+
+typeset -a \
+        command \
+        command_quoted;
+
+while
+        getopts :fkn opt
+do
+        case $opt in
+        f)
+                flag_f=1
+        ;;
+        k)
+                flag_k=1
+        ;;
+        n)
+                flag_n=1
+        ;;
+        \?)
+                printf "Unknown flag: '-%s'\n" "$OPTARG" \
+                1>&2;
+                exit 1
+        esac
+done
+shift $(( OPTIND - 1 ))
+
+typeset \
+        a \
+        q;
+
+for a
+do
+        printf -v q '%q' "$a"
+        command_quoted+=( "$q" )
+        command+=( "$a" )
+done
+
+if
+        command -v "${command[0]}" \
+        1>/dev/null \
+        2>&1;
+then
+        if
+                test-tty.sh \
+                2>/dev/null;
+        then
+                case ${flag_f}${flag_n}${flag_k} in
+                111)
+                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
+                ;;
+                110)
+                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
+                ;;
+                #101)
+                #;;
+                100)
+                        exec setsid.sh "${command[0]}" "${command[@]}"
+                ;;
+                011)
+                        terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
+                ;;
+                010)
+                        terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
+                ;;
+                001)
+                        exec ${SHELL:-sh} -c "${command[0]} ${command_quoted[@]:1};builtin printf '%s\n' 'Press ENTER to continue';builtin read"
+                ;;
+                000)
+                        exec -a "${command[0]}" "${command[@]}"
+                esac
+        else
+                case ${flag_f}${flag_n}${flag_k} in
+                111)
+                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
+                ;;
+                110)
+                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
+                ;;
+                #101)
+                #;;
+                100)
+                        exec setsid.sh "${command[0]}" "${command[@]}"
+                ;;
+                011)
+                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
+                ;;
+                010)
+                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
+                ;;
+                001)
+                        exec daemonize.sh ${SHELL:-sh} -c "${command[0]} ${command_quoted[@]:1};builtin printf '%s\n' 'Press ENTER to continue';builtin read"
+                ;;
+                000)
+                        exec setsid.sh "${command[0]}" "${command[@]}"
+                esac
+        fi
+else
+        printf "Command not found: '%s'\n" "${command[0]}" \
+        1>&2;
+        exit 1
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

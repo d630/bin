@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+# Default mail viewer (gui).
+
+IFS=' ' read -r -a opts <<< "$X_MAIL_VIEWER_OPTS"
+exec "$X_MAIL_VIEWER" "${opts[@]}" "$@"
+
+# vim: set ts=8 sw=8 tw=0 et :

@@ -1,0 +1,7 @@
+#!/usr/bin/env tcsh
+#
+# Use the filetest builtin command of tcsh.
+
+filetest $argv[*]
+
+# vim: set ts=8 sw=8 tw=0 et :

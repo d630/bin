@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+#
+# Simple wradio.
+# Forked from webradio.sh (GNU GPLv3) by Markus Lux, 2013
+# https://github.com/mlux/webradio.sh/blob/master/webradio.sh
+
+# -- CONFIG.
+
+file_webradio_streams=${XDG_VAR_HOME}/lib/wradio/streams
+file_webradio_pid=${XDG_VAR_HOME}/lib/wradio/instance.pid
+
+# -- FUNCTIONS.
+
+__build_streams ()
+{
+        typeset \
+                name \
+                uri;
+
+        while
+                IFS=';' read -r name uri
+        do
+                streams[$name]=$uri
+        done < "$file_webradio_streams";
+}
+
+__selectstream ()
+{
+        selection=$(
+                printf '%s\n' "STOPSTREAM" "${!streams[@]}" \
+                | sort -u \
+                | __menu;
+        )
+}
+
+__stopstream ()
+if
+        [[ -s "$file_webradio_pid" ]]
+then
+        #pkill -F "$file_webradio_pid" &> /dev/null && rm -- "$file_webradio_pid"
+        pkill -F "$file_webradio_pid" 1>/dev/null 2>&1;
+        rm -f "$file_webradio_pid" 1>/dev/null 2>&1;
+fi
+
+__playstream ()
+(
+        0</dev/null \
+        nohup audio-player "${streams[$selection]}"
+        1>/dev/null 2>&1 &
+
+        printf '%d\n' $! >> "$file_webradio_pid";
+)
+
+# -- MAIN.
+
+if
+        test-tty 2>/dev/null;
+then
+        function __menu { menu "fzf" "PLAY" ; }
+elif
+        [[ -n $DISPLAY ]]
+then
+        function __menu { menu "dmenu2" "PLAY" ; }
+else
+        exit 1
+fi
+
+typeset -gA streams
+
+__build_streams
+__selectstream
+
+while
+        [[ -n $selection ]]
+do
+        __stopstream
+        [[ $selection == STOPSTREAM ]] || __playstream;
+        __selectstream
+done
+
+# vim: set ts=8 sw=8 tw=0 et :

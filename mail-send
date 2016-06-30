@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#
+# Send mail via msmtp-queue.sh and give notification + sound.
+
+shopt -s nullglob
+shopt -s extglob
+shopt -s dotglob
+
+maildir=${XDG_VAR_HOME}/mail/queue
+
+if
+        set -- "${maildir}/"!(\.*)
+        (( $# ))
+then
+        msg="[Posteo] All mails have been sent!"
+        until
+                (( ! $# ))
+        do
+                msmtp-queue -r
+                set -- "${maildir}/"!(\.*)
+        done
+        if
+                [[ -n $DISPLAY ]]
+        then
+                notify-send -u low -h int:value:42 "$msg";
+        else
+                printf '%s\n' "$msg" 1>&2;
+        fi
+        aplay "${XDG_DATA_HOME}/sounds/mac-sound-pack-mail-sent.wav" \
+        1>/dev/null \
+        2>&1;
+else
+        printf '%s\n' "No Mails" 1>&2;
+        exit 1
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

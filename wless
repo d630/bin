@@ -1,0 +1,10 @@
+#!/usr/bin/env dash
+#
+# Open the result of which with less.
+
+LESSOPEN='| lesspipe-misc %s'
+export LESSOPEN
+
+exec less "$(which "$1")"
+
+# vim: set ts=8 sw=8 tw=0 et :

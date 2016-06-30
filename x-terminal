@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#
+# Default terminal emulator window.
+
+if
+        [[ -f /tmp/DAYLIGHT ]]
+then
+        IFS=' ' read -r -a opts <<< "$TERMINAL_L_OPTS"
+        exec "$TERMINAL_L" "${opts[@]}" "$@"
+else
+        IFS=' ' read -r -a opts <<< "$TERMINAL_D_OPTS"
+        exec "$TERMINAL_D" "${opts[@]}" "$@"
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

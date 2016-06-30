@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+#
+# Build /etc/apt/sources.list with the help of netselect-apt.
+
+(( $UID )) && {
+        printf '%s\n' "damn. invoke me as root, please" 1>&2;
+        exit 1
+}
+
+rm -frv -- "/tmp/napt"
+
+trap 'exit 1' INT TERM QUIT EXIT
+
+for release in stable testing unstable
+do
+        mkdir -p -- "/tmp/napt/${release}"
+
+        for i in {0..9}
+        do
+                netselect-apt -t 20 "$release" > /tmp/napt/${release}/${i};
+        done
+
+        server=$(
+                grep -h 'http' "/tmp/napt/${release}/"* \
+                | sort \
+                | uniq -cd \
+                | tac \
+                | {
+                        read -r _ s;
+                        printf '%s' "$s"
+                };
+        )
+
+        { section=$(</dev/fd/0) ; } <<SEC
+# ${release}
+deb ${server} ${release} main contrib non-free
+deb-src ${server} ${release} main contrib non-free
+$(
+        echo "# ${release} security"
+        [[ $release == unstable ]] || {
+                echo "deb ${server} ${release}/updates main contrib non-free"
+                echo "deb-src ${server} ${release}/updates main contrib non-free"
+        }
+)
+# ${release} multimedia
+deb http://www.deb-multimedia.org ${release} main non-free
+deb-src http://www.deb-multimedia.org ${release} main non-free
+
+SEC
+        printf '%s\n' "$section" > "/tmp/napt/${release}-source.list"
+        sleep 3
+done
+
+read -rp "set up sources.list + preferences? "
+[[ $REPLY == y ]] || exit 1;
+
+mv -v -- "/etc/apt/sources.list" "/etc/apt/sources.list.old"
+mv -v -- "/etc/apt/preferences" "/etc/apt/preferences.old"
+
+{ preferences=$(</dev/fd/0) ; } <<PREF
+Package: *
+Pin: release a=testing
+Pin-Priority: 900
+
+Package: *
+Pin: release a=unstable
+Pin-Priority: 300
+
+Package: *
+Pin: release o=Unofficial Multimedia Packages
+Pin-Priority: 1
+
+Package: *
+Pin: release o=Debian
+Pin-Priority: -1
+PREF
+
+printf "%s\n" "$preferences" > "/etc/apt/preferences"
+cat /tmp/napt/*-source.list > "/etc/apt/sources.list"
+
+# vim: set ts=8 sw=8 tw=0 et :

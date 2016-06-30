@@ -1,0 +1,9 @@
+#!/usr/bin/env dash
+#
+# Check still open network ports.
+
+echo
+lsof -a +L1 /
+echo
+
+# vim: set ts=8 sw=8 tw=0 et :

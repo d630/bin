@@ -1,0 +1,20 @@
+#!/usr/bin/env dash
+#
+# Weekly backup with obnam.
+
+obnam_conf="${HOME}/.obnam.conf"
+obnam_log="${XDG_VAR_HOME}/log/obnam.log"
+
+sudo obnam backup --config="$obnam_conf" --lru-size=8192 --upload-queue-size=8192 \
+        /etc/ \
+        /home/ \
+        /root/ \
+        /var/backups/ \
+        /var/mail/ \
+        /var/www/;
+
+sudo obnam force-lock --config="$obnam_conf"
+
+sudo obnam forget --config="$obnam_conf" --keep=2w
+
+# vim: set ts=8 sw=8 tw=0 et :

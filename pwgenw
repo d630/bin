@@ -1,0 +1,9 @@
+#!/usr/bin/env dash
+#
+# Create password.
+
+p=$(pwgen -nc)
+
+printf '%s' $p
+
+# vim: set ts=8 sw=8 tw=0 et :

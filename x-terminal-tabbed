@@ -1,0 +1,16 @@
+#!/usr/bin/env dash
+#
+# Open some terminal emulators in tabbed.
+
+xid="$(tabbed -cd -n terminal-tabbed 2>/dev/null)"
+
+{
+        urxvt -embed "$xid" &
+        xterm -into "$xid" &
+        sleep 0.5
+        x-terminal -w "$xid" &
+} 2>/dev/null;
+
+wait
+
+# vim: set ts=8 sw=8 tw=0 et :

@@ -1,0 +1,10 @@
+#!/usr/bin/env dash
+#
+# Update mail dirs.
+
+set -e
+
+mail-get
+mail-send
+
+# vim: set ts=8 sw=8 tw=0 et :

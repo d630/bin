@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+#
+# Simple clipboard manager for Xorg (xclip, xprop, menu, base64).
+
+typeset -i \
+        OPTIND=1 \
+        OPTERR=1;
+
+typeset \
+        opt= \
+        opt_clear=false \
+        opt_daemon=false \
+        opt_kill=false \
+        opt_restart=false \
+        xsels=${XDG_CACHE_HOME}/clipbuffer;
+
+Clipbuffer::Daemon ()
+{
+        mkdir -p -m 700 -- "$xsels"
+        ${opt_clear} && > "${xsels}/clips";
+        printf '%d\n' "$$" \
+        > "${xsels}/$$.pid";
+
+        xprop -root -spy CUT_BUFFER0 \
+        | {
+                while
+                        read
+                do
+                        printf '%(%s)T\t%s\0' -1 "$(xclip -o)" \
+                        | base64 \
+                        >> "${xsels}/clips";
+                done
+        }
+}
+
+Clipbuffer::Kill ()
+{
+        shopt -s nullglob
+
+        for p in "${xsels}/"*.pid
+        do
+                p=${p##*/}
+                pkill -TERM -P "${p%.pid}"
+        done
+
+        if
+                ${opt_clear}
+        then
+                rm -r -- "$xsels" 2>/dev/null;
+        else
+                rm -- "${xsels}/"*.pid 2>/dev/null;
+        fi
+}
+
+Clipbuffer::Clip ()
+{
+        if
+                test-tty 2>/dev/null;
+        then
+                menu=fzf
+        else
+                menu=dmenu2
+        fi
+
+        printf -v clip '%s' "$(
+                base64 -d "${xsels}/clips" \
+                | sort -zr \
+                | sed -z 's/^[0-9]*\t//' \
+                | tr '\0' '\n' \
+                | menu "$menu" ">";
+        )"
+
+        if
+                [[ -n $clip ]]
+        then
+                printf '%s' "$clip" \
+                | xclip -i -l 1 -selection "clipboard";
+        fi
+}
+
+while
+        getopts :cdkr opt
+do
+        case $opt in
+        c)
+                opt_clear=true
+        ;;
+        d)
+                opt_daemon=true
+        ;;
+        k)
+                opt_kill=true
+        ;;
+        r)
+                opt_restart=true
+        esac
+done
+
+shift "$#"
+
+if
+        ${opt_daemon}
+then
+        Clipbuffer::Daemon
+elif
+        ${opt_kill}
+then
+        Clipbuffer::Kill
+elif
+        ${opt_restart}
+then
+        Clipbuffer::Kill
+        [[ -n $DISPLAY ]] && daemonize "$(command -v "$0")" -d;
+else
+        Clipbuffer::Clip
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

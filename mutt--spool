@@ -1,0 +1,7 @@
+#! /usr/bin/env dash
+#
+# Wrapper: mutt spool.
+
+LOCAL_CONFIG=spool mutt -n "$@"
+
+# vim: set ts=8 sw=8 tw=0 et :

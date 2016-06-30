@@ -1,0 +1,149 @@
+#!/usr/bin/env bash
+#
+# Run or raise script for commands with gui or tui.
+
+# -- FUNCTIONS.
+
+i_have_a_gui ()
+{
+        typeset -a \
+                xids \
+                pids \
+                desks;
+
+        typeset \
+                a \
+                b \
+                c \
+                d;
+
+        while
+                read -r a b c d _
+        do
+                if
+                        [[ $d =~ ${command[0]} ]]
+                then
+                        xids+=( $a )
+                        #desks+=( $b )
+                        pids+=( $c )
+                fi
+        done < <(
+                wmctrl -lpx
+        )
+
+        case ${#xids[@]} in
+        0)
+                setsidw "${command[*]}" 2>/dev/null;
+                sleep 0.5
+                i_have_a_gui
+        ;;
+        1)
+                wmctrl -i -a "${xids[0]}"
+        ;;
+        # *)
+        #         printf '%s\n' "${xids[@]}" \
+        #         | xwinpp -I - -p \
+        #         | xwinreg -I - -L 1,max,grid-vertical,alias:0,all;
+        #         xwinreg focus -r 1
+        esac
+
+}
+
+i_have_a_tui ()
+{
+        typeset -a \
+                desks \
+                pid_list \
+                pids \
+                xids \
+                xids_list ;
+
+        typeset \
+                idx \
+                pid \
+                a \
+                b \
+                c ;
+
+
+        for pid in $(pgrep -d ' ' "${command[0]}")
+        do
+                until
+                        [[ ${pid// /} == 0 ]]
+                do
+                        pid=$(ps -p "${pid// /}" -o ppid= 2>/dev/null)
+                        pid_list+=( ${pid// /} )
+                done
+        done
+
+        while
+                read -r a b c _
+        do
+                xids+=( $a )
+                #desks+=( $b )
+                pids+=( $c )
+        done < <(
+                wmctrl -lpx
+        )
+
+        for pid in "${pid_list[@]}"
+        do
+                for idx in "${!pids[@]}"
+                do
+                        [[ ${pids[$idx]]} == $pid ]] && xids_list+=( ${xids[$idx]} )
+                done
+        done
+
+        case ${#xids_list[@]} in
+        0)
+                daemonize x-terminal -e sh -c "${command[*]};${SHELL}" \
+                2>/dev/null;
+        ;;
+        1)
+                wmctrl -i -a "${xids_list[0]}"
+        ;;
+        # *)
+        #         printf '%s\n' "${xids_list[@]}" \
+        #         | xwinpp -I - -p \
+        #         | xwinreg -I - -L 1,max,grid-vertical,alias:0,all;
+        #         xwinreg focus -r 1
+        esac
+}
+
+# -- MAIN.
+
+(( $# )) || {
+        printf 'USAGE: %s ( -g | -t ) <command>\n' "$(basename "$0")" 1>&2;
+        exit 1
+}
+
+case $1 in
+-t)
+        mode=tui
+        shift 1
+;;
+-g)
+        shift 1
+;&
+*)
+        mode=gui
+esac
+
+command=($*)
+
+if
+        ! command -v "${command[0]}" 1>/dev/null;
+then
+        printf 'Command is unknown: %s\n' "${command[0]}" 1>&2;
+        exit 1
+fi
+
+if
+        [[ $mode == gui ]]
+then
+        i_have_a_gui
+else
+        i_have_a_tui
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

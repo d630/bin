@@ -1,0 +1,7 @@
+#!/usr/bin/env dash
+#
+# Wrap up weechat.
+
+daemonize x-terminal -a -c weechat -t weechat -T weechat -e weechat
+
+# vim: set ts=8 sw=8 tw=0 et :

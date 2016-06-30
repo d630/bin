@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+#
+# Add interactively a note via terminal to use it later in org-mode.
+# Ask also for taskwarrior.
+
+typeset \
+        file \
+        kuno \
+        selection \
+        tags \
+        time \
+        title;
+
+file=${XDG_DATA_HOME}/documents/Notizen/outline/quicknotes.org
+
+read -re -p "Title: " title
+read -re -p "Kurznotiz: " kuno
+read -re -p "Tags: " tags
+
+printf -v time '%(%Y-%m-%d_%a_%H:%M)T' -1
+
+cat >> "$file" << TEMPLATE
+* Kurznotiz: ${title}                                            ${tags}
+:LOGBOOK:
+CLOCK: [${time}]--[${time}] =>  0:00
+:END:
+<${time}>
+:PROPERTIES:
+:TODO:
+:PRIORITY:
+:DEADLINE:
+:SCHEDULED:
+:CLOSED:
+:CLOCKSUM:
+:CLOCKSUM_T:
+:BLOCKED:
+:ITEM:
+:FILE:
+:COLUMNS:
+:CATEGORY:
+:ARCHIVE:
+:LOGGING:
+:END:
+${kuno}
+TEMPLATE
+
+#emacsclient -t "$file"
+
+read -re -n 1 -p "Add a task to taskwarrior? (y/n)" selection
+[[ $selection == y ]] && taskwarrior-add;
+
+# vim: set ts=8 sw=8 tw=0 et :

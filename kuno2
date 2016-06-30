@@ -1,0 +1,11 @@
+#!/usr/bin/env dash
+#
+# Simple notetaker using ledit.
+
+store=${XDG_DATA_HOME:-${HOME}/.local/share}/kuno2
+date=$(date --utc --date now +%s)
+
+mkdir -p -- "$store"
+ledit -x -h "${store}/${date}"
+
+# vim: set ts=8 sw=8 tw=0 et :

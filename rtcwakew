@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+#
+# Use rtcwake and play music on wakeup.
+
+if
+        test-tty 2>/dev/null;
+then
+        function __menu { menu "fzf" "$1" ; }
+elif
+        [[ -n $DISPLAY ]]
+then
+        function __menu { menu "dmenu2" "$1" ; }
+else
+        exit 1
+fi
+
+typeset -A music
+music[radio1]='http://www.radioeins.de/live.m3u'
+music[open]="-R ${XDG_MUSIC_DIR}/open_your_eyes.mp3"
+
+datum=$(
+        printf '%s\n' now tomorrow \
+        | __menu "Datum";
+)
+datum=$(date --date=${datum} +%F)
+tempus=$(
+        printf '%s\n' {00..23}:{00..59} \
+        | __menu "Zeitpunkt";
+)
+zp="${datum} ${tempus}"
+stream=$(
+        printf '%s\n' "${!music[@]}" \
+        | __menu "Stream";
+)
+check=$(
+        printf '%s\n' "no" "rtcwake ${zp} $stream" \
+        | __menu "Go";
+)
+
+if
+        [[ -n $check && $check != no ]]
+then
+        sudo rtcwake -m mem -t "$(date -d "$zp" +%s)" &&
+        sleep 10 &&
+        audio-player "${music[$stream]}";
+else
+        printf '%s\n' "Bye-bye!" 1>&2;
+        exit 1
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

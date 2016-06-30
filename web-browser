@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#
+# Default web browser (tui).
+
+IFS=' ' read -r -a opts <<< "$BROWSER_OPTS"
+exec "$BROWSER" "${opts[@]}" "$@"
+
+# vim: set ts=8 sw=8 tw=0 et :

@@ -1,0 +1,17 @@
+#!/usr/bin/env dash
+#
+# Display times.
+
+echo
+tput bold setaf 7
+date +"%V %a %Y-%m-%d %H:%M:%S"
+echo
+lifeday
+tput sgr0
+#echo ; ncal -w -M -3 ; echo
+task rc._forcecolor=true calendar 2>/dev/null;
+sed "s/.*/TZ=& date +\\\'%Z %t%F %T %t&\\\'/" "${HOME}/.tzlist" \
+| xargs -I {} sh -c "{}";
+echo
+
+# vim: set ts=8 sw=8 tw=0 et :

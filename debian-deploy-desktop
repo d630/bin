@@ -1,0 +1,333 @@
+#!/usr/bin/env bash -e
+#
+# Deploy my desktop (after Debian GNU/Linux netinstallation without use of tasksel).
+
+# STEP1
+#       # cd -- /home/user1
+#       # wget https://raw.githubusercontent.com/D630/bin/master/deploy-debian-desktop.sh
+#       # chmod 755 ./deploy-debian-desktop.sh
+# STEP2
+#       # /home/user1/deploy-debian-desktop.sh A
+# STEP3
+#       $ export HISTSIZE=0
+#       $ sudo /home/user1/deploy-debian-desktop.sh B SSID PW
+# STEP4
+#       $ export HISTSIZE=0
+#       $ sudo /home/user1/deploy-debian-desktop.sh C SSID PW
+# STEP5
+#       $ export HISTSIZE=0
+#       $ sudo /home/user1/deploy-debian-desktop.sh D SSID PW
+# STEP6
+#       $ sudo /home/user1/deploy-debian-desktop.sh E
+# STEP7
+#       $ sudo deploy-debian-desktop.sh F
+
+m ()
+{
+        df
+        read -rp "plug in the backup device, please"
+        df
+
+        until
+                [[ -b $REPLY ]]
+        do
+                read -rep "type location: " -i /dev/sdxX
+                mount $REPLY
+        done
+}
+
+c ()
+{
+        ip link set dev "${IFACE:-wlan0}" up
+        sleep 1
+        wpa_supplicant -B -i "${IFACE:-wlan0}" -c <(wpa_passphrase "$1" "$2")
+        dhclient "${IFACE:-wlan0}"
+}
+
+F ()
+{
+        /home/user1/bin/iface -c
+        /home/user1/bin/update-packages
+
+        printf '%s\n' "finished. you can now use XX to get into X" 1>&2;
+}
+
+E ()
+{
+        ip link set dev "${IFACE:-wlan0}" up
+        sleep 1
+        wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i  "${IFACE:-wlan0}" &&
+        dhclient "${IFACE:-wlan0}";
+
+        m
+
+        mkdir -pv /tmp/obnam
+        obnam restore --lru-size=8192 --upload-queue-size=8192 \
+                --repository "/media/user1/80e47b67-5efa-4325-a205-af0d5c4e1a38/linux/ICH3/obnam" \
+                --to /tmp/obnam \
+                /home/user1;
+
+        umount $REPLY
+
+        rm -rfv /home/user1/*
+        rsync -vaP /tmp/obnam/home/user1/ /home/user1
+
+        printf '%s\n' "logout required" 1>&2;
+}
+
+D ()
+{
+        c "$@"
+
+        m
+
+        mkdir -pv /tmp/obnam
+        obnam restore --lru-size=8192 --upload-queue-size=8192 \
+                --repository "/media/user1/80e47b67-5efa-4325-a205-af0d5c4e1a38/linux/ICH3/obnam" \
+                --to /tmp/obnam \
+                /etc;
+
+        mv -vb -- /tmp/obnam/etc/{resolv-,}dnsmasq.conf -t /etc
+        mv -vb -- /tmp/obnam/etc/hosts -t /etc
+        mv -vb -- /tmp/obnam/etc/exim4/update-exim4.conf.conf -t /etc/exim4
+
+        dpkg-reconfigure exim4-config
+
+        mv -vb -- /tmp/obnam/etc/bitlbee/bitlbee.conf -t /etc/bitlbee
+        mv -vb -- /tmp/obnam/etc/ssh/ssh_config -t /etc/ssh
+        mv -vb -- /tmp/obnam/etc/wpa_supplicant/wpa_supplicant.conf -t /etc/wpa_supplicant
+        mv -vb -- /tmp/obnam/etc/network/interfaces -t /etc/network
+
+        umount $REPLY
+
+        printf '%s\n' "reboot required" 1>&2;
+}
+
+C ()
+{
+        c "$@"
+        netstat -tapen
+        echo
+        lsof -i :1-10000
+        read -p "ok?"
+
+        systemctl disable \
+                ModemManager.service \
+                apache2.service \
+                atd.service \
+                avahi-daemon.service \
+                avahi-daemon.socket \
+                bluetooth.servicet \
+                cups-browsed.service \
+                cups.path \
+                cups.service \
+                cups.socket \
+                mpd.service \
+                mpd.socket \
+                rsync.service \
+                saned.socket;
+
+        update-rc.d bitlbee disable
+        update-rc.d minissdpd disable
+        update-rc.d polipo disable
+
+        {
+                read ; read
+                read -r _ _ _ _ driver
+        } < <(lspci -nnk | fgrep VGA -A2)
+
+        if
+
+                [[ $driver == radeon ]]
+        then
+                cat > /etc/modprobe.d/radeon.conf <<IN
+options radeon audio=0
+options radeon bapm=1
+options radeon disp_priority=2
+options radeon hw_i2c=1
+options radeon modeset=1
+options radeon msi=1
+options radeon mst=1
+options radeon pcie_gen2=0
+options radeon tv=0
+IN
+                cat > /etc/modprobe.d/sound.conf <<IN
+options snd-hda-intel index=-2,0
+IN
+        fi
+
+        ed -s /etc/default/grub <<S
+/^GRUB_CMDLINE_LINUX_DEFAULT=.*$/c
+GRUB_CMDLINE_LINUX_DEFAULT="ipv6.disable=1"
+.
+w
+S
+        update-grub
+
+        ed -s /etc/apache2/ports.conf <<S
+/^Listen 80$/s/80/localhost:80/
+w
+S
+
+        ed -s /etc/mailname <<S
+,c
+example.org
+.
+w
+S
+        printf '%s\n' "user1@example.org" > /root/.forward;
+
+        printf '%s\n' "D630: root
+backup-preparing: root
+bleachbit: root
+ip-log: root
+obnam: root
+urldiff: root
+SAMSUNG: root
+irc: root
+" >> /etc/aliases;
+
+        ed -s /etc/fuse.conf <<S
+/\#user_allow_other/s/\#//
+w
+S
+
+        printf '%s\n' "ALL: ALL" >> /etc/hosts.deny
+        printf '%s\n' "mpd: ALL" >> /etc/hosts.allow
+
+        ed -s /etc/environment <<S
+,c
+PATH="/bin:/usr/bin:/usr/games:/usr/local/bin:/usr/local/games:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin"
+.
+w
+S
+
+        rm -v -- /etc/bash_rc
+
+        ed -s /etc/profile <<S
+,c
+# /etc/profile: system-wide .profile file for the Bourne shell (sh(1))
+# and Bourne compatible shells (bash(1), ksh(1), ash(1), ...).
+
+if [ "`id -u`" -eq 0 ]
+then
+  PS1='# '
+else
+  PS1='$ '
+fi
+
+if [ -d /etc/profile.d ]
+then
+  for i in /etc/profile.d/*.sh
+  do
+    if [ -r $i ]
+    then
+      . $i
+    fi
+  done
+  unset i
+fi
+.
+w
+S
+        printf '%s\n' "59 23   * * *   root    /usr/sbin/logwatch --output mail --format text --detail low --range today --mailto root@example.org 1>/dev/null 2>&1
+
+#" >> /etc/crontab
+
+        mv -v -- /etc/xdg/autostart/* -t /etc/xdg
+
+        ed -s /etc/xdg/user-dirs.conf <<S
+/^filename_encoding=.*$/c
+filename_encoding=UTF-8
+.
+w
+S
+
+        ed -s /etc/xdg/user-dirs.defaults <<S
+,c
+DESKTOP=share/desktop
+DOWNLOAD=tmp/downloads
+TEMPLATES=share/templates
+PUBLICSHARE=var/public
+DOCUMENTS=share/documents
+MUSIC=share/music
+PICTURES=share/pictures
+VIDEOS=share/videos
+.
+w
+S
+
+        printf '%s\n' "UUID=80e47b67-5efa-4325-a205-af0d5c4e1a38       /media/user1/80e47b67-5efa-4325-a205-af0d5c4e1a38     auto    user,rw,noauto  0         0
+
+# last line" >> /etc/fstab
+        vi /etc/fstab
+        mkdir -pv /media/user1
+        chmod -v 755 /media/user1
+
+        cat 1>&2 << MSG
+reboot required
+
+TODO:
+        bitlbee
+        dnsmasq
+        exim4
+        hosts
+        ssh
+        wpa_supplicant
+
+next step:
+        mounting of the backup device
+MSG
+
+}
+
+B ()
+{
+        apt-get autoremove --purge
+        apt-get autoclean
+        rm -- /root/.bash_history debian-build-sources-list
+
+        c "$@"
+        cd -- /home/user1
+        wget "https://raw.githubusercontent.com/D630/dotfiles/master/dpkg/var/lib/dpkg/pkg.list"
+        aptitude install ./pkg.list && printf '%s\n' "reboot required" 1>&2;
+}
+
+A ()
+{
+        apt-get update
+        apt-get install etckeeper
+        apt-get install sudo aptitude dselect deb-multimedia-keyring netselect-apt htop
+
+        adduser user1 sudo
+        adduser user1 staff
+
+        cd -- /root
+        wget "https://raw.githubusercontent.com/D630/bin/master/debian-build-sources-list"
+        chmod +x ./debian-build-sources-list
+
+        ./debian-build-sources-list
+        read -p "ok?"
+
+        apt-get update
+        apt-get dist-upgrade &&
+        printf '%s\n' "reboot required" 1>&2;
+}
+
+# -- MAIN.
+
+(( $UID )) && {
+        printf '%s\n' "damn. must be root user" 1>&2;
+        set -- _
+}
+
+case $1 in
+[ABCDEFcm])
+        shift 1
+        ${1} "$@"
+;;
+*)
+        exit 1
+esac
+
+# vim: set ts=8 sw=8 tw=0 et :

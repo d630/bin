@@ -1,0 +1,7 @@
+#!/usr/bin/env dash
+#
+# Looking for mail queue (msmtp).
+
+msmtp-queue -d
+
+# vim: set ts=8 sw=8 tw=0 et :

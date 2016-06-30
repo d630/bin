@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+# Daily ip logging.
+
+log=${XDG_VAR_HOME}/log/ip-log.log
+to=ip-log@ip-log
+subject=ip-log
+
+printf '%(%Y-%m-%d_%R)T %s\n' -1 "$(curl ifconfig.me)" \
+| tee -a "$log" \
+| mailx -s "$subject" "$to";
+
+# vim: set ts=8 sw=8 tw=0 et :

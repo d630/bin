@@ -1,0 +1,7 @@
+#!/usr/bin/env dash
+#
+# Open the result of which in vim.
+
+exec vim "$(which "$1")"
+
+# vim: set ts=8 sw=8 tw=0 et :

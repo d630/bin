@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+#
+# Simple feed downloader based on urldiff.
+
+feedcacherdir=${XDG_VAR_HOME}/lib/feedfaetcher
+
+urllist=${feedcacherdir}/urls.txt
+typeset -x \
+        cachedir=${feedcacherdir}/cache \
+        reportnew=${feedcacherdir}/report.txt \
+        table=${feedcacherdir}/table.txt;
+
+__feedcacher_do()
+{
+        typeset \
+                filename \
+                onlinexml \
+                url=${1,,};
+
+        [[ $url == \#* ]] && return 1;
+
+        if
+                [[ $url =~ ^https?://.*\.[a-z]*/.*$ ]]
+        then
+                filename=${url:0:121}
+                filename=${filename//_/-}
+                filename=${filename// /_}
+                filename=${filename//\//_}
+                onlinexml=${cachedir}/${filename}.xml
+                wget --no-verbose \
+                        --connect-timeout=3 \
+                        --content-on-error \
+                        --dns-timeout=3 \
+                        --ignore-length \
+                        --inet4-only \
+                        --no-cache \
+                        --no-cookies \
+                        --no-http-keep-alive \
+                        --read-timeout=3 \
+                        --tries=1 \
+                        -O "$onlinexml" \
+                        "$1";
+                if
+                        [[ $(stat -c %s "$onlinexml" 2>/dev/null) -ge 2 ]]
+                then
+                        printf '%s %s\n' "$1" "${onlinexml##*/}" \
+                        >> "$table";
+                        printf 'SUCCESS %(%Y-%m-%d_%H:%M)T URL:%s synchronized\n' -1 "$1" \
+                        1>&3;
+                else
+                        rm -- "$onlinexml"
+                        printf 'FAIL %(%Y-%m-%d_%H:%M)T URL:%s unattainable\n' -1 "$1" \
+                        1>&3;
+                        return 1
+                fi
+        else
+                printf 'FAIL %(%Y-%m-%d_%H:%M)T URL:%s does not match\n' -1 "$1" \
+                1>&3;
+                return 1
+        fi
+}
+
+if
+        [[ -n $1 ]]
+then
+        if
+                <<< "$1" \
+                cat "$urllist" -  \
+                | sort -u \
+                > "$urllist.$$";
+        then
+                mv "$urllist.$$" "$urllist";
+        fi
+        exit $?
+fi
+
+export -f __feedcacher_do
+
+test-inet || {
+        printf '%(%Y-%m-%d_%H:%M)T %s\n' -1 "ERROR We are probably offline" \
+        1>&2;
+        exit 1
+}
+
+[[ -d $cachedir ]] || mkdir -p -- "$cachedir";
+[[ -f $reportnew ]] && rm -- "$reportnew";
+[[ -f $table ]] && rm -- "$table";
+if
+        [[ -d $cachedir ]]
+then
+        rm -r -- "$cachedir"
+        mkdir -p -- "$cachedir"
+fi
+
+tput bold setaf 7 ; printf '\n%s\n' "CHECK" ; tput sgr0
+exec 3>>"$reportnew";
+xargs -I {} -a "$urllist" -n 1 -P 4 -i bash -c '__feedcacher_do "$@"' _ {}
+exec 3<&-;
+
+if
+        [[ $(stat -c %s "$reportnew" 2>/dev/null) -ge 2 ]]
+then
+        tput bold setaf 7 ; printf '\n%s\n' "REPORT" ; tput sgr0
+        cat "$reportnew"
+else
+        printf '%(%Y-%m-%d_%H:%M)T %s\n' -1 "ERROR Report has not been created" \
+        1>&2;
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

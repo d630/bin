@@ -1,0 +1,14 @@
+#!/usr/bin/env dash
+#
+# Select files listed in a directory.
+
+arg="$(readlink -f "${1:-$PWD}")"
+
+if
+        test -d "$arg"
+then
+        ls -A1 --color=always "$arg" \
+        | fzf -m --ansi --prompt="PRINT ";
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

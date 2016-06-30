@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+#
+# Simple replacement for urlview using fzf in X.
+
+__fzf ()
+{
+        fzf --tac -e -i -m
+}
+
+__ugrep ()
+{
+        grep -oP -e \
+                '((http|https|gopher|ftp|ftps|webdav|webdavs|dav|davs):(//)?[^ <>"\t]*|(www|ftp)[0-9]?\.[-a-z0-9.]+)[^ .,;\t\n\r<">\):]?[^, <>"\t]*[^ .,;\t\n\r<">\):]'
+}
+
+__x_web_browser ()
+{
+
+        setsidw x-web-browser "$1"
+}
+
+if
+        (( ! $# ))
+then
+        printf '%s\n' "No args" \
+        1>&2;
+        exit 1
+elif
+        [[ $1 == - ]]
+then
+        if
+                [[ -p /dev/stdin ]]
+        then
+                shift 1
+                mapfile -t furls < <(
+                        __ugrep \
+                        | __fzf;
+                )
+        else
+                printf '%s\n' "Stdin is not coming from a pipe" \
+                1>&2;
+                exit 1
+        fi
+else
+        mapfile -t furls < <(
+                for a
+                do
+                        if
+                                [[ -p $a || -f $a ]]
+                        then
+                                cat "$a"
+                        else
+                                printf 'File %s does not exist or is neather a regular file nor a named pipe' "$a" \
+                                1>&2;
+                                exit 1
+                        fi
+                done \
+                | __ugrep \
+                | __fzf;
+        )
+fi
+
+if
+        (( ${#furls[@]} ))
+then
+        if
+                [[ -n $DISPLAY ]]
+        then
+                for u in "${furls[@]}"
+                do
+                        __x_web_browser "$u" &
+                done
+        fi
+        wait
+else
+        printf '%s\n' "No url has been chosen" \
+        1>&2;
+        exit 1
+fi
+
+# vim: set ts=8 sw=8 tw=0 et :

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#
+# Pick color via grabc.
+
+c=$(
+        grabc \
+        |& grep -o '#.*';
+)
+
+printf '%s' "${c^^}"
+
+# vim: set ts=8 sw=8 tw=0 et :
