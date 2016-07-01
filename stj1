@@ -31,10 +31,10 @@ else
         if
                 test -f "/tmp/DAYLIGHT"
         then
-                daemonize st-light -c stj1 -t stj1 -g 176x33+1+0 \
+                daemonize st-light -i -c stj1 -t stj1 -g 176x33+1+0 \
                 -e "$SHELL" -c 'printf "%x\n" "$WINDOWID" > "${XDG_CACHE_HOME}/stj1"; exec "$0"'
         else
-                daemonize st-dark -c stj1 -t stj1 -g 176x33+1+0 \
+                daemonize st-dark -i -c stj1 -t stj1 -g 176x33+1+0 \
                 -e "$SHELL" -c 'printf "%x\n" "$WINDOWID" > "${XDG_CACHE_HOME}/stj1"; exec "$0"'
         fi
 fi
