@@ -2,20 +2,15 @@
 #
 # Check inet connection.
 
-if
+{
+        ping -qnc2 -w10 debian.org ||
+        ping -qnc1 -w4 8.8.8.8 ||
+        nc -vz www.debian.org 80 ||
         {
-                ping -qnc2 -w10 debian.org ||
-                ping -qnc1 -w4 8.8.8.8 ||
-                ! nc -vz www.debian.org 80
-        } 1>/dev/null 2>&1
-then
-        if
-                exec 3<>/dev/udp/debian.org/80
-        then
-                exec 3<&-
-                exec 3>&-
-                exit 0
-        fi
-fi
+                exec 3<>/dev/udp/debian.org/80 &&
+                exec 3<&- &&
+                exec 3>&-;
+        };
+} 1>/dev/null 2>&1;
 
 # vim: set ts=8 sw=8 tw=0 et :

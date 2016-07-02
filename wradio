@@ -45,7 +45,7 @@ fi
 __playstream ()
 (
         0</dev/null \
-        nohup audio-player "${streams[$selection]}"
+        nohup audio-player --no-terminal "${streams[$selection]}" \
         1>/dev/null 2>&1 &
 
         printf '%d\n' $! >> "$file_webradio_pid";

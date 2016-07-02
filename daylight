@@ -21,21 +21,21 @@ __taskwarrior ()
 
 __mutt ()
 (
-        cd -- "${HOME_DATA_HOME}/mutt/colors"
+        cd -- "${XDG_DATA_HOME}/mutt/colors"
         ln -fsr "$1" "${HOME}/.mutt/mutt-colors.muttrc"
 )
 
 __x ()
 (
-        cd -- "${HOME_DATA_HOME}/xcolors"
+        cd -- "${XDG_DATA_HOME}/xcolors"
         ln -fsr "$1" "current.xcolor"
         xrdb -merge "${HOME}/.Xresources"
 
         xsetroot -solid "$2"
 
-        cd -- "${HOME_DATA_HOME}/wallpapers"
+        cd -- "${XDG_DATA_HOME}/wallpapers"
         ln -fsr "${3}" "current.wallpaper";
-        feh  --bg-fill "${HOME_DATA_HOME}/wallpapers/current.wallpaper"
+        feh --bg-fill "${XDG_DATA_HOME}/wallpapers/current.wallpaper"
 )
 
 __wm ()

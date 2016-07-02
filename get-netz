@@ -11,7 +11,7 @@ then
                 | tail -n1;
         )"
 else
-        printf '%s\n' "IP-ISP: ?"
+        printf '%s\n' "IP-ISP: offline"
 fi
 
 ip a show wlan0 \
