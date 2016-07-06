@@ -2,9 +2,14 @@
 #
 # Update mail dirs.
 
-set -e
+test-inet || {
+        printf 'error: %s\n' "we are offline" 1>&2;
+        exit 1
+}
 
-mail-get
+mail-hook-pre
 mail-send
+mail-get
+mail-hook-post
 
 # vim: set ts=8 sw=8 tw=0 et :

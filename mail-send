@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Send mail via msmtp-queue.sh and give notification + sound.
+# Send mail via msmtp-queue and give notification + sound.
 
 shopt -s nullglob
 shopt -s extglob
@@ -30,7 +30,7 @@ then
         1>/dev/null \
         2>&1;
 else
-        printf '%s\n' "No Mails" 1>&2;
+        printf '%s\n' "queue is empty" 1>&2;
         exit 1
 fi
 

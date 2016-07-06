@@ -11,6 +11,7 @@ List:
 * [bash-mselect-freq](https://github.com/D630/bin/blob/master/bash-mselect-freq): Print frequency of the bash history and run it from dmenu.
 * [bash-print-freq](https://github.com/D630/bin/blob/master/bash-print-freq): Print frequency of the bash history.
 * [bash-toggle-options.sh](https://github.com/D630/bin/blob/master/bash-toggle-options.sh): Toggle bash options via fzf.
+* [build-github-bin-readme](https://github.com/D630/bin/blob/master/build-github-bin-readme): Build README.md in github.com/D630/bin .
 * [calculate-date](https://github.com/D630/bin/blob/master/calculate-date): Calculate dates via taskwarrior.
 * [cclean](https://github.com/D630/bin/blob/master/cclean): Clean up some dirs and files.
 * [chromium--proxy](https://github.com/D630/bin/blob/master/chromium--proxy): Start chromium and redirect traffic through a proxy server.
@@ -57,9 +58,11 @@ List:
 * [lifeday](https://github.com/D630/bin/blob/master/lifeday): Print lifeday.
 * [log-ip](https://github.com/D630/bin/blob/master/log-ip): Daily ip logging.
 * [lsort](https://github.com/D630/bin/blob/master/lsort): Sort input by lenght.
-* [mail-get](https://github.com/D630/bin/blob/master/mail-get): Getting mail via offlineimap and give notification + sound.
+* [mail-get](https://github.com/D630/bin/blob/master/mail-get): Get mail and give notification + sound.
+* [mail-hook-post](https://github.com/D630/bin/blob/master/mail-hook-post): Run command after mail-get.
+* [mail-hook-pre](https://github.com/D630/bin/blob/master/mail-hook-pre): Run command before mail-get.
 * [mail-queue](https://github.com/D630/bin/blob/master/mail-queue): Looking for mail queue (msmtp).
-* [mail-send](https://github.com/D630/bin/blob/master/mail-send): Send mail via msmtp-queue.sh and give notification + sound.
+* [mail-send](https://github.com/D630/bin/blob/master/mail-send): Send mail via msmtp-queue and give notification + sound.
 * [mail-update](https://github.com/D630/bin/blob/master/mail-update): Update mail dirs.
 * [mail-viewer](https://github.com/D630/bin/blob/master/mail-viewer): Default mail viewer (tui).
 * [man2pdf](https://github.com/D630/bin/blob/master/man2pdf): man2pdf script.
