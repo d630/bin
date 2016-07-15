@@ -2,6 +2,6 @@
 #
 # Run command before mail-get.
 
-exec imapfilter -vc ~/.imapfilter/posteo.lua -l "${XDG_VAR_HOME}/log/imapfilter.log" > /dev/null
+#exec imapfilter -vc ~/.imapfilter/posteo.lua -l "${XDG_VAR_HOME}/log/imapfilter.log" > /dev/null 2>&1
 
 # vim: set ts=8 sw=8 tw=0 et :

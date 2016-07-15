@@ -7,8 +7,8 @@ test-inet || {
         exit 1
 }
 
-mail-hook-pre
 mail-send
+mail-hook-pre
 mail-get
 mail-hook-post
 

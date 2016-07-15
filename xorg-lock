@@ -8,6 +8,6 @@ exec i3lock \
         --image=${XDG_DATA_HOME}/wallpapers/current.wallpaper \
         --no-unlock-indicator \
         --show-failed-attempts \
-        --tiling";
+        --tiling;
 
 # vim: set ts=8 sw=8 tw=0 et :

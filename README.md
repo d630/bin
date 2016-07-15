@@ -71,6 +71,7 @@ List:
 * [mediathekvieww](https://github.com/D630/bin/blob/master/mediathekvieww): MediathekView (german tv)
 * [menu](https://github.com/D630/bin/blob/master/menu): A wrapper script for selecting menu driven programs.
 * [msmtpqw](https://github.com/D630/bin/blob/master/msmtpqw): Replacement for msmtpq.
+* [mutt--hotmail](https://github.com/D630/bin/blob/master/mutt--hotmail): Wrapper: mutt hotmail.
 * [mutt--posteo](https://github.com/D630/bin/blob/master/mutt--posteo): Wrapper: mutt posteo.
 * [mutt--spool](https://github.com/D630/bin/blob/master/mutt--spool): Wrapper: mutt spool.
 * [mutt-filter-uri](https://github.com/D630/bin/blob/master/mutt-filter-uri): Add a bookmark to urimark in mutt.

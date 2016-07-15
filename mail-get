@@ -2,29 +2,27 @@
 #
 # Get mail and give notification + sound.
 
-mpop >> "${XDG_VAR_HOME}/log/mbsync.log" 2>&1;
-mbsync -V "${@:-posteo}" >> "${XDG_VAR_HOME}/log/mbsync.log" 2>&1;
+mpop -a >> "${XDG_VAR_HOME}/log/mpop.log" 2>&1;
 
-mapfile -t newmails < <(
-        find "${XDG_VAR_HOME}/mail/storage/dovecot/.${X_POSTEO1}".* -type f -path "*/new/*"
+mapfile -t reply < <(
+        imapfilter -c "${HOME}/.imapfilter/localhost.lua"
 )
 
+read -r _ _ _ c0 <<< "${reply[0]}"
+read -r _ _ _ c1 <<< "${reply[1]}"
+
 if
-        (( ${#newmails[@]} ))
+        (( c0 + c1 > 0 ))
 then
+        aplay "${XDG_DATA_HOME}/sounds/mac-sound-pack-new-mail.wav" \
+                1>/dev/null 2>&1;
         if
                 [[ -n $DISPLAY ]]
         then
-                notify-send -u low -h int:value:42 \
-                        "[Posteo] new Mails: ${#newmails[@]}";
+                notify-send -u low -h int:value:42 "${reply[0]}\n${reply[1]}"
         else
-                printf '[Posteo] new Mails: %d\n' "${#newmails[@]}" 1>&2;
+                printf '%s\n' "${reply[0]}" "${reply[1]}" 2>&1;
         fi
-        aplay "${XDG_DATA_HOME}/sounds/mac-sound-pack-new-mail.wav" \
-                1>/dev/null \
-                2>&1;
-else
-        printf '[Posteo] new Mails: %d\n' "${#newmails[@]}" 1>&2;
 fi
 
 # vim: set ts=8 sw=8 tw=0 et :
