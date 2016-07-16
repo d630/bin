@@ -11,7 +11,7 @@ Open::Init ()
         { typeset i=$(</dev/fd/0) ; } <<-'INIT'
 typeset -A Mime=(
         [application/pdf]="${use_x}pdf-viewer %s"
-        [application/postscript]="${use_x}pdf-viewer-pdf %s"
+        [application/postscript]="${use_x}pdf-viewer %s"
         [application/vnd.rn-realmedia]="${use_x}video-player %s"
         [application/x-bittorrent]='transmission-cli-w %s'
         [application/x-lha]='aunpack %s'
