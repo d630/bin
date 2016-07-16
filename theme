@@ -54,8 +54,8 @@ then
                 [gtk.1]=dark
                 [taskwarrior.linux.1]=dark-16.theme
                 [taskwarrior.256.1]=solarized-dark-256.theme
-                [mutt.linux.1]=mutt-colors-solarized-light-16.muttrc
-                [mutt.256.1]=mutt-colors-solarized-light-256.muttrc
+                [mutt.linux.1]=mutt-colors-solarized-dark-16.muttrc
+                [mutt.256.1]=mutt-colors-solarized-dark-256.muttrc
                 [x.1]=Solarized-Dark.xcolor
                 [x.2]=\#002B36
                 [x.3]=debian-minimal-dark.png
@@ -79,24 +79,19 @@ else
 fi
 
 if
-        [[ $TERM == linux* ]]
-then
-        theme.taskwarrior "${C[taskwarrior.linux.1]}"
-        theme.mutt "${C[mutt.linux.1]}"
-else
-        theme.taskwarrior "${C[taskwarrior.256.1]}"
-        theme.mutt "${C[mutt.256.1]}"
-fi
-
-if
         [[ -n $DISPLAY ]]
 then
+        theme.taskwarrior "${C[taskwarrior.256.1]}"
+        theme.mutt "${C[mutt.256.1]}"
         theme.x "${C[x.1]}" "${C[x.2]}" "${C[x.3]}"
         theme.gtk "${C[gtk.1]}"
         case $X_XCLIENT in
         bspwm)
                 theme.bspwm "${C[bspwm.1]}" "${C[bspwm.2]}"
         esac
+else
+        theme.taskwarrior "${C[taskwarrior.linux.1]}"
+        theme.mutt "${C[mutt.linux.1]}"
 fi
 
 exit 0
