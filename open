@@ -2,7 +2,7 @@
 #
 # Open files or strings in preferred applications.
 
-# TODO(D630): revise
+# TODO(d630): revise, too slow
 
 # -- CONFIG.
 
@@ -10,49 +10,49 @@ Open::Init ()
 {
         { typeset i=$(</dev/fd/0) ; } <<-'INIT'
 typeset -A Mime=(
-        [application/pdf]="${use_x}pdf-viewer.sh %s"
-        [application/postscript]="${use_x}pdf-viewer.sh %s"
-        [application/vnd.rn-realmedia]="${use_x}video-player.sh %s"
-        [application/x-bittorrent]='transmission-cli.sh %s'
+        [application/pdf]="${use_x}pdf-viewer %s"
+        [application/postscript]="${use_x}pdf-viewer-pdf %s"
+        [application/vnd.rn-realmedia]="${use_x}video-player %s"
+        [application/x-bittorrent]='transmission-cli-w %s'
         [application/x-lha]='aunpack %s'
         [application/x-rar]='aunpack %s'
-        [application/x-shockwave-flash]="${use_x}web-browser.sh %s"
+        [application/x-shockwave-flash]="${use_x}web-browser %s"
         [application/x-ta]='aunpack %s'
         [application/x-tar]='aunpack %s'
         [application/zip]='aunpack %s'
-        [audio/*]="${use_x}audio-player.sh %s"
-        [image/*]="${use_x}image-viewer.sh %s"
-        [image/svg+xml]="${use_x}web-browser.sh %s"
+        [audio/*]="${use_x}audio-player %s"
+        [image/*]="${use_x}image-viewer %s"
+        [image/svg+xml]="${use_x}web-browser %s"
         [image/vnd.djvu]='xdg-open %s'
         [image/x-xcf]='gimp %s'
-        [inode/x-empty]="${use_x}file-browser.sh %s"
-        [text/html]="${use_x}web-browser.sh %s"
+        [inode/x-empty]="${use_x}file-browser %s"
+        [text/html]="${use_x}web-browser %s"
         [text/troff]='man -l %s'
-        [video/*]="${use_x}video-player.sh %s"
+        [video/*]="${use_x}video-player %s"
 )
 
 typeset -A Ext=(
-        [-]="${use_x}file-browser.sh %s"
-        [--]="${use_x}text-editor.sh %s"
+        [-]="${use_x}file-browser %s"
+        [--]="${use_x}text-editor %s"
         [7z]='aunpack %s'
         [a]='aunpack %s'
-        [aac]="${use_x}audio-player.sh %s"
+        [aac]="${use_x}audio-player %s"
         [abw]='abiword %s'
         [ace]='aunpack %s'
         [alz]='aunpack %s'
         [arc]='aunpack %s'
         [arj]='aunpack %s'
-        [asf]="${use_x}audio-player.sh %s"
-        [avi]="${use_x}video-player.sh %s"
+        [asf]="${use_x}audio-player %s"
+        [avi]="${use_x}video-player %s"
         [bz2]='aunpack %s'
         [bz]='aunpack %s'
         [cab]='aunpack %s'
         [cpio]='aunpack %s'
         [deb]='aunpack %s'
-        [divx]="${use_x}video-player.sh %s"
+        [divx]="${use_x}video-player %s"
         [doc]='libreoffice -o %s'
         [docx]='libreoffice -o %s'
-        [f4v]="${use_x}video-player.sh %s"
+        [f4v]="${use_x}video-player %s"
         [gz]='aunpack %s'
         [jar]='aunpack %s'
         [lha]='aunpack %s'
@@ -61,51 +61,51 @@ typeset -A Ext=(
         [lzh]='aunpack %s'
         [lzma]='aunpack %s'
         [lzo]='aunpack %s'
-        [m2ts]="${use_x}video-player.sh %s"
-        [m3u]="${use_x}audio-player.sh %s"
+        [m2ts]="${use_x}video-player %s"
+        [m3u]="${use_x}audio-player %s"
         [mdb]='libreoffice -o %s'
-        [mkv]="${use_x}video-player.sh %s"
-        [mov]="${use_x}video-player.sh %s"
-        [mp3]="${use_x}audio-player.sh %s"
-        [mp4]="${use_x}video-player.sh %s"
-        [mpeg]='video-player.sh %s"
-        [mpg]="${use_x}video-player.sh %s"
+        [mkv]="${use_x}video-player %s"
+        [mov]="${use_x}video-player %s"
+        [mp3]="${use_x}audio-player %s"
+        [mp4]="${use_x}video-player %s"
+        [mpeg]="${use_x}video-player %s"
+        [mpg]="${use_x}video-player %s"
         [odb]='libreoffice -o %s'
         [odp]='libreoffice -o %s'
         [ods]='libreoffice -o %s'
         [odt]='libreoffice -o %s'
-        [ogg]="${use_x}audio-player.sh %s"
-        [ogv]="${use_x}video-player.sh %s"
+        [ogg]="${use_x}audio-player %s"
+        [ogv]="${use_x}video-player %s"
         [pps]='libreoffice -o %s'
         [ppt]='libreoffice -o %s'
         [pptx]='libreoffice -o %s'
-        [qti]="${use_x}video-player.sh %s"
-        [qtif]="${use_x}video-player.sh %s"
-        [qtvr]="${use_x}video-player.sh %s"
-        [ra]="${use_x}audio-player.sh %s"
+        [qti]="${use_x}video-player %s"
+        [qtif]="${use_x}video-player %s"
+        [qtvr]="${use_x}video-player %s"
+        [ra]="${use_x}audio-player %s"
         [rar]='aunpack %s'
-        [rm]="${use_x}video-player.sh %s"
+        [rm]="${use_x}video-player %s"
         [rpm]='aunpack %s'
         [rtf]='libreoffice -o %s'
-        [rv]="${use_x}video-player.sh %s"
+        [rv]="${use_x}video-player %s"
         [rz]='aunpack %s'
-        [svg]="${use_x}web-browser.sh %s"
-        [swf]="${use_x}web-browser.sh %s"
+        [svg]="${use_x}web-browser %s"
+        [swf]="${use_x}web-browser %s"
         [t7z]='aunpack %s'
         [tar]='aunpack %s'
         [tbz2]='aunpack %s'
         [tbz]='aunpack %s'
         [tgz]='aunpack %s'
         [tlz]='aunpack %s'
-        [ts]="${use_x}video-player.sh %s"
+        [ts]="${use_x}video-player %s"
         [txz]='aunpack %s'
         [tz]='aunpack %s'
         [tzo]='aunpack %s'
-        [wav]="${use_x}audio-player.sh %s"
-        [webm]="${use_x}video-player.sh %s"
-        [wma]="${use_x}audio-player.sh %s"
-        [wmf]="${use_x}web-browser.sh %s"
-        [wmv]="${use_x}video-player.sh %s"
+        [wav]="${use_x}audio-player %s"
+        [webm]="${use_x}video-player %s"
+        [wma]="${use_x}audio-player %s"
+        [wmf]="${use_x}web-browser %s"
+        [wmv]="${use_x}video-player %s"
         [xls]='libreoffice -o %s'
         [xlsx]='libreoffice -o %s'
         [xz]='aunpack %s'
@@ -148,86 +148,25 @@ fi
 Open::CheckString ()
 case $1 in
 *://*)
-        command=( ${use_x}web-browser.sh %s)
+        command=( ${use_x}web-browser %s)
 ;;
 *:*)
         command=( xdg-open %s)
 ;;
 *@*.*)
-        command=( ${use_x}mail-viewer.sh %s)
+        command=( ${use_x}mail-viewer %s)
 ;;
 *)
-        printf "Could not handle file or string: '%s'\n" "$1" \
-        1>&2;
+        printf "Could not handle file or string: '%s'\n" "$1" 1>&2;
         exit 1
 ;;
 esac
 
 Open::ExecCommand ()
-if
-        command -v "${command[0]}" \
-        1>/dev/null \
-        2>&1;
-then
-        if
-                test-tty.sh \
-                2>/dev/null;
-        then
-                case ${flag_f}${flag_n}${flag_k} in
-                111)
-                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
-                ;;
-                110)
-                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
-                ;;
-                #101)
-                #;;
-                100)
-                        exec setsid.sh "${command[0]}" "${command[@]}"
-                ;;
-                011)
-                        terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
-                ;;
-                010)
-                        terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
-                ;;
-                001)
-                        exec ${SHELL:-sh} -c "${command[0]} ${command_quoted[@]:1};builtin printf '%s\n' 'Press ENTER to continue';builtin read"
-                ;;
-                000)
-                        exec -a "${command[0]}" "${command[@]}"
-                esac
-        else
-                case ${flag_f}${flag_n}${flag_k} in
-                111)
-                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
-                ;;
-                110)
-                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
-                ;;
-                #101)
-                #;;
-                100)
-                        exec setsid.sh "${command[0]}" "${command[@]}"
-                ;;
-                011)
-                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
-                ;;
-                010)
-                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
-                ;;
-                001)
-                        exec daemonize.sh ${SHELL:-sh} -c "${command[0]} ${command_quoted[@]:1};builtin printf '%s\n' 'Press ENTER to continue';builtin read"
-                ;;
-                000)
-                        exec setsid.sh "${command[0]}" "${command[@]}"
-                esac
-        fi
-else
-        printf "Command not found: '%s'\n" "${command[0]}" \
-        1>&2;
-        exit 1
-fi
+{
+        typeset f=${flag_f}${flag_n}${flag_k}
+        exec run ${f:+-${f}} "${command[@]}"
+}
 
 Open::ReplacePattern ()
 {
@@ -238,23 +177,20 @@ Open::ReplacePattern ()
         printf -v q '%q' "$1"
         for a in "${!command[@]}"
         do
-                command_quoted[$a]=${command[$a]//[%]s/$q}
+                #command_quoted[$a]=${command[$a]//[%]s/$q}
                 command[$a]=${command[$a]//[%]s/$1}
         done
 }
-
 
 # -- MAIN.
 
 OPTIND=1
 OPTERR=1
+flag_f=
+flag_k=
+flag_n=
+flag_x=
 use_x=
-
-typeset -i \
-        flag_f= \
-        flag_k= \
-        flag_n= \
-        flag_x=;
 
 typeset -a \
         command \
@@ -265,27 +201,25 @@ while
 do
         case $opt in
         f)
-                flag_f=1
+                flag_f=f
         ;;
         k)
-                flag_k=1
+                flag_k=k
         ;;
         n)
-                flag_n=1
+                flag_n=n
         ;;
         x)
-                flag_x=1
                 use_x=x-
         ;;
         \?)
-                printf "Unknown flag: '-%s'\n" "$OPTARG" \
-                1>&2;
+                printf "Unknown flag: '-%s'\n" "$OPTARG" 1>&2;
                 exit 1
         esac
 done
 shift $(( OPTIND - 1 ))
 
-[[ ${BASH_SOURCE[0]##*/} == x-open.sh ]] && use_x=x-;
+[[ ${BASH_SOURCE[0]##*/} == x-open ]] && use_x=x-;
 
 source <(Open::Init)
 
