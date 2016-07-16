@@ -93,7 +93,7 @@ List:
 * [pyrandgen](https://github.com/D630/bin/blob/master/pyrandgen): Generate random password.
 * [repeat](https://github.com/D630/bin/blob/master/repeat): Repeat a command n times.
 * [rtcwakew](https://github.com/D630/bin/blob/master/rtcwakew): Use rtcwake and play music on wakeup.
-* [run](https://github.com/D630/bin/blob/master/run): Run that command.
+* [run](https://github.com/D630/bin/blob/master/run): Run that command (X environment)
 * [schlafen](https://github.com/D630/bin/blob/master/schlafen): My suspend wrapper.
 * [sdmenu](https://github.com/D630/bin/blob/master/sdmenu): Wrapper for dmenu2-save.
 * [setsidw](https://github.com/D630/bin/blob/master/setsidw): Wrapper: setsid(1).

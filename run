@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 #
-# Run that command.
-
-# TODO(D630): revise
+# Run that command (X environment)
+#
+# -f fork into background
+# -k keep/wait
+# -n open cmd in new terminal-emulator
 
 OPTIND=1
 OPTERR=1
@@ -31,8 +33,7 @@ do
                 flag_n=1
         ;;
         \?)
-                printf "Unknown flag: '-%s'\n" "$OPTARG" \
-                1>&2;
+                printf "Unknown flag: '-%s'\n" "$OPTARG" 1>&2;
                 exit 1
         esac
 done
@@ -49,69 +50,60 @@ do
         command+=( "$a" )
 done
 
-if
-        command -v "${command[0]}" \
-        1>/dev/null \
-        2>&1;
-then
-        if
-                test-tty.sh \
-                2>/dev/null;
-        then
-                case ${flag_f}${flag_n}${flag_k} in
-                111)
-                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
-                ;;
-                110)
-                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
-                ;;
-                #101)
-                #;;
-                100)
-                        exec setsid.sh "${command[0]}" "${command[@]}"
-                ;;
-                011)
-                        terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
-                ;;
-                010)
-                        terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
-                ;;
-                001)
-                        exec ${SHELL:-sh} -c "${command[0]} ${command_quoted[@]:1};builtin printf '%s\n' 'Press ENTER to continue';builtin read"
-                ;;
-                000)
-                        exec -a "${command[0]}" "${command[@]}"
-                esac
-        else
-                case ${flag_f}${flag_n}${flag_k} in
-                111)
-                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
-                ;;
-                110)
-                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
-                ;;
-                #101)
-                #;;
-                100)
-                        exec setsid.sh "${command[0]}" "${command[@]}"
-                ;;
-                011)
-                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
-                ;;
-                010)
-                        exec daemonize.sh terminal.sh -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
-                ;;
-                001)
-                        exec daemonize.sh ${SHELL:-sh} -c "${command[0]} ${command_quoted[@]:1};builtin printf '%s\n' 'Press ENTER to continue';builtin read"
-                ;;
-                000)
-                        exec setsid.sh "${command[0]}" "${command[@]}"
-                esac
-        fi
-else
-        printf "Command not found: '%s'\n" "${command[0]}" \
-        1>&2;
+
+command -v "${command[0]}" 1>/dev/null 2>&1 || {
+        printf "error: command not found: '%s'\n" "${command[0]}" 1>&2;
         exit 1
+}
+
+if
+        test-tty 2>/dev/null;
+then
+        case ${flag_f}${flag_n}${flag_k} in
+        111)
+                daemonize x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
+        ;;
+        110)
+                daemonize x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
+        ;;
+        100)
+                setsidw "${command[0]}" "${command[@]}"
+        ;;
+        011)
+                x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
+        ;;
+        010)
+                x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
+        ;;
+        001)
+                exec ${SHELL:-sh} -c "${command[0]} ${command_quoted[@]:1};builtin printf '%s\n' 'Press ENTER to continue';builtin read"
+        ;;
+        000)
+                exec -a "${command[0]}" "${command[@]}"
+        esac
+else
+        case ${flag_f}${flag_n}${flag_k} in
+        111)
+                daemonize x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
+        ;;
+        110)
+                daemonize x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
+        ;;
+        100)
+                setsidw "${command[0]}" "${command[@]}"
+        ;;
+        011)
+                daemonize x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}"
+        ;;
+        010)
+                daemonize x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}"
+        ;;
+        001)
+                daemonize ${SHELL:-sh} -c "${command[0]} ${command_quoted[@]:1};builtin printf '%s\n' 'Press ENTER to continue';builtin read"
+        ;;
+        000)
+                setsidw "${command[0]}" "${command[@]}"
+        esac
 fi
 
 # vim: set ts=8 sw=8 tw=0 et :
