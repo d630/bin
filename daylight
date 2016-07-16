@@ -2,110 +2,28 @@
 #
 # Test against daytime and adjust my config.
 
-#set -e
-
-__gtk ()
-(
-        cd -- "$HOME"
-        ln -fsr ".gtkrc-2.0-${1}.mine" \
-                ".gtkrc-2.0-theme.mine";
-        ln -fsr "etc/gtk-3.0/settings-${1}.ini" \
-                "etc/gtk-3.0/settings.ini";
-)
-
-__taskwarrior ()
-(
-        cd -- "$HOME"
-        ln -fsr "/usr/share/taskwarrior/${1}" "${HOME}/.taskrc-color"
-)
-
-__mutt ()
-(
-        cd -- "${XDG_DATA_HOME}/mutt/colors"
-        ln -fsr "$1" "${HOME}/.mutt/mutt-colors.muttrc"
-)
-
-__x ()
-(
-        cd -- "${XDG_DATA_HOME}/xcolors"
-        ln -fsr "$1" "current.xcolor"
-        xrdb -merge "${HOME}/.Xresources"
-
-        xsetroot -solid "$2"
-
-        cd -- "${XDG_DATA_HOME}/wallpapers"
-        ln -fsr "${3}" "current.wallpaper";
-        feh --bg-fill "${XDG_DATA_HOME}/wallpapers/current.wallpaper"
-)
-
-__wm ()
-(
-        case $1 in
-        light)
-                bspc config active_border_color \#555555
-                bspc config focused_border_color \#555555
-                bspc config normal_border_color \#E0E0E0
-                bspc config presel_feedback_color \#555555
-        ;;
-        dark)
-                bspc config active_border_color \#555555
-                bspc config focused_border_color \#555555
-                bspc config normal_border_color \#222222
-                bspc config presel_feedback_color \#555555
-        esac
-)
-
 typeset -i FORCE=$FORCE
+f=${XDG_CACHE_HOME}/DAYLIGHT
 
 if
         test-daylight
 then
         if
-                [[ -f /tmp/DAYLIGHT && $FORCE -eq 0 ]]
+                [[ -f $f && $FORCE -eq 0 ]]
         then
                 exit 0
         else
-                > /tmp/DAYLIGHT
-        fi
-        if
-                [[ $TERM == linux* ]]
-        then
-                __taskwarrior "light-16.theme"
-                __mutt "mutt-colors-solarized-light-16.muttrc"
-        else
-                __taskwarrior "solarized-light-256.theme"
-                __mutt "mutt-colors-solarized-light-256.muttrc"
-        fi
-        if
-                [[ -n $DISPLAY ]]
-        then
-                __x "Solarized-Light.xcolor" "#FDF6E3" "debian-minimal-light.png"
-                __wm "light"
-                __gtk "light"
+                > "$f"
+                exec theme light
         fi
 else
         if
-                [[ -f /tmp/DAYLIGHT || $FORCE -gt 0 ]]
+                [[ -f $f || $FORCE -gt 0 ]]
         then
                 rm -f -- /tmp/DAYLIGHT
+                exec theme dark
         else
                 exit 0
-        fi
-        if
-                [[ $TERM == linux* ]]
-        then
-                __taskwarrior "dark-16.theme"
-                __mutt "mutt-colors-solarized-dark-16.muttrc"
-        else
-                __taskwarrior "solarized-dark-256.theme"
-                __mutt "mutt-colors-solarized-dark-256.muttrc"
-        fi
-        if
-                [[ -n $DISPLAY ]]
-        then
-                __x "Solarized-Dark.xcolor" "#002B36" "debian-minimal-dark.png"
-                __wm "dark"
-                __gtk "dark"
         fi
 fi
 

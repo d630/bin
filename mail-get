@@ -5,7 +5,9 @@
 mpop -a >> "${XDG_VAR_HOME}/log/mpop.log" 2>&1;
 
 mapfile -t reply < <(
-        imapfilter -c "${HOME}/.imapfilter/localhost.lua"
+        imapfilter \
+                -c "${HOME}/.imapfilter/localhost.lua" \
+                -l "${XDG_VAR_HOME}/log/imapfilter.log";
 )
 
 read -r _ _ _ c0 <<< "${reply[0]}"

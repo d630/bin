@@ -122,6 +122,7 @@ List:
 * [test-inet](https://github.com/D630/bin/blob/master/test-inet): Check inet connection.
 * [test-tty](https://github.com/D630/bin/blob/master/test-tty): Test if tty is available.
 * [text-editor](https://github.com/D630/bin/blob/master/text-editor): Default editor/visual (tui).
+* [theme](https://github.com/D630/bin/blob/master/theme): Adjust theme configuration.
 * [transmission-cli-w](https://github.com/D630/bin/blob/master/transmission-cli-w): Wrapper for transmission-cli.
 * [update-packages](https://github.com/D630/bin/blob/master/update-packages): Update via some package managers.
 * [urldiff-add](https://github.com/D630/bin/blob/master/urldiff-add): Add to urlwatch and urldiff.

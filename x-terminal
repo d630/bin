@@ -3,7 +3,7 @@
 # Default terminal emulator window.
 
 if
-        [[ -f /tmp/DAYLIGHT ]]
+        [[ -f ${XDG_CACHE_HOME}/DAYLIGHT ]]
 then
         IFS=' ' read -r -a opts <<< "$TERMINAL_L_OPTS"
         exec "$TERMINAL_L" "${opts[@]}" "$@"

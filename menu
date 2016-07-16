@@ -6,7 +6,7 @@ menu="$1"
 menu_prompt="$2"
 
 if
-        [ -f "/tmp/DAYLIGHT" ]
+        [ -f "${XDG_CACHE_HOME}/DAYLIGHT" ]
 then
         nb="#FDF6E3" # base3
         nf="#657B83" # base00
