@@ -1,17 +1,33 @@
 #!/usr/bin/env bash
 #
-# A preprocessor for less.
+# My preprocessor for less.
 # Inspired by: https://gitweb.gentoo.org/repo/gentoo.git/
 #       tree/sys-apps/less/files/lesspipe.sh
 
 # TODO(D630): revise
 
+# -- CONFIG.
+
 Lesspipe::Init ()
 {
         { typeset i=$(</dev/fd/0) ; } <<-'INIT'
+typeset -A Mime=(
+        [application/pdf]='pdftotext -layout %s -'
+        [application/postscript]='pstotext %s'
+        [application/vnd.rn-realmedia]='mediainfo %s'
+        [application/x-bittorrent]='transmissioncli --info %s'
+        [application/x-shockwave-flash]='mediainfo %s'
+        [audio/*]='mediainfo %s'
+        [image/*]='identify %s'
+        [text/html]='w3m -dump -T text/html -O UTF-8 < %s'
+        [text/troff]='man -l %s'
+        [video/*]='mediainfo %s'
+)
 
 typeset -A Ext=(
-        [--]='acat %s'
+        [----]='acat %s'
+        [---]="${LESSCOLORIZER=code2color} %s"
+        [--]='cat %s'
         [-]='ls -AFhl --color=always -- %s'
         [7z]='7z l -- %s'
         [a]='ar tv %s'
@@ -25,8 +41,13 @@ typeset -A Ext=(
         [cab]='cabextract -l -- %s'
         [cpi]='cpio -itv < %s'
         [cpio]='cpio -itv < %s'
+        [crl]='openssl crl -hash -text -noout -in %s'
+        [crt]='openssl x509 -hash -text -noout -in %s'
+        [csr]='openssl req -text -noout -in %s'
         [cue]='cd-info --no-header --no-device-info %s'
         [deb]='dpkg --info %s ; dpkg --contents %s'
+        [doc]='antiword %s'
+        [dvi]='dvi2tty %s'
         [ear]='unzip -v %s'
         [elf]='readelf -a -W -- %s'
         [exe]='7z l -- %s'
@@ -41,9 +62,13 @@ typeset -A Ext=(
         [lzma]='unlzma -c -- %s'
         [lzo]='lzop -dc -- %s'
         [mo]='msgunfmt -- %s'
+        [pdf]='ps2ascii %s'
+        [pem]='openssl x509 -hash -text -noout -in %s'
+        [ps]='ps2ascii %s'
         [rar]='unrar l -- %s'
         [raw]='cd-info --no-header --no-device-info %s'
         [rpm]='rpm -qpivl --changelog -- %s'
+        [rtf]='unrtf --nopict --text %s'
         [rz]='acat %s'
         [so]='readelf -h -d -s -W -- %s'
         [squashfs]='unsquashfs -s %s && unsquashfs -ll %s'
@@ -69,11 +94,27 @@ INIT
 
 } 2>/dev/null
 
-Lesspipe::CheckMime ()
-{
-        typeset mime_type=$(file -L "$1")
+# -- FUNCTIONS.
 
-        case $mime_type in
+Lesspipe::CheckMime ()
+if
+        typeset mime_type=$(file -L -b --mime-type "$1")
+        [[ -n ${Mime[$mime_type]} ]]
+then
+        command=( ${Mime[$mime_type]} )
+elif
+        [[ -n ${Mime[${mime_type%/*}/*]} ]]
+then
+        command=( ${Mime[${mime_type%/*}/*]} )
+else
+        return 1
+fi
+
+Lesspipe::CheckArchive ()
+{
+        typeset entry=$(file -L "$1")
+
+        case $entry in
         *" 7-zip archive"*)
                 command=( 7z l -- %s )
         ;;
@@ -110,7 +151,6 @@ Lesspipe::CheckMime ()
         *)
                 return 1
         esac
-
 }
 
 Lesspipe::CheckExt ()
@@ -119,21 +159,25 @@ if
 then
         command=( ${Ext[${1##*.}]} )
 else
-        command=( ${Ext[--]} )
+        if
+                [[ $LESS == *-[rR]* || $LESSCOLOR -eq 2 ]]
+        then
+                typeset -x LESSQUIET=true
+                command=( ${Ext[---]} )
+        else
+                exit 1
+        fi
 fi
 
 Lesspipe::ExecCommand ()
 if
-        command -v "${command[0]}" \
-        1>/dev/null \
-        2>&1;
+        command -v "${command[0]}" 1>/dev/null 2>&1;
 then
         typeset -x \
                 LESSMETACHARS=" $'\t'$'\n''"';*?"()<>[|&^`#\$%=~'
         eval "${command_quoted[@]}"
 else
-        printf "%s: Command not found: '%s'\n" "$0" "${command[0]}" \
-        1>&2;
+        printf "%s: error: command not found: '%s'\n" "$0" "${command[0]}" 1>&2;
         exit 1
 fi
 
@@ -205,9 +249,12 @@ then
 elif
         [[ -e $1 ]]
 then
-        Lesspipe::CheckMime "$1" || Lesspipe::CheckExt "${1,,}";
+        Lesspipe::CheckMime "$1" ||
+        Lesspipe::CheckArchive "$1" ||
+        Lesspipe::CheckExt "${1,,}";
 else
-        exit 0
+        printf "%s: error: file does not exist: '%s'\n" "$0" "$1" 1>&2;
+        exit 1
 fi
 
 Lesspipe::ReplacePattern "$1"

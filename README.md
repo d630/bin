@@ -53,8 +53,7 @@ List:
 * [kuno2](https://github.com/D630/bin/blob/master/kuno2): Simple notetaker using ledit.
 * [kuno3](https://github.com/D630/bin/blob/master/kuno3): Simple notetaker using rlfe.
 * [kuno](https://github.com/D630/bin/blob/master/kuno): Add interactively a note via terminal to use it later in org-mode.
-* [lesspipe-archives](https://github.com/D630/bin/blob/master/lesspipe-archives): A preprocessor for less.
-* [lesspipe-misc](https://github.com/D630/bin/blob/master/lesspipe-misc): A preprocessor for less.
+* [lesspipew](https://github.com/D630/bin/blob/master/lesspipew): My preprocessor for less.
 * [lifeday](https://github.com/D630/bin/blob/master/lifeday): Print lifeday.
 * [log-ip](https://github.com/D630/bin/blob/master/log-ip): Daily ip logging.
 * [lsort](https://github.com/D630/bin/blob/master/lsort): Sort input by lenght.
