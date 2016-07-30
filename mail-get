@@ -10,6 +10,7 @@ mapfile -t reply < <(
                 -l "${XDG_VAR_HOME}/log/imapfilter.log";
 )
 
+typeset -i c0= c1=
 read -r _ _ _ c0 <<< "${reply[0]}"
 read -r _ _ _ c1 <<< "${reply[1]}"
 
@@ -21,9 +22,9 @@ then
         if
                 [[ -n $DISPLAY ]]
         then
-                notify-send -u low -h int:value:42 "${reply[0]}\n${reply[1]}"
+                notify-send -u low -h int:value:42 "${reply[0]:-?}\n${reply[1]:-?}"
         else
-                printf '%s\n' "${reply[0]}" "${reply[1]}" 2>&1;
+                printf '%s\n' "${reply[0]:-?}" "${reply[1]:-?}" 2>&1;
         fi
 fi
 

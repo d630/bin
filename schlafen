@@ -3,6 +3,7 @@
 # My suspend wrapper.
 
 bevent -k
+clipbuffer -k
 sudo rtcwake -m mem -t "$(date -d year +%s)"
 #sudo systemctl suspend
 sleep 5

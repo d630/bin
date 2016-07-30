@@ -18,8 +18,7 @@ Clipbuffer::Daemon ()
 {
         mkdir -p -m 700 -- "$xsels"
         ${opt_clear} && > "${xsels}/clips";
-        printf '%d\n' "$$" \
-        > "${xsels}/$$.pid";
+        printf '%d\n' "$$" > "${xsels}/$$.pid";
 
         xprop -root -spy CUT_BUFFER0 \
         | {
@@ -27,17 +26,17 @@ Clipbuffer::Daemon ()
                         read
                 do
                         printf '%(%s)T\t%s\0' -1 "$(xclip -o)" \
-                        | base64 \
-                        >> "${xsels}/clips";
+                        | base64 >> "${xsels}/clips";
                 done
         }
 }
 
 Clipbuffer::Kill ()
 {
+        typeset p
         shopt -s nullglob
 
-        for p in "${xsels}/"*.pid
+        for p in "${xsels}/"?*.pid
         do
                 p=${p##*/}
                 pkill -TERM -P "${p%.pid}"
@@ -46,14 +45,16 @@ Clipbuffer::Kill ()
         if
                 ${opt_clear}
         then
-                rm -r -- "$xsels" 2>/dev/null;
+                rm -fr -- "$xsels" 2>/dev/null;
         else
-                rm -- "${xsels}/"*.pid 2>/dev/null;
+                rm -f -- "${xsels}/"?*.pid 2>/dev/null;
         fi
 }
 
 Clipbuffer::Clip ()
 {
+        typeset clip menu
+
         if
                 test-tty 2>/dev/null;
         then

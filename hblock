@@ -6,13 +6,13 @@
 (( $# )) && exec sudo "$(type -p "$0")";
 
 typeset -x \
-        hblock_cachedir=${HOME}/var/cache/hblock \
+        hblock_cachedir=${TMPDIR:-/tmp}/hostfiles \
         hblock_tmpdir=${TMPDIR:-/tmp}/hblock;
 
 #hostfile_regular=/etc/hosts.regular
 hblock_hlist=/home/user1/etc/hblock/hlist.txt
-hblock_negative=/home/user1/etc/hblock/negative.txt
-hblock_positive=/home/user1/etc/hblock/positive.txt
+hblock_black=/home/user1/etc/hblock/black.txt
+hblock_white=/home/user1/etc/hblock/white.txt
 hostfile_block=/etc/hosts.block
 
 __hblock_do()
@@ -33,7 +33,7 @@ __hblock_do()
                 --tries=1 \
                 -O - \
                 "$1" \
-        | tee "${hblock_cachedir}/${outfile}.data" \
+        | tee "${hblock_cachedir}/${outfile}.dirty" \
         | sed -rn '
                 /^(0.0.0.0|127.0.0.1)/ {
                         s/^127.0.0.1/0.0.0.0/;
@@ -57,12 +57,15 @@ xargs \
         -P 8 \
         -i bash -c '__hblock_do "$@"' _ {};
 
-cat "$hblock_negative" <(
+cat "$hblock_black" <(echo;echo) <(
         sort -u "${hblock_tmpdir}/"*.clean \
-        | egrep -v -f "$hblock_positive";
+        | egrep -v -f "$hblock_white";
 ) \
 > "$hostfile_block";
 
-systemctl restart dnsmasq.service
+chmod 644 "$hostfile_block" "/etc/resolv-dnsmasq.conf"
+rm -f "/var/run/dnsmasq/resolv.conf" "/run/dnsmasq/resolv.conf"
+
+systemctl restart dnsmasq
 
 # vim: set ts=8 sw=8 tw=0 et :
