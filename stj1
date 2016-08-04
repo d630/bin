@@ -4,6 +4,15 @@
 # Idea: https://wiki.archlinux.org/index.php/ \
 #       Urxvt#Improved_Kuake-like_behavior_in_Openbox
 
+dz ()
+{
+        daemonize "$1" -i -c stj1 -t stj1 -g 176x33+1+0 -e "$SHELL" \
+                -c '
+                        printf "%x\n" "$WINDOWID" > "${XDG_CACHE_HOME}/stj1";
+                        exec "$0"
+                '
+}
+
 if
         if
                 id="$(cat "${XDG_CACHE_HOME}/stj1" 2>/dev/null)" && test -n "$id";
@@ -31,11 +40,9 @@ else
         if
                 test -f "${XDG_CACHE_HOME}/DAYLIGHT"
         then
-                daemonize st-light -i -c stj1 -t stj1 -g 176x33+1+0 \
-                -e "$SHELL" -c 'printf "%x\n" "$WINDOWID" > "${XDG_CACHE_HOME}/stj1"; exec "$0"'
+                dz "st-light"
         else
-                daemonize st-dark -i -c stj1 -t stj1 -g 176x33+1+0 \
-                -e "$SHELL" -c 'printf "%x\n" "$WINDOWID" > "${XDG_CACHE_HOME}/stj1"; exec "$0"'
+                dz "st-dark"
         fi
 fi
 

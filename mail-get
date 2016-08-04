@@ -10,19 +10,15 @@ mapfile -t reply < <(
                 -l "${XDG_VAR_HOME}/log/imapfilter.log";
 )
 
-typeset -i c0= c1=
-read -r _ _ _ c0 <<< "${reply[0]}"
-read -r _ _ _ c1 <<< "${reply[1]}"
-
 if
-        (( c0 + c1 > 0 ))
+        (( ${reply[0]//[!0-9]/} + ${reply[1]//[!0-9]/} > 0 ))
 then
         aplay "${XDG_DATA_HOME}/sounds/mac-sound-pack-new-mail.wav" \
                 1>/dev/null 2>&1;
         if
                 [[ -n $DISPLAY ]]
         then
-                notify-send -u low -h int:value:42 "${reply[0]:-?}\n${reply[1]:-?}"
+                notify-send -u low "${reply[0]:-?}\n${reply[1]:-?}"
         else
                 printf '%s\n' "${reply[0]:-?}" "${reply[1]:-?}" 2>&1;
         fi
