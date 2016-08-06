@@ -2,9 +2,15 @@
 #
 # Default xlock programme.
 
-exec i3lock \
+t ()
+{
+        xset -dpms
+}
+
+trap t INT TERM QUIT EXIT HUP
+xset dpms 3 3 3
+i3lock \
         --nofork \
-        --dpms \
         --image=${XDG_DATA_HOME}/wallpapers/current.wallpaper \
         --no-unlock-indicator \
         --show-failed-attempts \
