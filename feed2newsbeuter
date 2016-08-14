@@ -14,7 +14,8 @@ feed="$(
 )"
 
 tags="$(
-        menu "dmenu2" "TAGS" < "$tagfile";
+        grep -v -e '^"_Filter' "$tagfile" \
+        | menu "dmenu2" "TAGS";
 )"
 
 if
