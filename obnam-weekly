@@ -6,11 +6,15 @@ obnam_conf="${HOME}/.obnam.conf"
 obnam_log="${XDG_VAR_HOME}/log/obnam.log"
 
 sudo obnam backup --config="$obnam_conf" --lru-size=8192 --upload-queue-size=8192 \
+        --exclude=/home/latch/tmp \
+        --exclude=/home/latch/var/mirror \
+        --exclude=/home/user1/cache \
         /etc/ \
         /home/ \
         /root/ \
         /var/backups/ \
         /var/mail/ \
+        /var/vmail/ \
         /var/www/;
 
 sudo obnam force-lock --config="$obnam_conf"
