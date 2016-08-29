@@ -9,53 +9,24 @@ then
         exit 1
 fi
 
-links=()
+links[1]='http://www.sportschau.de/ergebnisse_tabellen/ergebnisse102~_eam-14d4fb6c588c7fcebc9c5fd4dfd21e2b_eap__liga-BL1_eap__sportart-fb.html?eap=8oI34N4hym4RDV6dhKK0OnLYM%2FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhteE%2FSifHaWb%2BD5g3qtsFGsnGotmb1PcZSS6XXfYWnKf1ELW46g2DdkfFtPY%2BHqJZgCaUEvpeNMw%3D%3D'
+links[2]='http://www.sportschau.de/ergebnisse_tabellen/ergebnisse102~_eam-14d4fb6c588c7fcebc9c5fd4dfd21e2b_eap__liga-BL2_eap__sportart-fb.html?eap=8oI34N4hym4RDV6dhKK0OnLYM%2FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhteE%2FSifHaWb%2BD5g3qtsFGsnGotmb1PcZSS6XXfYWnKf1ELW46g2DdkfFtPY%2BHqJZgCaUEvpeNMw%3D%3D'
+links[3]='http://www.sportschau.de/ergebnisse_tabellen/ergebnisse102~_eam-14d4fb6c588c7fcebc9c5fd4dfd21e2b_eap__liga-BL3_eap__sportart-fb.html?eap=8oI34N4hym4RDV6dhKK0OnLYM%2FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhteE%2FSifHaWb%2BD5g3qtsFGsnGotmb1PcZSS6XXfYWnKf1ELW46g2DdkfFtPY%2BHqJZgCaUEvpeNMw%3D%3D'
+links[0]='http://www.sportschau.de/ergebnisse_tabellen/ergebnisse102~_eam-14d4fb6c588c7fcebc9c5fd4dfd21e2b_eap__liga-uebers_eap__sportart-fb.html?eap=8oI34N4hym4RDV6dhKK0OnLYM%2FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhteE%2FSifHaWb%2BD5g3qtsFGsnGotmb1PcZSS6XXfYWnKf1ELW46g2DdkfFtPY%2BHqJZgCaUEvpeNMw%3D%3D'
 
-links[0]='http://www.sportschau.de/fussball/bundesliga/spieltag/ergebnisse104_eam-5e9605716e513bbe6d967420512536eb.jsp?_liga=uebers&eap=8oI34N4hym4RDV6dhKK0OnLYM%252FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhNJvz6q13uZJB0jQoWe3oApsDRmgjnJGT1mkOeLckwLl9MDcdloJv%252B'
-links[1]='http://www.sportschau.de/fussball/bundesliga/spieltag/ergebnisse104_eam-5e9605716e513bbe6d967420512536eb.jsp?_liga=BL1&eap=8oI34N4hym4RDV6dhKK0OnLYM%252FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhNJvz6q13uZJB0jQoWe3oApsDRmgjnJGT1mkOeLckwLl9MDcdloJv%252B'
-links[2]='http://www.sportschau.de/fussball/bundesliga/spieltag/ergebnisse104_eam-5e9605716e513bbe6d967420512536eb.jsp?_liga=BL2&eap=8oI34N4hym4RDV6dhKK0OnLYM%252FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhNJvz6q13uZJB0jQoWe3oApsDRmgjnJGT1mkOeLckwLl9MDcdloJv%252B'
-links[3]='http://www.sportschau.de/fussball/bundesliga/spieltag/ergebnisse104_eam-5e9605716e513bbe6d967420512536eb.jsp?_liga=BL3&eap=8oI34N4hym4RDV6dhKK0OnLYM%252FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhNJvz6q13uZJB0jQoWe3oApsDRmgjnJGT1mkOeLckwLl9MDcdloJv%252B'
-
-get ()
-{
-        curl -s "${links[${1#-}]}" \
-        | scrape -be 'div.table' \
-        | grep -v "<img.*/>" \
-        | w3m -dump -no-graph -cols 142 -T text/html \
-        | head -n36 \
-        | sed -r '
-                s/Historie//g
-                s/Statistik//g
-                s/\|//g
-                s/ zu //g
-                s/gegen :/vs./g
-                s/Endstand: //g
+curl -s "${links[${1#-}]}" \
+| scrape -be 'div.table' \
+| grep -v "<img.*/>" \
+| w3m -dump -no-graph -cols 142 -T text/html \
+| sed -n '
+        2,36{
+                s/ Statistik.*//g;
+                s/ zu //g;
+                s/gegen:/vs./g;
+                s/Endstand: //g;
                 s/Halbzeitstand: //g
-                1d
-                1,20{/^Stand:.*/,/^R.*V.*Verein/ d}
-        ';
-}
-
-case ${2#-} in
-tabelle|t)
-        get "$1" \
-        | sed -n '/^[0-9]/ p';
-        ;;
-spieltag|sp)
-        get "$1" \
-        | grep -v -e "^[0-9]" -e "^Stand" -e "(P)" \
-        | grep -v '^$';
-        ;;
-stand|st)
-        get "$1" \
-        | sed -n '/^Stand/ p';
-        ;;
-legende|l)
-        get "$1" \
-        | tail -n1;
-        ;;
-*)
-        get "$1"
-esac
+                p
+        }
+'
 
 # vim: set ts=8 sw=8 tw=0 et :
