@@ -7,6 +7,7 @@
         exit 1
 }
 
+cd /tmp
 rm -frv -- "/tmp/napt"
 
 trap 'exit 1' INT TERM QUIT EXIT
@@ -38,23 +39,30 @@ deb-src ${server} ${release} main contrib non-free
 $(
         echo "# ${release} security"
         [[ $release == unstable ]] || {
-                echo "deb ${server} ${release}/updates main contrib non-free"
-                echo "deb-src ${server} ${release}/updates main contrib non-free"
+                echo "deb http://security.debian.org/ ${release}/updates main contrib non-free"
+                echo "deb-src http://security.debian.org/ ${release}/updates main contrib non-free"
         }
 )
 # ${release} multimedia
 deb http://www.deb-multimedia.org ${release} main non-free
 deb-src http://www.deb-multimedia.org ${release} main non-free
-
 SEC
-        printf '%s\n' "$section" > "/tmp/napt/${release}-source.list"
-        sleep 3
+        printf '%s\n\n' "$section" > "/tmp/napt/${release}-source.list"
 done
 
-read -rp "set up sources.list + preferences? "
-[[ $REPLY == y ]] || exit 1;
+        { section=$(</dev/fd/0) ; } <<SEC
+# experimental
+deb http://httpredir.debian.org/debian experimental main contrib non-free
+deb-src http://httpredir.debian.org/debian experimental main contrib non-free
+SEC
 
 mv -v -- "/etc/apt/sources.list" "/etc/apt/sources.list.old"
+cat /tmp/napt/*-source.list > "/etc/apt/sources.list"
+printf '%s\n' "$section" >> "/etc/apt/sources.list"
+
+read -rp "set up preferences? "
+[[ $REPLY == y ]] || exit 1;
+
 mv -v -- "/etc/apt/preferences" "/etc/apt/preferences.old"
 
 { preferences=$(</dev/fd/0) ; } <<PREF
@@ -68,14 +76,17 @@ Pin-Priority: 300
 
 Package: *
 Pin: release o=Unofficial Multimedia Packages
-Pin-Priority: 1
+Pin-Priority: 2
 
 Package: *
 Pin: release o=Debian
+Pin-Priority: 1
+
+Package: *
+Pin: release a=experimental
 Pin-Priority: -1
 PREF
 
-printf "%s\n" "$preferences" > "/etc/apt/preferences"
-cat /tmp/napt/*-source.list > "/etc/apt/sources.list"
+printf '%s\n' "$preferences" > "/etc/apt/preferences"
 
 # vim: set ts=8 sw=8 tw=0 et :
