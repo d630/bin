@@ -23,7 +23,7 @@ typeset -A XDG=(
         [VIDEOS_DIR]=${HOME}/share/videos
 )
 
-for d in "${XDG[@]}" "${HOME}/"{.cabal,.ghc,.cpanm,.vim/{autoload,bundle},.emacs.d/site-lisp,.config,.local,games,include,lib,sbin,man}
+for d in "${XDG[@]}" "${HOME}/"{.cabal,.ghc,.cpanm,.vim/{autoload,bundle},.emacs.d/site-lisp,.config,.local,games,include,lib/bash,sbin,man}
 do
         mkdir -vp "$d"
         echo \* > "${d}/.gitignore";
