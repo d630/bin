@@ -23,8 +23,8 @@ PrintHeader "Apt && Packages"
 
 PrintHeader "Perl modules"
 (
-        cpan-outdated -p \
-        | cpanm;
+        cpan-outdated -p --exclude-core\
+        | cpanm -iv --self-contained;
 )
 
 PrintHeader "npm modules"
