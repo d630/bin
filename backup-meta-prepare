@@ -49,7 +49,7 @@ cclean
 
 PrintHeader "Sending Mail"
 printf '%(%Y-%m-%d_%R)T\n' \
-| tee >(mailx -s BackupPreparing-log backup-preparing@backup-preparing) \
+| tee >(mailx -s BackupPreparing-log backup-preparing) \
 >> "${XDG_VAR_HOME}/log/backup-preparing.log";
 
 PrintHeader "."
