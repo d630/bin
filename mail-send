@@ -2,6 +2,14 @@
 #
 # Send mail via msmtp-queue and give notification + sound.
 
+if
+         exec 9<"$0";
+         ! command flock -n 9
+then
+         printf '%s\n' "sorry, I am already running" 1>&2;
+         exit 1
+fi
+
 shopt -s nullglob
 shopt -s extglob
 shopt -s dotglob
@@ -18,6 +26,7 @@ then
         do
                 msmtp-queue -r
                 set -- "${maildir}/"!(\.*)
+                sleep 1
         done
         if
                 [[ -n $DISPLAY ]]
@@ -27,8 +36,8 @@ then
                 printf '%s\n' "$msg" 1>&2;
         fi
         aplay "${XDG_DATA_HOME}/sounds/mac-sound-pack-mail-sent.wav" \
-        1>/dev/null \
-        2>&1;
+                1>/dev/null \
+                2>&1;
 else
         printf '%s\n' "queue is empty" 1>&2;
         exit 1
