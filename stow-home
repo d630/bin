@@ -3,10 +3,9 @@
 # xstow wrapper.
 
 xstow -v 3 \
-	-F "/home/latch/etc/xstow/local.ini" \
-	-dir "/home/stow" \
-	-target "$HOME" \
-	"${@:?package missing}";
-
+        -F "/home/latch/etc/xstow/local.ini" \
+        -dir "/home/stow" \
+        -target "$HOME" \
+        "${@:?package missing}";
 
 # vim: set ts=8 sw=8 tw=0 et :
