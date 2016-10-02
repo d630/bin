@@ -18,7 +18,7 @@ List:
 * [chromium-mselect-history](https://github.com/D630/bin/blob/master/chromium-mselect-history): Browse the history of chromium via fzf, and then open selection.
 * [clipbuffer](https://github.com/D630/bin/blob/master/clipbuffer): Simple clipboard manager for Xorg (xclip, xprop, menu, base64).
 * [color-grab](https://github.com/D630/bin/blob/master/color-grab): Pick color via grabc.
-* [color-show.sh](https://github.com/D630/bin/blob/master/color-show.sh): Display color info in terminal.
+* [color-show](https://github.com/D630/bin/blob/master/color-show): Display color info in terminal.
 * [color-xclip](https://github.com/D630/bin/blob/master/color-xclip): X-select color code.
 * [countdown](https://github.com/D630/bin/blob/master/countdown): Countdown.
 * [daemonize](https://github.com/D630/bin/blob/master/daemonize): Daemonize a command.
