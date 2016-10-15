@@ -3,7 +3,10 @@
 # Update mail dirs.
 
 test-inet || {
-        printf 'error: %s\n' "we are offline" 1>&2;
+        printf 'error: %s\n' "We are offline Mails have not been updated" 1>&2;
+        notify-send --category=network.error \
+                "network.error: You are offline" \
+                "Mails have not been updated";
         exit 1
 }
 

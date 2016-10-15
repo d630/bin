@@ -6,7 +6,7 @@ menu="$1"
 menu_prompt="$2"
 
 if
-        [ -f "${XDG_CACHE_HOME}/DAYLIGHT" ]
+        test -f "${XDG_CACHE_HOME}/DAYLIGHT"
 then
         nb="#FDF6E3" # base3
         nf="#657B83" # base00
@@ -21,7 +21,7 @@ else
         uc="#859900" # green
 fi
 
-fn="Noto Mono:pixelsize=15:antialias=true:autohint=false:hinting=true:hintstyle=hintfull:lcdfilter=lcddefault:rgba=rgb:dpi=96"
+fn="Monospace:size=13"
 
 case "$menu" in
 choose)

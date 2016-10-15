@@ -4,43 +4,61 @@
 
 if
          exec 9<"$0";
-         ! command flock -n 9
+         ! flock -n 9
 then
          printf '%s\n' "sorry, I am already running" 1>&2;
          exit 1
 fi
 
+maildir=${XDG_VAR_HOME}/mail/queue
+if
+        ! [[ -d $maildir ]]
+then
+        printf "maildir '%s' is not a directory\n" "$maildir" 1>&2;
+        exit 1
+fi
+
 shopt -s nullglob
 shopt -s extglob
 shopt -s dotglob
+set -- "${maildir}/"!(\.*)
 
-maildir=${XDG_VAR_HOME}/mail/queue
+(($#)) && cnt=$# || exit 1;
 
-if
-        set -- "${maildir}/"!(\.*)
-        (( $# ))
-then
-        msg="[Posteo] All mails have been sent!"
-        until
-                (( ! $# ))
-        do
+i=0
+until
+        (( ! $# ))
+do
+        case $i in
+        30)
+                printf -v msg '[posteo] Mails not sent: %d\n' "$cnt"
+                if
+                        [[ -n $DISPLAY ]]
+                then
+                        notify-send --category=email.error \
+                                "email.error: Mail fetch error" "$msg";
+                else
+                        mail-sound _ "email.error:"
+                        printf 'Mail fetch error:\n%s\n' "$msg" 1>&2;
+                fi
+                exit 1
+        ;;
+        *)
                 msmtp-queue -r
                 set -- "${maildir}/"!(\.*)
+                ((i++))
                 sleep 1
-        done
-        if
-                [[ -n $DISPLAY ]]
-        then
-                notify-send -u low -h int:value:42 "$msg";
-        else
-                printf '%s\n' "$msg" 1>&2;
-        fi
-        aplay "${XDG_DATA_HOME}/sounds/mac-sound-pack-mail-sent.wav" \
-                1>/dev/null \
-                2>&1;
+        esac
+done
+
+msg="[posteo] Sent Mails: ${cnt}"
+if
+        [[ -n $DISPLAY ]]
+then
+        notify-send --category=email.bounced -u normal "email.bounced:" "$msg"
 else
-        printf '%s\n' "queue is empty" 1>&2;
-        exit 1
+        mail-sound _ "email.bounced:"
+        printf 'Mail bounced:\n%s\n' "$msg" 1>&2;
 fi
 
 # vim: set ts=8 sw=8 tw=0 et :

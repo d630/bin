@@ -10,18 +10,17 @@ mapfile -t reply < <(
                 -l "${XDG_VAR_HOME}/log/imapfilter.log";
 )
 
+(( ${reply[0]//[!0-9]/} + ${reply[1]//[!0-9]/} > 0 )) || exit 1;
+
 if
-        (( ${reply[0]//[!0-9]/} + ${reply[1]//[!0-9]/} > 0 ))
+        [[ -n $DISPLAY ]]
 then
-        aplay "${XDG_DATA_HOME}/sounds/mac-sound-pack-new-mail.wav" \
-                1>/dev/null 2>&1;
-        if
-                [[ -n $DISPLAY ]]
-        then
-                notify-send -u low "${reply[0]:-?}\n${reply[1]:-?}"
-        else
-                printf '%s\n' "${reply[0]:-?}" "${reply[1]:-?}" 2>&1;
-        fi
+        notify-send --category=email.arrived -u normal \
+                "email.arrived:" \
+                "${reply[0]:-?}\n${reply[1]:-?}";
+else
+        mail-sound _ "email.arrived:"
+        printf 'Mail arrived:\n%s\n' "${reply[0]:-?}" "${reply[1]:-?}" 2>&1;
 fi
 
 # vim: set ts=8 sw=8 tw=0 et :

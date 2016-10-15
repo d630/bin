@@ -4,6 +4,11 @@
 
 xid="$(tabbed -cd -n terminal-tabbed 2>/dev/null)"
 
+case "$X_XCLIENT" in
+""|fallback)
+        xdotool windowsize "$xid" 100% 100%
+esac
+
 {
         urxvt -embed "$xid" &
         xterm -into "$xid" &

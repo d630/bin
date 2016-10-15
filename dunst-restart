@@ -1,0 +1,13 @@
+#!/usr/bin/env dash
+#
+# Restart dunst.
+
+p="${XDG_CACHE_HOME}/dunst.pid"
+
+test -f "$p" && pkill -F "$p";
+(
+    exec dunst -to 10 -config "${XDG_CONFIG_HOME}/dunst/dunstrc" &
+    echo $! > "$p";
+)
+
+# vim: set ts=8 sw=8 tw=0 et :
