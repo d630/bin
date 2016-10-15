@@ -19,7 +19,7 @@ then
                 "email.arrived:" \
                 "${reply[0]:-?}\n${reply[1]:-?}";
 else
-        mail-sound _ "email.arrived:"
+        sound _ "email.arrived:"
         printf 'Mail arrived:\n%s\n' "${reply[0]:-?}" "${reply[1]:-?}" 2>&1;
 fi
 

@@ -38,7 +38,7 @@ do
                         notify-send --category=email.error \
                                 "email.error: Mail fetch error" "$msg";
                 else
-                        mail-sound _ "email.error:"
+                        sound _ "email.error:"
                         printf 'Mail fetch error:\n%s\n' "$msg" 1>&2;
                 fi
                 exit 1
@@ -57,7 +57,7 @@ if
 then
         notify-send --category=email.bounced -u normal "email.bounced:" "$msg"
 else
-        mail-sound _ "email.bounced:"
+        sound _ "email.bounced:"
         printf 'Mail bounced:\n%s\n' "$msg" 1>&2;
 fi
 
