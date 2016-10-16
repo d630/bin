@@ -7,7 +7,7 @@ if
         xkblayout-state set +1
 then
         layout="$(xkblayout-state print "%s-%e")"
-        case "$X_XCLIENT" in
+        # case "$X_XCLIENT" in
         # openbox)
         #         for i in "${XDG_CONFIG_HOME}/openbox/${layout}"/*
         #         do
@@ -18,12 +18,12 @@ then
         #                 "${XDG_CONFIG_HOME}/xbindkeys/xbindkeysrc";
         #         return 0
         # ;;
-        bspwm|cwm|spectrwm|fallback)
-                :
-        ;;
-        *)
-                X_XCLIENT=fallback
-        esac
+        # bspwm|cwm|spectrwm|x-terminal-tabbed)
+        #         :
+        # ;;
+        # *)
+        #         X_XCLIENT=fallback
+        # esac
         ln -vsrf "${XDG_CONFIG_HOME}/sxhkd/${layout}/sxhkdrc_${X_XCLIENT}" \
                 "${XDG_CONFIG_HOME}/sxhkd/sxhkdrc";
 fi

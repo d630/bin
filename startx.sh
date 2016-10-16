@@ -2,9 +2,12 @@
 #
 # My mini wrapper for xinit.
 # $ . startx.sh
+#
+# Never ever use Debian's ugly /etc/X11/Xsession.
+#
+# Allow only one xserver; start always on :0 and use /dev/tty1.
 
-
-fn ()
+__startx ()
 {
         if
                 test -n "$DISPLAY"
@@ -20,35 +23,44 @@ fn ()
         fi
 
         umask 077
-        cp -bf -- "$XERRFILE" "$XERRFILE" 2>/dev/null;
+        cp -bf "$XERRFILE" "$XERRFILE" 2>/dev/null;
+        rm -f "$XERRFILE" 2>/dev/null;
+        touch "$XERRFILE" && chmod 600 "$XERRFILE" || return 1;
 
-        if
-                touch "$XERRFILE" && chmod 600 "$XERRFILE";
-        then
-                (
-                        exec >>"$XERRFILE" 2>&1
-                        printf '%s: X session started for %s at %s\n' "$0" \
-                                "$LOGNAME" "$(date)";
-                        exec xinit "${HOME}/.xinitrc" -- "${HOME}/.xserverrc"
-                )
-                printf '%s: X session terminated for %s at %s\n' "$0" \
-                        "$LOGNAME" "$(date)" >>"$XERRFILE";
-                if
-                        [ "$SHELL" = "$(which bash)" -a -x "$SHELL" ]
-                then
-                        . "${HOME}/.bash_logout"
-                        . "${HOME}/.bash_profile"
-                else
-                        . "${HOME}/.profile"
-                fi
-        else
-                printf '%s: Unable to create X session log/error file; aborting\n' \
-                        "$0" 1>&2;
-                return 1
-        fi
+        local \
+                hn=$(hostname -f) \
+                mc=$(mcookie) \
+                sxauth=$(mktemp --tmpdir serverauth.XXXXXXXXXX);
+
+        xauth -q remove :0 "${hn}:0"
+        xauth -q <<-IN
+	add :0 . ${mc}
+	add ${hn}:0 . ${mc}
+	IN
+
+        printf '%s: X session started for %s at %s\n' \
+                "$0" "$LOGNAME" "$(date)" >>"$XERRFILE";
+
+        (
+                exec >>"$XERRFILE" 2>&1
+                exec xinit "$XINITRC" -- "${HOME}/.xserverrc" -auth "$sxauth"
+        )
+
+        printf '%s: X session terminated for %s at %s\n' \
+                "$0" "$LOGNAME" "$(date)" >>"$XERRFILE";
+
+        deallocvt
+
+        case "$SHELL" in
+       "$(command -v bash)")
+                . "${HOME}/.bash_profile"
+        ;;
+        *)
+                . "${HOME}/.profile"
+        esac
 }
 
-fn
-unset -f fn
+__startx
+unset -f __startx
 
 # vim: set ts=8 sw=8 tw=0 et :
