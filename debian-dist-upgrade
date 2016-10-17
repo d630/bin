@@ -3,5 +3,6 @@
 # Dist-upgrade packages from Debian.
 
 sudo apt-get update && sudo apt-get dist-upgrade;
+#sudo aptitude update && sudo aptitude full-upgrade;
 
 # vim: set ts=8 sw=8 tw=0 et :

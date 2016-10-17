@@ -41,7 +41,7 @@ do
         echo \* > "${d}/.gitignore";
 done
 
-for d in "${XDG[DATA_HOME]}/"{applications,Trash,cert,fonts,icons,sounds,themes,wallpapers,bash,zsh,desktop,keyrings,texmf/tex/latex,doc,locale,ca-certificates,dircolors,man,mutt,xcolors,source-highlight}
+for d in "${XDG[DATA_HOME]}/"{applications,Trash,cert,fonts,icons,sounds,themes,wallpapers,bash,zsh,desktop,keyrings,texmf/tex/latex,doc,locale,ca-certificates,dircolors,man,mutt,xcolors,source-highlight,X11}
 do
         mkdir -vp "$d"
         echo \* > "${d}/.gitignore";
