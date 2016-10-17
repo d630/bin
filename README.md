@@ -155,7 +155,6 @@ List:
 * [xorg-rename-current-desktop](https://github.com/D630/bin/blob/master/xorg-rename-current-desktop): rename current desktop; manipulate _NET_DESKTOP_NAMES.
 * [xorg-run-or-raise](https://github.com/D630/bin/blob/master/xorg-run-or-raise): Run or raise script for commands with gui or tui.
 * [xorg-set-desktop-name](https://github.com/D630/bin/blob/master/xorg-set-desktop-name): Helper for setting current desktop's name
-* [xorg-switch-keyboard-layout](https://github.com/D630/bin/blob/master/xorg-switch-keyboard-layout): Switch keyboard layout and take the necessary actions.
 * [xorg-switch-to-desktop](https://github.com/D630/bin/blob/master/xorg-switch-to-desktop): Select desktop with a menu and then switch with wmctrl to it.
 * [youtube-dl-get-audio](https://github.com/D630/bin/blob/master/youtube-dl-get-audio): Run youtoube-dl to convert video to audio.
 * [z-run](https://github.com/D630/bin/blob/master/z-run): Run z output with file manager.
