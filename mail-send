@@ -32,6 +32,7 @@ do
         case $i in
         30)
                 printf -v msg '[posteo] Mails not sent: %d\n' "$cnt"
+                printf 'email.error:\n%s\n' "$msg" 1>&2;
                 if
                         [[ -n $DISPLAY ]]
                 then
@@ -39,7 +40,6 @@ do
                                 "email.error: Mail fetch error" "$msg";
                 else
                         sound _ "email.error:"
-                        printf 'Mail fetch error:\n%s\n' "$msg" 1>&2;
                 fi
                 exit 1
         ;;
@@ -52,13 +52,13 @@ do
 done
 
 msg="[posteo] Sent Mails: ${cnt}"
+printf 'email.bounced:\n%s\n' "$msg" 1>&2;
 if
         [[ -n $DISPLAY ]]
 then
         notify-send --category=email.bounced -u normal "email.bounced:" "$msg"
 else
         sound _ "email.bounced:"
-        printf 'Mail bounced:\n%s\n' "$msg" 1>&2;
 fi
 
 # vim: set ts=8 sw=8 tw=0 et :

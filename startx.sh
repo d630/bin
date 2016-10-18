@@ -22,6 +22,8 @@ __startx ()
                 return 1
         fi
 
+        # /tmp/.X*-lock /tmp/.X11-unix
+
         umask 077
         cp -bf "$XERRFILE" "$XERRFILE" 2>/dev/null;
         rm -f "$XERRFILE" 2>/dev/null;

@@ -2,10 +2,25 @@
 #
 # Wrapper for getting my news.
 
-feedfaetcher
+if
+        test-inet
+then
+        feedfaetcher &
+        urldiff -nv &
+else
+        printf 'network.error: %s\n' "We are offline. News have not been updated" 1>&2;
+        if
+                test -n "$DISPLAY"
+        then
+                notify-send --category=network.error \
+                        "network.error: We are offline" \
+                        "News have not been updated";
+        else
+                sound _ "network.error:"
+        fi
+        exit 1
+fi
 
-newsbeuter -r -l 3 -d "${XDG_VAR_HOME}/log/newsbeuter.log"
-
-urldiff -nv
+wait
 
 # vim: set ts=8 sw=8 tw=0 et :

@@ -2,6 +2,14 @@
 #
 # Get mail and give notification + sound.
 
+if
+         exec 9<"$0";
+         ! flock -n 9
+then
+         printf '%s\n' "sorry, I am already running" 1>&2;
+         exit 1
+fi
+
 mpop -a >> "${XDG_VAR_HOME}/log/mpop.log" 2>&1;
 
 mapfile -t reply < <(
@@ -12,6 +20,8 @@ mapfile -t reply < <(
 
 (( ${reply[0]//[!0-9]/} + ${reply[1]//[!0-9]/} > 0 )) || exit 1;
 
+
+printf 'email.arrived:\n%s\n' "${reply[0]:-?}" "${reply[1]:-?}" 2>&1;
 if
         [[ -n $DISPLAY ]]
 then
@@ -20,7 +30,6 @@ then
                 "${reply[0]:-?}\n${reply[1]:-?}";
 else
         sound _ "email.arrived:"
-        printf 'Mail arrived:\n%s\n' "${reply[0]:-?}" "${reply[1]:-?}" 2>&1;
 fi
 
 # vim: set ts=8 sw=8 tw=0 et :

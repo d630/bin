@@ -18,7 +18,6 @@ rm -f -- \
         "${HOME}/.gksu.lock" \
         "${HOME}/.recentf" \
         "${HOME}/.recently-used" \
-        "${XDG_VAR_HOME}/log/bevent.log" \
         "${XDG_DATA_HOME}/recently-used.xbel";
 
 # vim: set ts=8 sw=8 tw=0 et :

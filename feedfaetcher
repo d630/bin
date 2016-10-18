@@ -74,13 +74,15 @@ then
         exit $?
 fi
 
-export -f __feedcacher_do
+if
+         exec 9<"$0";
+         ! flock -n 9
+then
+         printf '%s\n' "sorry, I am already running" 1>&2;
+         exit 1
+fi
 
-test-inet || {
-        printf '%(%Y-%m-%d_%H:%M)T %s\n' -1 "ERROR We are probably offline" \
-        1>&2;
-        exit 1
-}
+export -f __feedcacher_do
 
 [[ -d $cachedir ]] || mkdir -p -- "$cachedir";
 [[ -f $reportnew ]] && rm -- "$reportnew";

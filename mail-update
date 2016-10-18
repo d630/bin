@@ -2,17 +2,27 @@
 #
 # Update mail dirs.
 
-test-inet || {
-        printf 'error: %s\n' "We are offline Mails have not been updated" 1>&2;
-        notify-send --category=network.error \
-                "network.error: You are offline" \
-                "Mails have not been updated";
+if
+        test-inet
+then
+        mail-send &
+        #mail-hook-pre
+        mail-get
+        #mail-hook-post
+else
+        printf 'network.error: %s\n' "We are offline. Mails have not been updated" 1>&2;
+        if
+                test -n "$DISPLAY"
+        then
+                notify-send --category=network.error \
+                        "network.error: We are offline" \
+                        "Mails have not been updated";
+        else
+                sound _ "network.error:"
+        fi
         exit 1
-}
+fi
 
-mail-send
-mail-hook-pre
-mail-get
-mail-hook-post
+wait
 
 # vim: set ts=8 sw=8 tw=0 et :
