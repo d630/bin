@@ -47,7 +47,7 @@ do
         echo \* > "${d}/.gitignore";
 done
 
-for d in "${XDG[VAR_HOME]}/"{backups,lib,log,mail/{storage,queue},spool,tmp}
+for d in "${XDG[VAR_HOME]}/"{backups/bash,lib,log,mail/{storage,queue},spool,tmp}
 do
         mkdir -vp "$d"
         echo \* > "${d}/.gitignore";

@@ -1,35 +1,41 @@
-#!/usr/bin/env dash
+#!/usr/bin/env bash
 #
 # My mini wrapper for xinit.
 # $ . startx.sh
-#
-# Never ever use Debian's ugly /etc/X11/Xsession.
-#
 # Allow only one xserver; start always on :0 and use /dev/tty1.
 
 __startx ()
 {
         if
-                test -n "$DISPLAY"
+                ! ((UID))
         then
-                printf '%s: Another X session had been started; aborting\n' \
-                        "$0" 1>&2;
-                return 1
-        elif
-                test "$(fgconsole)" -ne 1
-        then
-                printf '%s: Not on /dev/tty1; aborting\n' "$0" 1>&2;
+                printf '%s: May not run as superuser; aborting\n' "$FUNCNAME" 1>&2;
                 return 1
         fi
 
-        # /tmp/.X*-lock /tmp/.X11-unix
+        declare -i c=$(fgconsole 2>/dev/null)
 
-        umask 077
-        cp -bf "$XERRFILE" "$XERRFILE" 2>/dev/null;
-        rm -f "$XERRFILE" 2>/dev/null;
-        touch "$XERRFILE" && chmod 600 "$XERRFILE" || return 1;
+        if
+                ! ((c))
+        then
+                printf '%s: Another X session had been started; aborting\n' \
+                        "$FUNCNAME" 1>&2;
+                return 1
+        elif
+                ! (( c == 1))
+        then
+                printf '%s: Not on /dev/tty1; aborting\n' "$FUNCNAME" 1>&2;
+                return 1
+        fi
 
-        local \
+        rm -rf /tmp/.X11-unix 2>/dev/null;
+
+        #umask 077
+        #cp -bf "$XERRFILE" "$XERRFILE" 2>/dev/null;
+        # rm -f "$XERRFILE" 2>/dev/null;
+        # touch "$XERRFILE" && chmod 600 "$XERRFILE" || return 1;
+
+        declare \
                 hn=$(hostname -f) \
                 mc=$(mcookie) \
                 sxauth=$(mktemp --tmpdir serverauth.XXXXXXXXXX);
@@ -37,24 +43,26 @@ __startx ()
         xauth -q remove :0 "${hn}:0"
         xauth -q <<-IN
 	add :0 . ${mc}
-	add ${hn}:0 . ${mc}
+	add ${hn}/unix:0 . ${mc}
 	IN
 
-        printf '%s: X session started for %s at %s\n' \
-                "$0" "$LOGNAME" "$(date)" >>"$XERRFILE";
+        logger --id=$$ -t "startx.sh" -p "user.info" "Initializing X session for ${LOGNAME}"
 
         (
-                exec >>"$XERRFILE" 2>&1
+                exec 1> >(logger -e --id=$$ -t "Xorg.0" -p "user.notice") 2>&1;
                 exec xinit "$XINITRC" -- "${HOME}/.xserverrc" -auth "$sxauth"
         )
 
-        printf '%s: X session terminated for %s at %s\n' \
-                "$0" "$LOGNAME" "$(date)" >>"$XERRFILE";
+        logger --id=$$ -t "startx.sh" -p "user.info" "Finishing X session for ${LOGNAME}"
+
+        # TODO
+        dbus-update-activation-environment DISPLAY=
+        systemctl --user unset-environment DISPLAY
 
         deallocvt
 
-        case "$SHELL" in
-       "$(command -v bash)")
+        case $SHELL in
+        $BASH)
                 . "${HOME}/.bash_profile"
         ;;
         *)
