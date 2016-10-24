@@ -57,6 +57,7 @@ List:
 * [lesspipew](https://github.com/D630/bin/blob/master/lesspipew): My preprocessor for less.
 * [lifeday](https://github.com/D630/bin/blob/master/lifeday): Print lifeday.
 * [log-ip](https://github.com/D630/bin/blob/master/log-ip): Daily ip logging.
+* [loggi](https://github.com/D630/bin/blob/master/loggi): Wrap up logger for local scripting.
 * [lsort](https://github.com/D630/bin/blob/master/lsort): Sort input by lenght.
 * [mail-get](https://github.com/D630/bin/blob/master/mail-get): Get mail and give notification + sound.
 * [mail-hook-post](https://github.com/D630/bin/blob/master/mail-hook-post): Run command after mail-get.
@@ -77,6 +78,7 @@ List:
 * [mutt-filter-uri](https://github.com/D630/bin/blob/master/mutt-filter-uri): Add a bookmark to urimark in mutt.
 * [mutt-save-attachments](https://github.com/D630/bin/blob/master/mutt-save-attachments): Save attachements in Mutt.
 * [newsbeuter2taskum](https://github.com/D630/bin/blob/master/newsbeuter2taskum): Add a bookmark to taswarrior-um in newsbeuter.
+* [noti](https://github.com/D630/bin/blob/master/noti): Send notifications (meant to be used with dunst and rsyslog).
 * [nottoomuchw](https://github.com/D630/bin/blob/master/nottoomuchw): Wrapper for nottoomuch-addresses using dmenu or slmenu.
 * [obnam-weekly](https://github.com/D630/bin/blob/master/obnam-weekly): Weekly backup with obnam.
 * [ocean](https://github.com/D630/bin/blob/master/ocean): Simulate ocean sound.
@@ -106,7 +108,7 @@ List:
 * [show-zeit](https://github.com/D630/bin/blob/master/show-zeit): Display times.
 * [show-zombies](https://github.com/D630/bin/blob/master/show-zombies): List all zombies and their parents to kill.
 * [skel-home](https://github.com/D630/bin/blob/master/skel-home): Prepare home directory.
-* [sound](https://github.com/D630/bin/blob/master/sound): Play specific sounds (meant to be used with dunst).
+* [sound](https://github.com/D630/bin/blob/master/sound): Play specific sounds (meant to be used with dunst and rsyslog).
 * [ssudo](https://github.com/D630/bin/blob/master/ssudo): Using sudo with dmenu2 via SUDO_ASKPASS.
 * [startx.sh](https://github.com/D630/bin/blob/master/startx.sh): My mini wrapper for xinit.
 * [stat-1](https://github.com/D630/bin/blob/master/stat-1): Stat a file and build an associative array.

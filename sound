@@ -1,75 +1,91 @@
 #!/usr/bin/env dash
 #
-# Play specific sounds (meant to be used with dunst).
+# Play specific sounds (meant to be used with dunst and rsyslog).
 
-appname="$1"
-summary="$2"
-body="$3"
-icon="$4"
-urgency="$5"
+if
+        test -p /dev/stdin || test -f /dev/stdin;
+then
+        read -r urgency appname summary _
+else
+        appname="$1"
+        summary="$2"
+        body="$3"
+        icon="$4"
+        urgency="$5"
+fi
 
-play () { aplay "$@"; }
-f="${XDG_DATA_HOME}/sounds"
-
-case "$summary" in
-device.added:*)
-        f="${f}/mac-sound-pack-Device_Connect.wav"
-;;
-device.error:*)
-        f="${f}/mac-sound-pack-Device_Failed.wav"
-;;
-device.removed:*)
-        f="${f}/mac-sound-pack-Device_Disconnect.wav"
-;;
-email.arrived:*)
-        f="${f}/mac-sound-pack-new-mail.wav"
-;;
-email.bounced:*)
-        f="${f}/mac-sound-pack-mail-sent.wav"
-;;
-email.error:*)
-        f="${f}/mac-sound-pack-Error.wav"
-;;
-email.nomail:*)
-        f="${f}/mac-sound-pack-no-mail.wav"
-;;
-exclamation:*)
-        f="${f}/mac-sound-pack-exclamation.wav"
-;;
-im.error:*)
-        f="${f}/mac-sound-pack-Error.wav"
-;;
-im.sent:*)
-        f="${f}/mac-sound-pack-sent-message.wav"
-;;
-im.received:*)
-        f="${f}/mac-sound-pack-received-message.wav"
-;;
-network.connected:*)
-        f="${f}/mac-sound-pack-invitation-accepted.wav"
-;;
-network.disconnected:*)
-        f="${f}/mac-sound-pack-invitation.wav"
-;;
-network.error:*)
-        f="${f}/mac-sound-pack-Error.wav"
-;;
-presence.offline:*)
-        f="${f}/mac-sound-pack-buddy-logging-out.wav"
-;;
-presence.online:*)
-        f="${f}/mac-sound-pack-buddy-logging-in.wav"
-;;
-transfer.complete:*)
-        f="${f}/mac-sound-pack-file-transfer-complete.wav"
-;;
-transfer.error:*)
-        f="${f}/mac-sound-pack-Error.wav"
+case "$urgency" in
+CRITICAL|[0-3])
+        urgency="true"
 ;;
 *)
-        exit 1
+        urgency="false"
+;;
 esac
 
-play "$f" 1>/dev/null 2>&1;
+case "$summary" in
+.device.added)
+        f="mac-sound-pack-Device_Connect.wav"
+;;
+.device)
+        ${urgency} && f="mac-sound-pack-Device_Failed.wav";
+;;
+.device.removed)
+        f="mac-sound-pack-Device_Disconnect.wav"
+;;
+.email.arrived)
+        f="mac-sound-pack-new-mail.wav"
+;;
+.email.bounced)
+        f="mac-sound-pack-mail-sent.wav"
+;;
+.email)
+        ${urgency} && f="mac-sound-pack-Error.wav";
+;;
+.email.nomail)
+        f="mac-sound-pack-no-mail.wav"
+;;
+.im)
+        ${urgency} && f="mac-sound-pack-Error.wav";
+;;
+.im.sent)
+        f="mac-sound-pack-sent-message.wav"
+;;
+.im.received)
+        f="mac-sound-pack-received-message.wav"
+;;
+.misc)
+        ${urgency} && f="mac-sound-pack-Error.wav";
+;;
+.misc.exclamation)
+        f="mac-sound-pack-Exclamation.wav";
+;;
+.network.connected)
+        f="mac-sound-pack-invitation-accepted.wav"
+;;
+.network.disconnected)
+        f="mac-sound-pack-invitation.wav"
+;;
+.network)
+        ${urgency} && f="mac-sound-pack-Error.wav";
+;;
+.presence.offline)
+        f="mac-sound-pack-buddy-logging-out.wav"
+;;
+.presence.online)
+        f="mac-sound-pack-buddy-logging-in.wav"
+;;
+.transfer.complete)
+        f="mac-sound-pack-file-transfer-complete.wav"
+;;
+.transfer)
+        ${urgency} && f="mac-sound-pack-Error.wav";
+esac
+
+if
+        test -n "$f"
+then
+        aplay "${XDG_DATA_HOME:-/home/user1/share}/sounds/${f}" 1>/dev/null 2>&1;
+fi
 
 # vim: set ts=8 sw=8 tw=0 et :

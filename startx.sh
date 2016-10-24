@@ -40,9 +40,10 @@ __startx ()
                 mc=$(mcookie) \
                 sxauth=$(mktemp --tmpdir serverauth.XXXXXXXXXX);
 
-        xauth -q remove :0 "${hn}:0"
+        xauth -q remove :0 "${hn}:0" "${hn}/unix:0"
         xauth -q <<-IN
 	add :0 . ${mc}
+	add ${hn}:0 . ${mc}
 	add ${hn}/unix:0 . ${mc}
 	IN
 

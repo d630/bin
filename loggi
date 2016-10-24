@@ -1,0 +1,16 @@
+#!/usr/bin/env dash
+#
+# Wrap up logger for local scripting.
+# Needs facility local6 to work properly with my configured rsyslog.
+#
+# $ loggi level category [summary [body]]
+
+l="$1"
+c="$2"
+prog=
+
+shift 2
+
+logger -d -s --id="$PPID" -t "$(strings /proc/${PPID}/comm)" -p "local6.${l}" -s "$c" "$@"
+
+# vim: set ts=8 sw=8 tw=0 et :
