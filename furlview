@@ -2,10 +2,9 @@
 #
 # Simple replacement for urlview using fzf in X.
 
-__fzf ()
-{
-        fzf --tac -e -i -m
-}
+__x_web_browser () { setsidw x-web-browser "$1"; }
+
+__fzf () { fzf --tac -e -i -m; }
 
 __ugrep ()
 {
@@ -13,35 +12,19 @@ __ugrep ()
                 '((http|https|gopher|ftp|ftps|webdav|webdavs|dav|davs):(//)?[^ <>"\t]*|(www|ftp)[0-9]?\.[-a-z0-9.]+)[^ .,;\t\n\r<">\):]?[^, <>"\t]*[^ .,;\t\n\r<">\):]'
 }
 
-__x_web_browser ()
-{
-
-        setsidw x-web-browser "$1"
-}
+__select () { __ugrep | __fzf; }
 
 if
-        (( ! $# ))
+        [[ -p /dev/stdin || -f /dev/stdin ]]
 then
-        printf '%s\n' "No args" \
-        1>&2;
-        exit 1
-elif
-        [[ $1 == - ]]
-then
+        mapfile -t furls < <(__select);
+else
         if
-                [[ -p /dev/stdin ]]
+                ! (($#))
         then
-                shift 1
-                mapfile -t furls < <(
-                        __ugrep \
-                        | __fzf;
-                )
-        else
-                printf '%s\n' "Stdin is not coming from a pipe" \
-                1>&2;
+                printf '%s\n' "?" 1>&2;
                 exit 1
         fi
-else
         mapfile -t furls < <(
                 for a
                 do
@@ -50,18 +33,16 @@ else
                         then
                                 cat "$a"
                         else
-                                printf 'File %s does not exist or is neather a regular file nor a named pipe' "$a" \
-                                1>&2;
+                                printf 'File %s does not exist or is neather a regular file nor a named pipe' "$a" 1>&2;
                                 exit 1
                         fi
                 done \
-                | __ugrep \
-                | __fzf;
+                | __select;
         )
 fi
 
 if
-        (( ${#furls[@]} ))
+        ((${#furls[@]}))
 then
         if
                 [[ -n $DISPLAY ]]
@@ -72,10 +53,6 @@ then
                 done
         fi
         wait
-else
-        printf '%s\n' "No url has been chosen" \
-        1>&2;
-        exit 1
 fi
 
 # vim: set ts=8 sw=8 tw=0 et :
