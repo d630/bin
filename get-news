@@ -20,7 +20,7 @@ fi
 feedfaetcher &
 d="$(
         urldiff -nv \
-        | fgrep OLD \
+        | fgrep NEW \
         | wc -l;
 ) unread diffs"
 
