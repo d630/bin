@@ -3,24 +3,30 @@
 # Wrapper for getting my news.
 
 if
-        test-inet
+         exec 9<"$0";
+         ! flock -n 9
 then
-        feedfaetcher &
-        urldiff -nv &
-else
-        printf 'network.error: %s\n' "We are offline. News have not been updated" 1>&2;
-        if
-                test -n "$DISPLAY"
-        then
-                notify-send --category=network.error \
-                        "network.error: We are offline" \
-                        "News have not been updated";
-        else
-                sound _ "network.error:"
-        fi
+         printf '%s\n' "sorry, I am already running" 1>&2;
+         exit 1
+fi
+
+if
+        ! test-inet
+then
+        loggi 3 .network.error "We are offline. News have not been updated"
         exit 1
 fi
 
+feedfaetcher &
+d="$(
+        urldiff -nv \
+        | fgrep OLD \
+        | wc -l;
+) unread diffs"
+
 wait
+f="$(newsbeuter -rx print-unread)"
+
+test "$((${d%% *} + ${f%% *}))" -ge 0 && loggi 6 .transfer.complete "${d}\n${f}";
 
 # vim: set ts=8 sw=8 tw=0 et :

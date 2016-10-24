@@ -27,7 +27,7 @@ case "$summary" in
 .device.added)
         f="mac-sound-pack-Device_Connect.wav"
 ;;
-.device)
+.device*)
         ${urgency} && f="mac-sound-pack-Device_Failed.wav";
 ;;
 .device.removed)
@@ -39,13 +39,13 @@ case "$summary" in
 .email.bounced)
         f="mac-sound-pack-mail-sent.wav"
 ;;
-.email)
+.email*)
         ${urgency} && f="mac-sound-pack-Error.wav";
 ;;
 .email.nomail)
         f="mac-sound-pack-no-mail.wav"
 ;;
-.im)
+.im*)
         ${urgency} && f="mac-sound-pack-Error.wav";
 ;;
 .im.sent)
@@ -54,7 +54,7 @@ case "$summary" in
 .im.received)
         f="mac-sound-pack-received-message.wav"
 ;;
-.misc)
+.misc*)
         ${urgency} && f="mac-sound-pack-Error.wav";
 ;;
 .misc.exclamation)
@@ -66,7 +66,7 @@ case "$summary" in
 .network.disconnected)
         f="mac-sound-pack-invitation.wav"
 ;;
-.network)
+.network*)
         ${urgency} && f="mac-sound-pack-Error.wav";
 ;;
 .presence.offline)
@@ -78,7 +78,7 @@ case "$summary" in
 .transfer.complete)
         f="mac-sound-pack-file-transfer-complete.wav"
 ;;
-.transfer)
+.transfer*)
         ${urgency} && f="mac-sound-pack-Error.wav";
 esac
 

@@ -31,16 +31,7 @@ until
 do
         case $i in
         30)
-                printf -v msg '[posteo] Mails not sent: %d\n' "$cnt"
-                printf 'email.error:\n%s\n' "$msg" 1>&2;
-                if
-                        [[ -n $DISPLAY ]]
-                then
-                        notify-send --category=email.error \
-                                "email.error: Mail fetch error" "$msg";
-                else
-                        sound _ "email.error:"
-                fi
+                loggi 3 .email.error "Delivery error. [posteo] Mails not sent: ${cnt}"
                 exit 1
         ;;
         *)
@@ -51,14 +42,6 @@ do
         esac
 done
 
-msg="[posteo] Sent Mails: ${cnt}"
-printf 'email.bounced:\n%s\n' "$msg" 1>&2;
-if
-        [[ -n $DISPLAY ]]
-then
-        notify-send --category=email.bounced -u normal "email.bounced:" "$msg"
-else
-        sound _ "email.bounced:"
-fi
+loggi 6 .email.bounced "[posteo] Sent Mails: ${cnt}"
 
 # vim: set ts=8 sw=8 tw=0 et :

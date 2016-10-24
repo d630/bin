@@ -11,6 +11,8 @@ prog=
 
 shift 2
 
-logger -d -s --id="$PPID" -t "$(strings /proc/${PPID}/comm)" -p "local6.${l}" -s "$c" "$@"
+logger -d -s --id="$PPID" \
+        -t "$(basename "$(strings /proc/${PPID}/cmdline)")" \
+        -p "local6.${l}" -s "$c" "$@";
 
 # vim: set ts=8 sw=8 tw=0 et :

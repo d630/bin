@@ -10,16 +10,7 @@ then
         mail-get
         #mail-hook-post
 else
-        printf 'network.error: %s\n' "We are offline. Mails have not been updated" 1>&2;
-        if
-                test -n "$DISPLAY"
-        then
-                notify-send --category=network.error \
-                        "network.error: We are offline" \
-                        "Mails have not been updated";
-        else
-                sound _ "network.error:"
-        fi
+        loggi 3 .network.error "We are offline. Mails have not been updated"
         exit 1
 fi
 

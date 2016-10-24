@@ -12,12 +12,11 @@ export DBUS_SESSION_BUS_ADDRESS DISPLAY XDG_RUNTIME_DIR
 if
         test -p /dev/stdin || test -f /dev/stdin;
 then
-        read -r urgency category summary body
+        read -r urgency category body
 else
         urgency="$1"
         category="$2"
-        summary="$3"
-        body="$4"
+        body="$3"
 fi
 
 case "$urgency" in
@@ -35,6 +34,6 @@ info|6)
 esac
 
 test -f "/tmp/.dunst_use_${urgency}" && notify-send \
-        -u "$urgency" --category="$category" "$summary" "$body";
+        -u "$urgency" --category="$category" "$category" "$body";
 
 # vim: set ts=8 sw=8 tw=0 et :

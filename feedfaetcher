@@ -74,14 +74,6 @@ then
         exit $?
 fi
 
-if
-         exec 9<"$0";
-         ! flock -n 9
-then
-         printf '%s\n' "sorry, I am already running" 1>&2;
-         exit 1
-fi
-
 export -f __feedcacher_do
 
 [[ -d $cachedir ]] || mkdir -p -- "$cachedir";
