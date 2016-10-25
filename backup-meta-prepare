@@ -11,9 +11,6 @@ PrintHeader ()
         printf '%s\n' "${horiz// /-}" "$1" 1>&2;
 }
 
-#PrintHeader "Bevent"
-bevent -k
-
 update-packages
 
 PrintHeader "Programs"
