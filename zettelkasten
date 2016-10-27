@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Run Zettelkasten.
 # <http://zettelkasten.danielluedecke.de/en/>

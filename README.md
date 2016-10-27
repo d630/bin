@@ -3,8 +3,8 @@ Short scripts, which do not belong to my [dotfiles](https://github.com/D630/dotf
 List:
 * [audio-player](https://github.com/D630/bin/blob/master/audio-player): Default audio player (tui).
 * [backup-meta-apt](https://github.com/D630/bin/blob/master/backup-meta-apt): Backup infos about installed packages on Debian.
-* [backup-meta-bin](https://github.com/D630/bin/blob/master/backup-meta-bin): List all executables.
-* [backup-meta-init](https://github.com/D630/bin/blob/master/backup-meta-init): List inits.
+* [backup-meta-bin](https://github.com/D630/bin/blob/master/backup-meta-bin): Backup installed executables.
+* [backup-meta-init](https://github.com/D630/bin/blob/master/backup-meta-init): Backup inits.
 * [backup-meta-prepare](https://github.com/D630/bin/blob/master/backup-meta-prepare): Prepare the full backup of my system.
 * [bash-debug-set-x.sh](https://github.com/D630/bin/blob/master/bash-debug-set-x.sh): A debugging function for bash.
 * [bash-dedup-history](https://github.com/D630/bin/blob/master/bash-dedup-history): Remove duplicates in .bash_history.

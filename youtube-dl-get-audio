@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Run youtoube-dl to convert video to audio.
 

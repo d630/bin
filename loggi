@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Wrap up logger for local scripting.
 # Needs facility local6 to work properly with my configured rsyslog.

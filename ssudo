@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Using sudo with dmenu2 via SUDO_ASKPASS.
 

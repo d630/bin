@@ -1,12 +1,11 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
-# List inits.
+# Backup inits.
 
 {
-        find "/etc/init.d/" -perm /111 -type f -printf '%f\n'
-        find "/etc/init" -type f -printf '%f\n'
+        find "/etc/init.d/" -perm /111 -type f -printf '%f\n';
+        find "/etc/init" -type f -printf '%f\n';
 } \
-| sort -u \
-> "${XDG_VAR_HOME}/backups/init.txt";
+| sort -u > "${XDG_VAR_HOME}/backups/init.txt";
 
 # vim: set ts=8 sw=8 tw=0 et :

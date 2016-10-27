@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Use st like kuake and yeahconsole terminal.
 # Idea: https://wiki.archlinux.org/index.php/ \

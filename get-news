@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Wrapper for getting my news.
 
@@ -17,14 +17,14 @@ then
         exit 1
 fi
 
-feedfaetcher &
+feedfaetcher 1>/dev/null 2>&1 &
 d="$(
-        urldiff -nv \
+        urldiff -nv 2>/dev/null \
         | fgrep -c NEW;
 ) unread diffs"
 
 wait
-f="$(newsbeuter -rx print-unread)"
+f="$(newsbeuter -x reload print-unread)"
 
 test "$((${d%% *} + ${f%% *}))" -gt 0 && loggi 6 .transfer.complete "${d}\n${f}";
 

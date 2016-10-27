@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Play specific sounds (meant to be used with dunst and rsyslog).
 

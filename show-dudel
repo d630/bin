@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Disk usage of unlinked, but still open files.
 # Source: http://chneukirchen.org/dotfiles/bin/dudel

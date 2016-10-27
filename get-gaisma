@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Get sun data infos from http://www.gaisma.com.
 

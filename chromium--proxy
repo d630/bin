@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Start chromium and redirect traffic through a proxy server.
 

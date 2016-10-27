@@ -5,7 +5,6 @@
 cd -- "$HOME"
 
 printf -v horiz '%*s' "80" ''
-
 PrintHeader ()
 {
         printf '%s\n' "${horiz// /-}" "$1" 1>&2;

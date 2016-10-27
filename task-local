@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Simple wrapper for using taskwarrior with local "task-repos".
 

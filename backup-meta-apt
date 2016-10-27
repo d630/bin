@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Backup infos about installed packages on Debian.
 
@@ -14,8 +14,7 @@ cd -- "${backup_dir}/paketlisten" || exit 1;
 COLUMNS=200 dpkg-query -l > "./query.txt";
 
 dpkg --get-selections \
-| awk '!/deinstall|purge|hold/ { print $1 }' \
-> "./packages.txt";
+| mawk '!/deinstall|purge|hold/ { print $1 }' > "./packages.txt";
 
 sudo apt-mark showauto > "./auto.txt";
 
@@ -27,8 +26,7 @@ sudo find /etc/apt/sources.list*\
         -exec sh -c '
                 printf "%s\n## " "$1";
                 grep "^[[:space:]]*[^#[:space:]]" "$1"
-        ' _ {} \; \
-> "./sources.list";
+        ' _ {} \; > "./sources.list";
 
 sudo cp -v -- "/etc/apt/trusted.gpg" "./trusted.gpg"
 

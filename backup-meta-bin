@@ -1,6 +1,6 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
-# List all executables.
+# Backup installed executables.
 
 backup_dir="${XDG_VAR_HOME}/backups"
 
@@ -8,12 +8,10 @@ find "/var/lib/dpkg/info/" \
         -daystart \( -name \*.list -a -mtime -7 \) \
         -printf '%f\n' \
 | sed 's/.list$//' \
-| sort \
-> "${backup_dir}/7_days.txt";
+| sort > "${backup_dir}/7_days.txt";
 
 IFS=':'
 whatis -w '*' ${PATH} "/usr/bin/X11" 2>&1  \
-| sort -u \
-> "${backup_dir}/whatis.txt";
+| sort -u > "${backup_dir}/whatis.txt";
 
 # vim: set ts=8 sw=8 tw=0 et :

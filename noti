@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Send notifications (meant to be used with dunst and rsyslog).
 #

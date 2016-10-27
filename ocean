@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Simulate ocean sound.
 # Source: https://github.com/vain/bin-pub/blob/master/ocean

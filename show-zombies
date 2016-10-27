@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # List all zombies and their parents to kill.
 # Source: http://chneukirchen.org/dotfiles/bin/zombies

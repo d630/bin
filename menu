@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # A wrapper script for selecting menu driven programs.
 

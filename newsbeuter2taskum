@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Add a bookmark to taswarrior-um in newsbeuter.
 

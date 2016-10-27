@@ -1,4 +1,4 @@
-#!/usr/bin/env dash
+#!/bin/sh
 #
 # Show most swap-using processes.
 # Source: http://chneukirchen.org/dotfiles/bin/swaptop
