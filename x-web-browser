@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Default web browser (gui).
 
-IFS=' ' read -r -a opts <<< "$X_BROWSER_OPTS"
-exec "$X_BROWSER" "${opts[@]}"  "$@"
+IFS='|';
+set -- ${X_BROWSER_OPTS} ${1:+"$@"};
+exec "$X_BROWSER" "$@";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

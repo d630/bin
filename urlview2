@@ -7,20 +7,20 @@
 # https://github.com/vain/bin-pub/blob/master/urlview2
 
 while
-        read -r
+    read -r;
 do
-        if
-                [[ -n $DISPLAY ]]
-        then
-                setsidw x-web-browser "$REPLY"
-        else
-                exec web-browser $REPLY"
-        fi
+    if
+        [[ -n $DISPLAY ]];
+    then
+        setsidw x-web-browser "$REPLY";
+    else
+        exec web-browser $REPLY";
+    fi
 done < <(
-        grep -oP '(((http|https|ftp|gopher)|mailto|file):(//)?[^ <>"\t]*|' \
-                '(www|ftp)[0-9]?\.[-a-z0-9.]+)[^ .,;\t\n\r<">\):]?[^, <>"\t]*' \
-                '[^ .,;\t\n\r<">\):]' "$@" \
-        | menu choose;
-)
+    grep -oP '(((http|https|ftp|gopher)|mailto|file):(//)?[^ <>"\t]*|' \
+        '(www|ftp)[0-9]?\.[-a-z0-9.]+)[^ .,;\t\n\r<">\):]?[^, <>"\t]*' \
+        '[^ .,;\t\n\r<">\):]' "$@" |
+    menu choose;
+);
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

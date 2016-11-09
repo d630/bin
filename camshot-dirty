@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Take a quick camshot.
+
+mkdir -p /tmp/camshots;
+
+avconv \
+    -f video4linux2 \
+    -s 640x480 \
+    -i /dev/video0 \
+    -ss 0:0:2 \
+    -frames 1 \
+    /tmp/camshots/$(date +%s).jpg
+
+# vim: set ts=4 sw=4 tw=0 et :

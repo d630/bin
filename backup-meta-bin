@@ -2,16 +2,16 @@
 #
 # Backup installed executables.
 
-backup_dir="${XDG_VAR_HOME}/backups"
+backup_dir="${XDG_VAR_HOME:?}/backups";
 
 find "/var/lib/dpkg/info/" \
-        -daystart \( -name \*.list -a -mtime -7 \) \
-        -printf '%f\n' \
-| sed 's/.list$//' \
-| sort > "${backup_dir}/7_days.txt";
+    -daystart \( -name \*.list -a -mtime -7 \) \
+    -printf '%f\n' |
+sed 's/.list$//' \ |
+sort > "${backup_dir}/7_days.txt";
 
-IFS=':'
-whatis -w '*' ${PATH} "/usr/bin/X11" 2>&1  \
-| sort -u > "${backup_dir}/whatis.txt";
+IFS=':';
+whatis -w '*' ${PATH} "/usr/bin/X11" 2>&1 |
+sort -u > "${backup_dir}/whatis.txt";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

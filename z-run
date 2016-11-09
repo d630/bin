@@ -3,25 +3,29 @@
 # Run z output with file manager.
 
 if
-        test-tty 2>/dev/null;
+    test-tty 2>/dev/null;
 then
-        menu=fzf
-        function __nav { exec file-browser "$1" ; }
+    menu=fzf;
+    function __nav {
+        exec file-browser "$1";
+    };
 elif
-        [[ -n $DISPLAY ]]
+    [[ -n $DISPLAY ]];
 then
-        menu=dmenu2
-        function __nav { setsidw x-file-browser -t "$1" ; }
+    menu=dmenu2;
+    function __nav {
+        setsidw x-file-browser -t "$1";
+    };
 else
-        exit 1
-fi
+    exit 1;
+fi;
 
 path=$(
-        sort -g "${XDG_VAR_HOME}/lib/z/z.data" \
-        | cut -d '|' -f 1 \
-        | menu "$menu" "OPEN";
-)
+    sort -g "${XDG_VAR_HOME}/lib/z/z.data" |
+    cut -d '|' -f 1 |
+    menu "$menu" "OPEN";
+);
 
 [[ -n $path ]] && __nav "$path";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

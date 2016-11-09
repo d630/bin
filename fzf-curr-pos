@@ -9,46 +9,44 @@
 
 getpos ()
 {
-        exec < /dev/tty
+    exec < /dev/tty;
 
-        typeset -n arg=$1
-        typeset \
-                col \
-                row \
-                oldstty=$(stty -g);
+    typeset -n arg=$1;
+    typeset \
+        col \
+        row \
+        oldstty=$(stty -g);
 
-        stty raw -echo min 0
+    stty raw -echo min 0;
 
-        printf '%b' "\033[6n" \
-        > /dev/tty;
-        IFS='[;' read -d R _ row col \
-        < /dev/tty;
+    printf '%b' "\033[6n" > /dev/tty;
+    IFS='[;' read -d R _ row col < /dev/tty;
 
-        stty "$oldstty"
+    stty "$oldstty";
 
-        printf '%d' "$(( arg - 1))"
+    printf '%d' "$((arg - 1))";
 
-        unset -n arg
-}
+    unset -n arg;
+};
 
 typeset -i \
-        lines=$(tput lines) \
-        row=$(getpos row);
+    lines=$(tput lines) \
+    row=$(getpos row);
 typeset -i \
-        halfway=lines/2 \
-        start_row=lines-row;
-typeset -x FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS
+    halfway=lines/2 \
+    start_row=lines-row;
+typeset -x FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS;
 
 # Start fzf from the current row
 if
-        (( row < halfway ))
+     ((row < halfway));
 then
-        FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --reverse --margin $(( row - 1 )),0,0"
+    FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --reverse --margin $((row - 1)),0,0";
 else
-        (( start_row == 1 && (start_row=0) ))
-        FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --no-reverse --margin 0,0,${start_row}"
-fi
+    ((start_row == 1 && (start_row=0)));
+    FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --no-reverse --margin 0,0,${start_row}";
+fi;
 
-fzf
+fzf;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

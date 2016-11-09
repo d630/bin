@@ -1,15 +1,17 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Default terminal emulator window.
 
 if
-        [[ -f ${XDG_CACHE_HOME}/DAYLIGHT ]]
+    test -f "${XDG_CACHE_HOME:?}/DAYLIGHT";
 then
-        IFS=' ' read -r -a opts <<< "$TERMINAL_L_OPTS"
-        exec "$TERMINAL_L" "${opts[@]}" "$@"
+    IFS='|';
+    set -- ${TERMINAL_L_OPTS} ${1:+"$@"};
+    exec "$TERMINAL_L" "$@";
 else
-        IFS=' ' read -r -a opts <<< "$TERMINAL_D_OPTS"
-        exec "$TERMINAL_D" "${opts[@]}" "$@"
-fi
+    IFS='|';
+    set -- ${TERMINAL_D_OPTS} ${1:+"$@"};
+    exec "$TERMINAL_D" "$@";
+fi;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

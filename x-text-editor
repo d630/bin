@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Default editor (gui).
 
-IFS=' ' read -r -a opts <<< "$X_VISUAL_OPTS"
-exec "$X_VISUAL" "${opts[@]}" "$@"
+IFS='|';
+set -- ${X_VISUAL_OPTS} ${1:+"$@"};
+exec "$X_VISUAL" "$@";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

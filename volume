@@ -3,20 +3,16 @@
 # Set volume via amixer.
 
 case "$1" in
-\+)
-        amixer -q sset Master 2+
-;;
-\+\+)
-        amixer -q sset Master 2%+
-;;
--)
-        amixer -q sset Master 2-
-;;
---)
-        amixer -q sset Master 2%-
-;;
-toggle)
-        amixer -q sset Master toggle
-esac
+    (\+)
+        amixer -q sset Master 2+;;
+    (\+\+)
+        amixer -q sset Master 2%+;;
+    (-)
+        amixer -q sset Master 2-;;
+    (--)
+        amixer -q sset Master 2%-;;
+    (toggle)
+        amixer -q sset Master toggle;
+esac;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

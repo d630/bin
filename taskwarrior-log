@@ -3,76 +3,86 @@
 # Log interactively a task in Taskwarrior.
 
 if
-        test-tty 2>/dev/null;
+    test-tty 2>/dev/null;
 then
-        function __menu_cmd { menu "slmenu" "$1" ; }
+    function __menu_cmd {
+        menu "slmenu" "$1";
+    };
 elif
-        [[ -n $DISPLAY ]]
+    [[ -n $DISPLAY ]];
 then
-        function __menu_cmd { menu "dmenu2" "$1" ; }
+    function __menu_cmd {
+        menu "dmenu2" "$1";
+    };
 else
-        exit 1
-fi
+    exit 1;
+fi;
 
 printf '%s\n' "Choose a project, insert a new one or escape ..." 1>&2;
 project=$(
-        {
-                printf '%s\n' "NEW";
-                task rc.list.all.projects=yes _unique project \
-                | sed '
-                        /^log\./ {
-                                s/log\.//;
-                                b end;
-                        };
-                        d;
-                        : end
-                ' \
-                | sort -u;
-        } \
-        | __menu_cmd "PROJECT";
-)
+    {
+        printf '%s\n' "NEW";
+        task rc.list.all.projects=yes _unique project |
+        sed '
+            /^log\./ {
+                s/log\.//;
+                b end;
+            };
+            d;
+            : end' |
+        sort -u;
+    } |
+    __menu_cmd "PROJECT";
+);
 
-[[ $project == NEW ]] && project=$(printf '%s' | __menu_cmd "PROJECT");
+[[ $project == NEW ]] && project=$(
+        printf '%s' \
+        | __menu_cmd "PROJECT"
+);
+
 if
-        [[ -z $project ]]
+    [[ -z $project ]];
 then
-        printf '%s\n' "No project has been chosen" 1>&2;
-        exit 1
+    printf '%s\n' "No project has been chosen" 1>&2;
+    exit 1;
 else
-        project=log.${project}
-        printf 'Project: \t%s\n' "${project//./ > }"
-fi
+    project=log.${project};
+    printf 'Project: \t%s\n' "${project//./ > }";
+fi;
 
-read -re -p "description:    " description
-read -re -p "due:            " due
+read -re -p "description:    " description;
+read -re -p "due:            " due;
 
 while
-        true
+    :;
 do
-        tag=$(
-                {
-                        printf '%s\n' "NEW";
-                        task rc.list.all.tags=yes _unique tags \
-                        | tr ',' '\n' \
-                        | sort -u;
-                } \
-                | __menu_cmd "TAG";
-        )
-        [[ $tag == NEW ]] && tag=$(printf '%s' | __menu_cmd "TAG");
-        if
-                [[ -n $tag ]]
-        then
-                printf '+%s\n' "$tag"
-                tags+=( "$tag" )
-        else
-                break
-        fi
-done
+    tag=$(
+        {
+            printf '%s\n' "NEW";
+            task rc.list.all.tags=yes _unique tags |
+            tr ',' '\n' |
+            sort -u;
+        } |
+        __menu_cmd "TAG";
+    );
+    [[ $tag == NEW ]] && tag=$(
+        printf '%s' |
+        __menu_cmd "TAG";
+    );
+    if
+        [[ -n $tag ]];
+    then
+        printf '+%s\n' "$tag";
+        tags+=("$tag");
+    else
+        break;
+    fi;
+done;
 
-tags+=( log )
+tags+=(log);
 
-printf '\nCommand:       task log %s project:%s due:%s %s\n' "$description" "$project" "$due" "${tags[*]/#/+}"
+printf '\nCommand:       task log %s project:%s due:%s %s\n' "$description" "$project" "$due" "${tags[*]/#/+}";
 
-task log "$description" "${project:+project:$project}" "${due:+due:$due}" ${tags[*]/#/+}
+task log "$description" "${project:+project:$project}" "${due:+due:$due}" ${tags[*]/#/+};
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

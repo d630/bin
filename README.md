@@ -1,18 +1,19 @@
 Short scripts, which do not belong to my [dotfiles](https://github.com/D630/dotfiles). Unless otherwise stated, these files are in the public domain.
 
 List:
-* [audio-player](https://github.com/D630/bin/blob/master/audio-player): Default audio player (tui).
+* [audio-player](https://github.com/D630/bin/blob/master/audio-player): Default audio player (cli).
 * [backup-meta-apt](https://github.com/D630/bin/blob/master/backup-meta-apt): Backup infos about installed packages on Debian.
 * [backup-meta-bin](https://github.com/D630/bin/blob/master/backup-meta-bin): Backup installed executables.
 * [backup-meta-init](https://github.com/D630/bin/blob/master/backup-meta-init): Backup inits.
 * [backup-meta-prepare](https://github.com/D630/bin/blob/master/backup-meta-prepare): Prepare the full backup of my system.
-* [bash-debug-set-x.sh](https://github.com/D630/bin/blob/master/bash-debug-set-x.sh): A debugging function for bash.
+* [bash-debug-set-x.bash](https://github.com/D630/bin/blob/master/bash-debug-set-x.bash): A debugging function for bash.
 * [bash-dedup-history](https://github.com/D630/bin/blob/master/bash-dedup-history): Remove duplicates in .bash_history.
 * [bash-mselect-freq](https://github.com/D630/bin/blob/master/bash-mselect-freq): Print frequency of the bash history and run it from dmenu.
 * [bash-print-freq](https://github.com/D630/bin/blob/master/bash-print-freq): Print frequency of the bash history.
-* [bash-toggle-options.sh](https://github.com/D630/bin/blob/master/bash-toggle-options.sh): Toggle bash options via fzf.
+* [bash-toggle-options.bash](https://github.com/D630/bin/blob/master/bash-toggle-options.bash): Toggle bash options via fzf.
 * [build-github-bin-readme](https://github.com/D630/bin/blob/master/build-github-bin-readme): Build README.md in github.com/D630/bin .
 * [calculate-date](https://github.com/D630/bin/blob/master/calculate-date): Calculate dates via taskwarrior.
+* [camshot-dirty](https://github.com/D630/bin/blob/master/camshot-dirty): Take a quick camshot.
 * [cclean](https://github.com/D630/bin/blob/master/cclean): Clean up some dirs and files.
 * [chromium--proxy](https://github.com/D630/bin/blob/master/chromium--proxy): Start chromium and redirect traffic through a proxy server.
 * [chromium-mselect-history](https://github.com/D630/bin/blob/master/chromium-mselect-history): Browse the history of chromium via fzf, and then open selection.
@@ -51,8 +52,6 @@ List:
 * [hblock](https://github.com/D630/bin/blob/master/hblock): Simple ad- and malware-blocking-list builder for dnsmasq.
 * [iface](https://github.com/D630/bin/blob/master/iface): Configure my Wlan.
 * [image-viewer](https://github.com/D630/bin/blob/master/image-viewer): Default image viewer (tui).
-* [kuno2](https://github.com/D630/bin/blob/master/kuno2): Simple notetaker using ledit.
-* [kuno3](https://github.com/D630/bin/blob/master/kuno3): Simple notetaker using rlfe.
 * [kuno](https://github.com/D630/bin/blob/master/kuno): Add interactively a note via terminal to use it later in org-mode.
 * [lesspipew](https://github.com/D630/bin/blob/master/lesspipew): My preprocessor for less.
 * [lifeday](https://github.com/D630/bin/blob/master/lifeday): Print lifeday.
@@ -79,7 +78,6 @@ List:
 * [mutt-save-attachments](https://github.com/D630/bin/blob/master/mutt-save-attachments): Save attachements in Mutt.
 * [newsbeuter2taskum](https://github.com/D630/bin/blob/master/newsbeuter2taskum): Add a bookmark to taswarrior-um in newsbeuter.
 * [noti](https://github.com/D630/bin/blob/master/noti): Send notifications (meant to be used with dunst and rsyslog).
-* [nottoomuchw](https://github.com/D630/bin/blob/master/nottoomuchw): Wrapper for nottoomuch-addresses using dmenu or slmenu.
 * [obnam-weekly](https://github.com/D630/bin/blob/master/obnam-weekly): Weekly backup with obnam.
 * [ocean](https://github.com/D630/bin/blob/master/ocean): Simulate ocean sound.
 * [open](https://github.com/D630/bin/blob/master/open): Open files or strings in preferred applications.
@@ -149,12 +147,10 @@ List:
 * [x-video-player](https://github.com/D630/bin/blob/master/x-video-player): Default video player (gui).
 * [x-web-browser](https://github.com/D630/bin/blob/master/x-web-browser): Default web browser (gui).
 * [xorg-dpms-standby](https://github.com/D630/bin/blob/master/xorg-dpms-standby): Set DPMS to standby state.
-* [xorg-export-xinfo](https://github.com/D630/bin/blob/master/xorg-export-xinfo): Export the dbus session address on startup so it can be used by cron.
 * [xorg-get-xclass](https://github.com/D630/bin/blob/master/xorg-get-xclass): Get interactively xclass info about a xwindow.
 * [xorg-get-xids](https://github.com/D630/bin/blob/master/xorg-get-xids): Fastest way to get x window ids?
 * [xorg-lock](https://github.com/D630/bin/blob/master/xorg-lock): Default xlock programme.
 * [xorg-raise-xwin](https://github.com/D630/bin/blob/master/xorg-raise-xwin): List xwindows with dmenu and raise selection.
-* [xorg-rename-current-desktop](https://github.com/D630/bin/blob/master/xorg-rename-current-desktop): rename current desktop; manipulate _NET_DESKTOP_NAMES.
 * [xorg-run-or-raise](https://github.com/D630/bin/blob/master/xorg-run-or-raise): Run or raise script for commands with gui or tui.
 * [xorg-set-desktop-name](https://github.com/D630/bin/blob/master/xorg-set-desktop-name): Helper for setting current desktop's name
 * [xorg-switch-to-desktop](https://github.com/D630/bin/blob/master/xorg-switch-to-desktop): Select desktop with a menu and then switch with wmctrl to it.

@@ -2,41 +2,40 @@
 #
 # Copy password from pass.
 
-__select ()
-{
-        read -r file < <(
-                find "${HOME}/.password-store/" \
-                        -type f -name "*.gpg" -printf '%f\n' \
-                | sed 's/.gpg$//g' \
-                | sort \
-                | menu "$1" "> ";
-        )
-}
+function __select {
+    read -r file < <(
+        find "${HOME}/.password-store/" \
+            -type f -name "*.gpg" -printf '%f\n' |
+        sed 's/.gpg$//g' |
+        sort |
+        menu "$1" "> ";
+    );
+};
 
 if
-        test-tty 2>/dev/null;
+    test-tty 2>/dev/null;
 then
-        menu=fzf
+    menu=fzf;
 else
-        menu=dmenu2
-fi
+    menu=dmenu2;
+fi;
 
-__select "$menu"
+'__select' "$menu";
 
 if
-        [[ -f ${HOME}/.password-store/${file}.gpg ]]
+    [[ -f ${HOME}/.password-store/${file}.gpg ]];
 then
-        if
-                [[ $1 == --type ]]
-        then
-                pass show "$file" \
-                | xdotool type --clearmodifiers --file -;
-        else
-                PASSWORD_STORE_CLIP_TIME=10 pass show -c "$file"
-        fi
+    if
+        [[ $1 == --type ]];
+    then
+        pass show "$file" |
+        xdotool type --clearmodifiers --file -;
+    else
+        PASSWORD_STORE_CLIP_TIME=10 pass show -c "$file";
+    fi;
 else
-        printf '%s:Error: Nothing has been chosen\n' "$0" 1>&2;
-        exit 1
-fi
+    printf '%s:Error: Nothing has been chosen\n' "$0" 1>&2;
+    exit 1;
+fi;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

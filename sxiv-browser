@@ -3,33 +3,27 @@
 # Open all files in the current directory with sxiv.
 # source: archlinux wiki
 
-shopt -s nullglob
+shopt -s nullglob;
 
-if
-        [[ ! -f $1 ]]
-then
-        printf '%s: first argument is not a file' "$0" 1>&2;
-        exit 1
-fi
+[[ -f $1 ]] || {
+    printf '%s: first argument is not a file' "$0" 1>&2;
+    exit 1;
+};
 
 typeset \
-        file=$(basename -- "$1") \
-        dir=$(dirname -- "$1") ;
-typeset -a arr=()
+    file=$(basename -- "$1") \
+    dir=$(dirname -- "$1");
+typeset -a arr=();
 
-shift 1
+shift 1;
 
-if
-        cd -- "$dir"
-then
-        for i in *
-        do
-                [[ -f $i ]] || continue;
-                arr+=( "$i" )
-                [[ $i == $file ]] && c=$(( ${#arr[@]} - 1 ));
-        done
-fi
+cd -- "$dir" &&
+    for i in *; do
+        [[ -f $i ]] || continue;
+        arr+=("$i")
+        [[ $i == $file ]] && c=$((${#arr[@]} - 1));
+    done;
 
-setsidw sxiv "$@" -- "${arr[@]:c}" "${arr[@]:0:c}"
+setsidw sxiv "$@" -- "${arr[@]:c}" "${arr[@]:0:c}";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

@@ -2,52 +2,32 @@
 #
 # Prepare the full backup of my system.
 
-cd -- "$HOME"
+cd -- "$HOME";
 
-printf -v horiz '%*s' "80" ''
-PrintHeader ()
-{
-        printf '%s\n' "${horiz// /-}" "$1" 1>&2;
-}
+printf -v horiz '%*s' "80" '';
+function PrintHeader {
+    printf '%s\n' "${horiz// /-}" "$1" 1>&2;
+};
 
-update-packages
+update-packages;
 
-PrintHeader "Programs"
-backup-meta-bin
+'PrintHeader' "Programs";
+backup-meta-bin;
 
-PrintHeader "Inits"
-backup-meta-init
+'PrintHeader' "Inits";
+backup-meta-init;
 
-PrintHeader "etckeeper"
+'PrintHeader' "etckeeper";
 (
-        printf -v d '%(%s)T' -1
-        sudo etckeeper commit "${d}: prepare backup"
-)
+    cd -- / || exit 1;
+    printf -v d '%(%s)T' -1;
+    sudo etckeeper commit "${d}: prepare backup";
+);
 
-#PrintHeader "passivedns"
-#passivedns-archive.sh
-#( sudo cp -- /var/log/passivedns-archive/*.gz "${HOME}/local/var/log/passivedns" )
+'PrintHeader' "newsbeuter";
+rm -fv "${HOME}/.newsbeuter/newsbeuter_cache.db";
 
-#PrintHeader "firefox-urls"
-#firefox-backup-urls.sh
+'PrintHeader' "ccleaner";
+cclean;
 
-#PrintHeader "Refresh Firefox Profiles"
-#firefox-refresh-profiles.sh
-
-#PrintHeader "Delete pm-powersave.log"
-#( sudo rm -r -- "/var/log/pm-powersave.log" 2>/dev/null )
-
-PrintHeader "newsbeuter"
-rm -fv "${HOME}/.newsbeuter/newsbeuter_cache.db"
-
-PrintHeader "ccleaner"
-cclean
-
-PrintHeader "Sending Mail"
-printf '%(%Y-%m-%d_%R)T\n' \
-| tee >(mailx -s BackupPreparing-log backup-preparing) \
->> "${XDG_VAR_HOME}/log/backup-preparing.log";
-
-PrintHeader "."
-
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

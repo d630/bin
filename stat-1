@@ -3,10 +3,10 @@
 # Stat a file and build an associative array.
 
 if
-        [[ $1 == -f ]]
+    [[ $1 == -f ]];
 then
-        shift 1
-        { stat --file-system --printf="$(</dev/fd/0)\n" $1 ; } <<'SEQ'
+    shift 1;
+    { stat --file-system --printf="$(</dev/fd/0)\n" $1; } <<'SEQ'
 STAT[a|%n]='%a'
 STAT[b|%n]='%b'
 STAT[c|%n]='%c'
@@ -20,7 +20,7 @@ STAT[t|%n]='%t'
 STAT[T|%n]='%T'
 SEQ
 else
-        { stat --printf="$(</dev/fd/0)\n" $1 ; } <<'SEQ'
+    { stat --printf="$(</dev/fd/0)\n" $1; } <<'SEQ'
 STAT[a|%n]='%a'
 STAT[A|%n]='%A'
 STAT[b|%n]='%b'
@@ -46,6 +46,6 @@ STAT[X|%n]='%X'
 STAT[Y|%n]='%Y'
 STAT[Z|%n]='%Z'
 SEQ
-fi
+fi;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

@@ -3,9 +3,10 @@
 # Select desktop with a menu and then switch with wmctrl to it.
 
 desk="$(
-        wmctrl -d \
-        | menu "dmenu2" ">";
-)"
-wmctrl -s "${desk%% *}"
+    wmctrl -d |
+    menu "dmenu2" ">";
+)";
 
-# vim: set ts=8 sw=8 tw=0 et :
+wmctrl -s "${desk%% *}";
+
+# vim: set ts=4 sw=4 tw=0 et :

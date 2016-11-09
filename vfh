@@ -2,7 +2,7 @@
 #
 # Preview files in a directory like in vifm.
 
-ls -1a "${1:-$PWD}" \
-| xib -- less -R;
+ls -1a "${1:-$PWD}" |
+xib -- less -R;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

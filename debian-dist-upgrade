@@ -5,4 +5,4 @@
 sudo apt-get update && sudo apt-get dist-upgrade;
 #sudo aptitude update && sudo aptitude full-upgrade;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

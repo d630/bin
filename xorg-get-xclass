@@ -1,18 +1,18 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Get interactively xclass info about a xwindow.
 
-xprop \
-| awk '
-        /^WM_CLASS/ {
-                sub(/.* =/, "instance:");
-                sub(/,/, "\nclass:"); print
-        }
+xprop |
+mawk '
+    /^WM_CLASS/ {
+        sub(/.* =/, "instance:");
+        sub(/,/, "\nclass:");
+        print
+    }
 
-        /^WM_NAME/ {
-                sub(/.* =/, "title:")
-                print
-        }
-';
+    /^WM_NAME/ {
+        sub(/.* =/, "title:")
+        print
+    }';
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

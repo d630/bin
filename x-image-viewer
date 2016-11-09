@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Default image viewer (gui).
 
-IFS=' ' read -r -a opts <<< "$X_IMAGE_VIEWER_OPTS"
-exec "$X_IMAGE_VIEWER" "${opts[@]}" "$@"
+IFS='|';
+set -- ${X_IMAGE_VIEWER_OPTS} ${1:+"$@"};
+exec "$X_IMAGE_VIEWER" "$@";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

@@ -3,88 +3,96 @@
 # Add interactively a task to Taskwarrior via read in a terminal + {d,s}menu.
 
 if
-        test-tty 2>/dev/null;
+    test-tty 2>/dev/null;
 then
-        function __menu_cmd { menu "slmenu" "$1" ; }
+    function __menu_cmd {
+        menu "slmenu" "$1";
+    };
 elif
-        [[ -n $DISPLAY ]]
+    [[ -n $DISPLAY ]];
 then
-        function __menu_cmd { menu "dmenu2" "$1" ; }
+    function __menu_cmd {
+        menu "dmenu2" "$1";
+    };
 else
-        exit 1
-fi
+    exit 1;
+fi;
 
 printf '%s\n' "Choose a project, insert a new one or escape ..." 1>&2;
 project=$(
-        {
-                printf '%s\n' "NEW";
-                task rc.list.all.projects=yes _unique project \
-                | sed '
-                        /^log\./ {
-                                d;
-                                b end;
-                        }; {
-                                p;
-                                s/^\([^\.]*\)\..*/\1/;
-                        };
-                        : end
-                ' \
-                | sort -u;
-        } \
-        | __menu_cmd "PROJECT";
-)
+    {
+        printf '%s\n' "NEW";
+        task rc.list.all.projects=yes _unique project |
+        sed '
+            /^log\./ {
+                d;
+                b end;
+            }; {
+                p;
+                s/^\([^\.]*\)\..*/\1/;
+            };
+            : end' |
+        sort -u;
+    } |
+    __menu_cmd "PROJECT";
+);
 
-[[ $project == NEW ]] && project=$(printf '%s' | __menu_cmd "PROJECT");
+[[ $project == NEW ]] && project=$(
+    printf '%s' |
+    __menu_cmd "PROJECT";
+);
+
 if
-        [[ -z $project ]]
+    [[ -z $project ]];
 then
-        printf '%s\n' "No project has been chosen" 1>&2;
-        exit 1
+    printf '%s\n' "No project has been chosen" 1>&2;
+    exit 1;
 else
-        printf 'Project: \t%s\n' "${project//./ > }"
-fi
+    printf 'Project: \t%s\n' "${project//./ > }";
+fi;
 
-read -re -n 1 -p "Is recur/wait/until/scheduled/depends needed? (y/n)" answer
+read -re -n 1 -p "Is recur/wait/until/scheduled/depends needed? (y/n)" answer;
 
-read -re -p "description:    " description
-read -re -p "priority:       " priority
-read -re -p "due:            " due
+read -re -p "description:    " description;
+read -re -p "priority:       " priority;
+read -re -p "due:            " due;
 
 while
-        true
+    :;
 do
-        tag=$(
-                {
-                        printf '%s\n' "NEW";
-                        task rc.list.all.tags=yes _unique tags \
-                        | tr ',' '\n' \
-                        | sort -u;
-                } \
-                | __menu_cmd "TAG";
-        )
-        [[ $tag == NEW ]] && tag=$(printf '%s' | __menu_cmd "TAG");
-        if
-                [[ -n $tag ]]
-        then
-                printf '+%s\n' "$tag"
-                tags+=( "$tag" )
-        else
-                break
-        fi
-done
+    tag=$(
+        {
+            printf '%s\n' "NEW";
+            task rc.list.all.tags=yes _unique tags |
+            tr ',' '\n' |
+            sort -u;
+        } |
+        __menu_cmd "TAG";
+    );
+    [[ $tag == NEW ]] && tag=$(
+        printf '%s' |
+        __menu_cmd "TAG";
+    );
+    if
+        [[ -n $tag ]];
+    then
+        printf '+%s\n' "$tag";
+        tags+=("$tag");
+    else
+        break;
+    fi;
+done;
 
-if
-        [[ $answer == y ]]
-then
-        read -re -p "recur:          " recur
-        read -re -p "wait:           " wait
-        read -re -p "until:          " until
-        read -re -p "scheduled:      " scheduled
-        read -re -p "depends:        " depends
-fi
+[[ $answer == y ]] && {
+    read -re -p "recur:          " recur;
+    read -re -p "wait:           " wait;
+    read -re -p "until:          " until;
+    read -re -p "scheduled:      " scheduled;
+    read -re -p "depends:        " depends;
+};
 
-printf '\nCommand:       task add %s project:%s due:%s priority:%s recur:%s wait:%s until:%s scheduled:%s depends:%s %s\n' "$description" "$project" "$due" "$priority" "$recur" "$wait" "$until" "$scheduled" "$depends" "${tags[*]/#/+}"
+printf '\nCommand:       task add %s project:%s due:%s priority:%s recur:%s wait:%s until:%s scheduled:%s depends:%s %s\n' "$description" "$project" "$due" "$priority" "$recur" "$wait" "$until" "$scheduled" "$depends" "${tags[*]/#/+}";
 
-task add "$description" "${project:+project:$project}" "${due:+due:$due}" "${priority:+priority:$priority}" "${recur:+recur:$recur}" "${wait:+wait:$wait}" "${until:+until:$until}" "${scheduled:+scheduled:$scheduled}" "${depends:+depends:$depends}" ${tags[*]/#/+}
+task add "$description" "${project:+project:$project}" "${due:+due:$due}" "${priority:+priority:$priority}" "${recur:+recur:$recur}" "${wait:+wait:$wait}" "${until:+until:$until}" "${scheduled:+scheduled:$scheduled}" "${depends:+depends:$depends}" ${tags[*]/#/+};
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

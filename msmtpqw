@@ -2,16 +2,15 @@
 #
 # Replacement for msmtpq.
 
-Q=${XDG_VAR_HOME}/mail/queue
-LOG=${XDG_VAR_HOME}/log/msmtp-queue.log
-EMAIL_CONN_TEST=P
+Q=${XDG_VAR_HOME:?}/mail/queue \
+LOG=${XDG_VAR_HOME}/log/msmtp-queue.log \
+EMAIL_CONN_TEST=P;
 
-export Q
-export LOG
-export EMAIL_CONN_TEST
+export Q;
+export LOG;
+export EMAIL_CONN_TEST;
 
-exec msmtpq "$@"
-
+exec msmtpq "$@";
 
 # TODO(d630): finish script
 __msmpt () { IFS=" " command msmpt $* ; }
@@ -84,4 +83,4 @@ lock_queue ()
         :
 }
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

@@ -2,20 +2,20 @@
 #
 # Open some terminal emulators in tabbed.
 
-xid="$(tabbed -cd -n terminal-tabbed 2>/dev/null)"
+xid="$(tabbed -cd -n terminal-tabbed 2>/dev/null)";
 
 case "$X_XCLIENT" in
-x-terminal-tabbed)
-        xdotool windowsize "$xid" 100% 100%
-esac
+    (x-terminal-tabbed)
+        xdotool windowsize "$xid" 100% 100%;
+esac;
 
 {
-        urxvt -embed "$xid" &
-        xterm -into "$xid" &
-        sleep 0.5
-        x-terminal -w "$xid" &
+    urxvt -embed "$xid" &
+    xterm -into "$xid" &
+    sleep 0.5;
+    x-terminal -w "$xid" &
 } 2>/dev/null;
 
-wait
+wait;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

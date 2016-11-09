@@ -2,8 +2,8 @@
 #
 # Check still open network ports.
 
-echo
-lsof -a +L1 /
-echo
+echo;
+lsof -a +L1 /;
+echo;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

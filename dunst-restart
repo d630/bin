@@ -2,12 +2,13 @@
 #
 # Restart dunst.
 
-p="${XDG_CACHE_HOME}/dunst.pid"
+p="${XDG_CACHE_HOME:?}/dunst.pid";
 
 test -f "$p" && pkill -F "$p";
-(
-    exec dunst -to 10 -config "${XDG_CONFIG_HOME}/dunst/dunstrc" &
-    echo $! > "$p";
-)
 
-# vim: set ts=8 sw=8 tw=0 et :
+(
+    exec dunst -to 10 -config "${XDG_CONFIG_HOME:?}/dunst/dunstrc" &
+    echo $! > "$p";
+);
+
+# vim: set ts=4 sw=4 tw=0 et :

@@ -2,6 +2,6 @@
 #
 # Use the printenv builtin command of tcsh.
 
-printenv $argv[*]
+printenv $argv[*];
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

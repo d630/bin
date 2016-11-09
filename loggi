@@ -5,14 +5,14 @@
 #
 # $ loggi level category [summary [body]]
 
-l="$1"
-c="$2"
-prog=
+l="$1" \
+c="$2" \
+prog=;
 
-shift 2
+shift 2;
 
 logger -d -s --id="$PPID" \
-        -t "$(basename "$(strings /proc/${PPID}/cmdline)")" \
-        -p "local6.${l}" -s "$c" "$@";
+    -t "$(basename "$(strings /proc/${PPID}/cmdline)")" \
+    -p "local6.${l}" -s "$c" "$@";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

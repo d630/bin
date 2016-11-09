@@ -3,15 +3,13 @@
 # MediathekView (german tv)
 
 case "$1" in
-run)
-        java -jar /opt/MediathekView.jar
-        ;;
-load)
-        java -jar /opt/bin/MediathekView.jar -auto -noGui
-        ;;
-*)
+    (run)
+        java -jar /opt/MediathekView.jar;;
+    (load)
+        java -jar /opt/bin/MediathekView.jar -auto -noGui;;
+    (*)
         printf '%s\n' "Usage: mediathekieww (run|load)" 1>&2;
-        exit 1
-esac
+        exit 1;
+esac;
 
-#  vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

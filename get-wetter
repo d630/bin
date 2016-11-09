@@ -3,19 +3,17 @@
 # Get infos from http://wetter.tagesschau.de.
 
 case "$1" in
--d)
-        uri='http://wetter.tagesschau.de/deutschland/wetterstationen/'
-;;
--w)
-        uri='http://wetter.tagesschau.de/europawelt/'
-;;
-*)
+    (-d)
+        uri='http://wetter.tagesschau.de/deutschland/wetterstationen/';;
+    (-w)
+        uri='http://wetter.tagesschau.de/europawelt/';;
+    (*)
         echo "argument?" 1>&2;
-        exit 1
-esac
+        exit 1;
+esac;
 
-curl -s "$uri" \
-| scrape -be 'table' \
-| w3m -dump -T text/html;
+curl -s "$uri" |
+scrape -be 'table' |
+w3m -dump -T text/html;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

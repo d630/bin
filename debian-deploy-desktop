@@ -1,7 +1,7 @@
-#!/usr/bin/env bash -e
+#!/usr/bin/env bash
 #
 # Deploy my desktop (after Debian GNU/Linux netinstallation without use of tasksel).
-
+#
 # STEP1
 #       # cd -- /home/user1
 #       # wget https://raw.githubusercontent.com/D630/bin/master/deploy-debian-desktop.sh
@@ -21,6 +21,10 @@
 #       $ sudo /home/user1/deploy-debian-desktop.sh E
 # STEP7
 #       $ sudo deploy-debian-desktop.sh F
+
+# TODO
+
+set -e
 
 m ()
 {

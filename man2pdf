@@ -4,9 +4,9 @@
 
 man -w "$@" 2>/dev/null;
 
-man -t "$@" \
-| ps2pdf - "${@}.pdf";
+man -t "$@" |
+ps2pdf - "${@}.pdf";
 
-printf '%s.pdf\n' "$@"
+printf '%s.pdf\n' "$@";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

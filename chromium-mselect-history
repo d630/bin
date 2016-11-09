@@ -1,25 +1,35 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Browse the history of chromium via fzf, and then open selection.
 # https://github.com/junegunn/fzf/wiki/Examples#browsing-history
 
-cols=$(( $(tput cols) / 3 ))
-sep='{{::}}'
+cols="$(($(tput cols) / 3))";
+sep='{{::}}';
 
-cp -f "${XDG_CONFIG_HOME}/chromium/Default/History" /tmp/h.chromium
+cp -f "${XDG_CONFIG_HOME:?}/chromium/Default/History" /tmp/h.chromium;
 
+__sqlite () {
+    sqlite3 -separator "$sep" /tmp/h.chromium "
+        select substr(title, 1, ${cols}), url
+        from urls
+        order by last_visit_time desc";
+};
+
+__awk () {
+    gawk -F "$sep" '{ printf "%-'$cols's  \x1b[36m%s\n", $1, $2 }';
+};
+
+__while_read ()
 while
-        read -r
+    read -r REPLY;
 do
-        setsidw chromium "$REPLY" 1>/dev/null 2>&1
-done < <(
-        sqlite3 -separator "$sep" /tmp/h.chromium \
-                "select substr(title, 1, ${cols}), url
-                from urls
-                order by last_visit_time desc" \
-        | awk -F "$sep" '{printf "%-'$cols's  \x1b[36m%s\n", $1, $2}' \
-        | fzf --ansi --multi \
-        | sed 's#.*\(https*://\)#\1#';
-)
+    setsidw chromium "$REPLY" 1>/dev/null 2>&1;
+done;
 
-# vim: set ts=8 sw=8 tw=0 et :
+'__sqlite' |
+'__awk' |
+fzf --ansi --multi |
+sed 's#.*\(https*://\)#\1#' |
+'__while_read';
+
+# vim: set ts=4 sw=4 tw=0 et :

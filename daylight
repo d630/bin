@@ -2,29 +2,29 @@
 #
 # Test against daytime and adjust my config.
 
-typeset -i FORCE=$FORCE
-f=${XDG_CACHE_HOME}/DAYLIGHT
+typeset -i FORCE=$FORCE;
+f=${XDG_CACHE_HOME:?}/DAYLIGHT;
 
 if
-        test-daylight
+    test-daylight;
 then
-        if
-                [[ -f $f && $FORCE -eq 0 ]]
-        then
-                exit 0
-        else
-                > "$f"
-                exec theme light
-        fi
+    if
+        [[ -f $f && $FORCE -eq 0 ]];
+    then
+        :;
+    else
+        > "$f";
+        exec theme light;
+    fi;
 else
-        if
-                [[ -f $f || $FORCE -gt 0 ]]
-        then
-                rm -f -- /tmp/DAYLIGHT
-                exec theme dark
-        else
-                exit 0
-        fi
-fi
+    if
+        [[ -f $f || $FORCE -gt 0 ]];
+    then
+        rm -f -- /tmp/DAYLIGHT;
+        exec theme dark;
+    else
+        :;
+    fi;
+fi;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

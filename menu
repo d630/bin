@@ -2,72 +2,60 @@
 #
 # A wrapper script for selecting menu driven programs.
 
-menu="$1"
-menu_prompt="$2"
+menu="$1" \
+menu_prompt="$2";
 
 if
-        test -f "${XDG_CACHE_HOME}/DAYLIGHT"
+    test -f "${XDG_CACHE_HOME:?}/DAYLIGHT";
 then
-        nb="#FDF6E3" # base3
-        nf="#657B83" # base00
-        sb="#EEE8D5" # base2
-        sf="#B58900" # yellow
-        uc="#B58900" # yellow
+    nb="#FDF6E3"; # base3
+    nf="#657B83"; # base00
+    sb="#EEE8D5"; # base2
+    sf="#B58900"; # yellow
+    uc="#B58900"; # yellow
 else
-        nb="#002B36" # base03
-        nf="#839496" # base0
-        sb="#073642" # base02
-        sf="#859900" # green
-        uc="#859900" # green
-fi
+    nb="#002B36"; # base03
+    nf="#839496"; # base0
+    sb="#073642"; # base02
+    sf="#859900"; # green
+    uc="#859900"; # green
+fi;
 
-fn="Monospace:size=13"
+fn="Monospace:size=13";
 
 case "$menu" in
-choose)
-        exec choose -
-;;
-dmenu)
+    choose)
+        exec choose -;;
+    (dmenu)
         exec dmenu -b -i \
-                -l "10" \
-                -p "${menu_prompt:->}" \
-                -nb "$nb" \
-                -nf "$nf" \
-                -sb "$sb" \
-                -sf "$sf" \
-                -fn "$fn";
-;;
-dmenu2)
+            -l "10" \
+            -p "${menu_prompt:->}" \
+            -nb "$nb" \
+            -nf "$nf" \
+            -sb "$sb" \
+            -sf "$sf" \
+            -fn "$fn";;
+    (dmenu2)
         exec dmenu2 -b -f -i \
-                -l "10" \
-                -p "${menu_prompt:->}" \
-                -fn "$fn" \
-                -name "dmenu2" \
-                -class "dmenu2";
-;;
-dmenu2-save)
-        [ -n "$menu_prompt" ] || exit 1;
+            -l "10" \
+            -p "${menu_prompt:->}" \
+            -fn "$fn" \
+            -name "dmenu2" \
+            -class "dmenu2";;
+    (dmenu2-save)
+        test -n "$menu_prompt" ] || exit 1;
         exec dmenu2 -b -f \
-                -mask \
-                -p "$menu_prompt" \
-                -fn "$fn" \
-                -name "dmenu2-save" \
-                -class "dmenu2-save";
-;;
-slmenu)
-        exec slmenu -b -i -p "${menu_prompt:->}"
-;;
-selecta)
-        exec selecta
-;;
-tmenu)
-        exec tmenu -l 10 -p "${menu_prompt:->>}"
-;;
-fzf)
-        exec fzf -x -i +s --prompt="${menu_prompt:->} "
-;;
-fzf-print-query)
-        exec fzf -x -i +s --prompt="${menu_prompt:->} " --print-query
-esac
+            -mask \
+            -p "$menu_prompt" \
+            -fn "$fn" \
+            -name "dmenu2-save" \
+            -class "dmenu2-save";;
+    (slmenu)
+        exec slmenu -b -i -p "${menu_prompt:->}";;
+    (fzf)
+        exec fzf -x -i +s --prompt="${menu_prompt:->} ";;
+    (fzf-print-query)
+        exec fzf -x -i +s --prompt="${menu_prompt:->} " --print-query;
+esac;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

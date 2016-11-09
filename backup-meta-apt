@@ -2,32 +2,30 @@
 #
 # Backup infos about installed packages on Debian.
 
-backup_dir="${XDG_VAR_HOME}/backups"
+backup_dir="${XDG_VAR_HOME:?}/backups";
 
-sudo rm -rv -- "${backup_dir}/paketlisten"
-mkdir -pv -- "${backup_dir}/paketlisten"
+sudo rm -rv -- "${backup_dir}/paketlisten";
+mkdir -pv -- "${backup_dir}/paketlisten";
 
 sudo apt-cache policy > "${backup_dir}/cache.txt";
 
 cd -- "${backup_dir}/paketlisten" || exit 1;
 
+dpkg --get-selections |
+mawk '!/deinstall|purge|hold/ { print $1 }'  > "./packages.txt";
+
 COLUMNS=200 dpkg-query -l > "./query.txt";
-
-dpkg --get-selections \
-| mawk '!/deinstall|purge|hold/ { print $1 }' > "./packages.txt";
-
 sudo apt-mark showauto > "./auto.txt";
-
 sudo apt-mark showmanual > "./manual.txt";
+sudo cp -v -- "/etc/apt/trusted.gpg" "./trusted.gpg";
 
-sudo find /etc/apt/sources.list*\
-        -type f \
-        -name '*.list' \
-        -exec sh -c '
-                printf "%s\n## " "$1";
-                grep "^[[:space:]]*[^#[:space:]]" "$1"
-        ' _ {} \; > "./sources.list";
+sudo find /etc/apt/sources.list* \
+    -type f \
+    -name '*.list' \
+    -exec sh -c '
+        printf "%s\n## " "$1";
+        grep "^[[:space:]]*[^#[:space:]]" "$1";' \
+    _ {} \; > "./sources.list";
 
-sudo cp -v -- "/etc/apt/trusted.gpg" "./trusted.gpg"
 
-# vim: set ts=8 sw=8 sts=0 tw=0 et :
+# vim: set ts=4 sw=4 sts=4 tw=4 et :

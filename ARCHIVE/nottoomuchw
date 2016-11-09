@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#
+# Wrapper for nottoomuch-addresses using dmenu or slmenu.
+
+if
+    test-tty 2>/dev/null;
+then
+    function search {
+        string=$(menu "slmenu" ">" <<< "");
+    };
+else
+    function search {
+        string=$(menu "dmenu2" ">" <<< "");
+    };
+fi;
+
+'search';
+while
+    [[ -n $string ]];
+do
+    clear;
+    column -t < <(
+        nottoomuch-addresses.sh "$string" |
+        sed -r 's#(.*)()(<.*)#\3\   \1#g' |
+        sed -r 's/\"//g;s/(<)(.*)(>)/\2/g' |
+        sort -k 3;
+    );
+    'search';
+done;
+
+# vim: set ts=4 sw=4 tw=0 et :

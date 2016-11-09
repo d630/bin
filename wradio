@@ -6,76 +6,77 @@
 
 # -- CONFIG.
 
-file_webradio_streams=${XDG_VAR_HOME}/lib/wradio/streams
-file_webradio_pid=${XDG_VAR_HOME}/lib/wradio/instance.pid
+file_webradio_streams=${XDG_VAR_HOME:?}/lib/wradio/streams;
+file_webradio_pid=${XDG_VAR_HOME:?}/lib/wradio/instance.pid;
 
 # -- FUNCTIONS.
 
-__build_streams ()
-{
-        typeset \
-                name \
-                uri;
+function __build_streams {
+    typeset \
+        name \
+        uri;
 
-        while
-                IFS=';' read -r name uri
-        do
-                streams[$name]=$uri
-        done < "$file_webradio_streams";
-}
+    while
+        IFS=';' read -r name uri;
+    do
+        streams[$name]=$uri;
+    done < "$file_webradio_streams";
+};
 
-__selectstream ()
-{
-        selection=$(
-                printf '%s\n' "STOPSTREAM" "${!streams[@]}" \
-                | sort -u \
-                | __menu;
-        )
-}
+function __selectstream {
+    selection=$(
+        printf '%s\n' "STOPSTREAM" "${!streams[@]}" |
+        sort -u |
+        __menu;
+    );
+};
 
-__stopstream ()
+function __stopstream
 if
-        [[ -s "$file_webradio_pid" ]]
+    [[ -s "$file_webradio_pid" ]];
 then
-        #pkill -F "$file_webradio_pid" &> /dev/null && rm -- "$file_webradio_pid"
-        pkill -F "$file_webradio_pid" 1>/dev/null 2>&1;
-        rm -f "$file_webradio_pid" 1>/dev/null 2>&1;
-fi
+    #pkill -F "$file_webradio_pid" &> /dev/null && rm -- "$file_webradio_pid"
+    pkill -F "$file_webradio_pid" 1>/dev/null 2>&1;
+    rm -f "$file_webradio_pid" 1>/dev/null 2>&1;
+fi;
 
-__playstream ()
-(
-        0</dev/null \
+function __playstream (
+    0</dev/null \
         nohup audio-player --no-terminal "${streams[$selection]}" \
-        1>/dev/null 2>&1 &
+    1>/dev/null 2>&1 &
 
-        printf '%d\n' $! >> "$file_webradio_pid";
-)
+    printf '%d\n' $! >> "$file_webradio_pid";
+);
 
 # -- MAIN.
 
 if
-        test-tty 2>/dev/null;
+    test-tty 2>/dev/null;
 then
-        function __menu { menu "fzf" "PLAY" ; }
+    function __menu {
+        menu "fzf" "PLAY";
+    };
 elif
-        [[ -n $DISPLAY ]]
+    [[ -n $DISPLAY ]];
 then
-        function __menu { menu "dmenu2" "PLAY" ; }
+    function __menu {
+        menu "dmenu2" "PLAY";
+    };
 else
-        exit 1
-fi
+    exit 1;
+fi;
 
-typeset -gA streams
+typeset -gA streams;
 
-__build_streams
-__selectstream
+__build_streams;
+__selectstream;
 
 while
-        [[ -n $selection ]]
+    [[ -n $selection ]];
 do
-        __stopstream
-        [[ $selection == STOPSTREAM ]] || __playstream;
-        __selectstream
-done
+    __stopstream;
+    [[ $selection == STOPSTREAM ]] || __playstream;
+    __selectstream;
+done;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

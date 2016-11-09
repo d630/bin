@@ -1,8 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Default pdf viewer (gui).
 
-IFS=' ' read -r -a opts <<< "$X_PDF_VIEWER_OPTS"
-exec "$X_PDF_VIEWER" "${opts[@]}" "$@"
+IFS='|';
+set -- ${X_PDF_VIEWER_OPTS} ${1:+"$@"};
+exec "$X_PDF_VIEWER" "$@";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

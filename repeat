@@ -2,9 +2,13 @@
 #
 # Repeat a command n times.
 
-for (( i=1 ; i <= $1 ; i++ ))
-do
-        ( exec -a "$2" "${@:2}" )
-done
+: "${1:?}";
+: "${2:?}";
 
-# vim: set ts=8 sw=8 tw=0 et :
+for ((i=1; i <= $1; i++)); do
+    (
+        exec -a "$2" "${@:2}";
+    );
+done;
+
+# vim: set ts=4 sw=4 tw=0 et :

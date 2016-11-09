@@ -2,41 +2,43 @@
 #
 # Update via some package managers.
 
-cd -- "$HOME"
+cd -- "$HOME";
 
-printf -v horiz '%*s' "80" ''
+printf -v horiz '%*s' "80" '';
+function PrintHeader {
+    printf '%s\n' "${horiz// /-}" "$1" 1>&2;
+};
 
-PrintHeader ()
-{
-        printf '%s\n' "${horiz// /-}" "$1" 1>&2;
-}
-
-PrintHeader "Apt && Packages"
+PrintHeader "Apt && Packages";
 (
-        sudo dpkg --clear-avail
-        sudo apt-get autoclean
-        sudo apt-get autoremove --purge
-        sudo dpkg --configure -a
-        sudo apt-get install -f
-        backup-meta-apt
-)
+    sudo dpkg --clear-avail;
+    sudo apt-get autoclean;
+    sudo apt-get autoremove --purge;
+    sudo dpkg --configure -a;
+    sudo apt-get install -f;
+    backup-meta-apt;
+);
 
-PrintHeader "Perl modules"
+PrintHeader "Perl modules";
 (
-        cpan-outdated -p --exclude-core\
-        | cpanm -iv --self-contained;
-)
+    cpan-outdated -p --exclude-core |
+    cpanm -iv --self-contained;
+);
 
-PrintHeader "npm modules"
-( npm update )
-
-PrintHeader "go packages"
-( go get -u all )
-
-PrintHeader "cabal packages"
+PrintHeader "npm modules";
 (
-        cabal update
-        cabal install world --upgrade-dependencies --force-reinstalls
-)
+    npm update;
+);
 
-# vim: set ts=8 sw=8 tw=0 et :
+PrintHeader "go packages";
+(
+    go get -u all;
+);
+
+PrintHeader "cabal packages";
+(
+    cabal update;
+    cabal install world --upgrade-dependencies --force-reinstalls;
+);
+
+# vim: set ts=4 sw=4 tw=0 et :

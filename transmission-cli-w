@@ -2,6 +2,6 @@
 #
 # Wrapper for transmission-cli.
 
-transmission-cli -er -d 400 -u 25 -w "${XDG_DOWNLOAD_DIR}/torrents" "$@"
+transmission-cli -er -d 400 -u 25 -w "${XDG_DOWNLOAD_DIR:?}/torrents" "$@";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

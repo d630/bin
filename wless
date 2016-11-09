@@ -2,9 +2,7 @@
 #
 # Open the result of which with less.
 
-LESSOPEN='| lesspipe-misc %s'
-export LESSOPEN
+export LESSOPEN='| lesspipe-misc %s';
+exec less "$(which "${1:?}")";
 
-exec less "$(which "$1")"
-
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

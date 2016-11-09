@@ -2,6 +2,6 @@
 #
 # Use the filetest builtin command of tcsh.
 
-filetest $argv[*]
+filetest $argv[*];
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

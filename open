@@ -6,238 +6,225 @@
 
 # -- CONFIG.
 
-Open::Init ()
-{
-        { typeset i=$(</dev/fd/0) ; } <<-'INIT'
+function Open::Init {
+    { typeset i=$(</dev/fd/0); } <<-'INIT'
 typeset -A Mime=(
-        [application/pdf]="${use_x}pdf-viewer %s"
-        [application/postscript]="${use_x}pdf-viewer %s"
-        [application/vnd.rn-realmedia]="${use_x}video-player %s"
-        [application/x-bittorrent]='transmission-cli-w %s'
-        [application/x-lha]='aunpack %s'
-        [application/x-rar]='aunpack %s'
-        [application/x-shockwave-flash]="${use_x}web-browser %s"
-        [application/x-ta]='aunpack %s'
-        [application/x-tar]='aunpack %s'
-        [application/zip]='aunpack %s'
-        [audio/*]="${use_x}audio-player %s"
-        [image/*]="${use_x}image-viewer %s"
-        [image/svg+xml]="${use_x}web-browser %s"
-        [image/vnd.djvu]='xdg-open %s'
-        [image/x-xcf]='gimp %s'
-        [inode/x-empty]="${use_x}file-browser %s"
-        [text/html]="${use_x}web-browser %s"
-        [text/troff]='man -l %s'
-        [video/*]="${use_x}video-player %s"
-)
+    [application/pdf]="${use_x}pdf-viewer %s"
+    [application/postscript]="${use_x}pdf-viewer %s"
+    [application/vnd.rn-realmedia]="${use_x}video-player %s"
+    [application/x-bittorrent]='transmission-cli-w %s'
+    [application/x-lha]='aunpack %s'
+    [application/x-rar]='aunpack %s'
+    [application/x-shockwave-flash]="${use_x}web-browser %s"
+    [application/x-ta]='aunpack %s'
+    [application/x-tar]='aunpack %s'
+    [application/zip]='aunpack %s'
+    [audio/*]="${use_x}audio-player %s"
+    [image/*]="${use_x}image-viewer %s"
+    [image/svg+xml]="${use_x}web-browser %s"
+    [image/vnd.djvu]='xdg-open %s'
+    [image/x-xcf]='gimp %s'
+    [inode/x-empty]="${use_x}file-browser %s"
+    [text/html]="${use_x}web-browser %s"
+    [text/troff]='man -l %s'
+    [video/*]="${use_x}video-player %s"
+);
 
 typeset -A Ext=(
-        [-]="${use_x}file-browser %s"
-        [--]="${use_x}text-editor %s"
-        [7z]='aunpack %s'
-        [a]='aunpack %s'
-        [aac]="${use_x}audio-player %s"
-        [abw]='abiword %s'
-        [ace]='aunpack %s'
-        [alz]='aunpack %s'
-        [arc]='aunpack %s'
-        [arj]='aunpack %s'
-        [asf]="${use_x}audio-player %s"
-        [avi]="${use_x}video-player %s"
-        [bz2]='aunpack %s'
-        [bz]='aunpack %s'
-        [cab]='aunpack %s'
-        [cpio]='aunpack %s'
-        [deb]='aunpack %s'
-        [divx]="${use_x}video-player %s"
-        [doc]='libreoffice -o %s'
-        [docx]='libreoffice -o %s'
-        [f4v]="${use_x}video-player %s"
-        [gz]='aunpack %s'
-        [jar]='aunpack %s'
-        [lha]='aunpack %s'
-        [lrz]='aunpack %s'
-        [lz]='aunpack %s'
-        [lzh]='aunpack %s'
-        [lzma]='aunpack %s'
-        [lzo]='aunpack %s'
-        [m2ts]="${use_x}video-player %s"
-        [m3u]="${use_x}audio-player %s"
-        [mdb]='libreoffice -o %s'
-        [mkv]="${use_x}video-player %s"
-        [mov]="${use_x}video-player %s"
-        [mp3]="${use_x}audio-player %s"
-        [mp4]="${use_x}video-player %s"
-        [mpeg]="${use_x}video-player %s"
-        [mpg]="${use_x}video-player %s"
-        [odb]='libreoffice -o %s'
-        [odp]='libreoffice -o %s'
-        [ods]='libreoffice -o %s'
-        [odt]='libreoffice -o %s'
-        [ogg]="${use_x}audio-player %s"
-        [ogv]="${use_x}video-player %s"
-        [pps]='libreoffice -o %s'
-        [ppt]='libreoffice -o %s'
-        [pptx]='libreoffice -o %s'
-        [qti]="${use_x}video-player %s"
-        [qtif]="${use_x}video-player %s"
-        [qtvr]="${use_x}video-player %s"
-        [ra]="${use_x}audio-player %s"
-        [rar]='aunpack %s'
-        [rm]="${use_x}video-player %s"
-        [rpm]='aunpack %s'
-        [rtf]='libreoffice -o %s'
-        [rv]="${use_x}video-player %s"
-        [rz]='aunpack %s'
-        [svg]="${use_x}web-browser %s"
-        [swf]="${use_x}web-browser %s"
-        [t7z]='aunpack %s'
-        [tar]='aunpack %s'
-        [tbz2]='aunpack %s'
-        [tbz]='aunpack %s'
-        [tgz]='aunpack %s'
-        [tlz]='aunpack %s'
-        [ts]="${use_x}video-player %s"
-        [txz]='aunpack %s'
-        [tz]='aunpack %s'
-        [tzo]='aunpack %s'
-        [wav]="${use_x}audio-player %s"
-        [webm]="${use_x}video-player %s"
-        [wma]="${use_x}audio-player %s"
-        [wmf]="${use_x}web-browser %s"
-        [wmv]="${use_x}video-player %s"
-        [xls]='libreoffice -o %s'
-        [xlsx]='libreoffice -o %s'
-        [xz]='aunpack %s'
-        [z]='aunpack %s'
-        [zip]='aunpack %s'
-)
+    [-]="${use_x}file-browser %s"
+    [--]="${use_x}text-editor %s"
+    [7z]='aunpack %s'
+    [a]='aunpack %s'
+    [aac]="${use_x}audio-player %s"
+    [abw]='abiword %s'
+    [ace]='aunpack %s'
+    [alz]='aunpack %s'
+    [arc]='aunpack %s'
+    [arj]='aunpack %s'
+    [asf]="${use_x}audio-player %s"
+    [avi]="${use_x}video-player %s"
+    [bz2]='aunpack %s'
+    [bz]='aunpack %s'
+    [cab]='aunpack %s'
+    [cpio]='aunpack %s'
+    [deb]='aunpack %s'
+    [divx]="${use_x}video-player %s"
+    [doc]='libreoffice -o %s'
+    [docx]='libreoffice -o %s'
+    [f4v]="${use_x}video-player %s"
+    [gz]='aunpack %s'
+    [jar]='aunpack %s'
+    [lha]='aunpack %s'
+    [lrz]='aunpack %s'
+    [lz]='aunpack %s'
+    [lzh]='aunpack %s'
+    [lzma]='aunpack %s'
+    [lzo]='aunpack %s'
+    [m2ts]="${use_x}video-player %s"
+    [m3u]="${use_x}audio-player %s"
+    [mdb]='libreoffice -o %s'
+    [mkv]="${use_x}video-player %s"
+    [mov]="${use_x}video-player %s"
+    [mp3]="${use_x}audio-player %s"
+    [mp4]="${use_x}video-player %s"
+    [mpeg]="${use_x}video-player %s"
+    [mpg]="${use_x}video-player %s"
+    [odb]='libreoffice -o %s'
+    [odp]='libreoffice -o %s'
+    [ods]='libreoffice -o %s'
+    [odt]='libreoffice -o %s'
+    [ogg]="${use_x}audio-player %s"
+    [ogv]="${use_x}video-player %s"
+    [pps]='libreoffice -o %s'
+    [ppt]='libreoffice -o %s'
+    [pptx]='libreoffice -o %s'
+    [qti]="${use_x}video-player %s"
+    [qtif]="${use_x}video-player %s"
+    [qtvr]="${use_x}video-player %s"
+    [ra]="${use_x}audio-player %s"
+    [rar]='aunpack %s'
+    [rm]="${use_x}video-player %s"
+    [rpm]='aunpack %s'
+    [rtf]='libreoffice -o %s'
+    [rv]="${use_x}video-player %s"
+    [rz]='aunpack %s'
+    [svg]="${use_x}web-browser %s"
+    [swf]="${use_x}web-browser %s"
+    [t7z]='aunpack %s'
+    [tar]='aunpack %s'
+    [tbz2]='aunpack %s'
+    [tbz]='aunpack %s'
+    [tgz]='aunpack %s'
+    [tlz]='aunpack %s'
+    [ts]="${use_x}video-player %s"
+    [txz]='aunpack %s'
+    [tz]='aunpack %s'
+    [tzo]='aunpack %s'
+    [wav]="${use_x}audio-player %s"
+    [webm]="${use_x}video-player %s"
+    [wma]="${use_x}audio-player %s"
+    [wmf]="${use_x}web-browser %s"
+    [wmv]="${use_x}video-player %s"
+    [xls]='libreoffice -o %s'
+    [xlsx]='libreoffice -o %s'
+    [xz]='aunpack %s'
+    [z]='aunpack %s'
+    [zip]='aunpack %s'
+);
 INIT
-        printf '%s' "$i"
 
-} 2>/dev/null
+    printf '%s' "$i";
+
+} 2>/dev/null;
 
 # -- FUNCTIONS.
 
-Open::CheckMime ()
-{
-        typeset mime_type=$(file -L -b --mime-type "$1")
+function Open::CheckMime {
+    typeset mime_type=$(file -L -b --mime-type "$1");
 
-        if
-                [[ -n ${Mime[$mime_type]} ]]
-        then
-                command=( ${Mime[$mime_type]} )
-        elif
-                [[ -n ${Mime[${mime_type%/*}/*]} ]]
-        then
-                command=( ${Mime[${mime_type%/*}/*]} )
-        else
-                return 1
-        fi
-}
+    if
+            [[ -n ${Mime[$mime_type]} ]];
+    then
+            command=(${Mime[$mime_type]});
+    elif
+            [[ -n ${Mime[${mime_type%/*}/*]} ]];
+    then
+            command=(${Mime[${mime_type%/*}/*]});
+    else
+            return 1;
+    fi;
+};
 
-Open::CheckExt ()
+function Open::CheckExt
 if
-        [[ -n ${1/${1##*.}/} && -n ${Ext[${1##*.}]} ]]
+    [[ -n ${1/${1##*.}/} && -n ${Ext[${1##*.}]} ]];
 then
-        command=( ${Ext[${1##*.}]} )
+    command=(${Ext[${1##*.}]});
 else
-        command=( ${Ext[--]} )
-fi
+    command=(${Ext[--]});
+fi;
 
-Open::CheckString ()
+function Open::CheckString
 case $1 in
-*://*)
-        command=( ${use_x}web-browser %s)
-;;
-*:*)
-        command=( xdg-open %s)
-;;
-*@*.*)
-        command=( ${use_x}mail-viewer %s)
-;;
-*)
+    (*://*)
+        command=(${use_x}web-browser %s);;
+    (*:*)
+        command=(xdg-open %s);;
+    (*@*.*)
+        command=(${use_x}mail-viewer %s);;
+    (*)
         printf "Could not handle file or string: '%s'\n" "$1" 1>&2;
-        exit 1
-;;
-esac
+        exit 1;
+esac;
 
-Open::ExecCommand ()
-{
-        typeset f=${flag_f}${flag_n}${flag_k}
-        exec run ${f:+-${f}} "${command[@]}"
-}
+function Open::ExecCommand {
+    typeset f=${flag_f}${flag_n}${flag_k};
+    exec run ${f:+-${f}} "${command[@]}";
+};
 
-Open::ReplacePattern ()
-{
-        typeset \
-                a \
-                q;
+function Open::ReplacePattern {
+    typeset \
+        a \
+        q;
 
-        printf -v q '%q' "$1"
-        for a in "${!command[@]}"
-        do
-                #command_quoted[$a]=${command[$a]//[%]s/$q}
-                command[$a]=${command[$a]//[%]s/$1}
-        done
-}
+    printf -v q '%q' "$1";
+    for a in "${!command[@]}"; do
+            #command_quoted[$a]=${command[$a]//[%]s/$q}
+            command[$a]=${command[$a]//[%]s/$1};
+    done;
+};
 
 # -- MAIN.
 
-OPTIND=1
-OPTERR=1
-flag_f=
-flag_k=
-flag_n=
-flag_x=
-use_x=
+OPTIND=1 \
+OPTERR=1 \
+flag_f= \
+flag_k= \
+flag_n= \
+flag_x= \
+use_x=;
 
 typeset -a \
-        command \
-        command_quoted;
+    command \
+    command_quoted;
 
 while
-        getopts :fknx opt
+    getopts :fknx opt;
 do
-        case $opt in
-        f)
-                flag_f=f
-        ;;
-        k)
-                flag_k=k
-        ;;
-        n)
-                flag_n=n
-        ;;
-        x)
-                use_x=x-
-        ;;
-        \?)
-                printf "Unknown flag: '-%s'\n" "$OPTARG" 1>&2;
-                exit 1
-        esac
-done
-shift $(( OPTIND - 1 ))
+    case $opt in
+        (f)
+            flag_f=f;;
+        (k)
+            flag_k=k;;
+        (n)
+            flag_n=n;;
+        (x)
+            use_x=x-;;
+        (\?)
+            printf "Unknown flag: '-%s'\n" "$OPTARG" 1>&2;
+            exit 1;
+    esac;
+done;
+shift $((OPTIND - 1));
 
 [[ ${BASH_SOURCE[0]##*/} == x-open ]] && use_x=x-;
 
-source <(Open::Init)
+. <(Open::Init;);
 
-for a
-do
-        if
-                [[ -d $a ]]
-        then
-                command=( ${Ext[-]} )
-        elif
-                [[ -e $a ]]
-        then
-                Open::CheckMime "$a" || Open::CheckExt "${a,,}";
-        else
-                Open::CheckString "$a"
-        fi
-        Open::ReplacePattern "$a"
-        Open::ExecCommand
-done
+for a; do
+    if
+        [[ -d $a ]];
+    then
+        command=(${Ext[-]});
+    elif
+        [[ -e $a ]];
+    then
+        'Open::CheckMime' "$a" || 'Open::CheckExt' "${a,,}";
+    else
+        'Open::CheckString' "$a";
+    fi
+    'Open::ReplacePattern' "$a";
+    'Open::ExecCommand';
+done;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

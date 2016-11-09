@@ -3,28 +3,24 @@
 # Show network connections.
 
 if
-        test-inet
+    test-inet;
 then
-        printf 'IP-ISP: %s\n' "$(
-                w3m -dump "http://ip-check.info/?lang=en" \
-                | fgrep -A 2 'IP check' \
-                | tail -n1;
-        )"
+    printf 'IP-ISP: %s\n' "$(
+        w3m -dump "http://ip-check.info/?lang=en" \
+        | fgrep -A 2 'IP check' \
+        | tail -n1;
+    )";
 else
-        printf '%s\n' "IP-ISP: offline"
-fi
+    printf '%s\n' "IP-ISP: offline";
+fi;
 
-ip a show wlan0 \
-| awk '/inet/ {print $0}';
+ip a show wlan0 |
+mawk '/inet/ { print $0 }';
 
-echo
+echo;
+sudo netstat -tapen;
+echo;
+lsof -i :1-10000;
+echo;
 
-sudo netstat -tapen
-
-echo
-
-lsof -i :1-10000
-
-echo
-
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

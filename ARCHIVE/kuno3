@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Simple notetaker using rlfe.
+
+store=${XDG_DATA_HOME:?}/kuno2;
+date=$(date --utc --date now +%s);
+
+mkdir -p -- "$store";
+rlfe -h "${store}/${date}" cat;
+
+# vim: set ts=4 sw=4 tw=0 et :

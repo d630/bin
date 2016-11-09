@@ -2,6 +2,6 @@
 #
 # Add a bookmark to taswarrior-um in newsbeuter.
 
-taskum add uri:"$1" name:"$2" note:"$3"
+taskum add uri:"${1:?}" name:"${2}" note:"${3}";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

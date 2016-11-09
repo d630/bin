@@ -2,13 +2,13 @@
 #
 # Make Debian alternatives.
 
-set -e
+set -e;
 
 while
-        read -r a b c
+    read -r a b c;
 do
-        sudo update-alternatives --install "$a" "$b" "$c" 100
-        sudo update-alternatives --set "$b" "$c"
+    sudo update-alternatives --install "$a" "$b" "$c" 100;
+    sudo update-alternatives --set "$b" "$c";
 done <<IN
 /bin/ksh ksh /bin/ksh93
 /usr/bin/awk awk /usr/bin/original-awk
@@ -34,4 +34,4 @@ done <<IN
 /usr/bin/x-www-browser x-www-browser /usr/bin/chromium
 IN
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

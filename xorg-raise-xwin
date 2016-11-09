@@ -5,24 +5,24 @@
 #wmctrl -i -a "$(wmctrl -lGpx | column -t | menu.sh "dmenu2" ">" | awk '{print $1}')"
 
 id="$(
-        wmctrl -lGpx \
-        | column -t \
-        | menu "dmenu2" ">" \
-        | awk '{print $1}';
-)"
+    wmctrl -lGpx |
+    column -t |
+    menu "dmenu2" ">" |
+    mawk '{print $1}';
+)";
 
 if
-        test -n "$id"
+    test -n "$id";
 then
-        #xdotool windowmap $id
-        #wmctrl -i -r $id -b remove,hidden
-        #xdotool windowraise $id
-        #xdotool windowfocus $id
-        #xdotool mousemove --window $id 25 25
-        #xdotool click 1
-        wmctrl -i -a "$id"
+    #xdotool windowmap $id
+    #wmctrl -i -r $id -b remove,hidden
+    #xdotool windowraise $id
+    #xdotool windowfocus $id
+    #xdotool mousemove --window $id 25 25
+    #xdotool click 1
+    wmctrl -i -a "$id";
 else
-        exit 1
-fi
+    exit 1;
+fi;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

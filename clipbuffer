@@ -3,117 +3,106 @@
 # Simple clipboard manager for Xorg (xclip, xprop, menu, base64).
 
 typeset -i \
-        OPTIND=1 \
-        OPTERR=1;
+    OPTIND=1 \
+    OPTERR=1;
 
 typeset \
-        opt= \
-        opt_clear=false \
-        opt_daemon=false \
-        opt_kill=false \
-        opt_restart=false \
-        xsels=${XDG_CACHE_HOME}/clipbuffer;
+    opt= \
+    opt_clear=false \
+    opt_daemon=false \
+    opt_kill=false \
+    opt_restart=false \
+    xsels=${XDG_CACHE_HOME:?}/clipbuffer;
 
-Clipbuffer::Daemon ()
-{
-        mkdir -p -m 700 -- "$xsels"
-        ${opt_clear} && > "${xsels}/clips";
-        printf '%d\n' "$$" > "${xsels}/$$.pid";
+function Clipbuffer::Daemon {
+    mkdir -p -m 700 -- "$xsels";
+    ${opt_clear} && > "${xsels}/clips";
+    printf '%d\n' "$$" > "${xsels}/$$.pid";
 
-        xprop -root -spy CUT_BUFFER0 \
-        | {
-                while
-                        read
-                do
-                        printf '%(%s)T\t%s\0' -1 "$(xclip -o)" \
-                        | base64 >> "${xsels}/clips";
-                done
-        }
-}
+    xprop -root -spy CUT_BUFFER0 |
+    while
+        read;
+    do
+        printf '%(%s)T\t%s\0' -1 "$(xclip -o;)" |
+        base64 >> "${xsels}/clips";
+    done;
+};
 
-Clipbuffer::Kill ()
-{
-        typeset p
-        shopt -s nullglob
+function Clipbuffer::Kill {
+    typeset p;
+    shopt -s nullglob;
 
-        for p in "${xsels}/"?*.pid
-        do
-                p=${p##*/}
-                pkill -TERM -P "${p%.pid}"
-        done
+    for p in "${xsels}/"?*.pid; do
+            p=${p##*/};
+            pkill -TERM -P "${p%.pid}";
+    done;
 
-        if
-                ${opt_clear}
-        then
-                rm -fr -- "$xsels" 2>/dev/null;
-        else
-                rm -f -- "${xsels}/"?*.pid 2>/dev/null;
-        fi
-}
+    if
+        ${opt_clear};
+    then
+        rm -fr -- "$xsels" 2>/dev/null;
+    else
+        rm -f -- "${xsels}/"?*.pid 2>/dev/null;
+    fi;
+};
 
-Clipbuffer::Clip ()
-{
-        typeset clip menu
+function Clipbuffer::Clip {
+    typeset clip menu;
 
-        if
-                test-tty 2>/dev/null;
-        then
-                menu=fzf
-        else
-                menu=dmenu2
-        fi
+    if
+        test-tty 2>/dev/null;
+    then
+        menu=fzf;
+    else
+        menu=dmenu2;
+    fi;
 
-        printf -v clip '%s' "$(
-                base64 -d "${xsels}/clips" \
-                | sort -zr \
-                | sed -z 's/^[0-9]*\t//' \
-                | tr '\0' '\n' \
-                | menu "$menu" ">";
-        )"
+    printf -v clip '%s' "$(
+        base64 -d "${xsels}/clips" |
+        sort -zr |
+        sed -z 's/^[0-9]*\t//' |
+        tr '\0' '\n' |
+        menu "$menu" ">";
+    )";
 
-        if
-                [[ -n $clip ]]
-        then
-                printf '%s' "$clip" \
-                | xclip -i -l 1 -selection "clipboard";
-        fi
-}
+    [[ -n $clip ]] && {
+        printf '%s' "$clip" |
+        xclip -i -l 1 -selection "clipboard";
+    };
+};
 
 while
-        getopts :cdkr opt
+    getopts :cdkr opt;
 do
-        case $opt in
-        c)
-                opt_clear=true
-        ;;
-        d)
-                opt_daemon=true
-        ;;
-        k)
-                opt_kill=true
-        ;;
-        r)
-                opt_restart=true
-        esac
-done
+    case $opt in
+        (c)
+            opt_clear=true;;
+        (d)
+            opt_daemon=true;;
+        (k)
+            opt_kill=true;;
+        (r)
+            opt_restart=true;
+    esac;
+done;
 
-shift "$#"
+shift "$#";
 
 if
-        ${opt_daemon}
+    ${opt_daemon};
 then
-        Clipbuffer::Daemon
+    'Clipbuffer::Daemon';
 elif
-        ${opt_kill}
+    ${opt_kill};
 then
-        Clipbuffer::Kill
+    'Clipbuffer::Kill';
 elif
-        ${opt_restart}
+    ${opt_restart};
 then
-        Clipbuffer::Kill
-        [[ -n $DISPLAY ]] && daemonize "$(command -v "$0")" -d;
+    'Clipbuffer::Kill';
+    [[ -n $DISPLAY ]] && daemonize "$(command -v "$0";)" -d;
 else
-        Clipbuffer::Clip
-fi
+    'Clipbuffer::Clip';
+fi;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

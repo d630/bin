@@ -2,16 +2,14 @@
 #
 # Test if tty is available.
 
-if
-        [[ ! $BASH_SOURCE == $0 ]]
-then
-        printf '%s\n' "Error: Do not execute me via source" 1>&2;
-        return 1 2>/dev/null;
-fi
+[[ $BASH_SOURCE == $0 ]] || {
+    printf '%s\n' "Error: Do not execute me via source" 1>&2;
+    return 1 2>/dev/null;
+};
 
-tty=$(ps -p "$PPID" -o tty=)
-tty=${tty/\?/}
+tty=$(ps -p "$PPID" -o tty=);
+tty=${tty/\?/};
 
 [[ -n $tty ]] && printf '/dev/%s\n' "$tty" 1>&2;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

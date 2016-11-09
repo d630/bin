@@ -4,36 +4,33 @@
 #
 # TODO(d630): multiplexer?
 
-: "${XDG_RUNTIME_DIR:=/run/user/1000}"
-: "${DBUS_SESSION_BUS_ADDRESS:=unix:path=${XDG_RUNTIME_DIR}/bus}"
-: "${DISPLAY:=:0}"
-export DBUS_SESSION_BUS_ADDRESS DISPLAY XDG_RUNTIME_DIR
+: "${XDG_RUNTIME_DIR:=/run/user/1000}";
+: "${DBUS_SESSION_BUS_ADDRESS:=unix:path=${XDG_RUNTIME_DIR}/bus}";
+: "${DISPLAY:=:0}";
+export DBUS_SESSION_BUS_ADDRESS DISPLAY XDG_RUNTIME_DIR;
 
 if
-        test -p /dev/stdin || test -f /dev/stdin;
+    test -p /dev/stdin || test -f /dev/stdin;
 then
-        read -r urgency category body
+    read -r urgency category body;
 else
-        urgency="$1"
-        category="$2"
-        body="$3"
-fi
+    urgency="$1" \
+    category="$2" \
+    body="$3";
+fi;
 
 case "$urgency" in
-emerg|alert|crit|err|[0-3])
-        urgency=critical
-;;
-warning|notice|debug|[4,5,7])
-        urgency=normal
-;;
-info|6)
-        urgency=low
-;;
-*)
-        exit 1
-esac
+    (emerg|alert|crit|err|[0-3])
+        urgency=critical;;
+    (warning|notice|debug|[4,5,7])
+        urgency=normal;;
+    (info|6)
+        urgency=low;;
+    (*)
+        exit 1;
+esac;
 
-test -f "/tmp/.dunst_use_${urgency}" && notify-send \
-        -u "$urgency" --category="$category" "$category" "$body";
+test -f "/tmp/.dunst_use_${urgency}" &&
+    notify-send -u "$urgency" --category="$category" "$category" "$body";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

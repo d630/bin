@@ -2,11 +2,11 @@
 #
 # Get sun data infos from http://www.gaisma.com.
 
-echo
+echo;
 
-curl -s http://www.gaisma.com/en/location/"${1:-$X_MY_LOCATION1}".html \
-| scrape -be 'table.sun-data' \
-| w3m -dump -T text/html \
-| head;
+curl -s http://www.gaisma.com/en/location/"${1:-$X_MY_LOCATION1}".html |
+scrape -be 'table.sun-data' |
+w3m -dump -T text/html |
+head;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

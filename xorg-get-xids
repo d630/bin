@@ -2,12 +2,7 @@
 #
 # Fastest way to get x window ids?
 
-if
-        read -r _ _ _ _ xids < <(
-                xprop -root _NET_CLIENT_LIST
-        )
-then
-        printf '%s\n' ${xids//,/}
-fi
+read -r _ _ _ _ xids < <(xprop -root _NET_CLIENT_LIST) &&
+    printf '%s\n' ${xids//,/};
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

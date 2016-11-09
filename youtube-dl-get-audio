@@ -4,24 +4,23 @@
 
 #set -e
 
-for i
-do
-        youtube-dl \
-                --external-downloader=aria2c \
-                --output="%(title)s.%(ext)s" \
-                --restrict-filenames \
-                --continue \
-                --no-overwrites \
-                --no-cache-dir \
-                --print-traffic \
-                --no-call-home \
-                --prefer-free-formats \
-                --extract-audio \
-                --audio-format=vorbis \
-                --prefer-ffmpeg \
-                "$i"; #&
-done
+for i; do
+    youtube-dl \
+        --external-downloader=aria2c \
+        --output="%(title)s.%(ext)s" \
+        --restrict-filenames \
+        --continue \
+        --no-overwrites \
+        --no-cache-dir \
+        --print-traffic \
+        --no-call-home \
+        --prefer-free-formats \
+        --extract-audio \
+        --audio-format=vorbis \
+        --prefer-ffmpeg \
+        "$i"; #&
+done;
 
-#wait
+#wait;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

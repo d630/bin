@@ -3,10 +3,10 @@
 # Pick color via grabc.
 
 c=$(
-        grabc \
-        |& grep -o '#.*';
-)
+    grabc |&
+    grep -o '#.*';
+);
 
-printf '%s' "${c^^}"
+printf '%s' "${c^^}";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

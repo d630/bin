@@ -2,16 +2,16 @@
 #
 # Disown job.
 
-set -o monitor
+set -o monitor;
 
 "$1" "${@:2}" &
-pid=$!
+pid=$!;
 
 jn=$(
-        jobs -lr \
-        | sed "/\[[0-9]*\]+ ${pid}/ s/\[\([0-9]*\)\].*/\1/";
-)
+    jobs -lr |
+    sed "/\[[0-9]*\]+ ${pid}/ s/\[\([0-9]*\)\].*/\1/";
+);
 
-(( jn )) && builtin disown "%$jn"
+((jn)) && builtin disown "%$jn";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

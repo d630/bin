@@ -2,9 +2,14 @@
 #
 # Display color info in terminal.
 
-printf 'TERM: %s\nCOLORS: %d\nLONGNAME: %s\n' "$TERM" "$(tput colors)" "$(tput longname)"
+# TODO
 
-task rc._forcecolor=on colors
-# weechat -c
+printf 'TERM: %s\nCOLORS: %d\nLONGNAME: %s\n' \
+    "$TERM" \
+    "$(tput colors)" \
+    "$(tput longname)";
 
-# vim: set ts=8 sw=8 tw=0 et :
+task rc._forcecolor=on colors;
+# weechat -c;
+
+# vim: set ts=4 sw=4 tw=0 et :

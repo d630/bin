@@ -2,29 +2,27 @@
 #
 # Simple wrapper for using taskwarrior with local "task-repos".
 
-TASKRC="${TASKRC:-${PWD}/.task/taskrc}"
-
-export TASKRC
+TASKRC="${TASKRC:-${PWD}/.task/taskrc}";
+export TASKRC;
 
 case "$1" in
-init)
+    (init)
         if
-                test -d "${PWD}/.task"
+            test -d "${PWD}/.task";
         then
-                printf '%s:Error:82: Could not create a task repository: "%s/.task/" is existing\n' "$0" "$PWD" \
-                1>&2;
-                exit 82
+            printf '%s:Error:82: Could not create a task repository: "%s/.task/" is existing\n' "$0" "$PWD" \
+                    1>&2;
+            exit 82;
         else
-                mkdir -p -- "${PWD}/.task/data" && task config data.location "${PWD}/.task/data";
-        fi
-;;
---)
-        shift 1
-        task "$@"
-;;
-*)
+            mkdir -p -- "${PWD}/.task/data" &&
+                task config data.location "${PWD}/.task/data";
+        fi;;
+    (--)
+        shift 1;
+        task "$@";;
+    (*)
         printf '%s:Error:83: Unknown parameter: %s\n' "$0" "$1" 1>&2;
-        exit 83
-esac
+        exit 83;
+esac;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

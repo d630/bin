@@ -2,33 +2,32 @@
 #
 # Simple calculation with bc and dmenu.
 
-__result ()
-{
-        result=$(
-                xsel -o \
-                | menu "$1" "RESULT" \
-                | xargs echo \
-                | bc \
-                2>&1;
-        )
+function __result {
+    result=$(
+        xsel -o |
+        menu "$1" "RESULT" |
+        xargs echo |
+        bc 2>&1;
+    );
 
-        printf '%s\n' "$result" \
-        | tee >(xclip -i);
-}
+    printf '%s\n' "$result" |
+    tee >(xclip -i);
+};
 
 if
-        test-tty 2>/dev/null;
+    test-tty 2>/dev/null;
 then
-        menu=slmenu
+    menu=slmenu;
 else
-        menu=dmenu2
-fi
+    menu=dmenu2;
+fi;
 
-__result "$menu"
+'__result' "$menu";
+
 while
-        [[ -n $result ]]
+    [[ -n $result ]];
 do
-        __result "$menu"
-done
+    '__result' "$menu";
+done;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

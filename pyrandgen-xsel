@@ -2,9 +2,9 @@
 #
 # X-select random password.
 
-p="$(pyrandgen)"
+p="$(pyrandgen)";
 
-printf "$p" \
-| xclip -i -l 1 -selection clipboard;
+printf "$p" |
+xclip -i -l 1 -selection clipboard;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :

@@ -4,4 +4,4 @@
 
 #exec imapfilter -vc ~/.imapfilter/posteo.lua -l "${XDG_VAR_HOME}/log/imapfilter.log" > /dev/null 2>&1
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ts=4 sw=4 tw=0 et :
