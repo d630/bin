@@ -40,7 +40,7 @@ then
     rm -f "$file_webradio_pid" 1>/dev/null 2>&1;
 fi;
 
-function __playstream (
+function __playstream () (
     0</dev/null \
         nohup audio-player --no-terminal "${streams[$selection]}" \
     1>/dev/null 2>&1 &
@@ -68,15 +68,15 @@ fi;
 
 typeset -gA streams;
 
-__build_streams;
-__selectstream;
+'__build_streams';
+'__selectstream';
 
 while
     [[ -n $selection ]];
 do
-    __stopstream;
-    [[ $selection == STOPSTREAM ]] || __playstream;
-    __selectstream;
+    '__stopstream';
+    [[ $selection == STOPSTREAM ]] || '__playstream';
+    '__selectstream';
 done;
 
 # vim: set ts=4 sw=4 tw=0 et :
