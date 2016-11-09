@@ -2,11 +2,7 @@
 #
 # Weekly backup with obnam.
 
-ulimit -n 1024;
-ulimit -s 8192;
-
-obnam_conf="${HOME}/.obnam.conf" \
-obnam_log="${XDG_VAR_HOME:?}/log/obnam.log";
+obnam_conf="${HOME}/.obnam.conf";
 
 sudo obnam backup --config="$obnam_conf" --lru-size=8192 --upload-queue-size=8192 \
     --exclude=/home/latch/tmp \
