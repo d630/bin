@@ -25,7 +25,7 @@ function __select {
         GREEN=$(command \tput setaf 2 || command \tput AF 2;) \
         RED=$(command \tput setaf 1 || command \tput AF 1;);
 
-    command sed "
+    command \sed "
         / -[so] / {
             s/$/ ${BOLD}${GREEN}enabled${RESET}/;
             b return;

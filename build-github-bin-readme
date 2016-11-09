@@ -30,10 +30,10 @@ function __find {
     # | xargs -0 grep -H -m 1 '// ' \
     # | sed 's/    \/\//#/';
 
-    git ls-files -z '[!A][!R]*' \
-    | xargs -0 grep -E -Z -l -m 1 '^#!.*php.*' \
-    | xargs -0 grep -H -m 1 '// ' \
-    | sed 's/[[:space:]]*\/\//#/';
+    git ls-files -z '[!A][!R]*' |
+    xargs -0 grep -E -Z -l -m 1 '^#!.*php.*' |
+    xargs -0 grep -H -m 1 '// ' |
+    sed 's/[[:space:]]*\/\//#/';
 };
 
 {
