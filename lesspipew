@@ -9,7 +9,7 @@
 # -- CONFIG.
 
 function Lesspipe::Init {
-    { typeset i=$(</dev/fd/0) } <<-'INIT'
+    { typeset i=$(</dev/fd/0); } <<-'INIT'
 typeset -A Mime=(
     [application/pdf]='pdftotext -layout %s -'
     [application/postscript]='pstotext %s'
@@ -161,8 +161,7 @@ function Lesspipe::ExecCommand
 if
     command -v "${command[0]}" 1>/dev/null 2>&1;
 then
-    typeset -x \
-        LESSMETACHARS=" $'\t'$'\n''"';*?"()<>[|&^`#\$%=~';
+    typeset -x LESSMETACHARS=" $'\t'$'\n''"';*?"()<>[|&^`#\$%=~';
     eval "${command_quoted[@]}";
 else
     printf "%s: error: command not found: '%s'\n" "$0" "${command[0]}" 1>&2;
