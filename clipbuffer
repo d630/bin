@@ -16,7 +16,8 @@ typeset \
 
 function Clipbuffer::Daemon {
     mkdir -p -m 700 -- "$xsels";
-    ${opt_clear} && > "${xsels}/clips";
+    ${opt_clear} &&
+        > "${xsels}/clips";
     printf '%d\n' "$$" > "${xsels}/$$.pid";
 
     xprop -root -spy CUT_BUFFER0 |
@@ -100,7 +101,8 @@ elif
     ${opt_restart};
 then
     'Clipbuffer::Kill';
-    [[ -n $DISPLAY ]] && daemonize "$(command -v "$0";)" -d;
+    [[ -n $DISPLAY ]] &&
+        daemonize "$(command -v "$0")" -d;
 else
     'Clipbuffer::Clip';
 fi;

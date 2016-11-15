@@ -2,12 +2,10 @@
 #
 # Build /etc/apt/sources.list with the help of netselect-apt.
 
-if
-    ((UID));
-then
+((UID)) && {
     printf '%s\n' "damn. invoke me as root, please" 1>&2;
     exit 1;
-fi;
+};
 
 cd /tmp;
 rm -frv -- "/tmp/napt";
@@ -65,7 +63,8 @@ cat /tmp/napt/*-source.list > "/etc/apt/sources.list";
 printf '%s\n' "$section" >> "/etc/apt/sources.list";
 
 read -rp "set up preferences? ";
-[[ $REPLY == y ]] || exit 1;
+[[ $REPLY == y ]] ||
+    exit 1;
 
 {
     preferences=$(</dev/fd/0);

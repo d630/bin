@@ -4,10 +4,12 @@
 # Source: http://askubuntu.com/questions/16149/ \
 #       overwrite-previous-output-in-bash-instead-of-appending-it
 
-sec=$1 SECONDS=0;
+sec=$1 \
+SECONDS=0;
 
 while
-    sleep .5 && ((SECONDS <= sec));
+    sleep .5 &&
+        ((SECONDS <= sec));
 do
     printf "\r%0${#sec}d" "$((sec - SECONDS))";
 done;

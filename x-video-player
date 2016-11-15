@@ -4,6 +4,7 @@
 
 IFS='|';
 set -- ${X_VIDEO_PLAYER_OPTS} ${1:+"$@"};
+
 exec "$X_VIDEO_PLAYER" "$@";
 
 # vim: set ts=4 sw=4 tw=0 et :

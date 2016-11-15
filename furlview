@@ -32,7 +32,8 @@ function __ugrep {
 };
 
 function __select {
-    __ugrep | __fzf;
+    __ugrep |
+    __fzf;
 };
 
 function __is_file [[ -p $1 || -f $1 ]];

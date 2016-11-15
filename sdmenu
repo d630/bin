@@ -2,6 +2,7 @@
 #
 # Wrapper for dmenu2-save.
 
-test -n "$DISPLAY" && menu dmenu2-save "$1" 0<&-;
+test -n "$DISPLAY" &&
+    menu dmenu2-save "$1" 0<&-;
 
 # vim: set ts=4 sw=4 tw=0 et :

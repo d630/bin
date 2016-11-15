@@ -19,7 +19,7 @@ then
                 printf "%8d  %s %d\n", swap, name, pid
             }
         }' /proc/[0-9]*/status |
-        sort -nr;
+    sort -nr;
 else
     for f in /proc/[0-9]*; do
             # awk will fail on permission denied

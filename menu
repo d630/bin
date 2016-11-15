@@ -24,7 +24,7 @@ fi;
 fn="Monospace:size=13";
 
 case "$menu" in
-    choose)
+    (choose)
         exec choose -;;
     (dmenu)
         exec dmenu -b -i \
@@ -43,7 +43,8 @@ case "$menu" in
             -name "dmenu2" \
             -class "dmenu2";;
     (dmenu2-save)
-        test -n "$menu_prompt" ] || exit 1;
+        test -n "$menu_prompt" ] ||
+            exit 1;
         exec dmenu2 -b -f \
             -mask \
             -p "$menu_prompt" \

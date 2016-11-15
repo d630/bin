@@ -19,7 +19,8 @@ backup-meta-init;
 
 'PrintHeader' "etckeeper";
 (
-    cd -- / || exit 1;
+    cd -- / ||
+        exit 1;
     printf -v d '%(%s)T' -1;
     sudo etckeeper commit "${d}: prepare backup";
 );

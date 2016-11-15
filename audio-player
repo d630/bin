@@ -4,6 +4,7 @@
 
 IFS='|';
 set -- ${AUDIO_PLAYER_OPTS} ${1:+"$@"};
+
 exec "$AUDIO_PLAYER" "$@";
 
 # vim: et ts=4 sw=4 tw=0 et :

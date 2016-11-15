@@ -9,10 +9,11 @@ mkdir -pv -- "${backup_dir}/paketlisten";
 
 sudo apt-cache policy > "${backup_dir}/cache.txt";
 
-cd -- "${backup_dir}/paketlisten" || exit 1;
+cd -- "${backup_dir}/paketlisten" ||
+    exit 1;
 
 dpkg --get-selections |
-mawk '!/deinstall|purge|hold/ { print $1 }'  > "./packages.txt";
+mawk '!/deinstall|purge|hold/ { print $1 }' > "./packages.txt";
 
 COLUMNS=200 dpkg-query -l > "./query.txt";
 sudo apt-mark showauto > "./auto.txt";
@@ -26,6 +27,5 @@ sudo find /etc/apt/sources.list* \
         printf "%s\n## " "$1";
         grep "^[[:space:]]*[^#[:space:]]" "$1";' \
     _ {} \; > "./sources.list";
-
 
 # vim: set ts=4 sw=4 sts=4 tw=4 et :

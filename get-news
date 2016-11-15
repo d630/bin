@@ -2,13 +2,11 @@
 #
 # Wrapper for getting my news.
 
-if
-    exec 9<"$0";
-    ! flock -n 9;
-then
+exec 9<"$0";
+flock -n 9 || {
     printf '%s\n' "sorry, I am already running" 1>&2;
     exit 1;
-fi;
+};
 
 test-inet || {
     loggi 3 .network.error "We are offline. News have not been updated";
@@ -24,6 +22,7 @@ d="$(
 wait;
 f="$(newsbeuter -x reload print-unread)";
 
-test "$((${d%% *} + ${f%% *}))" -gt 0 && loggi 6 .transfer.complete "${d}\n${f}";
+test "$((${d%% *} + ${f%% *}))" -gt 0 &&
+    loggi 6 .transfer.complete "${d}\n${f}";
 
 # vim: set ts=4 sw=4 tw=0 et :

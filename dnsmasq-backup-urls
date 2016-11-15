@@ -2,7 +2,7 @@
 #
 # Backup all uris from dnsmasq log.
 
-log="${XDG_VAR_HOME:-/home/user1/var/}/log/urls.log";
+log="${XDG_VAR_HOME:-/home/user1/var}/log/urls.log";
 touch "$log";
 
 grep -F -e 'reply' "/var/log/dnsmasq.log" |

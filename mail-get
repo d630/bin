@@ -16,7 +16,8 @@ mapfile -t reply < <(
         -l "${XDG_VAR_HOME}/log/imapfilter.log";
 );
 
-((${reply[0]//[!0-9]/} + ${reply[1]//[!0-9]/} > 0)) || exit 1;
+((${reply[0]//[!0-9]/} + ${reply[1]//[!0-9]/} > 0)) ||
+    exit 1;
 loggi 6 .email.arrived "${reply[0]:-?}\n${reply[1]:-?}";
 
 # vim: set ts=4 sw=4 tw=0 et :

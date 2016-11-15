@@ -6,8 +6,7 @@
 # $ loggi level category [summary [body]]
 
 l="$1" \
-c="$2" \
-prog=;
+c="$2";
 
 shift 2;
 

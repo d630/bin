@@ -213,7 +213,8 @@ fi;
         exit 0;
 
 for i in ${LESSIGNORE}; do
-    [[ $1 == *.${i} ]] && exit 0;
+    [[ $1 == *.${i} ]] &&
+        exit 0;
 done;
 
 typeset -a \

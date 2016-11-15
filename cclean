@@ -12,7 +12,7 @@ rm -rf -- \
     "${HOME}/.icedteaplugin" \
     "${HOME}/.macromedia" \
     "${HOME}/.thumbnails" \
-    "${XDG_CACHE_HOME}/"?*;
+    "${XDG_CACHE_HOME:?}/"?*;
 
 rm -f -- \
     "${HOME}/.gksu.lock" \

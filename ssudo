@@ -2,7 +2,7 @@
 #
 # Using sudo with dmenu2 via SUDO_ASKPASS.
 
-export SUDO_ASKPASS=${XDG_BIN_HOME}/smenu;
+export SUDO_ASKPASS=${XDG_BIN_HOME:?}/smenu;
 readonly SUDO_ASKPASS;
 sudo -A "$@";
 

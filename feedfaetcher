@@ -16,7 +16,8 @@ function __feedcacher_do {
         onlinexml \
         url=${1,,};
 
-    [[ $url == \#* ]] && return 1;
+    [[ $url == \#* ]] &&
+        return 1;
 
     if
         [[ $url =~ ^https?://.*\.[a-z]*/.*$ ]];
@@ -66,9 +67,12 @@ function __feedcacher_do {
 
 export -f __feedcacher_do;
 
-[[ -d $cachedir ]] || mkdir -p -- "$cachedir";
-[[ -f $reportnew ]] && rm -- "$reportnew";
-[[ -f $table ]] && rm -- "$table";
+[[ -d $cachedir ]] ||
+    mkdir -p -- "$cachedir";
+[[ -f $reportnew ]] &&
+    rm -- "$reportnew";
+[[ -f $table ]] &&
+    rm -- "$table";
 [[ -d $cachedir ]] && {
     rm -r -- "$cachedir";
     mkdir -p -- "$cachedir";
@@ -80,7 +84,7 @@ xargs -I {} -a "$urllist" -n 1 -P 4 -i bash -c '__feedcacher_do "$@";' _ {};
 exec 3<&-;
 
 if
-    [[ $(stat -c %s "$reportnew" 2>/dev/null;) -ge 2 ]];
+    [[ $(stat -c %s "$reportnew" 2>/dev/null) -ge 2 ]];
 then
     tput bold setaf 7; printf '\n%s\n' "REPORT"; tput sgr0;
     cat "$reportnew";

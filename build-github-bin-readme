@@ -2,7 +2,8 @@
 #
 # Build README.md in github.com/D630/bin .
 
-cd -- "/home/stow/${HOSTNAME:?}::${USER:?}::bin/bin" || exit 1;
+cd -- "/home/stow/${HOSTNAME:?}::${USER:?}::bin/bin" ||
+    exit 1;
 
 IFS='.:' read -r _ _ p _  _ < <(git config --local --get remote.origin.url);
 P=https://github.com/${p};

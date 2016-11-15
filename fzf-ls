@@ -4,11 +4,8 @@
 
 arg="$(readlink -f "${1:-$PWD}")";
 
-if
-    test -d "$arg";
-then
+test -d "$arg" &&
     ls -A1 --color=always "$arg" |
     fzf -m --ansi --prompt="PRINT ";
-fi;
 
 # vim: set ts=4 sw=4 tw=0 et :

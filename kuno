@@ -47,6 +47,7 @@ TEMPLATE
 #emacsclient -t "$file"
 
 read -re -n 1 -p "Add a task to taskwarrior? (y/n)" selection;
-[[ $selection == y ]] && taskwarrior-add;
+[[ $selection == y ]] &&
+    taskwarrior-add;
 
 # vim: set ts=4 sw=4 tw=0 et :

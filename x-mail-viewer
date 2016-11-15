@@ -4,6 +4,7 @@
 
 IFS='|';
 set -- ${X_MAIL_VIEWER_OPTS} ${1:+"$@"};
+
 exec "$X_MAIL_VIEWER" "$@";
 
 # vim: set ts=4 sw=4 tw=0 et :

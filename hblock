@@ -3,7 +3,8 @@
 # Simple ad- and malware-blocking-list builder for dnsmasq.
 # Inspired by hostblock (http://gaenserich.github.com/hostsblock)
 
-(($#)) && exec sudo "$(type -P "$0")";
+(($#)) &&
+    exec sudo "$(type -P "$0")";
 
 typeset -x \
     hblock_cachedir=${TMPDIR:-/tmp}/hostfiles \
@@ -58,7 +59,6 @@ xargs \
 cat "$hblock_black" <(
     echo;
     echo;
-
     sort -u "${hblock_tmpdir}/"*.clean |
     egrep -v -f "$hblock_white";
 ) > "$hostfile_block";

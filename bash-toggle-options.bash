@@ -20,10 +20,10 @@ done;
 
 function __select {
     builtin typeset \
-        BOLD=$(command \tput bold || command \tput md;) \
-        RESET=$(command \tput sgr0 || command \tput me;) \
-        GREEN=$(command \tput setaf 2 || command \tput AF 2;) \
-        RED=$(command \tput setaf 1 || command \tput AF 1;);
+        BOLD=$(command \tput bold || command \tput md) \
+        RESET=$(command \tput sgr0 || command \tput me) \
+        GREEN=$(command \tput setaf 2 || command \tput AF 2) \
+        RED=$(command \tput setaf 1 || command \tput AF 1);
 
     command \sed "
         / -[so] / {
