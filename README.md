@@ -112,6 +112,7 @@ List:
 * [stat-1](https://github.com/D630/bin/blob/master/stat-1): Stat a file and build an associative array.
 * [stj1](https://github.com/D630/bin/blob/master/stj1): Use st like kuake and yeahconsole terminal.
 * [stow-home](https://github.com/D630/bin/blob/master/stow-home): xstow wrapper.
+* [stow-new](https://github.com/D630/bin/blob/master/stow-new): Set up a new stow package.
 * [sxiv-browser](https://github.com/D630/bin/blob/master/sxiv-browser): Open all files in the current directory with sxiv.
 * [task-local](https://github.com/D630/bin/blob/master/task-local): Simple wrapper for using taskwarrior with local "task-repos".
 * [taskwarrior-add](https://github.com/D630/bin/blob/master/taskwarrior-add): Add interactively a task to Taskwarrior via read in a terminal + {d,s}menu.
