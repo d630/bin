@@ -6,7 +6,7 @@ h=$(hostname) \
 cache="${XDG_VAR_HOME:?}/lib/feedfaetcher/cache" \
 tagfile="${HOME}/.newsbeuter/tags" \
 feedfile="${HOME}/.newsbeuter/urls";
-stowdir="/home/stow/${h}::${USER:?}::newsbeuter/.newsbeuter";
+stowdir="/home/stow/newsbeuter/.newsbeuter";
 
 feed="$(
     find -H "$cache" -type f |
@@ -27,8 +27,7 @@ then
 
     mv -- "${feedfile}.${$}" "${stowdir}/urls";
 
-    cd "/home/stow" &&
-        stow-home -R "${h}::${USER}::newsbeuter";
+    stow-home -R "newsbeuter";
 else
     printf '%s\n' "No tag has been chosen" 1>&2;
 fi;
