@@ -1,4 +1,4 @@
-Short scripts, which do not belong to my [dotfiles](https://github.com/D630/dotfiles). Unless otherwise stated, these files are in the public domain.
+Short scripts, which do not belong to my dotfiles. Unless otherwise stated, these files are in the public domain.
 
 List:
 * [audio-player](https://github.com/D630/bin/blob/master/audio-player): Default audio player (cli).
@@ -12,7 +12,7 @@ List:
 * [bash-print-freq](https://github.com/D630/bin/blob/master/bash-print-freq): Print frequency of the bash history.
 * [bash-toggle-options.bash](https://github.com/D630/bin/blob/master/bash-toggle-options.bash): Toggle bash options via fzf.
 * [bspwm-rules](https://github.com/D630/bin/blob/master/bspwm-rules): bspwm: external_rules_command
-* [build-github-bin-readme](https://github.com/D630/bin/blob/master/build-github-bin-readme): Build README.md in github.com/D630/bin .
+* [build-github-bin-readme](https://github.com/D630/bin/blob/master/build-github-bin-readme): Build README.md in github.com/D630/bin.
 * [calculate-date](https://github.com/D630/bin/blob/master/calculate-date): Calculate dates via taskwarrior.
 * [camshot-dirty](https://github.com/D630/bin/blob/master/camshot-dirty): Take a quick camshot.
 * [cclean](https://github.com/D630/bin/blob/master/cclean): Clean up some dirs and files.

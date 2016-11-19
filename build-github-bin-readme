@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Build README.md in github.com/D630/bin .
+# Build README.md in github.com/D630/bin.
 
 cd -- "/home/stow/bin/bin" ||
     exit 1;
@@ -40,7 +40,7 @@ function __find {
 {
     header=$(</dev/fd/0);
 } <<'HEADER'
-Short scripts, which do not belong to my [dotfiles](https://github.com/D630/dotfiles). Unless otherwise stated, these files are in the public domain.
+Short scripts, which do not belong to my dotfiles. Unless otherwise stated, these files are in the public domain.
 
 List:
 
