@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# bspwm: external_rules_command
+
+id="$1";
+instance="$3";
+class="$2";
+
+case "$class" in
+    (Gimp*)
+        echo follow=on ;;
+    (chromium)
+        echo desktop=^2;;
+    (Emacs)
+        echo "state=tiled layer=normal";;
+    (Firefox | Iceweasel)
+        echo desktop=^2;;
+    (Xombrero)
+        echo desktop=^2;;
+    (MPlayer)
+        echo "state=floating layer=normal";;
+    (mpv)
+        echo "state=floating layer=normal";;
+    (Pidgin)
+        echo desktop=^3;;
+    (Pinentry-gtk-2)
+        echo "state=floating layer=above";;
+    (Spotify)
+        echo desktop=^5;;
+    (XCalc)
+        echo "state=floating layer=normal";;
+    (Xmessage)
+        echo "state=floating layer=normal";;
+    (stj[12])
+        echo "state=floating layer=above border=on sticky=on";;
+    (weechat)
+        echo desktop=^3
+esac;
+
+# vim: set ts=4 sw=4 tw=0 et :
