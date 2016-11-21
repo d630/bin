@@ -19,7 +19,9 @@ shopt -s extglob;
 shopt -s dotglob;
 set -- "${maildir}/"!(\.*);
 
-(($#)) && cnt=$# || exit 1;
+(($#)) &&
+    cnt=$# ||
+        exit 1;
 
 i=0;
 until

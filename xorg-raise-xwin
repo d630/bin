@@ -11,9 +11,7 @@ id="$(
     mawk '{print $1}';
 )";
 
-if
-    test -n "$id";
-then
+test -n "$id" && {
     #xdotool windowmap $id
     #wmctrl -i -r $id -b remove,hidden
     #xdotool windowraise $id
@@ -21,8 +19,6 @@ then
     #xdotool mousemove --window $id 25 25
     #xdotool click 1
     wmctrl -i -a "$id";
-else
-    exit 1;
-fi;
+};
 
 # vim: set ts=4 sw=4 tw=0 et :

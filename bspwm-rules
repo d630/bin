@@ -34,7 +34,7 @@ case "$class" in
     (stj[12])
         echo "state=floating layer=above border=on sticky=on";;
     (weechat)
-        echo desktop=^3
+        echo desktop=^3;
 esac;
 
 # vim: set ts=4 sw=4 tw=0 et :

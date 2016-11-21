@@ -5,7 +5,7 @@
 h=$(hostname) \
 cache="${XDG_VAR_HOME:?}/lib/feedfaetcher/cache" \
 tagfile="${HOME}/.newsbeuter/tags" \
-feedfile="${HOME}/.newsbeuter/urls";
+feedfile="${HOME}/.newsbeuter/urls" \
 stowdir="/home/stow/newsbeuter/.newsbeuter";
 
 feed="$(

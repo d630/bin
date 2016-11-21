@@ -22,43 +22,43 @@ case "$urgency" in
 esac;
 
 case "$summary" in
-    .device.added)
+    (.device.added)
         f="mac-sound-pack-Device_Connect.wav";;
-    .device*)
+    (.device*)
         ${urgency} && f="mac-sound-pack-Device_Failed.wav";;
-    .device.removed)
+    (.device.removed)
         f="mac-sound-pack-Device_Disconnect.wav";;
-    .email.arrived)
+    (.email.arrived)
         f="mac-sound-pack-new-mail.wav";;
-    .email.bounced)
+    (.email.bounced)
         f="mac-sound-pack-mail-sent.wav";;
-    .email*)
+    (.email*)
         ${urgency} && f="mac-sound-pack-Error.wav";;
-    .email.nomail)
+    (.email.nomail)
         f="mac-sound-pack-no-mail.wav";;
-    .im*)
+    (.im*)
         ${urgency} && f="mac-sound-pack-Error.wav";;
-    .im.sent)
+    (.im.sent)
         f="mac-sound-pack-sent-message.wav";;
-    .im.received)
+    (.im.received)
         f="mac-sound-pack-received-message.wav";;
-    .misc*)
+    (.misc*)
         ${urgency} && f="mac-sound-pack-Error.wav";;
-    .misc.exclamation)
+    (.misc.exclamation)
         f="mac-sound-pack-Exclamation.wav";;
-    .network.connected)
+    (.network.connected)
         f="mac-sound-pack-invitation-accepted.wav";;
-    .network.disconnected)
+    (.network.disconnected)
         f="mac-sound-pack-invitation.wav";;
-    .network*)
+    (.network*)
         ${urgency} && f="mac-sound-pack-Error.wav";;
-    .presence.offline)
+    (.presence.offline)
         f="mac-sound-pack-buddy-logging-out.wav";;
-    .presence.online)
+    (.presence.online)
         f="mac-sound-pack-buddy-logging-in.wav";;
-    .transfer.complete)
+    (.transfer.complete)
         f="mac-sound-pack-file-transfer-complete.wav";;
-    .transfer*)
+    (.transfer*)
         ${urgency} && f="mac-sound-pack-Error.wav";
 esac;
 

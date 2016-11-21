@@ -10,7 +10,7 @@
 cd /tmp;
 rm -frv -- "/tmp/napt";
 
-trap 'exit 1;' INT TERM QUIT EXIT;
+trap 'exit 1' INT TERM QUIT EXIT;
 
 {
     section=$(</dev/fd/0);

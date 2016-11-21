@@ -75,7 +75,8 @@ function i_have_a_tui {
 
     for pid in "${pid_list[@]}"; do
         for idx in "${!pids[@]}"; do
-            [[ ${pids[$idx]]} == $pid ]] && xids_list+=(${xids[$idx]});
+            [[ ${pids[$idx]]} == $pid ]] &&
+                xids_list+=(${xids[$idx]});
         done;
     done;
 

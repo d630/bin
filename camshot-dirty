@@ -10,6 +10,6 @@ avconv \
     -i /dev/video0 \
     -ss 0:0:2 \
     -frames 1 \
-    /tmp/camshots/$(date +%s).jpg
+    /tmp/camshots/$(date +%s).jpg;
 
 # vim: set ts=4 sw=4 tw=0 et :

@@ -12,7 +12,8 @@ dz () {
 
 if
     if
-        id="$(cat "${XDG_CACHE_HOME:?}/stj1" 2>/dev/null;)" && test -n "$id";
+        id="$(cat "${XDG_CACHE_HOME:?}/stj1" 2>/dev/null;)" &&
+            test -n "$id";
     then
         xprop -id "0x${id}" 1>/dev/null 2>&1;
         #xwininfo -name stj1

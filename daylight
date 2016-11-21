@@ -8,23 +8,17 @@ f=${XDG_CACHE_HOME:?}/DAYLIGHT;
 if
     test-daylight;
 then
-    if
-        [[ -f $f && $FORCE -eq 0 ]];
-    then
-        :;
-    else
+    [[ -f $f && $FORCE -eq 0 ]] || {
         > "$f";
         exec theme light;
-    fi;
+    };
 else
-    if
-        [[ -f $f || $FORCE -gt 0 ]];
-    then
+    [[ -f $f || $FORCE -gt 0 ]] && {
         rm -f -- /tmp/DAYLIGHT;
         exec theme dark;
-    else
-        :;
-    fi;
+    };
 fi;
+
+:;
 
 # vim: set ts=4 sw=4 tw=0 et :

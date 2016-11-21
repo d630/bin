@@ -22,7 +22,6 @@ then
     sort -nr;
 else
     for f in /proc/[0-9]*; do
-            # awk will fail on permission denied
         mawk '
             BEGIN {
                 swap=0
