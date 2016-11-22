@@ -12,14 +12,6 @@ rm -frv -- "/tmp/napt";
 
 trap 'exit 1' INT TERM QUIT EXIT;
 
-{
-    section=$(</dev/fd/0);
-} <<SEC
-# experimental
-deb http://httpredir.debian.org/debian experimental main contrib non-free
-deb-src http://httpredir.debian.org/debian experimental main contrib non-free
-SEC
-
 for release in stable testing unstable; do
     mkdir -p -- "/tmp/napt/${release}";
 
@@ -57,6 +49,14 @@ SEC
 
     printf '%s\n\n' "$section" > "/tmp/napt/${release}-source.list";
 done;
+
+{
+    section=$(</dev/fd/0);
+} <<SEC
+# experimental
+deb http://httpredir.debian.org/debian experimental main contrib non-free
+deb-src http://httpredir.debian.org/debian experimental main contrib non-free
+SEC
 
 mv -v -- "/etc/apt/sources.list" "/etc/apt/sources.list.old";
 cat /tmp/napt/*-source.list > "/etc/apt/sources.list";
