@@ -1,0 +1,179 @@
+#!/usr/bin/env bash
+#
+# Some functions to modify public user-playlists via Spotify's Web API.
+# needs: bash, curl, gawk and jq
+
+# -- FUNCTIONS.
+
+# -- web api.
+
+function spotify.playlist.addTracks {
+    # OAuth Scope: playlist-modify-public, playlist-modify-private
+    # Params: user_id playlist_id access_token spotify_uri ...
+
+    [[ -n "$4" ]] || return 1;
+
+    curl \
+        -s \
+        -X POST "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}/tracks" \
+        -H "Accept: application/json" \
+        -H "Authorization: Bearer ${3:?}" \
+        --data "{\"uris\": [${@:4}]}";
+};
+
+function spotify.playlist.clear {
+    # OAuth Scope: playlist-modify-public, playlist-modify-private
+    # Params: user_id playlist_id access_token
+
+    curl \
+        -s \
+        -X PUT "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}/tracks?uris=" \
+        -H "Authorization: Bearer ${3:?}";
+};
+
+function spotify.playlist.create {
+    # OAuth Scope: playlist-modify-public, playlist-modify-private
+    # Params: user_id playlist_name access_token
+
+    curl \
+        -s \
+        -X POST "https://api.spotify.com/v1/users/${1:?}/playlists" \
+        -H "Authorization: Bearer ${3:?}" \
+        -H "Content-Type: application/json" \
+        --data "{\"name\":\"${2:?}\", \"public\":true, \"collaborative\":false}";
+};
+
+function spotify.playlist.getTracks {
+    # OAuth Scope: null
+    # Params: user_id playlist_id access_token [offset]
+
+    curl \
+        -s \
+        -X GET "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}/tracks?limit=100&offset=${4:-0}" \
+        -H "Authorization: Bearer ${3:?}";
+};
+
+function spotify.playlist.list {
+    # OAuth Scope: playlist-read-private, playlist-read-collaborative
+    # Params: user_id access_token [offset]
+
+    curl \
+        -s \
+        -X GET "https://api.spotify.com/v1/users/${1:?}/playlists?limit=50&offset=${3:-0}" \
+        -H "Authorization: Bearer ${2:?}";
+};
+
+function spotify.playlist.privatize {
+    # OAuth Scope: playlist-modify-public, playlist-modify-private
+    # Params: user_id playlist_id access_token
+
+    curl \
+        -s \
+        -X PUT "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}" \
+        -H "Authorization: Bearer ${3:?}" \
+        -H "Content-Type: application/json" \
+        --data "{\"public\":false}";
+};
+
+# -- misc.
+
+function addTracks {
+    declare uid=${1:?} plid=${2:?} ato=${3:?};
+    declare -a uris=();
+
+    shift 3
+
+    if
+        [[ -p /dev/stdin || -f /dev/stdin ]];
+    then
+        mapfile -t uris;
+    else
+        (($#)) &&
+            mapfile -t uris < <(cat "$@");
+    fi;
+
+    ((${#uris[@]})) ||
+        return 1;
+
+    declare -i \
+        int=${#uris[@]}/100 \
+        mod=${#uris[@]}%100 \
+        i= \
+        x=0 \
+        y=100;
+
+    for ((i=int; i > 0; i--, x=y)); do
+        'spotify.playlist.addTracks' "$uid" "$plid" "$ato" "$(
+            IFS=,;
+            printf -- '"%s"' "${uris[*]:x:y}";
+        )";
+    done;
+
+    ((mod)) &&
+        'spotify.playlist.addTracks' "$uid" "$plid" "$ato" "$(
+            IFS=,;
+            printf -- '"%s"' "${uris[*]: -mod}";
+        )";
+};
+
+function getLists {
+    declare -i offset=-50;
+
+    jq -e -r --unbuffered '
+        if (.items | length) > 0
+        then .items[] | [.id, .name] | @sh "spotify_playlists+=(\(.))"
+        else "exit"
+        end
+    ' < <(
+        while
+            'spotify.playlist.list' \
+                "${1:?}" \
+                "${2:?}" \
+                "$((offset+=50))";
+        do
+            :;
+        done;
+    ) |
+    gawk '$0 == "exit" { exit }; { print $0; };'
+};
+
+function getTracks {
+    declare -i offset=-100;
+
+    jq -e -r --unbuffered '
+        if (.items | length) > 0
+        then .items[].track.uri
+        else "exit"
+        end
+    ' < <(
+        while
+            'spotify.playlist.getTracks' \
+                "${1:?}" \
+                "${2:?}" \
+                "${3:?}" \
+                "$((offset+=100))";
+        do
+            :;
+        done;
+    ) |
+    gawk '$0 == "exit" { exit }; { print $0; };'
+};
+
+# -- MAIN.
+
+case "${1:?}" in
+    (addList)
+        'spotify.playlist.create' "${@:2}";;
+    (addTracks)
+        'addTracks' "${@:2}";;
+    (clearList)
+        'spotify.playlist.clear' "${@:2}";;
+    (getLists)
+        'getLists' "${@:2}";;
+    (getTracks)
+        'getTracks' "${@:2}";;
+    (privatizeList)
+        'spotify.playlist.privatize' "${@:2}";;
+esac;
+
+# vim: set ts=4 sw=4 tw=0 et :
