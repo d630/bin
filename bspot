@@ -18,7 +18,7 @@ function spotify.playlist.addTracks {
         -X POST "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}/tracks" \
         -H "Accept: application/json" \
         -H "Authorization: Bearer ${3:?}" \
-        --data "{\"uris\": [${@:4}]}";
+        --data "${@:4}";
 };
 
 function spotify.playlist.clear {
@@ -102,17 +102,19 @@ function addTracks {
         x=0 \
         y=100;
 
-    for ((i=int; i > 0; i--, x=y)); do
+    for ((i=int; i > 0; i--, x+=100)); do
         'spotify.playlist.addTracks' "$uid" "$plid" "$ato" "$(
-            IFS=,;
-            printf -- '"%s"' "${uris[*]:x:y}";
+            printf '%s\n' "${uris[@]:x:y}" |
+            jq -R . |
+            jq -s '{ uris: . }';
         )";
     done;
 
     ((mod)) &&
         'spotify.playlist.addTracks' "$uid" "$plid" "$ato" "$(
-            IFS=,;
-            printf -- '"%s"' "${uris[*]: -mod}";
+            printf '%s\n' "${uris[@]: -mod}" |
+            jq -R . |
+            jq -s '{ uris: . }';
         )";
 };
 
