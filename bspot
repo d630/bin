@@ -16,8 +16,9 @@ function spotify.playlist.addTracks {
     curl \
         -s \
         -X POST "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}/tracks" \
-        -H "Accept: application/json" \
         -H "Authorization: Bearer ${3:?}" \
+        -H "Accept: application/json" \
+        -H "Content-Type: application/json" \
         --data "${@:4}";
 };
 
@@ -66,7 +67,6 @@ function spotify.playlist.list {
 function spotify.playlist.privatize {
     # OAuth Scope: playlist-modify-public, playlist-modify-private
     # Params: user_id playlist_id access_token
-
     curl \
         -s \
         -X PUT "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}" \
@@ -106,7 +106,7 @@ function addTracks {
         'spotify.playlist.addTracks' "$uid" "$plid" "$ato" "$(
             printf '%s\n' "${uris[@]:x:y}" |
             jq -R . |
-            jq -s '{ uris: . }';
+            jq -sc '{ uris: . }';
         )";
     done;
 
@@ -114,7 +114,7 @@ function addTracks {
         'spotify.playlist.addTracks' "$uid" "$plid" "$ato" "$(
             printf '%s\n' "${uris[@]: -mod}" |
             jq -R . |
-            jq -s '{ uris: . }';
+            jq -sc '{ uris: . }';
         )";
 };
 
