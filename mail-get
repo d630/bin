@@ -8,7 +8,7 @@ flock -n 9 || {
     exit 1;
 };
 
-mpop -a >> "${XDG_VAR_HOME}/log/mpop.log" 2>&1;
+mpop -a >> "${XDG_VAR_HOME:?}/log/mpop.log" 2>&1;
 
 mapfile -t reply < <(
     imapfilter \

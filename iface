@@ -12,36 +12,32 @@ else
     iface=${IFACE:-wlan0};
 fi;
 
-if
-    [[ $1 == -wpa && -n $2 && -n $3 ]];
-then
-    ip link set dev "$iface" up;
-    sleep 1;
-    wpa_supplicant -B -i "$iface" -c <(wpa_passphrase "$2" "$3") &&
-        dhclient "$iface";
-elif
-    [[ $1 == -c ]];
-then
-    ip link set dev "$iface" up;
-    sleep 1;
-    wpa_supplicant -B -c /etc/wpa_supplicant/wpa_supplicant.conf -i "$iface" &&
-        dhclient "$iface";
-elif
-    [[ $1 == -s ]];
-then
-    ip link set dev "$iface" up;
-    sleep 1;
-    iw dev "$iface" scan |
-    grep 'SSID\|freq\|signal\|capability' |
-    tac;
-elif
-    [[ $1 == -d ]];
-then
-    dhclient -x "$iface" &&
-        wpa_cli -i "$iface" terminate;
-    ip link set dev "$iface" down;
-else
-    printf '%s' "?" 1>&2;
-fi;
+case $1 in
+    (-wpa)
+        : "${2:?}";
+        : "${3:?}";
+        ip link set dev "$iface" up;
+        sleep 1;
+        wpa_supplicant -B -i "$iface" -c <(wpa_passphrase "$2" "$3") &&
+            dhclient "$iface";;
+    (-c)
+        ip link set dev "$iface" up;
+        sleep 1;
+        wpa_supplicant -B \
+                -c /etc/wpa_supplicant/wpa_supplicant.conf -i "$iface" &&
+            dhclient "$iface";;
+    (-s)
+        ip link set dev "$iface" up;
+        sleep 1;
+        iw dev "$iface" scan |
+        grep 'SSID\|freq\|signal\|capability' |
+        tac;;
+    (-d)
+        dhclient -x "$iface" &&
+            wpa_cli -i "$iface" terminate;
+        ip link set dev "$iface" down;;
+    (*)
+        printf '%s' "?" 1>&2;;
+esac;
 
 # vim: set ts=4 sw=4 tw=0 et :

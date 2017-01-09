@@ -5,43 +5,33 @@
 #       Urxvt#Improved_Kuake-like_behavior_in_Openbox
 
 dz () {
+    test -e "${XDG_CACHE_HOME}/DAYLIGHT" &&
+        shift 1;
+
     daemonize "$1" -i -c stj1 -t stj1 -g 176x33+1+0 -e "$SHELL" -c '
-            printf "%x\n" "$WINDOWID" > "${XDG_CACHE_HOME}/stj1";
-            exec "$0";';
+        printf "%x\n" "$WINDOWID" > "${XDG_CACHE_HOME:?}/stj1";
+        exec "$0";';
+
+    exit 0;
 };
 
+read -r id < "${XDG_CACHE_HOME:?}/stj1" 2>/dev/null;
+
+xprop -id "0x${id}" 1>/dev/null 2>&1 ||
+    'dz' 'st-dark' 'st-light';
+
 if
-    if
-        id="$(cat "${XDG_CACHE_HOME:?}/stj1" 2>/dev/null;)" &&
-            test -n "$id";
-    then
-        xprop -id "0x${id}" 1>/dev/null 2>&1;
-        #xwininfo -name stj1
-    else
-        false;
-    fi;
+    xprop -root -notype -f _NET_CLIENT_LIST 32x '$0+,' _NET_CLIENT_LIST |
+    grep -F -q "0x${id},";
 then
-    if
-        xprop -root _NET_CLIENT_LIST |
-        fgrep -q "0x${id}";
-    then
-        xdotool windowunmap "0x${id}";
-    else
-        #xdotool mousemove --sync 0 0
-        xdotool windowmap --sync "0x${id}";
-        #wmctrl -i -a "0x${id}"
-        #xdotool windowraise "0x${id}"
-        #xdotool windowfocus --sync "0x${id}"
-        #xdotool mousemove --sync 0 0
-    fi;
+    xdotool windowunmap "0x${id}";
 else
-    if
-        test -f "${XDG_CACHE_HOME}/DAYLIGHT";
-    then
-        dz "st-light";
-    else
-        dz "st-dark";
-    fi;
+    #xdotool mousemove --sync 0 0
+    xdotool windowmap --sync "0x${id}";
+    #wmctrl -i -a "0x${id}"
+    #xdotool windowraise "0x${id}"
+    #xdotool windowfocus --sync "0x${id}"
+    #xdotool mousemove --sync 0 0
 fi;
 
 # vim: set ts=4 sw=4 tw=0 et :

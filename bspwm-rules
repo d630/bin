@@ -9,7 +9,7 @@ class="$2";
 case "$class" in
     (Gimp*)
         echo follow=on ;;
-    (chromium)
+    ([cC]hromium)
         echo desktop=^2;;
     (Emacs)
         echo "state=tiled layer=normal";;

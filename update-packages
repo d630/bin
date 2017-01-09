@@ -27,7 +27,7 @@ PrintHeader "Perl modules";
 
 PrintHeader "npm modules";
 (
-    npm update;
+    npm -g update;
 );
 
 PrintHeader "go packages";
