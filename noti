@@ -5,7 +5,7 @@
 # TODO(d630): multiplexer?
 
 : "${XDG_RUNTIME_DIR:=/run/user/1000}";
-: "${DBUS_SESSION_BUS_ADDRESS:=unix:path=${XDG_RUNTIME_DIR}/bus}";
+: "${DBUS_SESSION_BUS_ADDRESS:=unix:path=$XDG_RUNTIME_DIR/bus}";
 : "${DISPLAY:=:0}";
 export DBUS_SESSION_BUS_ADDRESS DISPLAY XDG_RUNTIME_DIR;
 
@@ -14,12 +14,12 @@ if
 then
     read -r urgency category body;
 else
-    urgency="$1" \
-    category="$2" \
-    body="$3";
+    urgency=$1 \
+    category=$2 \
+    body=$3;
 fi;
 
-case "$urgency" in
+case $urgency in
     (emerg|alert|crit|err|[0-3])
         urgency=critical;;
     (warning|notice|debug|[4,5,7])
@@ -30,7 +30,7 @@ case "$urgency" in
         exit 1;
 esac;
 
-test -f "/tmp/.dunst_use_${urgency}" &&
-    notify-send -u "$urgency" --category="$category" "$category" "$body";
+test -f /tmp/.dunst_use_$urgency &&
+    notify-send -u $urgency --category"=$category" "$category" "$body";
 
 # vim: set ts=4 sw=4 tw=0 et :

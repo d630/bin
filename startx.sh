@@ -37,23 +37,23 @@ function __startx {
         mc=$(mcookie) \
         sxauth=$(mktemp --tmpdir serverauth.XXXXXXXXXX);
 
-    xauth -q remove :0 "${hn}:0" "${hn}/unix:0";
+    xauth -q remove :0 "$hn:0" "$hn/unix:0";
     xauth -q <<-IN
-	add :0 . ${mc}
-	add ${hn}:0 . ${mc}
-	add ${hn}/unix:0 . ${mc}
+	add :0 . $mc
+	add $hn:0 . $mc
+	add $hn/unix:0 . $mc
 	IN
 
-    logger --id=$$ -t "startx.sh" -p "user.info" \
-        "Initializing X session for ${LOGNAME}";
+    logger --id=$$ -t startx.sh -p user.info \
+        'Initializing X session '"for $LOGNAME";
 
     (
-        exec 1> >(logger -e --id=$$ -t "Xorg.0" -p "user.notice") 2>&1;
-        exec xinit "$XINITRC" -- "${HOME}/.xserverrc" -auth "$sxauth";
+        exec 1> >(logger -e --id=$$ -t Xorg.0 -p user.notice) 2>&1;
+        exec xinit "$XINITRC" -- "$HOME/".xserverrc -auth "$sxauth";
     )
 
-    logger --id=$$ -t "startx.sh" -p "user.info" \
-        "Finishing X session for ${LOGNAME}";
+    logger --id=$$ -t startx.sh -p user.info \
+        'Finishing X session '"for $LOGNAME";
 
     # TODO
     dbus-update-activation-environment DISPLAY=;
@@ -63,13 +63,13 @@ function __startx {
 
     case $SHELL in
         ($BASH)
-            . "${HOME}/.bash_profile";;
+            . "$HOME/".bash_profile;;
         (*)
-            . "${HOME}/.profile";
+            . "$HOME/".profile;
     esac;
 };
 
-'__startx';
+__startx;
 unset -f __startx;
 
 # vim: set ts=4 sw=4 tw=0 et :

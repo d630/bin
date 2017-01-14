@@ -4,31 +4,31 @@
 
 cd -- "$HOME";
 
-printf -v horiz '%*s' "80" '';
+printf -v horiz %\*s 80 '';
 function PrintHeader {
-    printf '%s\n' "${horiz// /-}" "$1" 1>&2;
+    printf %s\\n ${horiz// /-} $1 1>&2;
 };
 
 update-packages;
 
-'PrintHeader' "Programs";
+PrintHeader Programs;
 backup-meta-bin;
 
-'PrintHeader' "Inits";
+PrintHeader Inits;
 backup-meta-init;
 
-'PrintHeader' "etckeeper";
+PrintHeader etckeeper;
 (
     cd -- / ||
         exit 1;
-    printf -v d '%(%s)T' -1;
-    sudo etckeeper commit "${d}: prepare backup";
+    printf -v d %\(%s\)T -1;
+    sudo etckeeper commit $d\ prepare\ backup;
 );
 
-'PrintHeader' "newsbeuter";
-rm -fv "${HOME}/.newsbeuter/newsbeuter_cache.db";
+PrintHeader newsbeuter;
+rm -fv -- "$HOME/".newsbeuter/newsbeuter_cache.db;
 
-'PrintHeader' "ccleaner";
+PrintHeader ccleaner;
 cclean;
 
 # vim: set ts=4 sw=4 tw=0 et :

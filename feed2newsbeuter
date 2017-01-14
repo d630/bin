@@ -3,33 +3,33 @@
 # Record url of feed in newsbeuter via dmenu.
 
 h=$(hostname) \
-cache="${XDG_VAR_HOME:?}/lib/feedfaetcher/cache" \
-tagfile="${HOME}/.newsbeuter/tags" \
-feedfile="${HOME}/.newsbeuter/urls" \
-stowdir="/home/stow/newsbeuter/.newsbeuter";
+cache=${XDG_VAR_HOME:?}/lib/feedfaetcher/cache \
+tagfile=$HOME/.newsbeuter/tags \
+feedfile=$HOME/.newsbeuter/urls \
+stowdir=/home/stow/newsbeuter/.newsbeuter;
 
-feed="$(
+feed=$(
     find -H "$cache" -type f |
-    menu "dmenu2" "FEED";
-)";
+    menu dmenu2 FEED;
+);
 
-tags="$(
-    grep -v -e '^"_Filter' "$tagfile" |
-    menu "dmenu2" "TAGS";
-)";
+tags=$(
+    grep -v -e '^"_Filter' -- "$tagfile" |
+    menu dmenu2 TAGS;
+);
 
 if
     test -n "$tags";
 then
     printf 'file://%s %s\n' "$feed" "$tags" |
-    cat "$feedfile" - |
-    sort -g > "${feedfile}.${$}";
+    cat -- "$feedfile" - |
+    sort -g > "$feedfile.$$";
 
-    mv -- "${feedfile}.${$}" "${stowdir}/urls";
+    mv -- "$feedfile.$$" "$stowdir/"urls;
 
-    stow-home -R "newsbeuter";
+    stow-home -R newsbeuter;
 else
-    printf '%s\n' "No tag has been chosen" 1>&2;
+    printf 'No tag has been chosen\n' 1>&2;
 fi;
 
 # vim: set ts=4 sw=4 tw=0 et :

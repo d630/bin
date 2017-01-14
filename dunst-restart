@@ -2,12 +2,12 @@
 #
 # Restart dunst.
 
-p="${XDG_CACHE_HOME:?}/dunst.pid";
+p=${XDG_CACHE_HOME:?}/dunst.pid;
 
 test -f "$p" && pkill -F "$p";
 
 (
-    exec dunst -to 10 -config "${XDG_CONFIG_HOME:?}/dunst/dunstrc" &
+    exec dunst -to 10 -config "${XDG_CONFIG_HOME:?}/"dunst/dunstrc &
     echo $! > "$p";
 );
 

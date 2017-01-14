@@ -37,7 +37,7 @@ else
                 if (swap > 0) {
                     printf "%8d  %s %d\n", swap, name, pid
                 }
-            }' ${f}/stat ${f}/smaps 2>/dev/null;
+            }' $f/stat $f/smaps 2>/dev/null;
     done |
     sort -nr;
 fi;

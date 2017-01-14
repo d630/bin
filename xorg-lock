@@ -10,7 +10,7 @@ trap t INT TERM QUIT EXIT HUP;
 xset dpms 3 3 3;
 i3lock \
     --nofork \
-    --image=${XDG_DATA_HOME}/wallpapers/current.wallpaper \
+    --image"=$XDG_DATA_HOME/"wallpapers/current.wallpaper \
     --no-unlock-indicator \
     --show-failed-attempts \
     --tiling;

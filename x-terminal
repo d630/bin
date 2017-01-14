@@ -2,15 +2,14 @@
 #
 # Default terminal emulator window.
 
+IFS=\|;
 if
     test -f "${XDG_CACHE_HOME:?}/DAYLIGHT";
 then
-    IFS='|';
-    set -- ${TERMINAL_L_OPTS} ${1:+"$@"};
+    set -- $TERMINAL_L_OPTS ${1:+"$@"};
     exec "$TERMINAL_L" "$@";
 else
-    IFS='|';
-    set -- ${TERMINAL_D_OPTS} ${1:+"$@"};
+    set -- $TERMINAL_D_OPTS ${1:+"$@"};
     exec "$TERMINAL_D" "$@";
 fi;
 

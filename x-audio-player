@@ -2,8 +2,8 @@
 #
 # Default audio player (gui).
 
-IFS='|';
-set -- ${X_AUDIO_PLAYER_OPTS} ${1:+"$@"};
+IFS=\|;
+set -- $X_AUDIO_PLAYER_OPTS ${1:+"$@"};
 
 exec "$X_AUDIO_PLAYER" "$@";
 

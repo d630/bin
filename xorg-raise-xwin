@@ -4,12 +4,12 @@
 
 #wmctrl -i -a "$(wmctrl -lGpx | column -t | menu.sh "dmenu2" ">" | awk '{print $1}')"
 
-id="$(
+id=$(
     wmctrl -lGpx |
     column -t |
-    menu "dmenu2" ">" |
-    mawk '{print $1}';
-)";
+    menu dmenu2 \> |
+    mawk '{ print $1 }';
+);
 
 test -n "$id" && {
     #xdotool windowmap $id

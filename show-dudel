@@ -9,9 +9,9 @@ while
 do
     pid=${fd#/proc/};
     pid=${pid%/fd/*};
-    prog="$(readlink /proc/${pid}/exe;)";
+    prog=$(readlink /proc/$pid/exe);
     prog=${prog##*/};
-    printf "%-10d %-10s %-20s %s\n" $size "$prog" $fd "$(readlink $fd)";
+    printf '%-10d %-10s %-20s %s\n' $size "$prog" $fd "$(readlink $fd)";
 done;
 
 # vim: set ts=4 sw=4 tw=0 et :

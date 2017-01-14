@@ -19,9 +19,10 @@ shift 1;
 
 cd -- "$dir" &&
     for i in *; do
-        [[ -f $i ]] || continue;
+        [[ -f $i ]] ||
+            continue;
         arr+=("$i")
-        [[ $i == $file ]] &&
+        [[ $i == "$file" ]] &&
             c=$((${#arr[@]} - 1));
     done;
 

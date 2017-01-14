@@ -2,8 +2,8 @@
 #
 # Default image viewer (tui).
 
-IFS='|';
-set -- ${IMAGE_VIEWER_OPTS} ${1:+"$@"};
+IFS=\|;
+set -- $IMAGE_VIEWER_OPTS ${1:+"$@"};
 
 exec "$IMAGE_VIEWER" "$@";
 

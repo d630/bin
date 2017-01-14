@@ -2,7 +2,7 @@
 #
 # Grep string in all files under the current directory with find.
 
-find . ! -type d -iname "*${2}" |
+find . ! -type d -iname "*$2" |
 xargs grep -i "$1";
 
 # vim: set ts=8 sw=8 tw=0 et :

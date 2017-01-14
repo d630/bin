@@ -4,12 +4,12 @@
 
 cd -- "$HOME";
 
-printf -v horiz '%*s' "80" '';
+printf -v horiz %\*s 80 '';
 function PrintHeader {
-    printf '%s\n' "${horiz// /-}" "$1" 1>&2;
+    printf %s\\n "${horiz// /-}" "$1" 1>&2;
 };
 
-PrintHeader "Apt && Packages";
+PrintHeader 'Apt && Packages';
 (
     sudo dpkg --clear-avail;
     sudo apt-get autoclean;
@@ -19,23 +19,23 @@ PrintHeader "Apt && Packages";
     backup-meta-apt;
 );
 
-PrintHeader "Perl modules";
+PrintHeader Perl\ modules;
 (
     cpan-outdated -p --exclude-core |
     cpanm -iv --self-contained;
 );
 
-PrintHeader "npm modules";
+PrintHeader npm\ modules;
 (
     npm -g update;
 );
 
-PrintHeader "go packages";
+PrintHeader go\ packages;
 (
     go get -u all;
 );
 
-PrintHeader "cabal packages";
+PrintHeader cabal\ packages;
 (
     cabal update;
     cabal install world --upgrade-dependencies --force-reinstalls;

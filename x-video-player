@@ -2,8 +2,8 @@
 #
 # Default video player (gui).
 
-IFS='|';
-set -- ${X_VIDEO_PLAYER_OPTS} ${1:+"$@"};
+IFS=\|;
+set -- $X_VIDEO_PLAYER_OPTS ${1:+"$@"};
 
 exec "$X_VIDEO_PLAYER" "$@";
 

@@ -17,7 +17,7 @@ function __build_streams {
         uri;
 
     while
-        IFS=';' read -r name uri;
+        IFS=\; read -r name uri;
     do
         streams[$name]=$uri;
     done < "$file_webradio_streams";
@@ -25,7 +25,7 @@ function __build_streams {
 
 function __selectstream {
     selection=$(
-        printf '%s\n' "STOPSTREAM" "${!streams[@]}" |
+        printf %s\\n STOPSTREAM "${!streams[@]}" |
         sort -u |
         __menu;
     );
@@ -33,11 +33,11 @@ function __selectstream {
 
 function __stopstream
 if
-    [[ -s "$file_webradio_pid" ]];
+    [[ -s $file_webradio_pid ]];
 then
     #pkill -F "$file_webradio_pid" &> /dev/null && rm -- "$file_webradio_pid"
     pkill -F "$file_webradio_pid" 1>/dev/null 2>&1;
-    rm -f "$file_webradio_pid" 1>/dev/null 2>&1;
+    rm -f -- "$file_webradio_pid" 1>/dev/null 2>&1;
 fi;
 
 function __playstream () (
@@ -45,7 +45,7 @@ function __playstream () (
         nohup audio-player --no-terminal "${streams[$selection]}" \
     1>/dev/null 2>&1 &
 
-    printf '%d\n' $! >> "$file_webradio_pid";
+    printf %d\\n $! >> "$file_webradio_pid";
 );
 
 # -- MAIN.
@@ -54,13 +54,13 @@ if
     test-tty 2>/dev/null;
 then
     function __menu {
-        menu "fzf" "PLAY";
+        menu fzf PLAY;
     };
 elif
     [[ -n $DISPLAY ]];
 then
     function __menu {
-        menu "dmenu2" "PLAY";
+        menu dmenu2 PLAY;
     };
 else
     exit 1;
@@ -68,16 +68,16 @@ fi;
 
 typeset -A streams;
 
-'__build_streams';
-'__selectstream';
+__build_streams;
+__selectstream;
 
 while
     [[ -n $selection ]];
 do
-    '__stopstream';
+    __stopstream;
     [[ $selection == STOPSTREAM ]] ||
-        '__playstream';
-    '__selectstream';
+        __playstream;
+    __selectstream;
 done;
 
 # vim: set ts=4 sw=4 tw=0 et :

@@ -5,7 +5,7 @@
 
 function debug_set_x
 case $1 in
-    ("")
+    ('')
         ! :;;
     (-)
         set -x;;
@@ -17,7 +17,7 @@ case $1 in
             exec 4>>"$1";
             BASH_XTRACEFD=4;
             set -x;
-        };
+        };;
 esac;
 
 # vim: set ts=4 sw=4 tw=0 et :

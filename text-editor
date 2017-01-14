@@ -2,8 +2,8 @@
 #
 # Default editor/visual (tui).
 
-IFS='|';
-set -- ${VISUAL_OPTS} ${1:+"$@"};
+IFS=\|;
+set -- $VISUAL_OPTS ${1:+"$@"};
 
 exec "$VISUAL" "$@";
 

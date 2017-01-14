@@ -4,6 +4,6 @@
 
 export SUDO_ASKPASS=${XDG_BIN_HOME:?}/smenu;
 readonly SUDO_ASKPASS;
-sudo -A "$@";
+sudo -A -- "$@";
 
 # vim: set ts=4 sw=4 tw=0 et :

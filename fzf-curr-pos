@@ -18,19 +18,19 @@ function getpos {
 
     stty raw -echo min 0;
 
-    printf '%b' "\033[6n" > /dev/tty;
+    printf %b '\033[6n' > /dev/tty;
     IFS='[;' read -d R _ row col < /dev/tty;
 
     stty "$oldstty";
 
-    printf '%d' "$((arg - 1))";
+    printf %d "$((arg - 1))";
 
     unset -n arg;
 };
 
 typeset -i \
     lines=$(tput lines) \
-    row=$('getpos' row);
+    row=$(getpos row);
 typeset -i \
     halfway=lines/2 \
     start_row=lines-row;
@@ -43,7 +43,7 @@ then
     FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --reverse --margin $((row - 1)),0,0";
 else
     ((start_row == 1 && (start_row=0)));
-    FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --no-reverse --margin 0,0,${start_row}";
+    FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --no-reverse --margin 0,0,$start_row";
 fi;
 
 fzf;

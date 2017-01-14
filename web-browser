@@ -2,7 +2,7 @@
 #
 # Default web browser (tui).
 
-IFS='|';
+IFS=\|;
 set -- ${BROWSER_OPTS} ${1:+"$@"};
 
 exec "$BROWSER" "$@";

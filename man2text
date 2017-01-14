@@ -3,8 +3,8 @@
 # man2text script.
 
 for i in *.1; do
-    man -l ./${i} |
-    sed -r 's/\d027\[[0-9]+m//g' > "${i}.txt";
+    man -l "./$i" |
+    sed -r 's/\d027\[[0-9]+m//g' > "$i.txt";
 done;
 
 # vim: set ts=4 sw=4 tw=0 et :

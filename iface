@@ -6,7 +6,7 @@
 if
     ((UID));
 then
-    printf '%s\n' "Must be run as root" 1>&2;
+    printf 'Must be run as root\n' 1>&2;
     exit 1;
 else
     iface=${IFACE:-wlan0};
@@ -37,7 +37,7 @@ case $1 in
             wpa_cli -i "$iface" terminate;
         ip link set dev "$iface" down;;
     (*)
-        printf '%s' "?" 1>&2;;
+        printf ?\\n 1>&2;;
 esac;
 
 # vim: set ts=4 sw=4 tw=0 et :

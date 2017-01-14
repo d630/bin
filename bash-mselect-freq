@@ -3,7 +3,7 @@
 # Print frequency of the bash history and run it from dmenu.
 
 bash-print-freq |
-menu "dmenu2" "RUN" |
+menu dmenu2 RUN |
 mawk '{ print $2 }';
 
 # vim: set ts=4 sw=4 tw=0 et :

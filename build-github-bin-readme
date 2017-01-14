@@ -2,11 +2,11 @@
 #
 # Build README.md in github.com/D630/bin.
 
-cd -- "/home/stow/bin/bin" ||
+cd -- /home/stow/bin/bin ||
     exit 1;
 
-IFS='.:' read -r _ _ p _  _ < <(git config --local --get remote.origin.url);
-P=https://github.com/${p};
+IFS=.: read -r _ _ p _  _ < <(git config --local --get remote.origin.url);
+P=https://github.com/$p;
 
 function __find {
     # find . -maxdepth 1 -regextype posix-egrep \
@@ -34,7 +34,7 @@ function __find {
     git ls-files -z '[!A][!R]*' |
     xargs -0 grep -E -Z -l -m 1 '^#!.*php.*' |
     xargs -0 grep -H -m 1 '// ' |
-    sed 's/[[:space:]]*\/\//#/';
+    sed 's:[[:space:]]*//:#:';
 };
 
 {
@@ -46,9 +46,9 @@ List:
 
 HEADER
 
-'__find' |
+__find |
 sort | {
-    printf '%s\n' "$header";
+    printf %s\\n "$header";
     while
         IFS=: read -r p c;
     do

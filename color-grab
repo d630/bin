@@ -7,6 +7,6 @@ c=$(
     grep -o '#.*';
 );
 
-printf '%s' "${c^^}";
+printf %s "${c^^}";
 
 # vim: set ts=4 sw=4 tw=0 et :

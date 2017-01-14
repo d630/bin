@@ -14,7 +14,7 @@ do
     then
         setsidw x-web-browser "$REPLY";
     else
-        exec web-browser $REPLY";
+        exec web-browser "$REPLY";
     fi
 done < <(
     grep -oP '(((http|https|ftp|gopher)|mailto|file):(//)?[^ <>"\t]*|' \

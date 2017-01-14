@@ -2,7 +2,6 @@
 #
 # Upgrade packages from Debian.
 
-sudo apt-get update &&
-    sudo apt-get upgrade;
+sudo sh -c 'apt-get update && apt-get upgrade';
 
 # vim: set ts=4 sw=4 tw=0 et :

@@ -2,8 +2,8 @@
 #
 # Default editor (gui).
 
-IFS='|';
-set -- ${X_VISUAL_OPTS} ${1:+"$@"};
+IFS=\|;
+set -- $X_VISUAL_OPTS ${1:+"$@"};
 
 exec "$X_VISUAL" "$@";
 

@@ -2,8 +2,8 @@
 #
 # Default image viewer (gui).
 
-IFS='|';
-set -- ${X_IMAGE_VIEWER_OPTS} ${1:+"$@"};
+IFS=\|;
+set -- $X_IMAGE_VIEWER_OPTS ${1:+"$@"};
 
 exec "$X_IMAGE_VIEWER" "$@";
 

@@ -2,20 +2,19 @@
 #
 # Simple wrapper for using taskwarrior with local "task-repos".
 
-TASKRC="${TASKRC:-${PWD}/.task/taskrc}";
-export TASKRC;
+export TASKRC=${TASKRC:-$PWD/.task/taskrc};
 
-case "$1" in
+case $1 in
     (init)
         if
-            test -d "${PWD}/.task";
+            test -d "$PWD/".task;
         then
             printf '%s:Error:82: Could not create a task repository: "%s/.task/" is existing\n' "$0" "$PWD" \
                     1>&2;
             exit 82;
         else
-            mkdir -p -- "${PWD}/.task/data" &&
-                task config data.location "${PWD}/.task/data";
+            mkdir -p -- "$PWD/".task/data &&
+                task config data.location "$PWD/".task/data;
         fi;;
     (--)
         shift 1;

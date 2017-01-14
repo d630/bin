@@ -90,7 +90,7 @@ typeset -A Ext=(
 );
 INIT
 
-    printf '%s' "$i";
+    printf %s "$i";
 
 } 2>/dev/null;
 

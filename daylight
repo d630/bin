@@ -8,12 +8,12 @@ f=${XDG_CACHE_HOME:?}/DAYLIGHT;
 if
     test-daylight;
 then
-    [[ -f $f && $FORCE -eq 0 ]] || {
+    [[ -f $f && FORCE -eq 0 ]] || {
         > "$f";
         exec theme light;
     };
 else
-    [[ -f $f || $FORCE -gt 0 ]] && {
+    [[ -f $f || FORCE -gt 0 ]] && {
         rm -f -- /tmp/DAYLIGHT;
         exec theme dark;
     };

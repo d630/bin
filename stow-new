@@ -10,26 +10,26 @@ s=$(
 );
 s=${s%% *};
 
-. "/home/stow/map" ||
+. /home/stow/map ||
     typeset -A map;
 
-map[$s]=${2}/${3}/${1};
+map[$s]=$2/$3/$1;
 
-mkdir -v "/home/stow/${s}" ||
+mkdir -v /home/stow"/$s" ||
     exit;
 
-typeset -p map > "/home/stow/map";
+typeset -p map > /home/stow/map;
 
-chmod 755 "/home/stow/${s}";
-> "/home/stow/${s}/.gitignore";
-ln -vfrs "/home/stow/${s}" "/home/stow/${1}";
+chmod 755 /home/stow"/$s";
+> /home/stow"/$s/".gitignore;
+ln -vfrs /home/stow"/$s" /home/stow"/$1";
 
 typeset -x \
-    GIT_DIR=/home/stow/${s}/.git \
-    GIT_WORK_TREE=/home/stow/${s};
+    GIT_DIR=/home/stow/$s/.git \
+    GIT_WORK_TREE=/home/stow/$s;
 
 git init;
 git add -f .gitignore;
-git commit -m "I";
+git commit -m I;
 
 # vim: set ts=4 sw=4 tw=0 et :

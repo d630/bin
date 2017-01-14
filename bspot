@@ -11,7 +11,8 @@ function spotify.playlist.addTracks {
     # OAuth Scope: playlist-modify-public, playlist-modify-private
     # Params: user_id playlist_id access_token spotify_uri ...
 
-    [[ -n "$4" ]] || return 1;
+    [[ -n $4 ]] ||
+        return 1;
 
     curl \
         -s \
@@ -103,15 +104,15 @@ function addTracks {
         y=100;
 
     for ((i=int; i > 0; i--, x+=100)); do
-        'spotify.playlist.addTracks' "$uid" "$plid" "$ato" "$(
-            printf '%s\n' "${uris[@]:x:y}" |
+        spotify.playlist.addTracks "$uid" "$plid" "$ato" "$(
+            printf %s\\n "${uris[@]:x:y}" |
             jq -R . |
             jq -sc '{ uris: . }';
         )";
     done;
 
     ((mod)) &&
-        'spotify.playlist.addTracks' "$uid" "$plid" "$ato" "$(
+        spotify.playlist.addTracks "$uid" "$plid" "$ato" "$(
             printf '%s\n' "${uris[@]: -mod}" |
             jq -R . |
             jq -sc '{ uris: . }';
@@ -163,19 +164,19 @@ function getTracks {
 
 # -- MAIN.
 
-case "${1:?}" in
+case ${1:?} in
     (addList)
-        'spotify.playlist.create' "${@:2}";;
+        spotify.playlist.create "${@:2}";;
     (addTracks)
-        'addTracks' "${@:2}";;
+        addTracks "${@:2}";;
     (clearList)
-        'spotify.playlist.clear' "${@:2}";;
+        spotify.playlist.clear "${@:2}";;
     (getLists)
-        'getLists' "${@:2}";;
+        getLists "${@:2}";;
     (getTracks)
-        'getTracks' "${@:2}";;
+        getTracks "${@:2}";;
     (privatizeList)
-        'spotify.playlist.privatize' "${@:2}";;
+        spotify.playlist.privatize "${@:2}";;
 esac;
 
 # vim: set ts=4 sw=4 tw=0 et :

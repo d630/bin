@@ -13,18 +13,18 @@ typeset \
 
 file=${XDG_DATA_HOME:?}/documents/Notizen/outline/quicknotes.org;
 
-read -re -p "Title: " title;
-read -re -p "Kurznotiz: " kuno;
-read -re -p "Tags: " tags;
+read -re -p 'Title: ' title;
+read -re -p 'Kurznotiz: ' kuno;
+read -re -p 'Tags: ' tags;
 
 printf -v time '%(%Y-%m-%d_%a_%H:%M)T' -1;
 
 cat >> "$file" << TEMPLATE
-* Kurznotiz: ${title}                                            ${tags}
+* Kurznotiz: $title                                            $tags
 :LOGBOOK:
-CLOCK: [${time}]--[${time}] =>  0:00
+CLOCK: [$time]--[$time] =>  0:00
 :END:
-<${time}>
+<$time>
 :PROPERTIES:
 :TODO:
 :PRIORITY:
@@ -41,12 +41,12 @@ CLOCK: [${time}]--[${time}] =>  0:00
 :ARCHIVE:
 :LOGGING:
 :END:
-${kuno}
+$kuno
 TEMPLATE
 
 #emacsclient -t "$file"
 
-read -re -n 1 -p "Add a task to taskwarrior? (y/n)" selection;
+read -re -n 1 -p 'Add a task to taskwarrior? (y/n)' selection;
 [[ $selection == y ]] &&
     taskwarrior-add;
 

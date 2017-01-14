@@ -21,11 +21,12 @@ else
 fi;
 
 path=$(
-    sort -g "${XDG_VAR_HOME}/lib/z/z.data" |
-    cut -d '|' -f 1 |
-    menu "$menu" "OPEN";
+    sort -g "$XDG_VAR_HOME/"lib/z/z.data |
+    cut -d \| -f 1 |
+    menu "$menu" OPEN;
 );
 
-[[ -n $path ]] && __nav "$path";
+[[ -n $path ]] &&
+    __nav "$path";
 
 # vim: set ts=4 sw=4 tw=0 et :

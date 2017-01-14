@@ -2,8 +2,8 @@
 #
 # Default file manager (tui).
 
-IFS='|';
-set -- ${FILE_BROWSER_OPTS} ${1:+"$@"};
+IFS=\|;
+set -- $FILE_BROWSER_OPTS ${1:+"$@"};
 
 exec "$FILE_BROWSER" "$@";
 

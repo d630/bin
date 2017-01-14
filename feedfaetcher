@@ -4,11 +4,11 @@
 
 feedcacherdir=${XDG_VAR_HOME:?}/lib/feedfaetcher;
 
-urllist=${feedcacherdir}/urls.txt;
+urllist=$feedcacherdir/urls.txt;
 typeset -x \
-    cachedir=${feedcacherdir}/cache \
-    reportnew=${feedcacherdir}/report.txt \
-    table=${feedcacherdir}/table.txt;
+    cachedir=$feedcacherdir/cache \
+    reportnew=$feedcacherdir/report.txt \
+    table=$feedcacherdir/table.txt;
 
 function __feedcacher_do {
     typeset \
@@ -26,7 +26,7 @@ function __feedcacher_do {
         filename=${filename//_/-};
         filename=${filename// /_};
         filename=${filename//\//_};
-        onlinexml=${cachedir}/${filename}.xml;
+        onlinexml=$cachedir/$filename.xml;
         wget --no-verbose \
             --connect-timeout=3 \
             --content-on-error \
@@ -41,7 +41,7 @@ function __feedcacher_do {
             -O "$onlinexml" \
             "$1";
         if
-            [[ $(stat -c %s "$onlinexml" 2>/dev/null) -ge 2 ]];
+            [[ $(stat -c %s -- "$onlinexml" 2>/dev/null) -ge 2 ]];
         then
             printf '%s %s\n' "$1" "${onlinexml##*/}" >> "$table";
             printf 'SUCCESS %(%Y-%m-%d_%H:%M)T URL:%s synchronized\n' -1 "$1" \
@@ -58,9 +58,9 @@ function __feedcacher_do {
 };
 
 [[ -n $1 ]] && {
-    <<< "$1" cat "$urllist" - |
+    <<< "$1" cat -- "$urllist" - |
     sort -u > "$urllist.$$" &&
-        mv "$urllist.$$" "$urllist";
+        mv -- "$urllist.$$" "$urllist";
 
     exit $?;
 };
@@ -78,18 +78,18 @@ export -f __feedcacher_do;
     mkdir -p -- "$cachedir";
 };
 
-tput bold setaf 7; printf '\n%s\n' "CHECK"; tput sgr0;
+tput bold setaf 7; printf '\n%s\n' CHECK; tput sgr0;
 exec 3>>"$reportnew";
 xargs -I {} -a "$urllist" -n 1 -P 4 -i bash -c '__feedcacher_do "$@";' _ {};
 exec 3<&-;
 
 if
-    [[ $(stat -c %s "$reportnew" 2>/dev/null) -ge 2 ]];
+    [[ $(stat -c %s -- "$reportnew" 2>/dev/null) -ge 2 ]];
 then
-    tput bold setaf 7; printf '\n%s\n' "REPORT"; tput sgr0;
-    cat "$reportnew";
+    tput bold setaf 7; printf '\n%s\n' REPORT; tput sgr0;
+    cat -- "$reportnew";
 else
-    printf '%(%Y-%m-%d_%H:%M)T %s\n' -1 "ERROR Report has not been created" 1>&2;
+    printf '%(%Y-%m-%d_%H:%M)T %s\n' -1 'ERROR Report has not been created' 1>&2;
     exit 1;
 fi;
 

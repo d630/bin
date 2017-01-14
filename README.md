@@ -7,7 +7,7 @@ List:
 * [backup-meta-init](https://github.com/D630/bin/blob/master/backup-meta-init): Backup inits.
 * [backup-meta-prepare](https://github.com/D630/bin/blob/master/backup-meta-prepare): Prepare the full backup of my system.
 * [bash-debug-set-x.bash](https://github.com/D630/bin/blob/master/bash-debug-set-x.bash): A debugging function for bash.
-* [bash-dedup-history](https://github.com/D630/bin/blob/master/bash-dedup-history): Remove duplicates in .bash_history.
+* [bash-dedup-history](https://github.com/D630/bin/blob/master/bash-dedup-history): Remove duplicates in history file.
 * [bash-mselect-freq](https://github.com/D630/bin/blob/master/bash-mselect-freq): Print frequency of the bash history and run it from dmenu.
 * [bash-print-freq](https://github.com/D630/bin/blob/master/bash-print-freq): Print frequency of the bash history.
 * [bash-toggle-options.bash](https://github.com/D630/bin/blob/master/bash-toggle-options.bash): Toggle bash options via fzf.
@@ -41,6 +41,7 @@ List:
 * [find-file](https://github.com/D630/bin/blob/master/find-file): Find file under the current directory with flag -ls.
 * [find-string](https://github.com/D630/bin/blob/master/find-string): Grep string in all files under the current directory with find.
 * [furlview](https://github.com/D630/bin/blob/master/furlview): Simple replacement for urlview using fzf in X.
+* [fzf-bind.bash](https://github.com/D630/bin/blob/master/fzf-bind.bash): My fzf keybinding script for bash.
 * [fzf-curr-pos](https://github.com/D630/bin/blob/master/fzf-curr-pos): Start fzf from current position.
 * [fzf-ls](https://github.com/D630/bin/blob/master/fzf-ls): Select files listed in a directory.
 * [gdate2din](https://github.com/D630/bin/blob/master/gdate2din): Grep and convert german dates with dateutils using dgrep & strptime.
@@ -151,7 +152,7 @@ List:
 * [x-web-browser](https://github.com/D630/bin/blob/master/x-web-browser): Default web browser (gui).
 * [xorg-dpms-standby](https://github.com/D630/bin/blob/master/xorg-dpms-standby): Set DPMS to standby state.
 * [xorg-get-xclass](https://github.com/D630/bin/blob/master/xorg-get-xclass): Get interactively xclass info about a xwindow.
-* [xorg-get-xids](https://github.com/D630/bin/blob/master/xorg-get-xids): Fastest way to get x window ids?
+* [xorg-get-xids](https://github.com/D630/bin/blob/master/xorg-get-xids): Get x window ids.
 * [xorg-lock](https://github.com/D630/bin/blob/master/xorg-lock): Default xlock programme.
 * [xorg-raise-xwin](https://github.com/D630/bin/blob/master/xorg-raise-xwin): List xwindows with dmenu and raise selection.
 * [xorg-run-or-raise](https://github.com/D630/bin/blob/master/xorg-run-or-raise): Run or raise script for commands with gui or tui.

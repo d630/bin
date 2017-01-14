@@ -14,6 +14,6 @@ do
     printf "\r%0${#sec}d" "$((sec - SECONDS))";
 done;
 
-printf '\n';
+printf \\n;
 
 # vim: set ts=4 sw=4 tw=0 et :

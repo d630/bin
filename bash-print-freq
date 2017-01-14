@@ -2,7 +2,7 @@
 #
 # Print frequency of the bash history.
 
-cut -d ' ' -f1 "${HISTFILE:?}" |
+cut -d ' ' -f 1 "${HISTFILE:?}" |
 sort |
 uniq -c |
 sort -nr;

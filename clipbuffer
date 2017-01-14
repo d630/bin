@@ -16,16 +16,16 @@ typeset \
 
 function Clipbuffer::Daemon {
     mkdir -p -m 700 -- "$xsels";
-    ${opt_clear} &&
-        > "${xsels}/clips";
-    printf '%d\n' "$$" > "${xsels}/$$.pid";
+    $opt_clear &&
+        > "$xsels/"clips;
+    printf %d\\n $$ > "$xsels/"$$.pid;
 
     xprop -root -spy CUT_BUFFER0 |
     while
         read;
     do
-        printf '%(%s)T\t%s\0' -1 "$(xclip -o;)" |
-        base64 >> "${xsels}/clips";
+        printf '%(%s)T\t%s\0' -1 "$(xclip -o)" |
+        base64 >> "$xsels/"clips;
     done;
 };
 
@@ -33,17 +33,17 @@ function Clipbuffer::Kill {
     typeset p;
     shopt -s nullglob;
 
-    for p in "${xsels}/"?*.pid; do
+    for p in "$xsels/"?*.pid; do
             p=${p##*/};
             pkill -TERM -P "${p%.pid}";
     done;
 
     if
-        ${opt_clear};
+        $opt_clear;
     then
         rm -fr -- "$xsels" 2>/dev/null;
     else
-        rm -f -- "${xsels}/"?*.pid 2>/dev/null;
+        rm -f -- "$xsels/"?*.pid 2>/dev/null;
     fi;
 };
 
@@ -58,17 +58,17 @@ function Clipbuffer::Clip {
         menu=dmenu2;
     fi;
 
-    printf -v clip '%s' "$(
-        base64 -d "${xsels}/clips" |
+    printf -v clip %s "$(
+        base64 -d "$xsels/"clips |
         sort -zr |
         sed -z 's/^[0-9]*\t//' |
-        tr '\0' '\n' |
+        tr \\0 \\n |
         menu "$menu" ">";
     )";
 
     [[ -n $clip ]] && {
-        printf '%s' "$clip" |
-        xclip -i -l 1 -selection "clipboard";
+        printf %s "$clip" |
+        xclip -i -l 1 -selection clipboard;
     };
 };
 
@@ -87,24 +87,24 @@ do
     esac;
 done;
 
-shift "$#";
+shift $#;
 
 if
-    ${opt_daemon};
+    $opt_daemon;
 then
-    'Clipbuffer::Daemon';
+    Clipbuffer::Daemon;
 elif
-    ${opt_kill};
+    $opt_kill;
 then
-    'Clipbuffer::Kill';
+    Clipbuffer::Kill;
 elif
-    ${opt_restart};
+    $opt_restart;
 then
-    'Clipbuffer::Kill';
+    Clipbuffer::Kill;
     [[ -n $DISPLAY ]] &&
         daemonize "$(command -v "$0")" -d;
 else
-    'Clipbuffer::Clip';
+    Clipbuffer::Clip;
 fi;
 
 # vim: set ts=4 sw=4 tw=0 et :

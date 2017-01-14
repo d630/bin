@@ -8,36 +8,36 @@ function theme.bspwm {
 
 function theme.dunst () (
     cd -- "$HOME";
-    ln -fsr "etc/dunst/dunstrc-${1}" "etc/dunst/dunstrc";
+    ln -fsr etc/dunst/dunstrc-$1 etc/dunst/dunstrc;
     dunst-restart;
 );
 
 function theme.gtk () (
     cd -- "$HOME";
-    ln -fsr ".gtkrc-2.0-${1}.mine" ".gtkrc-2.0-theme.mine";
-    ln -fsr "etc/gtk-3.0/settings-${1}.ini" "etc/gtk-3.0/settings.ini";
+    ln -fsr .gtkrc-2.0-$1.mine .gtkrc-2.0-theme.mine;
+    ln -fsr etc/gtk-3.0/settings-$1.ini etc/gtk-3.0/settings.ini;
 );
 
 function theme.mutt () (
-    cd -- "${XDG_DATA_HOME:?}/mutt/colors";
-    ln -fsr "$1" "${HOME}/.mutt/mutt-colors.muttrc";
+    cd -- "${XDG_DATA_HOME:?}/"mutt/colors;
+    ln -fsr $1 "$HOME/".mutt/mutt-colors.muttrc;
 );
 
 function theme.taskwarrior () (
     cd -- "$HOME";
-    ln -fsr "/usr/share/taskwarrior/${1}" "${HOME}/.taskrc-color";
+    ln -fsr /usr/share/taskwarrior/$1 "$HOME/".taskrc-color;
 );
 
 function theme.x () (
-    cd -- "${XDG_DATA_HOME:?}/xcolors";
-    ln -fsr "$1" "current.xcolor";
-    xrdb -merge "${HOME}/.Xresources";
+    cd -- "${XDG_DATA_HOME:?}/"xcolors;
+    ln -fsr $1 current.xcolor;
+    xrdb -merge "$HOME/".Xresources;
 
     xsetroot -solid "$2";
 
-    cd -- "${XDG_DATA_HOME}/wallpapers";
-    ln -fsr "${3}" "current.wallpaper";
-    feh --bg-fill "${XDG_DATA_HOME}/wallpapers/current.wallpaper";
+    cd -- "$XDG_DATA_HOME/"wallpapers;
+    ln -fsr $3 current.wallpaper;
+    feh --bg-fill "$XDG_DATA_HOME/"wallpapers/current.wallpaper;
 );
 
 declare -A C;
@@ -45,7 +45,7 @@ declare -A C;
 if
     [[ $1 == dark ]];
 then
-    rm -f "${XDG_CACHE_HOME:?}/DAYLIGHT";
+    rm -f "${XDG_CACHE_HOME:?}/"DAYLIGHT;
     C=(
         [gtk.1]=dark
         [taskwarrior.linux.1]=dark-16.theme
@@ -59,7 +59,7 @@ then
         [dunst.1]=dark
     );
 else
-    > "${XDG_CACHE_HOME:?}/DAYLIGHT";
+    > "${XDG_CACHE_HOME:?}/"DAYLIGHT;
     C=(
         [gtk.1]=light
         [taskwarrior.linux.1]=light-16.theme
@@ -77,18 +77,18 @@ fi;
 if
     [[ -n $DISPLAY ]];
 then
-    'theme.taskwarrior' "${C[taskwarrior.256.1]}";
-    'theme.mutt' "${C[mutt.256.1]}";
-    'theme.x' "${C[x.1]}" "${C[x.2]}" "${C[x.3]}";
-    'theme.gtk' "${C[gtk.1]}";
-    'theme.dunst' "${C[dunst.1]}";
+    theme.taskwarrior "${C[taskwarrior.256.1]}";
+    theme.mutt "${C[mutt.256.1]}";
+    theme.x "${C[x.1]}" "${C[x.2]}" "${C[x.3]}";
+    theme.gtk "${C[gtk.1]}";
+    theme.dunst "${C[dunst.1]}";
     case $X_XCLIENT in
         (bspwm)
-            'theme.bspwm' "${C[bspwm.1]}";
+            theme.bspwm "${C[bspwm.1]}";
     esac;
 else
-    'theme.taskwarrior' "${C[taskwarrior.linux.1]}";
-    'theme.mutt' "${C[mutt.linux.1]}";
+    theme.taskwarrior "${C[taskwarrior.linux.1]}";
+    theme.mutt "${C[mutt.linux.1]}";
 fi;
 
 # vim: set ts=4 sw=4 tw=0 et :

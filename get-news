@@ -4,25 +4,25 @@
 
 exec 9<"$0";
 flock -n 9 || {
-    printf '%s\n' "sorry, I am already running" 1>&2;
+    printf 'sorry, I am already running\n' 1>&2;
     exit 1;
 };
 
 test-inet || {
-    loggi 3 .network.error "We are offline. News have not been updated";
+    loggi 3 .network.error 'We are offline. News have not been updated';
     exit 1;
 };
 
 feedfaetcher 1>/dev/null 2>&1 &
 d="$(
     urldiff -nv 2>/dev/null |
-    fgrep -c NEW;
+    grep -F -c NEW;
 ) unread diffs";
 
 wait;
-f="$(newsbeuter -x reload print-unread)";
+f=$(newsbeuter -x reload print-unread);
 
 test "$((${d%% *} + ${f%% *}))" -gt 0 &&
-    loggi 6 .transfer.complete "${d}\n${f}";
+    loggi 6 .transfer.complete "$d\n$f";
 
 # vim: set ts=4 sw=4 tw=0 et :

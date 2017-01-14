@@ -5,7 +5,7 @@
 man -w "$@" 2>/dev/null;
 
 man -t "$@" |
-ps2pdf - "${@}.pdf";
+ps2pdf - "$@.pdf";
 
 printf '%s.pdf\n' "$@";
 

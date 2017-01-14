@@ -1,15 +1,15 @@
 #!/bin/sh
 #
-# Remove duplicates in .bash_history.
+# Remove duplicates in history file.
 # http://unix.stackexchange.com/questions/48713/how-can-i-remove-duplicates-in-my-bash-history-preserving-order
 
-nl "${HISTFILE:?}" |
-sed 's/[[:space:]]*$//' |
+nl -- "${HISTFILE:?}" |
+sed 's:[[:space:]]*$::' |
 sort -k 2 -k 1,1nr |
 uniq -f 1 |
 sort -n |
-cut -f 2 > "${HISTFILE}~";
+cut -f 2 > "$HISTFILE~";
 
-mv -- "${HISTFILE}~" "$HISTFILE";
+mv -- "$HISTFILE~" "$HISTFILE";
 
 # vim: set ts=4 sw=4 tw=0 et :

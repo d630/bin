@@ -2,8 +2,8 @@
 #
 # Default pdf viewer (gui).
 
-IFS='|';
-set -- ${X_PDF_VIEWER_OPTS} ${1:+"$@"};
+IFS=\|;
+set -- $X_PDF_VIEWER_OPTS ${1:+"$@"};
 
 exec "$X_PDF_VIEWER" "$@";
 

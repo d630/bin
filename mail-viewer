@@ -2,8 +2,8 @@
 #
 # Default mail viewer (tui).
 
-IFS='|';
-set -- ${MAIL_VIEWER_OPTS} ${1:+"$@"};
+IFS=\|;
+set -- $MAIL_VIEWER_OPTS ${1:+"$@"};
 
 exec "$MAIL_VIEWER" "$@";
 

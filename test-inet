@@ -6,9 +6,9 @@
     ping -qnc2 -w10 debian.org ||
         ping -qnc1 -w4 8.8.8.8 ||
             nc -vz www.debian.org 80 || {
-                exec 3<>/dev/udp/debian.org/80 &&
-                    exec 3<&- &&
-                        exec 3>&-; };
+                exec 9<>/dev/udp/debian.org/80 &&
+                    exec 9<&- &&
+                        exec 9>&-; };
 } 1>/dev/null 2>&1;
 
 # vim: set ts=4 sw=4 tw=0 et :

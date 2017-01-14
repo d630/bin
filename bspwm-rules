@@ -2,49 +2,49 @@
 #
 # bspwm: external_rules_command
 
-id="${1?}" \
-instance="$3" \
-class="$2";
+id=${1?} \
+instance=$3 \
+class=$2;
 
-case "$class" in
+case $class in
     (Gimp*)
         echo follow=on ;;
     ([cC]hromium)
         echo desktop=^2;;
     (Emacs)
-        echo "state=tiled layer=normal";;
-    (Firefox | Iceweasel)
+        echo state=tiled\ layer=normal;;
+    (Firefox|Iceweasel)
         echo desktop=^2;;
     (Xombrero)
         echo desktop=^2;;
     (MPlayer)
-        echo "state=floating layer=normal";;
+        echo state=floating\ layer=normal;;
     (mpv)
-        echo "state=floating layer=normal";;
+        echo state=floating\ layer=normal;;
     (Pidgin)
         echo desktop=^3;;
     (Pinentry-gtk-2)
-        echo "state=floating layer=above";;
+        echo state=floating\ layer=above;;
     (XCalc)
-        echo "state=floating layer=normal";;
+        echo state=floating\ layer=normal;;
     (Xmessage)
-        echo "state=floating layer=normal";;
+        echo state=floating\ layer=normal;;
     (stj[12])
-        echo "state=floating layer=above border=on sticky=on";;
+        echo state=floating\ layer=above\ border=on\ sticky=on;;
     (weechat)
         echo desktop=^3;;
-    ("")
+    ('')
         unset -v _NET_WM_PID;
         . /dev/fd/0 2>/dev/null <<IN
         : \"\${$(
             xprop \
                 -id "$id" \
                 -notype \
-                -f _NET_WM_PID 32c '=$0' \
+                -f _NET_WM_PID 32c =\$0 \
                 _NET_WM_PID;
         )}\";
 IN
-        case "$(ps -p "${_NET_WM_PID:?}" -o comm= 2>/dev/null)" in
+        case $(ps -p "${_NET_WM_PID:?}" -o comm= 2>/dev/null) in
             (spotify)
                 echo desktop=^5;;
         esac;;

@@ -6,22 +6,22 @@ if
     test-tty 2>/dev/null;
 then
     function __menu_cmd {
-        menu "slmenu" "$1";
+        menu slmenu "$1";
     };
 elif
     [[ -n $DISPLAY ]];
 then
     function __menu_cmd {
-        menu "dmenu2" "$1";
+        menu dmenu2 "$1";
     };
 else
     exit 1;
 fi;
 
-printf '%s\n' "Choose a project, insert a new one or escape ..." 1>&2;
+printf 'Choose a project, insert a new one or escape ...\n' 1>&2;
 project=$(
     {
-        printf '%s\n' "NEW";
+        printf 'NEW\n';
         task rc.list.all.projects=yes _unique project |
         sed '
             /^log\./ {
@@ -32,47 +32,45 @@ project=$(
             : end' |
         sort -u;
     } |
-    __menu_cmd "PROJECT";
+    __menu_cmd PROJECT;
 );
 
 [[ $project == NEW ]] && project=$(
-        printf '%s' \
-        | __menu_cmd "PROJECT"
+        __menu_cmd PROJECT <<<'';
 );
 
 if
     [[ -z $project ]];
 then
-    printf '%s\n' "No project has been chosen" 1>&2;
+    printf 'No project has been chosen\n' 1>&2;
     exit 1;
 else
-    project=log.${project};
+    project=log.$project;
     printf 'Project: \t%s\n' "${project//./ > }";
 fi;
 
-read -re -p "description:    " description;
-read -re -p "due:            " due;
+read -re -p 'description:    ' description;
+read -re -p 'due:            ' due;
 
 while
     :;
 do
     tag=$(
         {
-            printf '%s\n' "NEW";
+            printf 'NEW\n';
             task rc.list.all.tags=yes _unique tags |
-            tr ',' '\n' |
+            tr , \\n |
             sort -u;
         } |
-        __menu_cmd "TAG";
+        __menu_cmd TAG;
     );
     [[ $tag == NEW ]] && tag=$(
-        printf '%s' |
-        __menu_cmd "TAG";
+        __menu_cmd TAG <<<'';
     );
     if
         [[ -n $tag ]];
     then
-        printf '+%s\n' "$tag";
+        printf +%s\\n "$tag";
         tags+=("$tag");
     else
         break;

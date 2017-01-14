@@ -5,12 +5,12 @@
 function __result {
     result=$(
         xsel -o |
-        menu "$1" "RESULT" |
+        menu "$1" RESULT |
         xargs echo |
         bc 2>&1;
     );
 
-    printf '%s\n' "$result" |
+    printf %s\\n "$result" |
     tee >(xclip -i);
 };
 
@@ -22,12 +22,12 @@ else
     menu=dmenu2;
 fi;
 
-'__result' "$menu";
+__result "$menu";
 
 while
     [[ -n $result ]];
 do
-    '__result' "$menu";
+    __result "$menu";
 done;
 
 # vim: set ts=4 sw=4 tw=0 et :

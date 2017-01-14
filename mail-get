@@ -4,16 +4,16 @@
 
 exec 9<"$0";
 flock -n 9 || {
-    printf '%s\n' "sorry, I am already running" 1>&2;
+    printf 'sorry, I am already running\n' 1>&2;
     exit 1;
 };
 
-mpop -a >> "${XDG_VAR_HOME:?}/log/mpop.log" 2>&1;
+mpop -a >> "${XDG_VAR_HOME:?}/"log/mpop.log 2>&1;
 
 mapfile -t reply < <(
     imapfilter \
-        -c "${HOME}/.imapfilter/localhost.lua" \
-        -l "${XDG_VAR_HOME}/log/imapfilter.log";
+        -c "$HOME/".imapfilter/localhost.lua \
+        -l "$XDG_VAR_HOME/"log/imapfilter.log;
 );
 
 ((${reply[0]//[!0-9]/} + ${reply[1]//[!0-9]/} > 0)) ||

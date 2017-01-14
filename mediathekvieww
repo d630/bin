@@ -2,13 +2,13 @@
 #
 # MediathekView (german tv)
 
-case "$1" in
+case $1 in
     (run)
         java -jar /opt/MediathekView.jar;;
     (load)
         java -jar /opt/bin/MediathekView.jar -auto -noGui;;
     (*)
-        printf '%s\n' "Usage: mediathekieww (run|load)" 1>&2;
+        printf 'Usage: mediathekieww (run|load)\n' 1>&2;
         exit 1;
 esac;
 

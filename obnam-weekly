@@ -2,12 +2,12 @@
 #
 # Weekly backup with obnam.
 
-obnam_conf="${HOME}/.obnam.conf";
+obnam_conf=$HOME/.obnam.conf;
 
-sudo obnam backup --config="$obnam_conf" --lru-size=8192 --upload-queue-size=8192 \
+sudo obnam backup --config"=$obnam_conf" --lru-size=8192 --upload-queue-size=8192 \
     --exclude=/home/latch/tmp \
     --exclude=/home/latch/var/mirror \
-    --exclude="${HOME}/cache" \
+    --exclude"=$HOME/cache" \
     /etc/ \
     /home/ \
     /root/ \
@@ -16,8 +16,8 @@ sudo obnam backup --config="$obnam_conf" --lru-size=8192 --upload-queue-size=819
     /var/vmail/ \
     /var/www/;
 
-sudo obnam force-lock --config="$obnam_conf";
+sudo obnam force-lock --config"=$obnam_conf";
 
-sudo obnam forget --config="$obnam_conf" --keep=2w;
+sudo obnam forget --config"=$obnam_conf" --keep=2w;
 
 # vim: set ts=4 sw=4 tw=0 et :
