@@ -7,7 +7,7 @@ backup_dir="${XDG_VAR_HOME:?}/"backups;
 find /var/lib/dpkg/info/ \
     -daystart \( -name \*.list -a -mtime -7 \) \
     -printf '%f\n' |
-sed s:.list\$:: \ |
+sed s:.list\$:: |
 sort > "$backup_dir/"7_days.txt;
 
 IFS=:;

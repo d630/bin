@@ -20,6 +20,7 @@ sed -n '
     2,36{
         s/ Statistik.*//g;
         s/ zu //g;
+        s/Historie//g;
         s/gegen:/vs./g;
         s/Endstand: //g;
         s/Halbzeitstand: //g;

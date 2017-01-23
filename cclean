@@ -11,8 +11,7 @@ rm -rf -- \
     "$HOME/".gnome2_private \
     "$HOME/".icedteaplugin \
     "$HOME/".macromedia \
-    "$HOME/".thumbnails \
-    "${XDG_CACHE_HOME:?}/"?*;
+    "$HOME/".thumbnails;
 
 rm -f -- \
     "$HOME/".gksu.lock \

@@ -43,7 +43,7 @@ case $menu in
             -name dmenu2 \
             -class dmenu2;;
     (dmenu2-save)
-        test -n "$menu_prompt" ] ||
+        test -n "$menu_prompt" ||
             exit 1;
         exec dmenu2 -b -f \
             -mask \
@@ -56,7 +56,7 @@ case $menu in
     (fzf)
         exec fzf -x -i +s --prompt="${menu_prompt:->} ";;
     (fzf-print-query)
-        exec fzf -x -i +s --prompt="${menu_prompt:->} " --print-query;
+        exec fzf -x -i +s --prompt="${menu_prompt:->} " --print-query;;
 esac;
 
 # vim: set ts=4 sw=4 tw=0 et :
