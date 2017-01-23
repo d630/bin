@@ -8,6 +8,8 @@ cd -- /home/stow/bin/bin ||
 IFS=.: read -r _ _ p _  _ < <(git config --local --get remote.origin.url);
 P=https://github.com/$p;
 
+export LC_ALL=C;
+
 function __find {
     # find . -maxdepth 1 -regextype posix-egrep \
     #         \( -path "./.*" -o -name README.md \) \
@@ -40,7 +42,8 @@ function __find {
 {
     header=$(</dev/fd/0);
 } <<'HEADER'
-Short scripts, which do not belong to my dotfiles. Unless otherwise stated, these files are in the public domain.
+Short scripts, which do not belong to my dotfiles. Unless otherwise stated,
+these files are in the public domain.
 
 List:
 
