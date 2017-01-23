@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# Spotify: Take pub list1, shuffle it and add the songs to cleared pub list2.
+
+user=${1:?};
+list1=${2:?};
+list2=${3:?};
+token=${4:?};
+
+bspot clearList "$user" "$list2" "$token";
+
+bspot getTracks "$user" "$list1" "$token" |
+sort -R |
+sort -R |
+sort -R |
+bspot addTracks "$user" "$list2" "$token";
+
+# vim: set ts=4 sw=4 tw=0 et :
