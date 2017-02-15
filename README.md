@@ -46,7 +46,6 @@ List:
 * [find-string](https://github.com/D630/bin/blob/master/find-string): Grep string in all files under the current directory with find.
 * [furlview](https://github.com/D630/bin/blob/master/furlview): Simple replacement for urlview using fzf in X.
 * [fzf-bind.bash](https://github.com/D630/bin/blob/master/fzf-bind.bash): My fzf keybinding script for bash.
-* [fzf-curr-pos](https://github.com/D630/bin/blob/master/fzf-curr-pos): Start fzf from current position.
 * [fzf-ls](https://github.com/D630/bin/blob/master/fzf-ls): Select files listed in a directory.
 * [gdate2din](https://github.com/D630/bin/blob/master/gdate2din): Grep and convert german dates with dateutils using dgrep & strptime.
 * [get-fball](https://github.com/D630/bin/blob/master/get-fball): Show some soccer results from http://www.sportschau.de.
@@ -55,12 +54,10 @@ List:
 * [get-news](https://github.com/D630/bin/blob/master/get-news): Wrapper for getting my news.
 * [get-webheader](https://github.com/D630/bin/blob/master/get-webheader): Get webheader via curl.
 * [get-wetter](https://github.com/D630/bin/blob/master/get-wetter): Get infos from http://wetter.tagesschau.de.
-* [grep-man](https://github.com/D630/bin/blob/master/grep-man): Grep pattern in manpage.
 * [hblock](https://github.com/D630/bin/blob/master/hblock): Simple ad- and malware-blocking-list builder for dnsmasq.
 * [highlighter](https://github.com/D630/bin/blob/master/highlighter): Wrapper: Default highlighting tool.
 * [iface](https://github.com/D630/bin/blob/master/iface): Configure my Wlan.
 * [image-viewer](https://github.com/D630/bin/blob/master/image-viewer): Default image viewer (tui).
-* [kuno](https://github.com/D630/bin/blob/master/kuno): Add interactively a note via terminal to use it later in org-mode.
 * [lesspipew](https://github.com/D630/bin/blob/master/lesspipew): My preprocessor for less.
 * [lifeday](https://github.com/D630/bin/blob/master/lifeday): Print lifeday.
 * [log-ip](https://github.com/D630/bin/blob/master/log-ip): Daily ip logging.
@@ -73,17 +70,12 @@ List:
 * [mail-send](https://github.com/D630/bin/blob/master/mail-send): Send mail via msmtp-queue and give notification + sound.
 * [mail-update](https://github.com/D630/bin/blob/master/mail-update): Update mail dirs.
 * [mail-viewer](https://github.com/D630/bin/blob/master/mail-viewer): Default mail viewer (tui).
-* [man2pdf](https://github.com/D630/bin/blob/master/man2pdf): man2pdf script.
-* [man2text](https://github.com/D630/bin/blob/master/man2text): man2text script.
-* [mcalc](https://github.com/D630/bin/blob/master/mcalc): Simple calculation with bc and dmenu.
-* [mediathekvieww](https://github.com/D630/bin/blob/master/mediathekvieww): MediathekView (german tv)
 * [menu](https://github.com/D630/bin/blob/master/menu): A wrapper script for selecting menu driven programs.
 * [mime-build-types](https://github.com/D630/bin/blob/master/mime-build-types): Build a mime.type file with ERE globs from /usr/share/mime.
 * [msmtpqw](https://github.com/D630/bin/blob/master/msmtpqw): Replacement for msmtpq.
 * [mutt--hotmail](https://github.com/D630/bin/blob/master/mutt--hotmail): Wrapper: mutt hotmail.
 * [mutt--posteo](https://github.com/D630/bin/blob/master/mutt--posteo): Wrapper: mutt posteo.
 * [mutt--spool](https://github.com/D630/bin/blob/master/mutt--spool): Wrapper: mutt spool.
-* [mutt-filter-uri](https://github.com/D630/bin/blob/master/mutt-filter-uri): Add a bookmark to urimark in mutt.
 * [mutt-save-attachments](https://github.com/D630/bin/blob/master/mutt-save-attachments): Save attachements in Mutt.
 * [newsbeuter2taskum](https://github.com/D630/bin/blob/master/newsbeuter2taskum): Add a bookmark to taswarrior-um in newsbeuter.
 * [noti](https://github.com/D630/bin/blob/master/noti): Send notifications (meant to be used with dunst and rsyslog).
@@ -103,7 +95,7 @@ List:
 * [readline-editor](https://github.com/D630/bin/blob/master/readline-editor): Default readline editor.
 * [repeat](https://github.com/D630/bin/blob/master/repeat): Repeat a command n times.
 * [rtcwakew](https://github.com/D630/bin/blob/master/rtcwakew): Use rtcwake and play music on wakeup.
-* [run](https://github.com/D630/bin/blob/master/run): Run that command (X environment)
+* [run](https://github.com/D630/bin/blob/master/run): Run that command.
 * [schlafen](https://github.com/D630/bin/blob/master/schlafen): My suspend wrapper.
 * [screenshot-multi](https://github.com/D630/bin/blob/master/screenshot-multi): Take a quick multi screenshot.
 * [screenshot-single](https://github.com/D630/bin/blob/master/screenshot-single): Take a quick single screenshot.
@@ -143,8 +135,6 @@ List:
 * [theme](https://github.com/D630/bin/blob/master/theme): Adjust theme configuration.
 * [transmission-cli-w](https://github.com/D630/bin/blob/master/transmission-cli-w): Wrapper for transmission-cli.
 * [update-packages](https://github.com/D630/bin/blob/master/update-packages): Update via some package managers.
-* [urldiff-add](https://github.com/D630/bin/blob/master/urldiff-add): Add to urlwatch and urldiff.
-* [urlview2](https://github.com/D630/bin/blob/master/urlview2): Use choose to simulate urlview.
 * [vfh](https://github.com/D630/bin/blob/master/vfh): Preview files in a directory like in vifm.
 * [volume](https://github.com/D630/bin/blob/master/volume): Set volume via amixer.
 * [web-browser](https://github.com/D630/bin/blob/master/web-browser): Default web browser (tui).
@@ -156,7 +146,6 @@ List:
 * [x-file-browser](https://github.com/D630/bin/blob/master/x-file-browser): Default file manager (gui).
 * [x-image-viewer](https://github.com/D630/bin/blob/master/x-image-viewer): Default image viewer (gui).
 * [x-mail-viewer](https://github.com/D630/bin/blob/master/x-mail-viewer): Default mail viewer (gui).
-* [x-open](https://github.com/D630/bin/blob/master/x-open): Open files or strings in preferred applications.
 * [x-pdf-viewer](https://github.com/D630/bin/blob/master/x-pdf-viewer): Default pdf viewer (gui).
 * [x-terminal-tabbed](https://github.com/D630/bin/blob/master/x-terminal-tabbed): Open some terminal emulators in tabbed.
 * [x-terminal](https://github.com/D630/bin/blob/master/x-terminal): Default terminal emulator window.
@@ -169,9 +158,7 @@ List:
 * [xorg-lock](https://github.com/D630/bin/blob/master/xorg-lock): Default xlock programme.
 * [xorg-raise-xwin](https://github.com/D630/bin/blob/master/xorg-raise-xwin): List xwindows with dmenu and raise selection.
 * [xorg-run-or-raise](https://github.com/D630/bin/blob/master/xorg-run-or-raise): Run or raise script for commands with gui or tui.
-* [xorg-set-desktop-name](https://github.com/D630/bin/blob/master/xorg-set-desktop-name): Helper for setting current desktop's name
 * [xorg-switch-to-desktop](https://github.com/D630/bin/blob/master/xorg-switch-to-desktop): Select desktop with a menu and then switch with wmctrl to it.
 * [xorg-touchpad](https://github.com/D630/bin/blob/master/xorg-touchpad): Xorg: Disable or enable touchpad.
 * [youtube-dl-get-audio](https://github.com/D630/bin/blob/master/youtube-dl-get-audio): Run youtoube-dl to convert video to audio.
-* [z-run](https://github.com/D630/bin/blob/master/z-run): Run z output with file manager.
-* [zettelkasten](https://github.com/D630/bin/blob/master/zettelkasten): Run Zettelkasten.
+* [z-run](https://github.com/D630/bin/blob/master/z-run): Run z output within file manager.

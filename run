@@ -1,91 +1,76 @@
 #!/usr/bin/env bash
 #
-# Run that command (X environment)
+# Run that command.
 #
-# -f fork into background
-# -k keep/wait
-# -n open cmd in new terminal-emulator
-
-OPTIND=1 \
-OPTERR=1 \
-opt=;
-
-typeset -i \
-    flag_f= \
-    flag_k= \
-    flag_n=;
-
-typeset -a \
-    command \
-    command_quoted;
-
-while
-    getopts :fkn opt;
-do
-    case $opt in
-        (f)
-            flag_f=1;;
-        (k)
-            flag_k=1;;
-        (n)
-            flag_n=1;;
-        (\?)
-            printf "Unknown flag: '-%s'\n" "$OPTARG" 1>&2;
-            exit 1;
-    esac;
-done;
-shift $((OPTIND - 1));
+# -F fork into background
+# -K keep/wait
+# -N open cmd in new terminal-emulator
 
 typeset \
-    a \
-    q;
+    cmd \
+    opt;
 
-for a; do
-    printf -v q '%q' "$a";
-    command_quoted+=("$q");
-    command+=("$a");
+typeset -i \
+    flag_F= \
+    flag_K= \
+    flag_N=;
+
+for opt; do
+    case $opt in
+        (-F)
+            flag_F=1;;
+        (-K)
+            flag_K=1;;
+        (-N)
+            flag_N=1;;
+        (--)
+            cmd=$2;
+            shift 2;
+            break;;
+    esac;
+    shift 1;
 done;
 
-command -v "${command[0]}" 1>/dev/null 2>&1 || {
-    printf "error: command not found: '%s'\n" "${command[0]}" 1>&2;
+command -v "$cmd" 1>/dev/null 2>&1 || {
+    printf "error: command not found: '%s'\n" "$cmd" 1>&2;
     exit 1;
 };
 
 if
     test-tty 2>/dev/null;
 then
-    case ${flag_f}${flag_n}${flag_k} in
+    case $flag_F$flag_N$flag_K in
     (111)
-        daemonize x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}";;
+        daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
     (110)
-        daemonize x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}";;
+        daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
     (100)
-        setsidw "${command[0]}" "${command[@]}";;
+        setsidw "$cmd" "$@";;
     (011)
-        x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}";;
+        x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
     (010)
-        x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}";;
+        x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
     (001)
-        exec ${SHELL:-sh} -c "${command[0]} ${command_quoted[@]:1};builtin printf '%s\n' 'Press ENTER to continue';builtin read";;
+        exec ${SHELL:-sh} -c "$cmd ${*@Q};printf 'Press ENTER to continue\n';read";;
     (000)
-        exec -a "${command[0]}" "${command[@]}";
+        exec "$cmd" "$@";;
     esac;
 else
-    case ${flag_f}${flag_n}${flag_k} in
+    case $flag_F$flag_N$flag_K in
     (111)
-        daemonize x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}";;
+        daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
     (110)
-        daemonize x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}";;
+        daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
     (100)
-        setsidw "${command[0]}" "${command[@]}";;
+        setsidw "$cmd" "$@";;
     (011)
-        daemonize x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1};exec ${SHELL:-sh}";;
+        daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
     (010)
-        daemonize x-terminal -e "${SHELL:-sh}" -c "${command[0]} ${command_quoted[@]:1}";;
+        daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
     (001)
-        daemonize ${SHELL:-sh} -c "${command[0]} ${command_quoted[@]:1};builtin printf '%s\n' 'Press ENTER to continue';builtin read";;
+        daemonize ${SHELL:-sh} -c "$cmd ${*@Q};printf 'Press ENTER to continue\n';read";;
     (000)
-        setsidw "${command[0]}" "${command[@]}";
+        setsidw "$cmd" "$@";;
     esac;
 fi;
 
