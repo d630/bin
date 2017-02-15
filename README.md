@@ -1,4 +1,5 @@
-Short scripts, which do not belong to my dotfiles. Unless otherwise stated, these files are in the public domain.
+Short scripts, which do not belong to my dotfiles. Unless otherwise stated,
+these files are in the public domain.
 
 List:
 * [audio-player](https://github.com/D630/bin/blob/master/audio-player): Default audio player (cli).
@@ -20,6 +21,7 @@ List:
 * [cclean](https://github.com/D630/bin/blob/master/cclean): Clean up some dirs and files.
 * [chromium--proxy](https://github.com/D630/bin/blob/master/chromium--proxy): Start chromium and redirect traffic through a proxy server.
 * [chromium-mselect-history](https://github.com/D630/bin/blob/master/chromium-mselect-history): Browse the history of chromium via fzf, and then open selection.
+* [chromiumw](https://github.com/D630/bin/blob/master/chromiumw): Wrapper: chromium
 * [clipbuffer](https://github.com/D630/bin/blob/master/clipbuffer): Simple clipboard manager for Xorg (xclip, xprop, menu, base64).
 * [color-grab](https://github.com/D630/bin/blob/master/color-grab): Pick color via grabc.
 * [color-show](https://github.com/D630/bin/blob/master/color-show): Display color info in terminal.
@@ -36,6 +38,7 @@ List:
 * [disownw](https://github.com/D630/bin/blob/master/disownw): Disown job.
 * [dnsmasq-backup-urls](https://github.com/D630/bin/blob/master/dnsmasq-backup-urls): Backup all uris from dnsmasq log.
 * [dunst-restart](https://github.com/D630/bin/blob/master/dunst-restart): Restart dunst.
+* [fb-image-viewer](https://github.com/D630/bin/blob/master/fb-image-viewer): Default image viewer (framebuffer).
 * [feed2newsbeuter](https://github.com/D630/bin/blob/master/feed2newsbeuter): Record url of feed in newsbeuter via dmenu.
 * [feedfaetcher](https://github.com/D630/bin/blob/master/feedfaetcher): Simple feed downloader based on urldiff.
 * [file-browser](https://github.com/D630/bin/blob/master/file-browser): Default file manager (tui).
@@ -54,6 +57,7 @@ List:
 * [get-wetter](https://github.com/D630/bin/blob/master/get-wetter): Get infos from http://wetter.tagesschau.de.
 * [grep-man](https://github.com/D630/bin/blob/master/grep-man): Grep pattern in manpage.
 * [hblock](https://github.com/D630/bin/blob/master/hblock): Simple ad- and malware-blocking-list builder for dnsmasq.
+* [highlighter](https://github.com/D630/bin/blob/master/highlighter): Wrapper: Default highlighting tool.
 * [iface](https://github.com/D630/bin/blob/master/iface): Configure my Wlan.
 * [image-viewer](https://github.com/D630/bin/blob/master/image-viewer): Default image viewer (tui).
 * [kuno](https://github.com/D630/bin/blob/master/kuno): Add interactively a note via terminal to use it later in org-mode.
@@ -74,6 +78,7 @@ List:
 * [mcalc](https://github.com/D630/bin/blob/master/mcalc): Simple calculation with bc and dmenu.
 * [mediathekvieww](https://github.com/D630/bin/blob/master/mediathekvieww): MediathekView (german tv)
 * [menu](https://github.com/D630/bin/blob/master/menu): A wrapper script for selecting menu driven programs.
+* [mime-build-types](https://github.com/D630/bin/blob/master/mime-build-types): Build a mime.type file with ERE globs from /usr/share/mime.
 * [msmtpqw](https://github.com/D630/bin/blob/master/msmtpqw): Replacement for msmtpq.
 * [mutt--hotmail](https://github.com/D630/bin/blob/master/mutt--hotmail): Wrapper: mutt hotmail.
 * [mutt--posteo](https://github.com/D630/bin/blob/master/mutt--posteo): Wrapper: mutt posteo.
@@ -95,10 +100,13 @@ List:
 * [pyfonts](https://github.com/D630/bin/blob/master/pyfonts): Display fonts.
 * [pyrandgen-xsel](https://github.com/D630/bin/blob/master/pyrandgen-xsel): X-select random password.
 * [pyrandgen](https://github.com/D630/bin/blob/master/pyrandgen): Generate random password.
+* [readline-editor](https://github.com/D630/bin/blob/master/readline-editor): Default readline editor.
 * [repeat](https://github.com/D630/bin/blob/master/repeat): Repeat a command n times.
 * [rtcwakew](https://github.com/D630/bin/blob/master/rtcwakew): Use rtcwake and play music on wakeup.
 * [run](https://github.com/D630/bin/blob/master/run): Run that command (X environment)
 * [schlafen](https://github.com/D630/bin/blob/master/schlafen): My suspend wrapper.
+* [screenshot-multi](https://github.com/D630/bin/blob/master/screenshot-multi): Take a quick multi screenshot.
+* [screenshot-single](https://github.com/D630/bin/blob/master/screenshot-single): Take a quick single screenshot.
 * [sdmenu](https://github.com/D630/bin/blob/master/sdmenu): Wrapper for dmenu2-save.
 * [setsidw](https://github.com/D630/bin/blob/master/setsidw): Wrapper: setsid(1).
 * [show-dudel](https://github.com/D630/bin/blob/master/show-dudel): Disk usage of unlinked, but still open files.
@@ -117,6 +125,8 @@ List:
 * [stj1](https://github.com/D630/bin/blob/master/stj1): Use st like kuake and yeahconsole terminal.
 * [stow-home](https://github.com/D630/bin/blob/master/stow-home): xstow wrapper.
 * [stow-new](https://github.com/D630/bin/blob/master/stow-new): Set up a new stow package.
+* [sxhkd-reload](https://github.com/D630/bin/blob/master/sxhkd-reload): Reload sxhkd config.
+* [sxhkd-restart](https://github.com/D630/bin/blob/master/sxhkd-restart): Restart sxhkd.
 * [sxiv-browser](https://github.com/D630/bin/blob/master/sxiv-browser): Open all files in the current directory with sxiv.
 * [task-local](https://github.com/D630/bin/blob/master/task-local): Simple wrapper for using taskwarrior with local "task-repos".
 * [taskwarrior-add](https://github.com/D630/bin/blob/master/taskwarrior-add): Add interactively a task to Taskwarrior via read in a terminal + {d,s}menu.
@@ -124,10 +134,12 @@ List:
 * [taskwarrior-log](https://github.com/D630/bin/blob/master/taskwarrior-log): Log interactively a task in Taskwarrior.
 * [tcsh--filetest](https://github.com/D630/bin/blob/master/tcsh--filetest): Use the filetest builtin command of tcsh.
 * [tcsh--printenv](https://github.com/D630/bin/blob/master/tcsh--printenv): Use the printenv builtin command of tcsh.
+* [template-new](https://github.com/D630/bin/blob/master/template-new): Prepare new file from a template.
 * [test-daylight](https://github.com/D630/bin/blob/master/test-daylight): Test daytime.
 * [test-inet](https://github.com/D630/bin/blob/master/test-inet): Check inet connection.
 * [test-tty](https://github.com/D630/bin/blob/master/test-tty): Test if tty is available.
-* [text-editor](https://github.com/D630/bin/blob/master/text-editor): Default editor/visual (tui).
+* [text-editor](https://github.com/D630/bin/blob/master/text-editor): Default text editor.
+* [text-visual](https://github.com/D630/bin/blob/master/text-visual): Default text visual editor.
 * [theme](https://github.com/D630/bin/blob/master/theme): Adjust theme configuration.
 * [transmission-cli-w](https://github.com/D630/bin/blob/master/transmission-cli-w): Wrapper for transmission-cli.
 * [update-packages](https://github.com/D630/bin/blob/master/update-packages): Update via some package managers.
@@ -159,6 +171,7 @@ List:
 * [xorg-run-or-raise](https://github.com/D630/bin/blob/master/xorg-run-or-raise): Run or raise script for commands with gui or tui.
 * [xorg-set-desktop-name](https://github.com/D630/bin/blob/master/xorg-set-desktop-name): Helper for setting current desktop's name
 * [xorg-switch-to-desktop](https://github.com/D630/bin/blob/master/xorg-switch-to-desktop): Select desktop with a menu and then switch with wmctrl to it.
+* [xorg-touchpad](https://github.com/D630/bin/blob/master/xorg-touchpad): Xorg: Disable or enable touchpad.
 * [youtube-dl-get-audio](https://github.com/D630/bin/blob/master/youtube-dl-get-audio): Run youtoube-dl to convert video to audio.
 * [z-run](https://github.com/D630/bin/blob/master/z-run): Run z output with file manager.
 * [zettelkasten](https://github.com/D630/bin/blob/master/zettelkasten): Run Zettelkasten.

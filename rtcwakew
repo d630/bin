@@ -20,7 +20,7 @@ fi;
 
 typeset -A music;
 music[radio1]=http://www.radioeins.de/live.m3u;
-music[open]=-R\ $XDG_MUSIC_DIR/open_your_eyes.mp3;
+music[open]=$XDG_MUSIC_DIR/open_your_eyes.mp3;
 
 datum=$(
     __menu Datum <<< $'now\ntomorrow';
@@ -45,7 +45,7 @@ if
 then
     sudo rtcwake -m mem -t "$(date -d "$zp" +%s)" &&
         sleep 10 &&
-            audio-player "${music[$stream]}";
+            audio-player --loop=inf "${music[$stream]}";
 else
     printf 'Bye-bye!\n' 1>&2;
     exit 1;

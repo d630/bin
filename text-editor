@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
-# Default editor/visual (tui).
+# Default text editor.
 
 IFS=\|;
-set -- $VISUAL_OPTS ${1:+"$@"};
+set -- $EDITOR_OPTS ${1:+"$@"};
 
-exec "$VISUAL" "$@";
+exec "$EDITOR" "$@";
 
 # vim: set ts=8 sw=8 tw=0 et :

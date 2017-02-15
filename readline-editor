@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Default readline editor.
+
+IFS=\|;
+set -- $READLINE_EDITOR_OPTS ${1:+"$@"};
+
+exec "$READLINE_EDITOR" "$@";
+
+# vim: set ts=8 sw=8 tw=0 et :

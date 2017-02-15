@@ -1,244 +1,37 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # My preprocessor for less.
-# Inspired by: https://gitweb.gentoo.org/repo/gentoo.git/
-#       tree/sys-apps/less/files/lesspipe.sh
 
-# TODO(D630): revise
-
-# -- CONFIG.
-
-function Lesspipe::Init {
-    { typeset i=$(</dev/fd/0); } <<-'INIT'
-typeset -A Mime=(
-    [application/pdf]='pdftotext -layout %s -'
-    [application/postscript]='pstotext %s'
-    [application/vnd.rn-realmedia]='mediainfo %s'
-    [application/x-bittorrent]='transmissioncli --info %s'
-    [application/x-shockwave-flash]='mediainfo %s'
-    [audio/*]='mediainfo %s'
-    [image/*]='identify %s'
-    [text/html]='w3m -dump -T text/html -O UTF-8 < %s'
-    [text/troff]='man -l %s'
-    [video/*]='mediainfo %s'
-);
-
-typeset -A Ext=(
-    [----]='acat %s'
-    [---]="${LESSCOLORIZER=code2color} %s"
-    [--]='cat %s'
-    [-]='ls -AFhl --color=always -- %s'
-    [7z]='7z l -- %s'
-    [a]='ar tv %s'
-    [ace]='unace l %s'
-    [alz]='acat %s'
-    [arc]='arc v %s'
-    [arj]='arj l %s'
-    [bin]='cd-info --no-header --no-device-info %s'
-    [bz2]='bunzip2 -c -- %s'
-    [bz]='bunzip2 -c -- %s'
-    [cab]='cabextract -l -- %s'
-    [cpi]='cpio -itv < %s'
-    [cpio]='cpio -itv < %s'
-    [crl]='openssl crl -hash -text -noout -in %s'
-    [crt]='openssl x509 -hash -text -noout -in %s'
-    [csr]='openssl req -text -noout -in %s'
-    [cue]='cd-info --no-header --no-device-info %s'
-    [deb]='dpkg --info %s ; dpkg --contents %s'
-    [doc]='antiword %s'
-    [dvi]='dvi2tty %s'
-    [ear]='unzip -v %s'
-    [elf]='readelf -a -W -- %s'
-    [exe]='7z l -- %s'
-    [gmo]='msgunfmt -- %s'
-    [gz]='gunzip -c -- %s'
-    [iso]='Lesspipe::ListIso %s'
-    [jar]='unzip -v %s'
-    [lha]='lha v %s'
-    [lrz]='acat %s'
-    [lz]='lzip -dc -- %s'
-    [lzh]='lha v %s'
-    [lzma]='unlzma -c -- %s'
-    [lzo]='lzop -dc -- %s'
-    [mo]='msgunfmt -- %s'
-    [pdf]='ps2ascii %s'
-    [pem]='openssl x509 -hash -text -noout -in %s'
-    [ps]='ps2ascii %s'
-    [rar]='unrar l -- %s'
-    [raw]='cd-info --no-header --no-device-info %s'
-    [rpm]='rpm -qpivl --changelog -- %s'
-    [rtf]='unrtf --nopict --text %s'
-    [rz]='acat %s'
-    [so]='readelf -h -d -s -W -- %s'
-    [squashfs]='unsquashfs -s %s && unsquashfs -ll %s'
-    [t7z]='acat %s'
-    [tar]='tar tvvf %s'
-    [tbz2]='acat %s'
-    [tbz]='acat %s'
-    [tgz]='acat %s'
-    [tlz]='acat %s'
-    [txz]='acat %s'
-    [tz]='acat %s'
-    [tzo]='acat %s'
-    [udeb]='dpkg --info %s ; dpkg --contents %s'
-    [war]='unzip -v %s'
-    [xpi]='unzip -v %s'
-    [xz]='xzdec -- %s'
-    [z]='gunzip -c -- %s'
-    [zip]='unzip -v %s'
-    [zoo]='zoo -list %s'
-);
-INIT
-
-    printf %s "$i";
-
-} 2>/dev/null;
-
-# -- FUNCTIONS.
-
-function Lesspipe::CheckMime
-if
-    typeset mime_type=$(file -L -b --mime-type "$1");
-    [[ -n ${Mime[$mime_type]} ]];
-then
-    command=(${Mime[$mime_type]});
-elif
-    [[ -n ${Mime[${mime_type%/*}/*]} ]];
-then
-    command=(${Mime[${mime_type%/*}/*]});
-else
-    return 1;
-fi;
-
-function Lesspipe::CheckArchive {
-    typeset entry=$(file -L "$1");
-
-    case $entry in
-        (*" 7-zip archive"*)
-            command=(7z l -- %s);;
-        (*" ar archive"*)
-            command=(ar tv %s);;
-        (*" CAB-Installer"*)
-            command=(cabextract -l -- %s);;
-        (*" cpio archive"*)
-            command=(cpio -itv \< %s);;
-        (*" ELF "*)
-            command=(readelf -a -W -- %s);;
-        (*" LHa"*archive*)
-            command=(lha v %s);;
-        (*" troff "*)
-            command=(man -l %s);;
-        (*" shared object"*)
-            command=(readelf -h -d -s -W -- %s);;
-        (*" tar archive"*)
-            command=(tar tvvf %s);;
-        (*" Zip archive"*)
-            command=(unzip -v %s);;
-        (*": data")
-            command=(hexdump -C -- %s);;
-        (*)
-            return 1;
-    esac;
-};
-
-function Lesspipe::CheckExt
-if
-    [[ -n ${1/${1##*.}/} && -n ${Ext[${1##*.}]} ]];
-then
-    command=(${Ext[${1##*.}]});
-else
-    if
-        [[ $LESS == *-[rR]* || $LESSCOLOR -eq 2 ]];
-    then
-        typeset -x LESSQUIET=true;
-        command=(${Ext[---]});
-    else
-        exit 1;
-    fi;
-fi;
-
-function Lesspipe::ExecCommand
-if
-    command -v "${command[0]}" 1>/dev/null 2>&1;
-then
-    typeset -x LESSMETACHARS=" $'\t'$'\n''"';*?"()<>[|&^`#\$%=~';
-    eval "${command_quoted[@]}";
-else
-    printf "%s: error: command not found: '%s'\n" "$0" "${command[0]}" 1>&2;
+test $# -gt 0 ||
     exit 1;
-fi;
 
-function Lesspipe::ListIso {
-    typeset \
-        iso_opts \
-        iso_info=$(isoinfo -d -i "$1");
+trap exit\ 0 PIPE;
+umask 077;
+#export LESSMETACHARS;
 
-    printf '%s\n' "$iso_info";
+test -x "$HOME/".lessfilter &&
+    "$HOME/".lessfilter "$1" &&
+        exit 72;
 
-    case $iso_info in
-        (*"$'\n'Rock Ridge"*)
-            iso_opts=-R;;
-        (*"$'\n'Joliet"*)
-            iso_opts=-J;
+for i in $LESSIGNORE; do
+    case $1 in
+        (*.$i)
+            exit 72;;
     esac;
-
-    isoinfo -l ${iso_opts} -i "$1";
-};
-
-function Lesspipe::ReplacePattern {
-    typeset \
-        a \
-        q;
-
-    printf -v q '%q' "$1";
-    for a in "${!command[@]}"; do
-        command_quoted[$a]=${command[$a]//[%]s/$q};
-        command[$a]=${command[$a]//[%]s/$1};
-    done;
-};
-
-# -- MAIN.
-
-if
-    (($#));
-then
-    trap 'exit 0' PIPE;
-    umask 077;
-else
-    exit 1;
-fi;
-
-[[ -x ${HOME}/.lessfilter ]] &&
-    "${HOME}/.lessfilter" "$1" &&
-        exit 0;
-
-for i in ${LESSIGNORE}; do
-    [[ $1 == *.${i} ]] &&
-        exit 0;
 done;
 
-typeset -a \
-    command \
-    command_quoted;
-
-. <(Lesspipe::Init);
-
 if
-    [[ -d $1 ]];
+    test "${LESSCOLOR:-0}" -eq 2 ||
+        case $LESS in
+            (*-[rR]*)
+                :;;
+            (*)
+                ! :;;
+        esac;
 then
-    command=(${Ext[-]});
-elif
-    [[ -e $1 ]];
-then
-    'Lesspipe::CheckMime' "$1" ||
-        'Lesspipe::CheckArchive' "$1" ||
-            'Lesspipe::CheckExt' "${1,,}";
+    open -A cdog -A about -f "$1" 2>&1;
 else
-    printf "%s: error: file does not exist: '%s'\n" "$0" "$1" 1>&2;
-    exit 1;
+    open -A dog -A about -f "$1" 2>&1;
 fi;
-
-'Lesspipe::ReplacePattern' "$1";
-'Lesspipe::ExecCommand';
 
 # vim: set ts=4 sw=4 tw=0 et :

@@ -1,0 +1,70 @@
+#!/usr/bin/mawk -f
+#
+# Build a mime.type file with ERE globs from /usr/share/mime.
+
+function mergeAliases() {
+    FS = " "
+
+    while ((getline < aliasesFile) > 0) {
+        if (match($1, "^#")) {
+            continue
+        }
+        Types[$1] = Types[$2]
+    }
+
+    close(aliasesFile)
+}
+
+function mergeGlobs() {
+    FS = ":"
+
+    while ((getline < globsFile) > 0) {
+        if (match($1, "^#")) {
+            continue
+        }
+
+        if (length($4)) {
+            $3 = $3 FS $4
+        }
+
+        gsub(/\./, "\.", $3)
+        gsub(/\*/, ".*", $3)
+
+        if (length(Types[$2])) {
+            Types[$2] = Types[$2] "|" $3
+        } else {
+            Types[$2] = $3
+        }
+    }
+
+    close(globsFile)
+}
+
+function loadTypes() {
+    while ((getline < typesFile) > 0) {
+        if (match($1, "^#")) {
+            continue
+        }
+        Types[$1] = ""
+    }
+
+    close(typesFile)
+}
+
+BEGIN {
+    aliasesFile = "/usr/share/mime/aliases"
+    globsFile = "/usr/share/mime/globs2"
+    typesFile = "/usr/share/mime/types"
+    mimeFile = "/tmp/MIME"
+    split("", Types)
+
+    loadTypes()
+    mergeGlobs()
+    mergeAliases()
+
+    for (t in Types) {
+        print t, Types[t]
+    }
+}
+
+# vim: set ts=4 sw=4 tw=0 et :

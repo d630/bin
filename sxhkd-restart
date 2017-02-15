@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Restart sxhkd.
+
+p=${XDG_CACHE_HOME:?}/sxhkd.pid;
+
+if
+    test -r "$p";
+then
+    pkill -F "$p";
+else
+    pkill -f sxhkd\ -c;
+fi;
+
+(
+    exec sxhkd -c "$XDG_CONFIG_HOME/"sxhkd/sxhkdrc &
+    echo $! > "$p";
+);
+
+# vim: set ts=4 sw=4 tw=0 et :

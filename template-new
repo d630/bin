@@ -1,0 +1,80 @@
+#!/bin/sh
+#
+# Prepare new file from a template.
+
+# TODO(D630): Use awk instead of tr and sed.
+
+: "${1:? need arg}";
+
+FFILE=${1##*/};
+EXT=${FFILE#*.};
+test "$FFILE" = "$EXT" &&
+    EXT=;
+
+test -r "${XDG_TEMPLATES_DIR:?}/${EXT:-_}" || {
+    printf 'no template found\n' 1>&2;
+    exit 1;
+};
+
+FILE=${FFILE%.$EXT};
+
+test -n "$FILE" ||
+    FILE=x;
+
+GUARD=$(tr -c '[a-zA-Z0-9]' '_' <<!
+$FILE
+!
+);
+
+CLASS=$(sed 's:\([a-zA-Z]\+\):\u\1\E:g' <<!
+$FILE
+!
+);
+
+MACROCLASS=$(tr '[:lower:]' '[:upper:]' <<!
+$CLASS
+!
+);
+
+CAMELCLASS=$(tr -d '[[:space:]_]' <<!
+$CLASS
+!
+);
+
+eval "$(
+    date +'DATE=%F DAY=% MONTH=%m YEAR=%Y TIME=%T FDATE="%F %T"'
+)"
+
+m4 -G \
+    -DCAMELCLASS="$CAMELCLASS" \
+    -DCLASS="$CLASS" \
+    -DDATE="$DATE" \
+    -DDAY="$DAY" \
+    -DEUID="$EUID" \
+    -DEXT="$EXT" \
+    -DFDATE="$FDATE" \
+    -DFFILE="$FFILE" \
+    -DFILE="$FILE" \
+    -DGUARD="$GUARD" \
+    -DHOME="$HOME" \
+    -DHOSTNAME="$HOSTNAME" \
+    -DHOSTTYPE="$HOSTTYPE" \
+    -DLICENSE="GNU GPLv3" \
+    -DMACHTYPE="$MACHTYPE" \
+    -DMACROCLASS="$MACROCLASS" \
+    -DMAIL="$MAIL" \
+    -DMONTH="$MONTH" \
+    -DOSTYPE="$OSTYPE" \
+    -DPATH="$PATH" \
+    -DPWD="$PWD" \
+    -DSHELL="$SHELL" \
+    -DTERM="$TERM" \
+    -DTIME="$TIME" \
+    -DUID="$UID" \
+    -DUSER="$USER" \
+    -DYEAR="$YEAR" <<!
+changecom()dnl
+include($XDG_TEMPLATES_DIR/$EXT)dnl
+!
+
+# vim: set ts=4 sw=4 tw=0 et :

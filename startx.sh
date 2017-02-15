@@ -15,7 +15,7 @@ function __startx {
     if
         ! ((c));
     then
-        printf '%s: Another X session had been started; aborting\n' \
+        printf '%s: Another X session was started; aborting\n' \
             "$FUNCNAME" 1>&2;
         return 1;
     elif

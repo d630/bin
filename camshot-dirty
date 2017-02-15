@@ -4,7 +4,7 @@
 
 mkdir -p /tmp/camshots;
 
-avconv \
+exec avconv \
     -f video4linux2 \
     -s 640x480 \
     -i /dev/video0 \

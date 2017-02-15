@@ -5,52 +5,54 @@
 menu=${1:?} \
 menu_prompt=$2;
 
-if
-    test -f "${XDG_CACHE_HOME:?}/"DAYLIGHT;
-then
-    nb=\#FDF6E3; # base3
-    nf=\#657B83; # base00
-    sb=\#EEE8D5; # base2
-    sf=\#B58900; # yellow
-    uc=\#B58900; # yellow
-else
-    nb=\#002B36; # base03
-    nf=\#839496; # base0
-    sb=\#073642; # base02
-    sf=\#859900; # green
-    uc=\#859900; # green
-fi;
-
 fn=Monospace:size=13;
+
+color () {
+    if
+        test -f "${XDG_CACHE_HOME:?}/"DAYLIGHT;
+    then
+        nb=\#FDF6E3; # base3
+        nf=\#657B83; # base00
+        sb=\#EEE8D5; # base2
+        sf=\#B58900; # yellow
+        uc=\#B58900; # yellow
+    else
+        nb=\#002B36; # base03
+        nf=\#839496; # base0
+        sb=\#073642; # base02
+        sf=\#859900; # green
+        uc=\#859900; # green
+    fi;
+};
 
 case $menu in
     (choose)
         exec choose -;;
     (dmenu)
+        color;
         exec dmenu -b -i \
+            -fn "$fn" \
             -l 10 \
-            -p "${menu_prompt:->}" \
             -nb "$nb" \
             -nf "$nf" \
-            -sb "$sb" \
-            -sf "$sf" \
-            -fn "$fn";;
-    (dmenu2)
-        exec dmenu2 -b -f -i \
-            -l 10 \
             -p "${menu_prompt:->}" \
+            -sb "$sb" \
+            -sf "$sf";;
+    (dmenu2)
+        exec dmenu2 -b -i \
+            -class dmenu2 \
             -fn "$fn" \
+            -l 10 \
             -name dmenu2 \
-            -class dmenu2;;
+            -p "${menu_prompt:->}";;
     (dmenu2-save)
-        test -n "$menu_prompt" ||
-            exit 1;
         exec dmenu2 -b -f \
-            -mask \
-            -p "$menu_prompt" \
+            -class dmenu2-save \
             -fn "$fn" \
+            -mask \
             -name dmenu2-save \
-            -class dmenu2-save;;
+            -noinput \
+            -p "${menu_prompt:-*}";;
     (slmenu)
         exec slmenu -b -i -p "${menu_prompt:->}";;
     (fzf)

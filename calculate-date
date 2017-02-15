@@ -2,6 +2,6 @@
 #
 # Calculate dates via taskwarrior.
 
-task calc "$@";
+exec task calc "$@";
 
 # vim: set ts=4 sw=4 tw=0 et :

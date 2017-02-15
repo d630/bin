@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Reload sxhkd config.
+
+p=${XDG_CACHE_HOME:?}/sxhkd.pid;
+
+test -f "$p" ||
+    exit;
+
+IFS= read -r pp < "$p" &&
+    kill -USR1 $pp;
+
+# vim: set ts=4 sw=4 tw=0 et :
