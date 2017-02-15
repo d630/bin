@@ -24,17 +24,16 @@ for opt; do
         (-N)
             flag_N=1;;
         (--)
+            command -v "$2" 1>/dev/null 2>&1 || {
+                printf "error: command not found: '%s'\n" "$2" 1>&2;
+                exit 1;
+            };
             cmd=$2;
             shift 2;
             break;;
     esac;
     shift 1;
 done;
-
-command -v "$cmd" 1>/dev/null 2>&1 || {
-    printf "error: command not found: '%s'\n" "$cmd" 1>&2;
-    exit 1;
-};
 
 if
     test-tty 2>/dev/null;
