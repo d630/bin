@@ -1,19 +1,19 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
-# Run z output with file manager.
+# Run z output within file manager.
 
 if
     test-tty 2>/dev/null;
 then
     menu=fzf;
-    function __nav {
+    __nav () {
         exec file-browser "$1";
     };
 elif
     [[ -n $DISPLAY ]];
 then
     menu=dmenu2;
-    function __nav {
+    __nav () {
         setsidw x-file-browser -t "$1";
     };
 else
@@ -26,7 +26,7 @@ path=$(
     menu "$menu" OPEN;
 );
 
-[[ -n $path ]] &&
+test -d "$path" &&
     __nav "$path";
 
 # vim: set ts=4 sw=4 tw=0 et :

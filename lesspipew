@@ -7,16 +7,21 @@ test $# -gt 0 ||
 
 trap exit\ 0 PIPE;
 umask 077;
-#export LESSMETACHARS;
+space=' ' \
+tab='	' \
+newline='
+' \
+LESSMETACHARS="$space$tab$newline'"';*?"()<>[|&^`#\$%=~';
+export LESSMETACHARS;
 
 test -x "$HOME/".lessfilter &&
     "$HOME/".lessfilter "$1" &&
-        exit 72;
+        exit 82;
 
 for i in $LESSIGNORE; do
     case $1 in
         (*.$i)
-            exit 72;;
+            exit 82;;
     esac;
 done;
 

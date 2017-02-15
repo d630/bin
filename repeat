@@ -2,7 +2,7 @@
 #
 # Repeat a command n times.
 
-: ${2:?}
+: ${2:?};
 
 for ((i=1; i <= ${1:?}; i++)); do
     (
