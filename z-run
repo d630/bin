@@ -10,7 +10,7 @@ then
         exec file-browser "$1";
     };
 elif
-    [[ -n $DISPLAY ]];
+    test -n "$DISPLAY";
 then
     menu=dmenu2;
     __nav () {

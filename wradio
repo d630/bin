@@ -67,17 +67,21 @@ else
 fi;
 
 typeset -A streams;
-
 __build_streams;
-__selectstream;
 
 while
-    [[ -n $selection ]];
+    :;
 do
-    __stopstream;
-    [[ $selection == STOPSTREAM ]] ||
-        __playstream;
     __selectstream;
+    case $selection in
+        (STOPSTREAM)
+            __stopstream;;
+        ('')
+            exit 1;;
+        (*)
+        __stopstream;
+        __playstream;;
+    esac;
 done;
 
 # vim: set ts=4 sw=4 tw=0 et :

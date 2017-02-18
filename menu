@@ -5,7 +5,7 @@
 menu=${1:?} \
 menu_prompt=$2;
 
-fn=Monospace:size=13;
+fn="-xos4-terminus-medium-r-normal-*-16-*-*-*-*-*-iso10646-*";
 
 color () {
     if
