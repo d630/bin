@@ -2,7 +2,7 @@
 #
 # Clean up some dirs and files.
 
-rm -rf -- \
+rm -frv -- \
     "$HOME/".adobe \
     "$HOME/".cache \
     "$HOME/".gconf \
@@ -11,9 +11,10 @@ rm -rf -- \
     "$HOME/".gnome2_private \
     "$HOME/".icedteaplugin \
     "$HOME/".macromedia \
-    "$HOME/".thumbnails;
+    "$HOME/".thumbnails \
+    "${XDG_CONFIG_HOME:?}/"freshwrapper-data;
 
-rm -f -- \
+rm -fv -- \
     "$HOME/".gksu.lock \
     "$HOME/".recentf \
     "$HOME/".recently-used \
