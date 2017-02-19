@@ -2,6 +2,11 @@
 #
 # Use rtcwake and play music on wakeup.
 
+function bye {
+    printf 'Bye-bye!\n' 1>&2;
+    exit 1;
+};
+
 if
     test-tty 2>/dev/null;
 then
@@ -25,16 +30,26 @@ music[open]=$XDG_MUSIC_DIR/open_your_eyes.mp3;
 datum=$(
     __menu Datum <<< $'now\ntomorrow';
 );
-datum=$(date --date=${datum} +%F);
+[[ -n $datum ]] ||
+    bye;
+
+datum=$(date --date=$datum +%F);
+
 tempus=$(
     printf '%s\n' {00..23}:{00..59} |
     __menu Zeitpunkt;
 );
+[[ -n $tempus ]] ||
+    bye;
+
 zp=$datum\ $tempus;
 stream=$(
     printf %s\\n "${!music[@]}" |
     __menu Stream;
 );
+[[ -n $stream ]] ||
+    bye;
+
 check=$(
     printf %s\\n no "rtcwake $zp $stream" |
     __menu Go;
@@ -47,8 +62,7 @@ then
         sleep 10 &&
             audio-player --loop=inf "${music[$stream]}";
 else
-    printf 'Bye-bye!\n' 1>&2;
-    exit 1;
+    bye;
 fi;
 
 # vim: set ts=4 sw=4 tw=0 et :
