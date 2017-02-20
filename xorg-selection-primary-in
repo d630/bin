@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Read into X primary selection.
+
+xsel -l /dev/null --primary --input;
+# xclip -selection primary -in -loops 0;
+
+# vim: set ts=4 sw=4 tw=0 et :

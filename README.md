@@ -22,7 +22,7 @@ List:
 * [chromium--proxy](https://github.com/D630/bin/blob/master/chromium--proxy): Start chromium and redirect traffic through a proxy server.
 * [chromium-mselect-history](https://github.com/D630/bin/blob/master/chromium-mselect-history): Browse the history of chromium via fzf, and then open selection.
 * [chromiumw](https://github.com/D630/bin/blob/master/chromiumw): Wrapper: chromium
-* [clipbuffer](https://github.com/D630/bin/blob/master/clipbuffer): Simple clipboard manager for Xorg (xclip, xprop, menu, base64).
+* [clipbuffer](https://github.com/D630/bin/blob/master/clipbuffer): Simple X primary selection manager.
 * [color-grab](https://github.com/D630/bin/blob/master/color-grab): Pick color via grabc.
 * [color-show](https://github.com/D630/bin/blob/master/color-show): Display color info in terminal.
 * [color-xclip](https://github.com/D630/bin/blob/master/color-xclip): X-select color code.
@@ -158,6 +158,10 @@ List:
 * [xorg-lock](https://github.com/D630/bin/blob/master/xorg-lock): Default xlock programme.
 * [xorg-raise-xwin](https://github.com/D630/bin/blob/master/xorg-raise-xwin): List xwindows with dmenu and raise selection.
 * [xorg-run-or-raise](https://github.com/D630/bin/blob/master/xorg-run-or-raise): Run or raise script for commands with gui or tui.
+* [xorg-selection-clipboard-in](https://github.com/D630/bin/blob/master/xorg-selection-clipboard-in): Read into X clipboard selection.
+* [xorg-selection-clipboard-out](https://github.com/D630/bin/blob/master/xorg-selection-clipboard-out): Print the X clipboard selection to stdout.
+* [xorg-selection-primary-in](https://github.com/D630/bin/blob/master/xorg-selection-primary-in): Read into X primary selection.
+* [xorg-selection-primary-out](https://github.com/D630/bin/blob/master/xorg-selection-primary-out): Print the X primary selection to stdout.
 * [xorg-switch-to-desktop](https://github.com/D630/bin/blob/master/xorg-switch-to-desktop): Select desktop with a menu and then switch with wmctrl to it.
 * [xorg-touchpad](https://github.com/D630/bin/blob/master/xorg-touchpad): Xorg: Disable or enable touchpad.
 * [youtube-dl-get-audio](https://github.com/D630/bin/blob/master/youtube-dl-get-audio): Run youtoube-dl to convert video to audio.

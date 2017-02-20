@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#
+# Read into X clipboard selection.
+
+# xclip -selection clipboard -in -loops 0;
+tee >(xsel -l /dev/null --clipboard --input) |
+xorg-selection-primary-in;
+
+# vim: set ts=4 sw=4 tw=0 et :
