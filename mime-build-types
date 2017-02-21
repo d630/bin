@@ -6,10 +6,9 @@ function mergeAliases() {
     FS = " "
 
     while ((getline < aliasesFile) > 0) {
-        if (match($1, "^#")) {
-            continue
+        if (! match($1, "^#")) {
+            Types[$1] = Types[$2]
         }
-        Types[$1] = Types[$2]
     }
 
     close(aliasesFile)
@@ -19,21 +18,19 @@ function mergeGlobs() {
     FS = ":"
 
     while ((getline < globsFile) > 0) {
-        if (match($1, "^#")) {
-            continue
-        }
+        if (! match($1, "^#")) {
+            if (length($4)) {
+                $3 = $3 FS $4
+            }
 
-        if (length($4)) {
-            $3 = $3 FS $4
-        }
+            gsub(/\./, "\.", $3)
+            gsub(/\*/, ".*", $3)
 
-        gsub(/\./, "\.", $3)
-        gsub(/\*/, ".*", $3)
-
-        if (length(Types[$2])) {
-            Types[$2] = Types[$2] "|" $3
-        } else {
-            Types[$2] = $3
+            if (length(Types[$2])) {
+                Types[$2] = Types[$2] "|" $3
+            } else {
+                Types[$2] = $3
+            }
         }
     }
 
@@ -42,10 +39,9 @@ function mergeGlobs() {
 
 function loadTypes() {
     while ((getline < typesFile) > 0) {
-        if (match($1, "^#")) {
-            continue
+        if (! match($1, "^#")) {
+            Types[$1] = ""
         }
-        Types[$1] = ""
     }
 
     close(typesFile)

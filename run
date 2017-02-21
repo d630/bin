@@ -35,41 +35,46 @@ for opt; do
     shift 1;
 done;
 
+[[ -n $cmd ]] || {
+    printf 'error: command missing\n' 1>&2;
+    exit 1;
+};
+
 if
     test-tty 2>/dev/null;
 then
     case $flag_F$flag_N$flag_K in
-    (111)
-        daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
-    (110)
-        daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
-    (100)
-        setsidw "$cmd" "$@";;
-    (011)
-        x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
-    (010)
-        x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
-    (001)
-        exec ${SHELL:-sh} -c "$cmd ${*@Q};printf 'Press ENTER to continue\n';read";;
-    (000)
-        exec "$cmd" "$@";;
+        (111)
+            daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
+        (110)
+            daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
+        (100)
+            setsidw "$cmd" "$@";;
+        (011)
+            x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
+        (010)
+            x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
+        (001)
+            exec ${SHELL:-sh} -c "$cmd ${*@Q};printf 'Press ENTER to continue\n';read";;
+        (000)
+            exec "$cmd" "$@";;
     esac;
 else
     case $flag_F$flag_N$flag_K in
-    (111)
-        daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
-    (110)
-        daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
-    (100)
-        setsidw "$cmd" "$@";;
-    (011)
-        daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
-    (010)
-        daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
-    (001)
-        daemonize ${SHELL:-sh} -c "$cmd ${*@Q};printf 'Press ENTER to continue\n';read";;
-    (000)
-        setsidw "$cmd" "$@";;
+        (111)
+            daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
+        (110)
+            daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
+        (100)
+            setsidw "$cmd" "$@";;
+        (011)
+            daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
+        (010)
+            daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
+        (001)
+            daemonize ${SHELL:-sh} -c "$cmd ${*@Q};printf 'Press ENTER to continue\n';read";;
+        (000)
+            setsidw "$cmd" "$@";;
     esac;
 fi;
 
