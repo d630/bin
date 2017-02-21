@@ -6,7 +6,7 @@
 
 {
     tee /dev/fd/9 |
-    xorg-selection-primary-in
+    xorg-selection-primary-in;
 } 9>&1 |
 exec xsel -l /dev/null --clipboard --input &
 

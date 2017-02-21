@@ -6,7 +6,7 @@
 # Idea from: http://chneukirchen.org/dotfiles/bin/backclip
 
 function Clipbuffer::Daemon {
-    typeset i=0;
+    typeset -i i=-1;
 
     mkdir -p -m 700 -- "$xsels";
     printf %d $$ > "$xsels/"$$.pid;
@@ -18,7 +18,7 @@ function Clipbuffer::Daemon {
         oi=$i;
         xorg-selection-primary-out > "$xsels/".$oi;
         cmp -s "$xsels/".$oi "$xsels/"$oi ||
-            mv -- "$xsels/".$oi "$xsels/"$((++i, i = i % 32));
+            mv -- "$xsels/".$oi "$xsels/"$((i = ++i % 32));
     done;
 };
 
