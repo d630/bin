@@ -158,6 +158,7 @@ List:
 * [xorg-lock](https://github.com/D630/bin/blob/master/xorg-lock): Default xlock programme.
 * [xorg-raise-xwin](https://github.com/D630/bin/blob/master/xorg-raise-xwin): List xwindows with dmenu and raise selection.
 * [xorg-run-or-raise](https://github.com/D630/bin/blob/master/xorg-run-or-raise): Run or raise script for commands with gui or tui.
+* [xorg-selection-clear](https://github.com/D630/bin/blob/master/xorg-selection-clear): Clear the X selection.
 * [xorg-selection-clipboard-in](https://github.com/D630/bin/blob/master/xorg-selection-clipboard-in): Read into X clipboard selection.
 * [xorg-selection-clipboard-out](https://github.com/D630/bin/blob/master/xorg-selection-clipboard-out): Print the X clipboard selection to stdout.
 * [xorg-selection-primary-in](https://github.com/D630/bin/blob/master/xorg-selection-primary-in): Read into X primary selection.
