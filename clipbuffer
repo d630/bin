@@ -38,6 +38,9 @@ function Clipbuffer::Kill {
     else
         rm -f -- "$xsels/"?*.pid 2>/dev/null;
     fi;
+
+    xsel -l /dev/null --clear --clipboard;
+    xsel -l /dev/null --clear --primary;
 };
 
 function Clipbuffer::Clip {
@@ -74,8 +77,10 @@ function Clipbuffer::Clip {
         if
             $opt_board;
         then
+            xsel -l /dev/null --clear --clipboard;
             xorg-selection-clipboard-in < "$xsels/${clip%% *}";
         else
+            xsel -l /dev/null --clear --primary;
             xorg-selection-primary-in < "$xsels/${clip%% *}";
         fi;
 };

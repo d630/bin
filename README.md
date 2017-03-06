@@ -39,6 +39,7 @@ List:
 * [dnsmasq-backup-urls](https://github.com/D630/bin/blob/master/dnsmasq-backup-urls): Backup all uris from dnsmasq log.
 * [dunst-restart](https://github.com/D630/bin/blob/master/dunst-restart): Restart dunst.
 * [fb-image-viewer](https://github.com/D630/bin/blob/master/fb-image-viewer): Default image viewer (framebuffer).
+* [fc-edit](https://github.com/D630/bin/blob/master/fc-edit): Default fc editor ($FCEDIT).
 * [feed2newsbeuter](https://github.com/D630/bin/blob/master/feed2newsbeuter): Record url of feed in newsbeuter via dmenu.
 * [feedfaetcher](https://github.com/D630/bin/blob/master/feedfaetcher): Simple feed downloader based on urldiff.
 * [file-browser](https://github.com/D630/bin/blob/master/file-browser): Default file manager (tui).
@@ -157,7 +158,6 @@ List:
 * [xorg-get-xids](https://github.com/D630/bin/blob/master/xorg-get-xids): Get x window ids.
 * [xorg-lock](https://github.com/D630/bin/blob/master/xorg-lock): Default xlock programme.
 * [xorg-raise-xwin](https://github.com/D630/bin/blob/master/xorg-raise-xwin): List xwindows with dmenu and raise selection.
-* [xorg-run-or-raise](https://github.com/D630/bin/blob/master/xorg-run-or-raise): Run or raise script for commands with gui or tui.
 * [xorg-selection-clear](https://github.com/D630/bin/blob/master/xorg-selection-clear): Clear the X selection.
 * [xorg-selection-clipboard-in](https://github.com/D630/bin/blob/master/xorg-selection-clipboard-in): Read into X clipboard selection.
 * [xorg-selection-clipboard-out](https://github.com/D630/bin/blob/master/xorg-selection-clipboard-out): Print the X clipboard selection to stdout.

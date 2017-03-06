@@ -5,13 +5,13 @@
 if
     test-inet;
 then
-    printf 'IP-ISP: %s\n' "$(
+    printf 'WAN-IP: %s\n' "$(
         w3m -dump http://ip-check.info/\?lang=en |
         grep -F -A 2 IP\ check |
         tail -n 1;
     )";
 else
-    printf 'IP-ISP: offline\n';
+    printf 'WAN-IP: offline\n';
 fi;
 
 ip a show wlan0 |
