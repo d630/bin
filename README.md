@@ -12,6 +12,7 @@ List:
 * [bash-mselect-freq](https://github.com/D630/bin/blob/master/bash-mselect-freq): Print frequency of the bash history and run it from dmenu.
 * [bash-print-freq](https://github.com/D630/bin/blob/master/bash-print-freq): Print frequency of the bash history.
 * [bash-toggle-options.bash](https://github.com/D630/bin/blob/master/bash-toggle-options.bash): Toggle bash options via fzf.
+* [bspot-create-featured-lists](https://github.com/D630/bin/blob/master/bspot-create-featured-lists): Spotify: Take pub list1 and create audio-featured public lists.
 * [bspot-shuffle-list](https://github.com/D630/bin/blob/master/bspot-shuffle-list): Spotify: Take pub list1, shuffle it and add the songs to cleared pub list2.
 * [bspot](https://github.com/D630/bin/blob/master/bspot): Some functions to modify public user-playlists via Spotify's Web API.
 * [bspwm-rules](https://github.com/D630/bin/blob/master/bspwm-rules): bspwm: external_rules_command
