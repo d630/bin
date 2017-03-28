@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+#
+# Spotify: Take pub list1 and create audio-featured public lists.
+
+user=${1:?};
+token=${2:?};
+
+list1=2WnlSygFyIGdV6hUcNygUo;
+declare -A Features=(
+    [acousticness]=6kpJlNFqONHiFkbf1RnLa9
+    [danceability]=3h1hfO0kkKZy7g4tbn2fTl
+    [energy]=3Y5mE7xPdKNPriAcu8Rpnl
+    [instrumentalness]=2GodaFWJBAGNCivcq68EKG
+    [liveness]=31FjqV4SOYfEyYn1qphrKJ
+    [loudness]=390AjCYjLGFHD50cDFjmxo
+    [speechiness]=6Onff4ga9prvw0SQP1jSDK
+    [tempo]=3uZ6JqwEDpgZH088NhvrYo
+    [valence]=0liWcy2L57aJ6yZeVB88kq
+);
+
+_list1=/tmp/$list1.json;
+bspot getTracks "$user" "$list1" "$token" |
+cut -d : -f 3 |
+bspot getTracksFeatures "$token" > "$_list1";
+
+for f in "${!Features[@]}"
+do
+    bspot clearList "$user" "${Features[$f]}" "$token";
+    jq -r ".audio_features[] | [.$f, .uri] | @tsv" "$_list1" |
+    LC_ALL=C sort -gr |
+    cut -f 2 |
+    bspot addTracks "$user" "${Features[$f]}" "$token";
+done;
+
+# vim: set ts=4 sw=4 tw=0 et :
