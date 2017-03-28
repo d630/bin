@@ -8,7 +8,7 @@ id=${1?} \
 
 case $class in
 (Emacs) echo state=tiled\ layer=normal;;
-(Firefox|Iceweasel) echo desktop=^2;;
+(Firefox|Firefox-esr|Iceweasel) echo desktop=^2;;
 (Gimp*) echo follow=on;;
 (Gitk) echo state=floating\ layer=normal;;
 (MPlayer) echo state=floating\ layer=normal;;

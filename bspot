@@ -76,6 +76,20 @@ function spotify.playlist.privatize {
         --data "{\"public\":false}";
 };
 
+function spotify.tracks.audio_features {
+    # OAuth Scope:
+    # Params: access_token ids
+
+    [[ -n $2 ]] ||
+        return 1;
+
+    curl \
+        -s \
+        -X GET "https://api.spotify.com/v1/audio-features/?ids=${@:2}" \
+        -H "Accept: application/json" \
+        -H "Authorization: Bearer ${1:?}";
+};
+
 # -- misc.
 
 function addTracks {
@@ -162,6 +176,40 @@ function getTracks {
     gawk '$0 == "exit" { exit }; { print $0; };'
 };
 
+function getTracksFeatures {
+    declare ato=${1:?};
+    declare -a uris=();
+
+    shift 1
+
+    if
+        [[ -p /dev/stdin || -f /dev/stdin ]];
+    then
+        mapfile -t uris;
+    else
+        (($#)) &&
+            mapfile -t uris < <(cat "$@");
+    fi;
+
+    ((${#uris[@]})) ||
+        return 1;
+
+    declare -i \
+        int=${#uris[@]}/100 \
+        mod=${#uris[@]}%100 \
+        i= \
+        x=0 \
+        y=100;
+
+    IFS=,;
+    for ((i=int; i > 0; i--, x+=100)); do
+        spotify.tracks.audio_features "$ato" "${uris[*]:x:y}";
+    done;
+
+    ((mod)) &&
+        spotify.tracks.audio_features "$ato" "${uris[*]: -mod}";
+};
+
 # -- MAIN.
 
 case ${1:?} in
@@ -175,6 +223,8 @@ case ${1:?} in
         getLists "${@:2}";;
     (getTracks)
         getTracks "${@:2}";;
+    (getTracksFeatures)
+        getTracksFeatures "${@:2}";;
     (privatizeList)
         spotify.playlist.privatize "${@:2}";;
 esac;
