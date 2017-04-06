@@ -32,7 +32,7 @@ PrintHeader npm\ modules;
 
 PrintHeader go\ packages;
 (
-    go get -u all;
+    go get -v -u all;
 );
 
 PrintHeader cabal\ packages;

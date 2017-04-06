@@ -10,9 +10,7 @@ token=${4:?};
 bspot clearList "$user" "$list2" "$token";
 
 bspot getTracks "$user" "$list1" "$token" |
-sort -R |
-sort -R |
-sort -R |
+shuf |
 bspot addTracks "$user" "$list2" "$token";
 
 # vim: set ts=4 sw=4 tw=0 et :
