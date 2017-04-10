@@ -3,7 +3,7 @@
 # Test against daytime and adjust my config.
 
 typeset -i FORCE=$FORCE;
-f=${XDG_CACHE_HOME:?}/DAYLIGHT;
+f=${XDG_RUNTIME_DIR:?}/DAYLIGHT;
 
 if
     test-daylight;
@@ -14,7 +14,7 @@ then
     };
 else
     [[ -f $f || FORCE -gt 0 ]] && {
-        rm -f -- /tmp/DAYLIGHT;
+        rm -f -- "$f";
         exec theme dark;
     };
 fi;

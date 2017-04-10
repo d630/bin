@@ -2,7 +2,7 @@
 #
 # Restart dunst.
 
-p=${XDG_CACHE_HOME:?}/dunst.pid;
+p=${XDG_RUNTIME_DIR:?}/dunst.pid;
 
 test -f "$p" &&
     pkill -F "$p";

@@ -10,7 +10,7 @@
 export DBUS_SESSION_BUS_ADDRESS DISPLAY XDG_RUNTIME_DIR;
 
 if
-    test -p /dev/stdin || test -f /dev/stdin;
+    test -p /dev/stdin -o -f /dev/stdin;
 then
     read -r urgency category body;
 else
@@ -30,7 +30,7 @@ case $urgency in
         exit 1;
 esac;
 
-test -f /tmp/.dunst_use_$urgency &&
+test -f "$XDG_RUNTIME_DIR/".dunst_use_$urgency &&
     notify-send -u $urgency --category"=$category" "$category" "$body";
 
 # vim: set ts=4 sw=4 tw=0 et :

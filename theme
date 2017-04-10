@@ -45,7 +45,7 @@ declare -A C;
 if
     [[ $1 == dark ]];
 then
-    rm -f "${XDG_CACHE_HOME:?}/"DAYLIGHT;
+    rm -f "${XDG_RUNTIME_DIR:?}/"DAYLIGHT;
     C=(
         [gtk.1]=dark
         [taskwarrior.linux.1]=dark-16.theme
@@ -59,7 +59,7 @@ then
         [dunst.1]=dark
     );
 else
-    > "${XDG_CACHE_HOME:?}/"DAYLIGHT;
+    > "${XDG_RUNTIME_DIR:?}/"DAYLIGHT;
     C=(
         [gtk.1]=light
         [taskwarrior.linux.1]=light-16.theme

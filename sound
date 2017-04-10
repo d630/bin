@@ -3,7 +3,7 @@
 # Play specific sounds (meant to be used with dunst and rsyslog).
 
 if
-    test -p /dev/stdin || test -f /dev/stdin;
+    test -p /dev/stdin -o -f /dev/stdin;
 then
     read -r urgency appname summary _;
 else
@@ -62,7 +62,6 @@ case $summary in
         $urgency && f=mac-sound-pack-Error.wav;;
 esac;
 
-test -n "$f" &&
-    aplay "${XDG_DATA_HOME:-/home/user1/share}/sounds/$f" 1>/dev/null 2>&1;
+aplay "${XDG_DATA_HOME:-/home/user1/share}/sounds/${f:?}" 1>/dev/null 2>&1;
 
 # vim: set ts=4 sw=4 tw=0 et :

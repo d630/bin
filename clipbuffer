@@ -96,7 +96,7 @@ typeset \
     opt_daemon=false \
     opt_kill=false \
     opt_restart=false \
-    xsels=${XDG_CACHE_HOME:?}/clipbuffer;
+    xsels=${TMPDIR:?}/clipbuffer;
 
 while
     getopts :bcdkr opt;

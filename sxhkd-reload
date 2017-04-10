@@ -2,7 +2,7 @@
 #
 # Reload sxhkd config.
 
-p=${XDG_CACHE_HOME:?}/sxhkd.pid;
+p=${XDG_RUNTIME_DIR:?}/sxhkd.pid;
 
 test -f "$p" ||
     exit;

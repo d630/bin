@@ -2,7 +2,7 @@
 #
 # Restart sxhkd.
 
-p=${XDG_CACHE_HOME:?}/sxhkd.pid;
+p=${XDG_RUNTIME_DIR:?}/sxhkd.pid;
 
 if
     test -r "$p";

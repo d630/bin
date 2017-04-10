@@ -5,17 +5,17 @@
 #       Urxvt#Improved_Kuake-like_behavior_in_Openbox
 
 dz () {
-    test -e "$XDG_CACHE_HOME/"DAYLIGHT &&
+    test -e "$XDG_RUNTIME_DIR/"DAYLIGHT &&
         shift 1;
 
     daemonize "$1" -i -c stj1 -t stj1 -g 176x33+1+0 -e "$SHELL" -c '
-        printf "%x\n" "$WINDOWID" > "${XDG_CACHE_HOME:?}/stj1";
+        printf "%x\n" "$WINDOWID" > "${XDG_RUNTIME_DIR:?}/stj1";
         exec "$0";';
 
     exit 0;
 };
 
-read -r id < "${XDG_CACHE_HOME:?}/"stj1 2>/dev/null;
+read -r id < "${XDG_RUNTIME_DIR:?}/"stj1 2>/dev/null;
 
 xprop -id "0x$id" 1>/dev/null 2>&1 ||
     dz st-dark st-light;

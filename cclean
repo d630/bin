@@ -12,6 +12,7 @@ rm -frv -- \
     "$HOME/".icedteaplugin \
     "$HOME/".macromedia \
     "$HOME/".thumbnails \
+    "${XDG_CACHE_HOME:?}/"?* \
     "${XDG_CONFIG_HOME:?}/"freshwrapper-data;
 
 rm -fv -- \
