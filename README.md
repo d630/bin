@@ -63,6 +63,7 @@ List:
 * [lesspipew](https://github.com/D630/bin/blob/master/lesspipew): My preprocessor for less.
 * [lifeday](https://github.com/D630/bin/blob/master/lifeday): Print lifeday.
 * [log-ip](https://github.com/D630/bin/blob/master/log-ip): Daily ip logging.
+* [log](https://github.com/D630/bin/blob/master/log): Wrapper: Use taskwarrior in my 'log' context.
 * [loggi](https://github.com/D630/bin/blob/master/loggi): Wrap up logger for local scripting.
 * [lsort](https://github.com/D630/bin/blob/master/lsort): Sort input by lenght.
 * [mail-get](https://github.com/D630/bin/blob/master/mail-get): Get mail and give notification + sound.
@@ -95,6 +96,7 @@ List:
 * [pyrandgen-xsel](https://github.com/D630/bin/blob/master/pyrandgen-xsel): X-select random password.
 * [pyrandgen](https://github.com/D630/bin/blob/master/pyrandgen): Generate random password.
 * [readline-editor](https://github.com/D630/bin/blob/master/readline-editor): Default readline editor.
+* [remind](https://github.com/D630/bin/blob/master/remind): Wrapper: Use taskwarrior in my 'reminder' context.
 * [repeat](https://github.com/D630/bin/blob/master/repeat): Repeat a command n times.
 * [rtcwakew](https://github.com/D630/bin/blob/master/rtcwakew): Use rtcwake and play music on wakeup.
 * [run](https://github.com/D630/bin/blob/master/run): Run that command.
@@ -124,8 +126,8 @@ List:
 * [sxiv-browser](https://github.com/D630/bin/blob/master/sxiv-browser): Open all files in the current directory with sxiv.
 * [task-local](https://github.com/D630/bin/blob/master/task-local): Simple wrapper for using taskwarrior with local "task-repos".
 * [taskwarrior-add](https://github.com/D630/bin/blob/master/taskwarrior-add): Add interactively a task to Taskwarrior via read in a terminal + {d,s}menu.
-* [taskwarrior-cv](https://github.com/D630/bin/blob/master/taskwarrior-cv): Source or print structured all defaults of the configuration settings (Taskwarrrior v2.5.0).
-* [taskwarrior-log](https://github.com/D630/bin/blob/master/taskwarrior-log): Log interactively a task in Taskwarrior.
+* [taskwarrior-cv](https://github.com/D630/bin/blob/master/taskwarrior-cv): Source or print all defaults of Taskwarrior's configuration settings (v2.5.1).
+* [taskwarrior-log](https://github.com/D630/bin/blob/master/taskwarrior-log): Log interactively a task into Taskwarrior ('log' context).
 * [tcsh--filetest](https://github.com/D630/bin/blob/master/tcsh--filetest): Use the filetest builtin command of tcsh.
 * [tcsh--printenv](https://github.com/D630/bin/blob/master/tcsh--printenv): Use the printenv builtin command of tcsh.
 * [template-new](https://github.com/D630/bin/blob/master/template-new): Prepare new file from a template.
