@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 #
-# Log interactively a task in Taskwarrior.
+# Log interactively a task into Taskwarrior ('log' context).
+
+export TASKRC=${TASKRC:-$XDG_CONFIG_HOME/taskrc-life};
 
 if
     test-tty 2>/dev/null;
@@ -30,7 +32,7 @@ project=$(
             };
             d;
             : end' |
-        sort -u;
+        sort -gu;
     } |
     __menu_cmd PROJECT;
 );
@@ -51,6 +53,7 @@ fi;
 
 read -re -p 'description:    ' description;
 read -re -p 'due:            ' due;
+read -re -p 'entry:          ' entry;
 
 while
     :;
@@ -60,7 +63,7 @@ do
             printf 'NEW\n';
             task rc.list.all.tags=yes _unique tags |
             tr , \\n |
-            sort -u;
+            sort -gu;
         } |
         __menu_cmd TAG;
     );
@@ -79,8 +82,8 @@ done;
 
 tags+=(log);
 
-printf '\nCommand:       task log %s project:%s due:%s %s\n' "$description" "$project" "$due" "${tags[*]/#/+}";
+printf '\nCommand:       task log %s project:%s due:%s entry:%s %s\n' "$description" "$project" "$due" "$entry" "${tags[*]/#/+}";
 
-task log "$description" "${project:+project:$project}" "${due:+due:$due}" ${tags[*]/#/+};
+log log "$description" ${project:+"project:$project"} ${due:+"due:$due"} ${entry:+"entry:$entry"} ${tags[*]/#/+};
 
 # vim: set ts=4 sw=4 tw=0 et :

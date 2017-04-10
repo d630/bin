@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Wrapper: Use taskwarrior in my 'log' context.
+
+export TASKRC=${TASKRC:-$XDG_CONFIG_HOME/taskrc-life};
+
+{
+    task context log > /dev/null;
+    task +log "$@";
+    task context none > /dev/null;
+} 2> /dev/null;
+
+# vim: set ts=4 sw=4 tw=0 et :

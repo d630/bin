@@ -32,7 +32,7 @@ project=$(
                 s/^\([^\.]*\)\..*/\1/;
             };
             : end' |
-        sort -u;
+        sort -gu;
     } |
     __menu_cmd PROJECT;
 );
@@ -50,7 +50,7 @@ else
     printf 'Project: \t%s\n' "${project//./ > }";
 fi;
 
-read -re -n 1 -p 'Is recur/wait/until/scheduled/depends needed? (y/n)' answer;
+read -re -n 1 -p 'Is recur/wait/until/scheduled/depends/entry needed? (y/n)' answer;
 
 read -re -p 'description:    ' description;
 read -re -p 'priority:       ' priority;
@@ -64,7 +64,7 @@ do
             printf 'NEW\n';
             task rc.list.all.tags=yes _unique tags |
             tr , \\n |
-            sort -u;
+            sort -gu;
         } |
         __menu_cmd TAG;
     );
@@ -87,10 +87,11 @@ done;
     read -re -p 'until:          ' until;
     read -re -p 'scheduled:      ' scheduled;
     read -re -p 'depends:        ' depends;
+    read -re -p 'entry:          ' entry;
 };
 
-printf '\nCommand:       task add %s project:%s due:%s priority:%s recur:%s wait:%s until:%s scheduled:%s depends:%s %s\n' "$description" "$project" "$due" "$priority" "$recur" "$wait" "$until" "$scheduled" "$depends" "${tags[*]/#/+}";
+printf '\nCommand:       task add %s project:%s due:%s priority:%s recur:%s wait:%s until:%s scheduled:%s depends:%s entry:%s %s\n' "$description" "$project" "$due" "$priority" "$recur" "$wait" "$until" "$scheduled" "$depends" "$entry" "${tags[*]/#/+}";
 
-task add "$description" "${project:+project:$project}" "${due:+due:$due}" "${priority:+priority:$priority}" "${recur:+recur:$recur}" "${wait:+wait:$wait}" "${until:+until:$until}" "${scheduled:+scheduled:$scheduled}" "${depends:+depends:$depends}" ${tags[*]/#/+};
+task add "$description" ${project:+"project:$project"} ${due:+"due:$due"} ${priority:+"priority:$priority"} ${recur:+"recur:$recur"} ${wait:+"wait:$wait"} ${until:+"until:$until"} ${scheduled:+"scheduled:$scheduled"} ${depends:+"depends:$depends"} ${entry:+"entry:$entry"} ${tags[*]/#/+};
 
 # vim: set ts=4 sw=4 tw=0 et :

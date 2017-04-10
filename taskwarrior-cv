@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Source or print structured all defaults of the configuration settings (Taskwarrrior v2.5.0).
+# Source or print all defaults of Taskwarrior's configuration settings (v2.5.1).
 
 # Usage:
 # $ task-cv print
-# $ source task-cv
+# $ . task-cv
 
 typeset -A \
     color_controls \
@@ -293,7 +293,7 @@ if
     [[ $1 == print ]];
 then
     cat <<HEADER
-# [Created by taskwarrior-cv.sh, using task $(task _version;), $(date;)]
+# [Created by taskwarrior-cv, using task $(task _version;), $(date;)]
 # Taskwarrior program configuration file.
 # For more documentation, see http://taskwarrior.org or try 'man task', 'man task-faq',
 # 'man task-tutorial', 'man task-color', 'man task-sync' or 'man taskrc'
