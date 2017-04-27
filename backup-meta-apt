@@ -10,17 +10,18 @@ mkdir -pv -- "$backup_dir/"pkgs;
 cd -- "$backup_dir/"pkgs ||
     exit 1;
 
-sudo apt-cache policy > ./cache.txt;
+COLUMNS=200 dpkg-query -l > ./query.txt;
+sudo sh -c '
+    apt-cache policy > ./cache.txt;
+    apt-mark showauto > ./auto.txt;
+    apt-mark showmanual > ./manual.txt;
+    # cp -v /etc/apt/trusted.gpg ./trusted.gpg;
+    apt-clone clone .;
+'
 
 # dpkg --get-selections |
 # mawk '!/deinstall|purge|hold/ { print $1 }' > ./packages.txt;
 
-COLUMNS=200 dpkg-query -l > ./query.txt;
-sudo sh -c '
-    apt-mark showauto > ./auto.txt;
-    apt-mark showmanual > ./manual.txt;
-    # cp -v /etc/apt/trusted.gpg ./trusted.gpg;
-'
 # sudo find /etc/apt/sources.list* \
 #     -type f \
 #     -name '*.list' \
@@ -28,7 +29,5 @@ sudo sh -c '
 #         printf "%s\n## " "$1";
 #         grep "^[[:space:]]*[^#[:space:]]" "$1";' \
 #     _ {} \; > ./sources.list;
-
-sudo apt-clone clone .;
 
 # vim: set ts=4 sw=4 sts=4 tw=4 et :
