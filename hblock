@@ -4,7 +4,7 @@
 # Inspired by hostblock (http://gaenserich.github.com/hostsblock)
 
 (($#)) &&
-    exec sudo "$(type -P "$0")";
+    exec sudo "$(type -P "$BASH_SOURCE")";
 
 typeset -x \
     hblock_cachedir=${TMPDIR:-/tmp}/hostfiles \

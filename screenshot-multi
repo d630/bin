@@ -2,12 +2,13 @@
 #
 # Take a quick multi screenshot.
 
-mkdir -p /tmp/screenshots;
+mkdir -p /tmp/screenshots &&
+    cd /tmp/screenshots ||
+        exit 1;
 
 exec scrot \
     '%Y-%m-%d--%s_$wx$h.png' \
     -q 100 \
-    -m \
-    -e 'mv $f /tmp/screenshots';
+    -m;
 
 # vim: set ts=4 sw=4 tw=0 et :

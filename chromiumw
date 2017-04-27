@@ -2,13 +2,253 @@
 #
 # Wrapper: chromium
 
+r=${XDG_RUNTIME_DIR:?}/chromiumw;
+
+test -r "$r" -a -n "$force_new" && {
+    t=$(mktemp -d);
+    rsync -var --delete "$t/" "$r/";
+    rm -Rf -- "$t";
+};
+
+test -r "$r/"Default/Preferences || {
+    mkdir -p -- "$r/"Default/Extensions;
+    cat > "$r/"Default/Preferences <<!
+{
+  "AudioCaptureAllowed": false,
+  "alternate_error_pages": {
+    "enabled": false
+  },
+  "autofill": {
+    "enabled": false
+  },
+  "bookmark_bar": {
+    "show_apps_shortcut": false,
+    "show_on_all_tabs": false
+  },
+  "browser": {
+    "back_shortcut_bubble_shown_count": 1,
+    "clear_data": {
+      "form_data": true,
+      "hosted_apps_data": true,
+      "media_licenses": true,
+      "passwords": true,
+      "time_period": 4
+    },
+    "clear_lso_data_enabled": true,
+    "custom_chrome_frame": false,
+    "enable_spellchecking": false,
+    "pepper_flash_settings_enabled": true,
+    "show_home_button": true
+  },
+  "credentials_enable_service": false,
+  "custom_handlers": {
+    "enabled": false,
+    "ignored_protocol_handlers": [],
+    "registered_protocol_handlers": []
+  },
+  "default_search_provider_data": {
+    "template_url_data": {
+      "alternate_urls": [],
+      "contextual_search_url": "",
+      "created_by_policy": false,
+      "date_created": "13130865345000000",
+      "favicon_url": "https://duckduckgo.com/favicon.ico",
+      "id": "2",
+      "image_url": "",
+      "image_url_post_params": "",
+      "input_encodings": [
+        "UTF-8"
+      ],
+      "instant_url": "",
+      "instant_url_post_params": "",
+      "keyword": "dd",
+      "last_modified": "13130865345000000",
+      "last_visited": "13137600727000000",
+      "new_tab_url": "",
+      "originating_url": "https://duckduckgo.com/opensearch.xml?atb=v50-6_b",
+      "prepopulate_id": 0,
+      "safe_for_autoreplace": false,
+      "search_terms_replacement_key": "",
+      "search_url_post_params": "",
+      "short_name": "DuckDuckGo",
+      "suggestions_url": "https://duckduckgo.com/ac/?q={searchTerms}&type=list",
+      "suggestions_url_post_params": "",
+      "url": "https://duckduckgo.com/?q={searchTerms}&atb=v50-6_b",
+      "usage_count": 0
+    }
+  },
+  "distribution": {
+    "create_all_shortcuts": true,
+    "import_bookmarks": false,
+    "import_bookmarks_from_file": "/usr/share/chromium/initial_bookmarks.html",
+    "make_chrome_default": false,
+    "make_chrome_default_for_user": false,
+    "show_welcome_page": false,
+    "skip_first_run_ui": true,
+    "suppress_first_run_default_browser_prompt": true
+  },
+  "download": {
+    "directory_upgrade": true,
+    "extensions_to_open": "",
+    "open_pdf_in_system_reader": false,
+    "prompt_for_download": true
+  },
+  "enable_do_not_track": true,
+  "extensions": {
+    "theme": {
+      "id": "",
+      "use_system": true
+    },
+    "toolbarsize": 2,
+    "ui": {
+      "developer_mode": true
+    }
+  },
+  "homepage": "about:blank",
+  "homepage_is_newtabpage": true,
+  "http_original_content_length": "0",
+  "http_received_content_length": "0",
+  "local_discovery": {
+    "notifications_enabled": false
+  },
+  "net": {
+    "network_prediction_options": 2
+  },
+  "profile": {
+    "password_manager_enabled": false
+  },
+  "pinned_tabs": [],
+  "plugins": {
+    "always_open_pdf_externally": false
+  },
+  "safebrowsing": {
+    "enabled": false
+  },
+  "savefile": {
+    "default_directory": "$HOME/tmp/downloads"
+  },
+  "search": {
+    "suggest_enabled": false
+  },
+  "selectfile": {},
+  "session": {
+    "restore_on_startup": 4,
+    "startup_urls": [
+      "about:blank"
+    ]
+  },
+  "spellcheck": {
+    "dictionaries": [
+      "en-US"
+    ],
+    "dictionary": ""
+  },
+  "toolbar_migrated_component_action_status": {},
+  "translate": {
+    "enabled": false
+  },
+  "webkit": {
+    "webprefs": {
+      "default_fixed_font_size": 12,
+      "default_font_size": 15,
+      "fonts": {
+        "sansserif": {
+          "Zyyy": "Sans"
+        },
+        "serif": {
+          "Zyyy": "Serif"
+        },
+        "standard": {
+          "Zyyy": "Serif"
+        }
+      },
+      "minimum_font_size": 10,
+      "minimum_logical_font_size": 10
+    }
+  },
+  "zerosuggest": {
+    "cachedresults": ""
+  }
+}
+!
+};
+
+test -r "$r/Default/Web Data" || {
+    sqlite3 -init /dev/stdin "$r/Default/Web Data" .quit <<\!
+BEGIN TRANSACTION;
+CREATE TABLE unmasked_credit_cards (id VARCHAR,card_number_encrypted VARCHAR, use_count INTEGER NOT NULL DEFAULT 0, use_date INTEGER NOT NULL DEFAULT 0, unmask_date INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE token_service (service VARCHAR PRIMARY KEY NOT NULL,encrypted_token BLOB);
+CREATE TABLE server_card_metadata (id VARCHAR NOT NULL,use_count INTEGER NOT NULL DEFAULT 0, use_date INTEGER NOT NULL DEFAULT 0, billing_address_id VARCHAR);
+CREATE TABLE server_addresses (id VARCHAR,company_name VARCHAR,street_address VARCHAR,address_1 VARCHAR,address_2 VARCHAR,address_3 VARCHAR,address_4 VARCHAR,postal_code VARCHAR,sorting_code VARCHAR,country_code VARCHAR,language_code VARCHAR, recipient_name VARCHAR, phone_number VARCHAR);
+CREATE TABLE server_address_metadata (id VARCHAR NOT NULL,use_count INTEGER NOT NULL DEFAULT 0, use_date INTEGER NOT NULL DEFAULT 0, has_converted BOOL NOT NULL DEFAULT FALSE);
+CREATE TABLE meta(key LONGVARCHAR NOT NULL UNIQUE PRIMARY KEY, value LONGVARCHAR);
+INSERT INTO `meta` (key,value) VALUES ('mmap_status','-1'),
+ ('last_compatible_version','71'),
+ ('version','71'),
+ ('Builtin Keyword Version','97');
+CREATE TABLE "masked_credit_cards" (id VARCHAR,status VARCHAR,name_on_card VARCHAR,type VARCHAR,last_four VARCHAR,exp_month INTEGER DEFAULT 0,exp_year INTEGER DEFAULT 0);
+CREATE TABLE "keywords" (id INTEGER PRIMARY KEY,short_name VARCHAR NOT NULL,keyword VARCHAR NOT NULL,favicon_url VARCHAR NOT NULL,url VARCHAR NOT NULL,safe_for_autoreplace INTEGER,originating_url VARCHAR,date_created INTEGER DEFAULT 0,usage_count INTEGER DEFAULT 0,input_encodings VARCHAR,suggest_url VARCHAR,prepopulate_id INTEGER DEFAULT 0,created_by_policy INTEGER DEFAULT 0,instant_url VARCHAR,last_modified INTEGER DEFAULT 0,sync_guid VARCHAR,alternate_urls VARCHAR,search_terms_replacement_key VARCHAR,image_url VARCHAR,search_url_post_params VARCHAR,suggest_url_post_params VARCHAR,instant_url_post_params VARCHAR,image_url_post_params VARCHAR,new_tab_url VARCHAR, last_visited INTEGER DEFAULT 0);
+INSERT INTO `keywords` (id,short_name,keyword,favicon_url,url,safe_for_autoreplace,originating_url,date_created,usage_count,input_encodings,suggest_url,prepopulate_id,created_by_policy,instant_url,last_modified,sync_guid,alternate_urls,search_terms_replacement_key,image_url,search_url_post_params,suggest_url_post_params,instant_url_post_params,image_url_post_params,new_tab_url,last_visited) VALUES (2,'DuckDuckGo','dd','','https://duckduckgo.com/?q={searchTerms}&atb=v50-6_b',0,'',1486391745,0,'UTF-8','',0,0,'',1486391745,'3bf7b295-90d8-4a87-acce-8379f7da45f6','','','','','','','','',0),
+ (3,'debian => code','code','','http://codesearch.debian.net/search?q={searchTerms}',0,'',1493274260,0,'','',0,0,'',1493274260,'fc62f54e-769d-4173-87e6-084183d06265','','','','','','','','',0),
+ (4,'duden','du','','http://www.duden.de/suchen/dudenonline?s={searchTerms}&scope=all',0,'',1493274285,0,'','',0,0,'',1493274285,'08f765ef-4aa0-43c4-b641-00be5ad78bc4','','','','','','','','',0),
+ (5,'google (DE)','gd','','https://www.google.de/?gws_rd=ssl#q={searchTerms}',0,'',1493274320,0,'','',0,0,'',1493274320,'50944e6a-53b5-4a89-bb48-d41f5924c7f2','','','','','','','','',0),
+ (6,'google (US)','ge','','https://www.google.com/?gfe_rd=cr&gws_rd=ssl,cr&fg=1#q={searchTerms}',0,'',1493274366,0,'','',0,0,'',1493274366,'826b2d6b-3890-43ee-a935-1f16e1734c17','','','','','','','','',0),
+ (7,'debian => man','man','','https://dyn.manpages.debian.org/jump?q={searchTerms}',0,'',1493274391,0,'','',0,0,'',1493274391,'8c3dbaed-bbc0-4a50-ba4d-87f5234fec17','','','','','','','','',0),
+ (8,'debian => packages','pack','','https://packages.debian.org/search?keywords={searchTerms}',0,'',1493274441,0,'','',0,0,'',1493274441,'c3de8440-fcd0-4f3d-80f0-67047063e7b0','','','','','','','','',0),
+ (9,'pons','po','','http://en.pons.com/translate?l=enes&q={searchTerms}',0,'',1493274487,0,'','',0,0,'',1493274487,'22069feb-caab-4970-9f82-ee89a3044c98','','','','','','','','',0),
+ (10,'wikipedia (DE)','wd','','https://de.wikipedia.org/w/index.php?title=Spezial:Suche&search={searchTerms}',0,'',1493274514,0,'','',0,0,'',1493274514,'99ed896f-6aa1-4649-bccc-8d7024c47675','','','','','','','','',0),
+ (11,'wikipedia (EN)','we','','https://en.wikipedia.org/w/index.php?title=Special:Search&search={searchTerms}',0,'',1493274537,0,'','',0,0,'',1493274537,'3bb76383-da37-46f2-a635-fd1d16a61d50','','','','','','','','',0),
+ (12,'youtube','yt','','https://www.youtube.com/results?search_query={searchTerms}',0,'',1493274561,0,'','',0,0,'',1493274561,'d7989a3e-a9ce-4d2d-b01d-33ddcbcd7c23','','','','','','','','',0);
+CREATE TABLE credit_cards ( guid VARCHAR PRIMARY KEY, name_on_card VARCHAR, expiration_month INTEGER, expiration_year INTEGER, card_number_encrypted BLOB, date_modified INTEGER NOT NULL DEFAULT 0, origin VARCHAR DEFAULT '', use_count INTEGER NOT NULL DEFAULT 0, use_date INTEGER NOT NULL DEFAULT 0, billing_address_id VARCHAR);
+CREATE TABLE autofill_sync_metadata (storage_key VARCHAR PRIMARY KEY NOT NULL,value BLOB);
+CREATE TABLE autofill_profiles_trash ( guid VARCHAR);
+CREATE TABLE autofill_profiles ( guid VARCHAR PRIMARY KEY, company_name VARCHAR, street_address VARCHAR, dependent_locality VARCHAR, city VARCHAR, state VARCHAR, zipcode VARCHAR, sorting_code VARCHAR, country_code VARCHAR, date_modified INTEGER NOT NULL DEFAULT 0, origin VARCHAR DEFAULT '', language_code VARCHAR, use_count INTEGER NOT NULL DEFAULT 0, use_date INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE autofill_profile_phones ( guid VARCHAR, number VARCHAR);
+CREATE TABLE autofill_profile_names ( guid VARCHAR, first_name VARCHAR, middle_name VARCHAR, last_name VARCHAR, full_name VARCHAR);
+CREATE TABLE autofill_profile_emails ( guid VARCHAR, email VARCHAR);
+CREATE TABLE autofill_model_type_state (id INTEGER PRIMARY KEY, value BLOB);
+CREATE TABLE autofill (name VARCHAR, value VARCHAR, value_lower VARCHAR, date_created INTEGER DEFAULT 0, date_last_used INTEGER DEFAULT 0, count INTEGER DEFAULT 1, PRIMARY KEY (name, value));
+CREATE INDEX autofill_name_value_lower ON autofill (name, value_lower);
+CREATE INDEX autofill_name ON autofill (name);
+COMMIT;
+!
+};
+
 export CHROME_WRAPPER=$0;
 
-exec /usr/bin/chromium \
+exec chromium \
     --enable-remote-extensions \
+    --artifacts-dir=$r/artifacts \
+    --crash-dumps-dir="$r/crash-dumps" \
+    --disk-cache-dir=$r/cache \
+    --golden-screenshots-dir=$r/screenshots \
+    --user-data-dir=$r \
+    --disable-breakpad \
+    --disable-cloud-import \
+    --disable-component-cloud-policy \
     --disable-infobars \
+    --disable-payment-request \
+    --disable-speech-api \
     --disable-sync-preferences \
     --disable-translate \
+    --enable-extension-activity-logging \
+    --enable-fast-unload \
+    --enable-grouped-history \
+    --enable-logging=stderr \
+    --enable-potentially-annoying-security-features \
+    --enable-reader-mode-toolbar-icon \
+    --enable-site-settings \
+    --enable-smooth-scrolling \
+    --enable-spatial-navigation \
+    --enable-strict-mixed-content-checking \
+    --enable-strict-powerful-feature-restrictions \
+    --enable-tab-audio-muting \
+    --error-console \
+    --hide-scrollbars \
+    --log-net-log \
+    --no-first-run \
+    --no-wifi \
+    --process-per-site \
     ${1:+"$@"};
 
 # vim: set ts=4 sw=4 tw=0 et :

@@ -4,29 +4,31 @@
 
 backup_dir=${XDG_VAR_HOME:?}/backups;
 
-sudo rm -rv -- "$backup_dir/"paketlisten;
-mkdir -pv -- "$backup_dir/"paketlisten;
+sudo rm -rv -- "$backup_dir/"pkgs;
+mkdir -pv -- "$backup_dir/"pkgs;
 
-sudo apt-cache policy > "$backup_dir/"cache.txt;
-
-cd -- "$backup_dir/"paketlisten ||
+cd -- "$backup_dir/"pkgs ||
     exit 1;
 
-dpkg --get-selections |
-mawk '!/deinstall|purge|hold/ { print $1 }' > ./packages.txt;
+sudo apt-cache policy > ./cache.txt;
+
+# dpkg --get-selections |
+# mawk '!/deinstall|purge|hold/ { print $1 }' > ./packages.txt;
 
 COLUMNS=200 dpkg-query -l > ./query.txt;
 sudo sh -c '
     apt-mark showauto > ./auto.txt;
     apt-mark showmanual > ./manual.txt;
-    cp -v /etc/apt/trusted.gpg ./trusted.gpg;
+    # cp -v /etc/apt/trusted.gpg ./trusted.gpg;
 '
-sudo find /etc/apt/sources.list* \
-    -type f \
-    -name '*.list' \
-    -exec sh -c '
-        printf "%s\n## " "$1";
-        grep "^[[:space:]]*[^#[:space:]]" "$1";' \
-    _ {} \; > ./sources.list;
+# sudo find /etc/apt/sources.list* \
+#     -type f \
+#     -name '*.list' \
+#     -exec sh -c '
+#         printf "%s\n## " "$1";
+#         grep "^[[:space:]]*[^#[:space:]]" "$1";' \
+#     _ {} \; > ./sources.list;
+
+sudo apt-clone clone .;
 
 # vim: set ts=4 sw=4 sts=4 tw=4 et :

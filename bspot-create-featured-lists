@@ -6,6 +6,7 @@ user=${1:?};
 token=${2:?};
 
 list1=2WnlSygFyIGdV6hUcNygUo;
+_list1=/tmp/$list1.json;
 declare -A Features=(
     [acousticness]=6kpJlNFqONHiFkbf1RnLa9
     [danceability]=3h1hfO0kkKZy7g4tbn2fTl
@@ -18,7 +19,6 @@ declare -A Features=(
     [valence]=0liWcy2L57aJ6yZeVB88kq
 );
 
-_list1=/tmp/$list1.json;
 bspot getTracks "$user" "$list1" "$token" |
 cut -d : -f 3 |
 bspot getTracksFeatures "$token" > "$_list1";

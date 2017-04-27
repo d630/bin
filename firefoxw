@@ -1,0 +1,71 @@
+#!/bin/sh
+#
+# Wrapper: firefox
+
+r=${XDG_RUNTIME_DIR:?}/firefoxw;
+
+test -r "$r" -a -n "$force_new" && {
+    t=$(mktemp -d);
+    rsync -var --delete "$t/" "$r/";
+    rm -Rf -- "$t";
+};
+
+test -r "$r/"prefs.js || {
+    mkdir -p -- "$r/cache";
+    cat > "$r/"prefs.js <<!
+user_pref("accessibility.browsewithcaret", true);
+user_pref("browser.bookmarks.restore_default_bookmarks", false);
+user_pref("browser.download.dir", "$HOME/tmp/downloads");
+user_pref("browser.download.importedFromSqlite", true);
+user_pref("browser.download.useDownloadDir", false);
+user_pref("browser.fixup.dns_first_for_single_words", true);
+user_pref("browser.link.open_newwindow", 2);
+user_pref("browser.newtabpage.enabled", false);
+user_pref("browser.newtabpage.enhanced", false);
+user_pref("browser.newtabpage.introShown", true);
+user_pref("browser.newtabpage.storageVersion", 1);
+user_pref("browser.pagethumbnails.storage_version", 3);
+user_pref("browser.places.smartBookmarksVersion", 7);
+user_pref("browser.pocket.enabled", false);
+user_pref("browser.preferences.advanced.selectedTabIndex", 4);
+user_pref("browser.reader.detectedFirstArticle", true);
+user_pref("browser.rights.3.shown", true);
+user_pref("browser.safebrowsing.enabled", false);
+user_pref("browser.safebrowsing.malware.enabled", false);
+user_pref("browser.search.suggest.enabled", false);
+user_pref("browser.search.update", false);
+user_pref("browser.startup.page", 0);
+user_pref("browser.tabs.animate", false);
+user_pref("browser.tabs.closeWindowWithLastTab", false);
+user_pref("datareporting.healthreport.service.enabled", false);
+user_pref("datareporting.policy.dataSubmissionPolicyAcceptedVersion", 2);
+user_pref("datareporting.policy.dataSubmissionPolicyNotifiedTime", "1450604664862");
+user_pref("datareporting.policy.firstRunTime", "1450604654097");
+user_pref("dom.apps.reset-permissions", true);
+user_pref("general.warnOnAboutConfig", false);
+user_pref("layout.spellcheckDefault", 0);
+user_pref("loop.enabled", false);
+user_pref("network.cookie.cookieBehavior", 3);
+user_pref("network.cookie.lifetimePolicy", 2);
+user_pref("network.cookie.prefsMigrated", true);
+user_pref("network.predictor.cleaned-up", true);
+user_pref("pdfjs.disabled", true);
+user_pref("privacy.clearOnShutdown.offlineApps", true);
+user_pref("privacy.clearOnShutdown.siteSettings", true);
+user_pref("privacy.donottrackheader.enabled", true);
+user_pref("privacy.sanitize.didShutdownSanitize", true);
+user_pref("privacy.sanitize.migrateClearSavedPwdsOnExit", true);
+user_pref("privacy.sanitize.migrateFx3Prefs", true);
+user_pref("privacy.sanitize.sanitizeOnShutdown", true);
+user_pref("signon.importedFromSqlite", true);
+user_pref("signon.rememberSignons", false);
+!
+};
+
+export XDG_CACHE_HOME=$r/cache;
+
+exec firefox \
+    --profile "$r" \
+    ${1:+"$@"};
+
+# vim: set ts=4 sw=4 tw=0 et :

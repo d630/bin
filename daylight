@@ -1,24 +1,17 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Test against daytime and adjust my config.
 
-typeset -i FORCE=$FORCE;
 f=${XDG_RUNTIME_DIR:?}/DAYLIGHT;
 
 if
     test-daylight;
 then
-    [[ -f $f && FORCE -eq 0 ]] || {
-        > "$f";
-        exec theme light;
-    };
+    : > "$f";
+    exec theme light;
 else
-    [[ -f $f || FORCE -gt 0 ]] && {
-        rm -f -- "$f";
-        exec theme dark;
-    };
+    rm -f -- "$f";
+    exec theme dark;
 fi;
-
-:;
 
 # vim: set ts=4 sw=4 tw=0 et :

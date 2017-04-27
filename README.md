@@ -46,6 +46,7 @@ List:
 * [file-browser](https://github.com/D630/bin/blob/master/file-browser): Default file manager (tui).
 * [find-file](https://github.com/D630/bin/blob/master/find-file): Find file under the current directory with flag -ls.
 * [find-string](https://github.com/D630/bin/blob/master/find-string): Grep string in all files under the current directory with find.
+* [firefoxw](https://github.com/D630/bin/blob/master/firefoxw): Wrapper: firefox
 * [furlview](https://github.com/D630/bin/blob/master/furlview): Simple replacement for urlview using fzf in X.
 * [fzf-bind.bash](https://github.com/D630/bin/blob/master/fzf-bind.bash): My fzf keybinding script for bash.
 * [fzf-ls](https://github.com/D630/bin/blob/master/fzf-ls): Select files listed in a directory.

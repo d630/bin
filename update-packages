@@ -10,35 +10,25 @@ function PrintHeader {
 };
 
 PrintHeader 'Apt && Packages';
-(
-    sudo dpkg --clear-avail;
-    sudo apt-get autoclean;
-    sudo apt-get autoremove --purge;
-    sudo dpkg --configure -a;
-    sudo apt-get install -f;
-    backup-meta-apt;
-);
+sudo dpkg --clear-avail;
+sudo apt-get autoclean;
+sudo apt-get autoremove --purge;
+sudo dpkg --configure -a;
+sudo apt-get install -f;
+backup-meta-apt;
 
 PrintHeader Perl\ modules;
-(
-    cpan-outdated -p --exclude-core |
-    cpanm -iv --self-contained;
-);
+cpan-outdated -p --exclude-core |
+cpanm -iv --self-contained;
 
 PrintHeader npm\ modules;
-(
-    npm -g update;
-);
+npm -g update;
 
 PrintHeader go\ packages;
-(
-    go get -v -u all;
-);
+go get -v -u all;
 
 PrintHeader cabal\ packages;
-(
-    cabal update;
-    cabal install world --upgrade-dependencies --force-reinstalls;
-);
+cabal update;
+cabal install world --upgrade-dependencies --force-reinstalls;
 
 # vim: set ts=4 sw=4 tw=0 et :
