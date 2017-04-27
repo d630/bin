@@ -20,8 +20,8 @@ List:
 * [calculate-date](https://github.com/D630/bin/blob/master/calculate-date): Calculate dates via taskwarrior.
 * [camshot-dirty](https://github.com/D630/bin/blob/master/camshot-dirty): Take a quick camshot.
 * [cclean](https://github.com/D630/bin/blob/master/cclean): Clean up some dirs and files.
-* [chromium--proxy](https://github.com/D630/bin/blob/master/chromium--proxy): Start chromium and redirect traffic through a proxy server.
-* [chromium-mselect-history](https://github.com/D630/bin/blob/master/chromium-mselect-history): Browse the history of chromium via fzf, and then open selection.
+* [chromiumw--proxy](https://github.com/D630/bin/blob/master/chromiumw--proxy): Start chromiumw and redirect traffic through a proxy server.
+* [chromiumw-mselect-history](https://github.com/D630/bin/blob/master/chromiumw-mselect-history): Browse the history of chromium via fzf, and then open selection.
 * [chromiumw](https://github.com/D630/bin/blob/master/chromiumw): Wrapper: chromium
 * [clipbuffer](https://github.com/D630/bin/blob/master/clipbuffer): Simple X primary selection manager.
 * [color-grab](https://github.com/D630/bin/blob/master/color-grab): Pick color via grabc.
