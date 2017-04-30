@@ -65,7 +65,7 @@ function __startx {
         ($BASH)
             . "$HOME/".bash_profile;;
         (*)
-            . "$HOME/".profile;
+            . "$HOME/".profile;;
     esac;
 };
 

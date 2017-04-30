@@ -20,7 +20,7 @@ function __find {
     # | xargs -0 grep -H -m 1 '^# ';
 
     git ls-files -z '[!A][!R]*' |
-    xargs -0 grep -E -Z -l -m 1 '^#!.*(awk|[bdt][ac]sh|python|sh).*' |
+    xargs -0 grep -E -Z -l -m 1 '^#!.*(awk|[bdtm][ack]sh|python|sh).*' |
     xargs -0 grep -H -m 1 '^# ';
 
     # find . -maxdepth 1 \

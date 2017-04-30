@@ -2,10 +2,9 @@
 #
 # Weekly backup with obnam.
 
-sudo HOME=$HOME obnam_conf=$HOME/.obnam.conf sh -c '
+exec sudo HOME=$HOME obnam_conf=$HOME/.obnam.conf sh -c '
     obnam backup --config"=$obnam_conf" --lru-size=8192 --upload-queue-size=8192 \
         --exclude"=$HOME/"cache \
-        --exclude"=$HOME/"tmp \
         --exclude=/home/latch/tmp \
         --exclude=/home/latch/var/mirror \
         /etc/ \

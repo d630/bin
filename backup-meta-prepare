@@ -9,26 +9,25 @@ function PrintHeader {
     printf %s\\n ${horiz// /-} $1 1>&2;
 };
 
-update-packages;
+# PrintHeader update-packages;
+# update-packages;
 
-PrintHeader Programs;
+PrintHeader backup-meta-apt;
+backup-meta-apt;
+
+PrintHeader backup-meta-bin;
 backup-meta-bin;
 
-PrintHeader Inits;
+PrintHeader backup-meta-init;
 backup-meta-init;
 
-PrintHeader etckeeper;
-(
-    cd -- / ||
-        exit 1;
-    printf -v d %\(%s\)T -1;
-    sudo etckeeper commit $d\ prepare\ backup;
-);
-
-PrintHeader newsbeuter;
-rm -fv -- "$HOME/".newsbeuter/newsbeuter_cache.db;
-
-PrintHeader ccleaner;
+PrintHeader cclean;
 cclean;
+
+PrintHeader etckeeper;
+cd / ||
+    exit 1;
+printf -v d %\(%s\)T -1;
+sudo etckeeper commit $d\ prepare\ backup;
 
 # vim: set ts=4 sw=4 tw=0 et :

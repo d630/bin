@@ -12,11 +12,11 @@ rm -frv -- \
     "$HOME/".icedteaplugin \
     "$HOME/".macromedia \
     "$HOME/".thumbnails \
-    "${XDG_CACHE_HOME:?}/"?* \
     "${XDG_CONFIG_HOME:?}/"freshwrapper-data;
 
 rm -fv -- \
     "$HOME/".gksu.lock \
+    "$HOME/".newsbeuter/newsbeuter_cache.db \
     "$HOME/".recentf \
     "$HOME/".recently-used \
     "${XDG_DATA_HOME:?}/"recently-used.xbel;

@@ -18,7 +18,7 @@ case $urgency in
     (CRITICAL|[0-3])
         urgency=true;;
     (*)
-        urgency=false;
+        urgency=false;;
 esac;
 
 case $summary in

@@ -3,11 +3,11 @@
 # Wrapper: Default highlighting tool.
 
 for f; do
-    /usr/bin/source-highlight \
+    source-highlight \
         --failsafe \
         --infer-lang \
         -f esc-solarized \
-        --outlang-def"=$XDG_DATA_HOME/"source-highlight/solarized/esc-solarized.outlang \
+        --outlang-def"=${XDG_DATA_HOME:?}/"source-highlight/solarized/esc-solarized.outlang \
         --style-file"=$XDG_DATA_HOME/"source-highlight/solarized/esc-solarized.style \
         -o STDOUT \
         --tab=4 \

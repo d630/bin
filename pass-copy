@@ -23,7 +23,7 @@ fi;
 __select "$menu";
 
 if
-    [[ -f ${HOME}/.password-store/$file.gpg ]];
+    [[ -f $HOME/.password-store/$file.gpg ]];
 then
     if
         [[ $1 == --type ]];

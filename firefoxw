@@ -7,7 +7,7 @@ r=${XDG_RUNTIME_DIR:?}/firefoxw;
 test -r "$r" -a -n "$force_new" && {
     t=$(mktemp -d);
     rsync -var --delete "$t/" "$r/";
-    rm -Rf -- "$t";
+    rm -rf -- "$t";
 };
 
 test -r "$r/"prefs.js || {

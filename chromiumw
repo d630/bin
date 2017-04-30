@@ -7,7 +7,7 @@ r=${XDG_RUNTIME_DIR:?}/chromiumw;
 test -r "$r" -a -n "$force_new" && {
     t=$(mktemp -d);
     rsync -var --delete "$t/" "$r/";
-    rm -Rf -- "$t";
+    rm -rf -- "$t";
 };
 
 test -r "$r/"Default/Preferences || {
@@ -173,7 +173,7 @@ test -r "$r/"Default/Preferences || {
 !
 };
 
-test -r "$r/Default/Web Data" || {
+test -r "$r/Default/Web Data" ||
     sqlite3 -init /dev/stdin "$r/Default/Web Data" .quit <<\!
 BEGIN TRANSACTION;
 CREATE TABLE unmasked_credit_cards (id VARCHAR,card_number_encrypted VARCHAR, use_count INTEGER NOT NULL DEFAULT 0, use_date INTEGER NOT NULL DEFAULT 0, unmask_date INTEGER NOT NULL DEFAULT 0);
@@ -195,7 +195,7 @@ INSERT INTO `keywords` (id,short_name,keyword,favicon_url,url,safe_for_autorepla
  (6,'google (US)','ge','','https://www.google.com/?gfe_rd=cr&gws_rd=ssl,cr&fg=1#q={searchTerms}',0,'',1493274366,0,'','',0,0,'',1493274366,'826b2d6b-3890-43ee-a935-1f16e1734c17','','','','','','','','',0),
  (7,'debian => man','man','','https://dyn.manpages.debian.org/jump?q={searchTerms}',0,'',1493274391,0,'','',0,0,'',1493274391,'8c3dbaed-bbc0-4a50-ba4d-87f5234fec17','','','','','','','','',0),
  (8,'debian => packages','pack','','https://packages.debian.org/search?keywords={searchTerms}',0,'',1493274441,0,'','',0,0,'',1493274441,'c3de8440-fcd0-4f3d-80f0-67047063e7b0','','','','','','','','',0),
- (9,'pons','po','','http://en.pons.com/translate?l=enes&q={searchTerms}',0,'',1493274487,0,'','',0,0,'',1493274487,'22069feb-caab-4970-9f82-ee89a3044c98','','','','','','','','',0),
+ (9,'pons','po','','http://en.pons.com/translate?l=deen&q={searchTerms}',0,'',1493274487,0,'','',0,0,'',1493274487,'22069feb-caab-4970-9f82-ee89a3044c98','','','','','','','','',0),
  (10,'wikipedia (DE)','wd','','https://de.wikipedia.org/w/index.php?title=Spezial:Suche&search={searchTerms}',0,'',1493274514,0,'','',0,0,'',1493274514,'99ed896f-6aa1-4649-bccc-8d7024c47675','','','','','','','','',0),
  (11,'wikipedia (EN)','we','','https://en.wikipedia.org/w/index.php?title=Special:Search&search={searchTerms}',0,'',1493274537,0,'','',0,0,'',1493274537,'3bb76383-da37-46f2-a635-fd1d16a61d50','','','','','','','','',0),
  (12,'youtube','yt','','https://www.youtube.com/results?search_query={searchTerms}',0,'',1493274561,0,'','',0,0,'',1493274561,'d7989a3e-a9ce-4d2d-b01d-33ddcbcd7c23','','','','','','','','',0);
@@ -212,12 +212,10 @@ CREATE INDEX autofill_name_value_lower ON autofill (name, value_lower);
 CREATE INDEX autofill_name ON autofill (name);
 COMMIT;
 !
-};
 
 export CHROME_WRAPPER=$0;
 
 exec chromium \
-    --enable-remote-extensions \
     --artifacts-dir=$r/artifacts \
     --crash-dumps-dir="$r/crash-dumps" \
     --disk-cache-dir=$r/cache \

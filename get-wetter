@@ -9,7 +9,7 @@ case $1 in
         uri=http://wetter.tagesschau.de/europawelt/;;
     (*)
         printf 'argument?\n' 1>&2;
-        exit 1;
+        exit 1;;
 esac;
 
 curl -s "$uri" |

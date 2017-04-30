@@ -14,8 +14,7 @@ fi;
 
 case $1 in
     (-wpa)
-        : "${2:?}";
-        : "${3:?}";
+        : "${2:?}" "${3:?}";
         ip link set dev "$iface" up;
         sleep 1;
         wpa_supplicant -B -i "$iface" -c <(wpa_passphrase "$2" "$3") &&

@@ -15,6 +15,7 @@ case $class in
 (Pidgin) echo desktop=^3;;
 (Pinentry-gtk-2) echo state=floating\ layer=above;;
 (Spotify) echo desktop=^5;;
+(TelegramDesktop) echo desktop=^3;;
 (XCalc) echo state=floating\ layer=normal;;
 (Xmessage) echo state=floating\ layer=normal;;
 (Xombrero) echo desktop=^2;;

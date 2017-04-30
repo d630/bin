@@ -15,7 +15,6 @@ sudo apt-get autoclean;
 sudo apt-get autoremove --purge;
 sudo dpkg --configure -a;
 sudo apt-get install -f;
-backup-meta-apt;
 
 PrintHeader Perl\ modules;
 cpan-outdated -p --exclude-core |

@@ -2,9 +2,6 @@
 #
 # Default fc editor ($FCEDIT).
 
-IFS=\|;
-set -- $VISUAL_OPTS ${1:+"$@"};
-
-exec "$VISUAL" '+set ft=sh' "$@";
+exec vim -f '+set ft=sh' "$@";
 
 # vim: set ts=8 sw=8 tw=0 et :

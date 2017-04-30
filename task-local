@@ -21,7 +21,7 @@ case $1 in
         task "$@";;
     (*)
         printf '%s:Error:83: Unknown parameter: %s\n' "$0" "$1" 1>&2;
-        exit 83;
+        exit 83;;
 esac;
 
 # vim: set ts=4 sw=4 tw=0 et :

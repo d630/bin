@@ -17,7 +17,7 @@ function Clipbuffer::Daemon {
     do
         oi=$i;
         xorg-selection-primary-out > "$xsels/".$oi;
-        cmp -s "$xsels/".$oi "$xsels/"$oi ||
+        cmp -s -- "$xsels/".$oi "$xsels/"$oi ||
             mv -- "$xsels/".$oi "$xsels/"$((i = ++i % 32));
     done;
 };
