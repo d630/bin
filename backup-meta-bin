@@ -2,7 +2,7 @@
 #
 # Backup installed executables.
 
-backup_dir="${XDG_VAR_HOME:?}/"backups;
+backup_dir=${XDG_BACKUP_HOME:?}/;
 
 find /var/lib/dpkg/info/ \
     -daystart \( -name \*.list -a -mtime -7 \) \

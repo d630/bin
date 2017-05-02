@@ -12,13 +12,16 @@ rm -frv -- \
     "$HOME/".icedteaplugin \
     "$HOME/".macromedia \
     "$HOME/".thumbnails \
-    "${XDG_CONFIG_HOME:?}/"freshwrapper-data;
+    "${XDG_CONFIG_HOME:?}/"cef_user_data \
+    "$XDG_CONFIG_HOME/"freshwrapper-data;
 
 rm -fv -- \
     "$HOME/".gksu.lock \
     "$HOME/".newsbeuter/newsbeuter_cache.db \
     "$HOME/".recentf \
     "$HOME/".recently-used \
-    "${XDG_DATA_HOME:?}/"recently-used.xbel;
+    "${XDG_DATA_HOME:?}/"gegl-0.3 \
+    "$XDG_DATA_HOME/"recently-used.xbel \
+    "$XDG_DATA_HOME/"webkit;
 
 # vim: set ts=4 sw=4 tw=0 et :

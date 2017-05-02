@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+#
+# Set up a new stow-data package.
+
+set -- "${1:? need a name}" "${2:-$HOSTNAME}" "${3:-$USER}";
+
+s=$(
+    IFS=;
+    md5sum <<< "$*";
+);
+s=${s%% *};
+
+. /home/stow-data/map ||
+    typeset -A map;
+
+map[$s]=$2/$3/$1;
+
+mkdir -v /home/stow-data"/$s" ||
+    exit;
+
+typeset -p map > /home/stow-data/map;
+
+chmod 755 /home/stow-data"/$s";
+> /home/stow-data"/$s/".gitignore;
+ln -vfrs /home/stow-data"/$s" /home/stow-data"/$1";
+
+typeset -x \
+    GIT_DIR=/home/stow-data/$s/.git \
+    GIT_WORK_TREE=/home/stow-data/$s;
+
+git init;
+git add -f .gitignore;
+git commit -m I;
+
+# vim: set ts=4 sw=4 tw=0 et :

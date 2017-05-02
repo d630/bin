@@ -10,25 +10,24 @@ typeset -A XDG=(
     [CONFIG_HOME]=$HOME/etc
     [DATA_HOME]=$HOME/share
     [DESKTOP_DIR]=$HOME/share/desktop
-    [DOCUMENTS_DIR]=$HOME/share/documents
-    [DOWNLOAD_DIR]=$HOME/tmp/downloads
-    [MUSIC_DIR]=$HOME/share/music
     [OPT_HOME]=$HOME/opt
-    [PICTURES_DIR]=$HOME/share/pictures
     [PUBLICSHARE_DIR]=$HOME/var/public
     [SRC_DIR]=$HOME/src
     [TEMPLATES_DIR]=$HOME/share/templates
-    [TMP_HOME]=$HOME/tmp
     [VAR_HOME]=$HOME/var
-    [VIDEOS_DIR]=$HOME/share/videos
+);
+
+typeset -A XDG2=(
+    [BACKUP_HOME]=/home/files/var/backups
+    [DOCUMENTS_DIR]=/home/files/share/documents
+    [DOWNLOAD_DIR]=/home/files/tmp/downloads
+    [MUSIC_DIR]=/home/files/share/music
+    [PICTURES_DIR]=/home/files/share/pictures
+    [TMP_HOME]=/home/files/tmp
+    [VIDEOS_DIR]=/home/files/share/videos
 );
 
 for d in "${XDG[@]}" "$HOME/"{.cabal,.ghc,.cpanm,.vim/{autoload,bundle},.emacs.d/site-lisp,.config,.local,games,include,lib/bash,sbin,man}; do
-    mkdir -vp -- "$d";
-    echo \* > "$d/".gitignore;
-done;
-
-for d in "${XDG[TMP_HOME]}/"{attachments,downloads/torrents}; do
     mkdir -vp -- "$d";
     echo \* > "$d/".gitignore;
 done;
@@ -38,12 +37,28 @@ for d in "${XDG[OPT_HOME]}/"{go,npm,perl5,win32,win64}; do
     echo \* > "$d/".gitignore;
 done;
 
-for d in "${XDG[DATA_HOME]}/"{applications,Trash,cert,fonts,icons,sounds,themes,wallpapers,bash,zsh,desktop,keyrings,texmf/tex/latex,doc,locale,ca-certificates,dircolors,man,mutt,xcolors,source-highlight,X11}; do
+for d in "${XDG[DATA_HOME]}/"{applications,Trash,cert,fonts,icons,sounds,themes,wallpapers,bash,zsh,desktop,keyrings,texmf/tex/latex,doc,locale,ca-certificates,dircolors,man,mutt,xcolors,source-highlight,webkit,X11}; do
     mkdir -vp -- "$d";
     echo \* > "$d/".gitignore;
 done;
 
-for d in "${XDG[VAR_HOME]}/"{backups/bash,lib,log,mail/{storage,queue},spool,tmp}; do
+for d in "${XDG[VAR_HOME]}/"{lib,log,mail/{storage,queue},spool,tmp}; do
+    mkdir -vp -- "$d";
+    echo \* > "$d/".gitignore;
+done;
+
+for d in "${XDG2[@]}" /home/{files,stow,stow-data}; do
+    sudo mkdir -vp -- "$d";
+    sudo chown -Rv "$USER:$USER" -- "$d";
+    echo \* > "$d/".gitignore;
+done;
+
+for d in "${XDG2[TMP_HOME]}/"{attachments,downloads/torrents}; do
+    mkdir -vp -- "$d";
+    echo \* > "$d/".gitignore;
+done;
+
+for d in "${XDG2[BACKUP_HOME]}/"bash; do
     mkdir -vp -- "$d";
     echo \* > "$d/".gitignore;
 done;

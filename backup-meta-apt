@@ -2,7 +2,7 @@
 #
 # Backup infos about installed packages on Debian.
 
-backup_dir=${XDG_VAR_HOME:?}/backups;
+backup_dir=${XDG_BACKUP_HOME:?};
 
 sudo rm -rv -- "$backup_dir/"pkgs;
 mkdir -pv -- "$backup_dir/"pkgs;
