@@ -120,6 +120,8 @@ List:
 * [startx.sh](https://github.com/D630/bin/blob/master/startx.sh): My mini wrapper for xinit.
 * [stat-1](https://github.com/D630/bin/blob/master/stat-1): Stat a file and build an associative array.
 * [stj1](https://github.com/D630/bin/blob/master/stj1): Use st like kuake and yeahconsole terminal.
+* [stow-data-home](https://github.com/D630/bin/blob/master/stow-data-home): xstow wrapper.
+* [stow-data-new](https://github.com/D630/bin/blob/master/stow-data-new): Set up a new stow-data package.
 * [stow-home](https://github.com/D630/bin/blob/master/stow-home): xstow wrapper.
 * [stow-new](https://github.com/D630/bin/blob/master/stow-new): Set up a new stow package.
 * [sxhkd-reload](https://github.com/D630/bin/blob/master/sxhkd-reload): Reload sxhkd config.

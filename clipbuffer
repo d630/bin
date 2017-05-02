@@ -11,7 +11,7 @@ function Clipbuffer::Daemon {
     mkdir -p -m 700 -- "$xsels";
     printf %d $$ > "$xsels/"$$.pid;
 
-    xprop -root -spy CUT_BUFFER0 |
+    exec xprop -root -spy CUT_BUFFER0 |
     while
         read;
     do
@@ -77,10 +77,10 @@ function Clipbuffer::Clip {
         if
             $opt_board;
         then
-            xsel -l /dev/null --clear --clipboard;
+            # xsel -l /dev/null --clear --clipboard;
             xorg-selection-clipboard-in < "$xsels/${clip%% *}";
         else
-            xsel -l /dev/null --clear --primary;
+            # xsel -l /dev/null --clear --primary;
             xorg-selection-primary-in < "$xsels/${clip%% *}";
         fi;
 };
