@@ -219,7 +219,6 @@ exec chromium \
     --artifacts-dir=$r/artifacts \
     --crash-dumps-dir="$r/crash-dumps" \
     --disk-cache-dir=$r/cache \
-    --golden-screenshots-dir=$r/screenshots \
     --user-data-dir=$r \
     --disable-breakpad \
     --disable-cloud-import \

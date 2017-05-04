@@ -6,9 +6,7 @@ if
     test-inet;
 then
     printf 'WAN-IP: %s\n' "$(
-        w3m -dump http://ip-check.info/\?lang=en |
-        grep -F -A 2 IP\ check |
-        tail -n 1;
+        dig -4 +short whoami.akamai.net @ns1-1.akamaitech.net
     )";
 else
     printf 'WAN-IP: offline\n';
