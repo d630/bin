@@ -116,6 +116,7 @@ List:
 * [show-zombies](https://github.com/D630/bin/blob/master/show-zombies): List all zombies and their parents to kill.
 * [skel-home](https://github.com/D630/bin/blob/master/skel-home): Prepare home directory.
 * [sound](https://github.com/D630/bin/blob/master/sound): Play specific sounds (meant to be used with dunst and rsyslog).
+* [spotify-mpris](https://github.com/D630/bin/blob/master/spotify-mpris): Control spotify via mpris player interface.
 * [ssudo](https://github.com/D630/bin/blob/master/ssudo): Using sudo with dmenu2 via SUDO_ASKPASS.
 * [startx.sh](https://github.com/D630/bin/blob/master/startx.sh): My mini wrapper for xinit.
 * [stat-1](https://github.com/D630/bin/blob/master/stat-1): Stat a file and build an associative array.
