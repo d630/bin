@@ -89,6 +89,7 @@ List:
 * [pass-copy](https://github.com/D630/bin/blob/master/pass-copy): Copy password from pass.
 * [pdf-purge-metadata](https://github.com/D630/bin/blob/master/pdf-purge-metadata): Remove PDF metadata with pdftk and exiftool.
 * [pidgin-start](https://github.com/D630/bin/blob/master/pidgin-start): Run pidgin.
+* [power](https://github.com/D630/bin/blob/master/power): Notify, if power is (almost) gone.
 * [pwgenw-xsel](https://github.com/D630/bin/blob/master/pwgenw-xsel): X-select password.
 * [pwgenw](https://github.com/D630/bin/blob/master/pwgenw): Create password.
 * [pycalendar](https://github.com/D630/bin/blob/master/pycalendar): Display calendar.
@@ -135,6 +136,7 @@ List:
 * [tcsh--filetest](https://github.com/D630/bin/blob/master/tcsh--filetest): Use the filetest builtin command of tcsh.
 * [tcsh--printenv](https://github.com/D630/bin/blob/master/tcsh--printenv): Use the printenv builtin command of tcsh.
 * [template-new](https://github.com/D630/bin/blob/master/template-new): Prepare new file from a template.
+* [test-bat](https://github.com/D630/bin/blob/master/test-bat): Test if battery capacity is high.
 * [test-daylight](https://github.com/D630/bin/blob/master/test-daylight): Test daytime.
 * [test-inet](https://github.com/D630/bin/blob/master/test-inet): Check inet connection.
 * [test-tty](https://github.com/D630/bin/blob/master/test-tty): Test if tty is available.

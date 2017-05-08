@@ -15,7 +15,7 @@ test -r "$r/"prefs.js || {
     cat > "$r/"prefs.js <<!
 user_pref("accessibility.browsewithcaret", true);
 user_pref("browser.bookmarks.restore_default_bookmarks", false);
-user_pref("browser.download.dir", "$HOME/tmp/downloads");
+user_pref("browser.download.dir", "/home/files/tmp/downloads");
 user_pref("browser.download.importedFromSqlite", true);
 user_pref("browser.download.useDownloadDir", false);
 user_pref("browser.fixup.dns_first_for_single_words", true);

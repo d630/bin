@@ -125,7 +125,7 @@ test -r "$r/"Default/Preferences || {
     "enabled": false
   },
   "savefile": {
-    "default_directory": "$HOME/tmp/downloads"
+    "default_directory": "/home/files/tmp/downloads"
   },
   "search": {
     "suggest_enabled": false
