@@ -6,7 +6,7 @@ b=(/sys/class/power_supply/BAT*);
 [[ ${#b} -eq 0 || $(< $b/status) != Discharging ]] &&
 		exit 0;
 
-(((c=$(< $b/capacity)), c > 80)) &&
+(((c=$(< $b/capacity)), c > 25)) &&
 		print "$c";
 
 # vim: set ts=2 sw=2 tw=0 noet :
