@@ -1,12 +1,14 @@
-#!/usr/bin/env mksh
+#!/usr/bin/env bash
 #
 # Test if battery capacity is high.
+
+shopt -s nullglob;
 
 b=(/sys/class/power_supply/BAT*);
 [[ ${#b} -eq 0 || $(< $b/status) != Discharging ]] &&
 		exit 0;
 
 (((c=$(< $b/capacity)), c > 25)) &&
-		print "$c";
+		echo "$c";
 
 # vim: set ts=2 sw=2 tw=0 noet :
