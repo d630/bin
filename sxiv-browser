@@ -17,14 +17,16 @@ typeset -a arr=();
 
 shift 1;
 
-cd -- "$dir" &&
-    for i in *; do
-        [[ -f $i ]] ||
-            continue;
-        arr+=("$i")
-        [[ $i == "$file" ]] &&
-            c=$((${#arr[@]} - 1));
-    done;
+cd -- "$dir" ||
+ exit 1;
+
+for i in *; do
+    [[ -f $i ]] ||
+        continue;
+    arr+=("$i")
+    [[ $i == "$file" ]] &&
+        c=$((${#arr[@]} - 1));
+done;
 
 setsidw sxiv "$@" -- "${arr[@]:c}" "${arr[@]:0:c}";
 

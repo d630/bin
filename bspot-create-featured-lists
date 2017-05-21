@@ -10,12 +10,15 @@ _list1=/tmp/$list1.json;
 declare -A Features=(
     [acousticness]=6kpJlNFqONHiFkbf1RnLa9
     [danceability]=3h1hfO0kkKZy7g4tbn2fTl
+    [duration_ms]=68PPPPoCDzFpOZMDMuPlVR
     [energy]=3Y5mE7xPdKNPriAcu8Rpnl
     [instrumentalness]=2GodaFWJBAGNCivcq68EKG
+    [key]=1AQLPDXxdK1KQ31Bvdpc3g
     [liveness]=31FjqV4SOYfEyYn1qphrKJ
     [loudness]=390AjCYjLGFHD50cDFjmxo
     [speechiness]=6Onff4ga9prvw0SQP1jSDK
     [tempo]=3uZ6JqwEDpgZH088NhvrYo
+    [time_signature]=4kOLmgDP3hVv0Lf4FHovpq
     [valence]=0liWcy2L57aJ6yZeVB88kq
 );
 
@@ -27,7 +30,7 @@ for f in "${!Features[@]}"
 do
     bspot clearList "$user" "${Features[$f]}" "$token";
     jq -r ".audio_features[] | [.$f, .uri] | @tsv" "$_list1" |
-    LC_ALL=C sort -gr |
+    LC_ALL=C sort -k 1gr,1gr -k 2d,2d |
     cut -f 2 |
     bspot addTracks "$user" "${Features[$f]}" "$token";
 done;

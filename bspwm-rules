@@ -6,6 +6,7 @@ id=${1?} \
   instance=$3 \
   class=$2;
 
+echo "$@" >> /tmp/INFO
 case $class in
 (Emacs) echo state=tiled\ layer=normal;;
 (Firefox|Firefox-esr|Iceweasel) echo desktop=^2;;
@@ -20,6 +21,7 @@ case $class in
 (Xmessage) echo state=floating\ layer=normal;;
 (Xombrero) echo desktop=^2;;
 ([cC]hromium|Chromium-browser) echo desktop=^2;;
+(libreoffice*|LibreOffice*) echo state=tiled\ layer=normal;;
 (mpv) echo state=floating\ layer=normal;;
 (stj[12]) echo state=floating\ layer=above\ border=on\ sticky=on;;
 (weechat) echo desktop=^3;;
