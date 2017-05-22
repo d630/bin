@@ -10,14 +10,17 @@ flock -n 9 || {
 
 mpop -a >> "${XDG_VAR_HOME:?}/"log/mpop.log 2>&1;
 
-mapfile -t reply < <(
-    imapfilter \
-        -c "$HOME/".imapfilter/localhost.lua \
-        -l "$XDG_VAR_HOME/"log/imapfilter.log;
-);
+mapfile -t reply < <(imapfilter-localhost-unseen);
 
-((${reply[0]//[!0-9]/} + ${reply[1]//[!0-9]/} > 0)) ||
+((
+    ${reply[0]##*:}
+    + ${reply[1]##*:}
+    + ${reply[2]##*:}
+    + ${reply[3]##*:} > 0
+)) ||
     exit 1;
-loggi 6 .email.arrived "${reply[0]:-?}\n${reply[1]:-?}";
+
+loggi 6 .email.arrived \
+ "${reply[0]:-?}\n${reply[1]:-?}\n${reply[2]:-?}\n${reply[3]:-?}";
 
 # vim: set ts=4 sw=4 tw=0 et :

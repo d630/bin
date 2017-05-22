@@ -41,20 +41,9 @@ project=$(
     __menu_cmd PROJECT <<<'';
 );
 
-if
-    [[ -z $project ]];
-then
-    printf 'No project has been chosen\n' 1>&2;
-    exit 1;
-else
-    printf 'Project: \t%s\n' "${project//./ > }";
-fi;
-
-read -re -n 1 -p 'Is recur/wait/until/scheduled/depends/entry needed? (y/n)' answer;
+printf 'project:        %s\n' "$project";
 
 read -re -p 'description:    ' description;
-read -re -p 'priority:       ' priority;
-read -re -p 'due:            ' due;
 
 while
     :;
@@ -81,14 +70,14 @@ do
     fi;
 done;
 
-[[ $answer == y ]] && {
-    read -re -p 'recur:          ' recur;
-    read -re -p 'wait:           ' wait;
-    read -re -p 'until:          ' until;
-    read -re -p 'scheduled:      ' scheduled;
-    read -re -p 'depends:        ' depends;
-    read -re -p 'entry:          ' entry;
-};
+read -re -p 'priority:       ' priority;
+read -re -p 'due:            ' due;
+read -re -p 'recur:          ' recur;
+read -re -p 'wait:           ' wait;
+read -re -p 'until:          ' until;
+read -re -p 'scheduled:      ' scheduled;
+read -re -p 'depends:        ' depends;
+read -re -p 'entry:          ' entry;
 
 printf '\nCommand:       task add %s project:%s due:%s priority:%s recur:%s wait:%s until:%s scheduled:%s depends:%s entry:%s %s\n' "$description" "$project" "$due" "$priority" "$recur" "$wait" "$until" "$scheduled" "$depends" "$entry" "${tags[*]/#/+}";
 

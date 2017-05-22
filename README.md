@@ -61,6 +61,8 @@ List:
 * [highlighter](https://github.com/D630/bin/blob/master/highlighter): Wrapper: Default highlighting tool.
 * [iface](https://github.com/D630/bin/blob/master/iface): Configure my Wlan.
 * [image-viewer](https://github.com/D630/bin/blob/master/image-viewer): Default image viewer (tui).
+* [imapfilter-localhost-action](https://github.com/D630/bin/blob/master/imapfilter-localhost-action): Wrapper: imapfilter with config localhost-action.lua.
+* [imapfilter-localhost-unseen](https://github.com/D630/bin/blob/master/imapfilter-localhost-unseen): Wrapper: imapfilter with config localhost-unseen.lua.
 * [lesspipew](https://github.com/D630/bin/blob/master/lesspipew): My preprocessor for less.
 * [lifeday](https://github.com/D630/bin/blob/master/lifeday): Print lifeday.
 * [log-ip](https://github.com/D630/bin/blob/master/log-ip): Daily ip logging.
@@ -77,7 +79,9 @@ List:
 * [menu](https://github.com/D630/bin/blob/master/menu): A wrapper script for selecting menu driven programs.
 * [mime-build-types](https://github.com/D630/bin/blob/master/mime-build-types): Build a mime.type file with ERE globs from /usr/share/mime.
 * [msmtpqw](https://github.com/D630/bin/blob/master/msmtpqw): Replacement for msmtpq.
+* [mutt--d630](https://github.com/D630/bin/blob/master/mutt--d630): Wrapper: mutt d630.
 * [mutt--hotmail](https://github.com/D630/bin/blob/master/mutt--hotmail): Wrapper: mutt hotmail.
+* [mutt--posteo1](https://github.com/D630/bin/blob/master/mutt--posteo1): Wrapper: mutt posteo1.
 * [mutt--posteo](https://github.com/D630/bin/blob/master/mutt--posteo): Wrapper: mutt posteo.
 * [mutt--spool](https://github.com/D630/bin/blob/master/mutt--spool): Wrapper: mutt spool.
 * [mutt-save-attachments](https://github.com/D630/bin/blob/master/mutt-save-attachments): Save attachements in Mutt.
