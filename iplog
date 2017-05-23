@@ -6,7 +6,9 @@ log=${XDG_VAR_HOME:?}/log/ip-log.log \
 to=ip-log@ip-log \
 subject=ip-log;
 
-printf '%(%Y-%m-%d_%R)T %s\n' -1 "$(curl ifconfig.me)" |
+printf '%(%Y-%m-%d_%R)T %s\n' -1 "$(
+    dig -4 +short whoami.akamai.net @ns1-1.akamaitech.net
+)" |
 tee -a "$log" |
 mailx -s "$subject" "$to";
 

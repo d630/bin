@@ -18,7 +18,6 @@ case $class in
 (TelegramDesktop) echo desktop=^3;;
 (XCalc) echo state=floating\ layer=normal;;
 (Xmessage) echo state=floating\ layer=normal;;
-(Xombrero) echo desktop=^2;;
 ([cC]hromium|Chromium-browser) echo desktop=^2;;
 (libreoffice*|LibreOffice*) echo state=tiled\ layer=normal;;
 (mpv) echo state=floating\ layer=normal;;

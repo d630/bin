@@ -1,12 +1,12 @@
 #!/bin/sh
 #
-# Wrapper: Use taskwarrior in my 'log' context.
+# Wrapper: Use taskwarrior in my 'todo' context.
 
 export TASKRC=$XDG_CONFIG_HOME/taskrc-life;
 
 {
-    task context log > /dev/null;
-    task +log "$@";
+    task context todo > /dev/null;
+    task +todo "$@";
     s=$?;
     task context none > /dev/null;
 } 2> /dev/null;

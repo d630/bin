@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# Add a task to Taskwarrior ('todo' context) via vim (yaml).
+
+export TASKRC=$XDG_CONFIG_HOME/taskrc-life;
+
+eval "$(date +'s=%s d=%Y-%m-%d t=%H:%M')";
+f=${TMPDIR:-${XDG_RUNTIME_DIR}/tmp}/$s.task;
+
+trap 'rm "$f"' EXIT;
+
+cat > "$f" <<-TEMPLATE
+	%YAML 1.1
+	---
+	description:
+
+	entry: now
+	# due: ${d}_00:00
+	# recur:
+	# scheduled: ${d}_00:00
+	# until: ${d}_00:00
+	# wait: ${d}_00:00
+
+	# depends:
+	#     - 1
+
+	# project:
+	# priority:
+
+	tags:
+	    - todo
+
+	# annotations:
+	#     -
+	#         entry: now
+	#         description:
+	...
+TEMPLATE
+
+vim -f \
+ '+set ft=yaml' \
+ +3 \
+ "+startinsert!" \
+ "$f" < /dev/tty > /dev/tty;
+
+yaml2json < "$f" |
+jq 'if (.description | length) > 0 then . else empty end' |
+task import -;
+
+# vim: set ts=2 sw=2 tw=0 noet :

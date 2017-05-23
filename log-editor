@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# Log a task into Taskwarrior ('log' context) via vim (yaml).
+
+export TASKRC=$XDG_CONFIG_HOME/taskrc-life;
+
+eval "$(date +'s=%s d=%Y-%m-%d t=%H:%M')";
+f=${TMPDIR:-${XDG_RUNTIME_DIR}/tmp}/$s.task;
+
+trap 'rm "$f"' EXIT;
+
+cat > "$f" <<-TEMPLATE
+	%YAML 1.1
+	---
+	description:
+
+	status: completed
+	entry: ${d}_${t}
+	# due: ${d}_${t}
+
+	# project:
+
+	tags:
+	    - log
+
+	# annotations:
+	#     -
+	#         entry: ${d}_${t}
+	#         description:
+	...
+TEMPLATE
+
+vim -f \
+ '+set ft=yaml' \
+ +3 \
+ "+startinsert!" \
+ "$f" < /dev/tty > /dev/tty;
+
+yaml2json < "$f" |
+jq 'if (.description | length) > 0 and .status == "completed" then . else empty end' |
+task import -;
+
+# vim: set ts=2 sw=2 tw=0 noet :

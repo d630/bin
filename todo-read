@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 #
-# Add interactively a task to Taskwarrior via read in a terminal + {d,s}menu.
+# Add a task to Taskwarrior ('todo' context) via read ({d,s}menu).
+
+export TASKRC=$XDG_CONFIG_HOME/taskrc-life;
 
 if
     test-tty 2>/dev/null;
@@ -70,6 +72,8 @@ do
     fi;
 done;
 
+tags+=(todo);
+
 read -re -p 'priority:       ' priority;
 read -re -p 'due:            ' due;
 read -re -p 'recur:          ' recur;
@@ -79,7 +83,7 @@ read -re -p 'scheduled:      ' scheduled;
 read -re -p 'depends:        ' depends;
 read -re -p 'entry:          ' entry;
 
-printf '\nCommand:       task add %s project:%s due:%s priority:%s recur:%s wait:%s until:%s scheduled:%s depends:%s entry:%s %s\n' "$description" "$project" "$due" "$priority" "$recur" "$wait" "$until" "$scheduled" "$depends" "$entry" "${tags[*]/#/+}";
+printf '\ncommand:       task add %s project:%s due:%s priority:%s recur:%s wait:%s until:%s scheduled:%s depends:%s entry:%s %s\n' "$description" "$project" "$due" "$priority" "$recur" "$wait" "$until" "$scheduled" "$depends" "$entry" "${tags[*]/#/+}";
 
 task add "$description" ${project:+"project:$project"} ${due:+"due:$due"} ${priority:+"priority:$priority"} ${recur:+"recur:$recur"} ${wait:+"wait:$wait"} ${until:+"until:$until"} ${scheduled:+"scheduled:$scheduled"} ${depends:+"depends:$depends"} ${entry:+"entry:$entry"} ${tags[*]/#/+};
 

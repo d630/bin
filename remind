@@ -2,11 +2,11 @@
 #
 # Wrapper: Use taskwarrior in my 'reminder' context.
 
-export TASKRC=${TASKRC:-$XDG_CONFIG_HOME/taskrc-life};
+export TASKRC=$XDG_CONFIG_HOME/taskrc-life;
 
 {
-    task context reminder > /dev/null;
-    task +reminder "$@";
+    task context remind > /dev/null;
+    task +remind "$@";
     s=$?;
     task context none > /dev/null;
 } 2> /dev/null;

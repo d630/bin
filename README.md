@@ -63,15 +63,19 @@ List:
 * [image-viewer](https://github.com/D630/bin/blob/master/image-viewer): Default image viewer (tui).
 * [imapfilter-localhost-action](https://github.com/D630/bin/blob/master/imapfilter-localhost-action): Wrapper: imapfilter with config localhost-action.lua.
 * [imapfilter-localhost-unseen](https://github.com/D630/bin/blob/master/imapfilter-localhost-unseen): Wrapper: imapfilter with config localhost-unseen.lua.
+* [iplog](https://github.com/D630/bin/blob/master/iplog): Daily ip logging.
+* [issue-editor](https://github.com/D630/bin/blob/master/issue-editor): Add a task into Taskwarrior ('issue' context) via vim (yaml).
+* [issue](https://github.com/D630/bin/blob/master/issue): Wrapper: Use taskwarrior in my 'issue' context.
 * [lesspipew](https://github.com/D630/bin/blob/master/lesspipew): My preprocessor for less.
 * [lifeday](https://github.com/D630/bin/blob/master/lifeday): Print lifeday.
-* [log-ip](https://github.com/D630/bin/blob/master/log-ip): Daily ip logging.
+* [log-editor](https://github.com/D630/bin/blob/master/log-editor): Log a task into Taskwarrior ('log' context) via vim (yaml).
 * [log](https://github.com/D630/bin/blob/master/log): Wrapper: Use taskwarrior in my 'log' context.
 * [loggi](https://github.com/D630/bin/blob/master/loggi): Wrap up logger for local scripting.
 * [lsort](https://github.com/D630/bin/blob/master/lsort): Sort input by lenght.
 * [mail-get](https://github.com/D630/bin/blob/master/mail-get): Get mail and give notification + sound.
 * [mail-hook-post](https://github.com/D630/bin/blob/master/mail-hook-post): Run command after mail-get.
 * [mail-hook-pre](https://github.com/D630/bin/blob/master/mail-hook-pre): Run command before mail-get.
+* [mail-inbox](https://github.com/D630/bin/blob/master/mail-inbox): Looking for new/unseen mails (imapfilter).
 * [mail-queue](https://github.com/D630/bin/blob/master/mail-queue): Looking for mail queue (msmtp).
 * [mail-send](https://github.com/D630/bin/blob/master/mail-send): Send mail via msmtp-queue and give notification + sound.
 * [mail-update](https://github.com/D630/bin/blob/master/mail-update): Update mail dirs.
@@ -102,6 +106,7 @@ List:
 * [pyrandgen-xsel](https://github.com/D630/bin/blob/master/pyrandgen-xsel): X-select random password.
 * [pyrandgen](https://github.com/D630/bin/blob/master/pyrandgen): Generate random password.
 * [readline-editor](https://github.com/D630/bin/blob/master/readline-editor): Default readline editor.
+* [remind-editor](https://github.com/D630/bin/blob/master/remind-editor): Add a task to Taskwarrior ('remind' context) via vim (yaml).
 * [remind](https://github.com/D630/bin/blob/master/remind): Wrapper: Use taskwarrior in my 'reminder' context.
 * [repeat](https://github.com/D630/bin/blob/master/repeat): Repeat a command n times.
 * [rtcwakew](https://github.com/D630/bin/blob/master/rtcwakew): Use rtcwake and play music on wakeup.
@@ -134,9 +139,7 @@ List:
 * [sxhkd-restart](https://github.com/D630/bin/blob/master/sxhkd-restart): Restart sxhkd.
 * [sxiv-browser](https://github.com/D630/bin/blob/master/sxiv-browser): Open all files in the current directory with sxiv.
 * [task-local](https://github.com/D630/bin/blob/master/task-local): Simple wrapper for using taskwarrior with local "task-repos".
-* [taskwarrior-add](https://github.com/D630/bin/blob/master/taskwarrior-add): Add interactively a task to Taskwarrior via read in a terminal + {d,s}menu.
 * [taskwarrior-cv](https://github.com/D630/bin/blob/master/taskwarrior-cv): Source or print all defaults of Taskwarrior's configuration settings (v2.5.1).
-* [taskwarrior-log](https://github.com/D630/bin/blob/master/taskwarrior-log): Log interactively a task into Taskwarrior ('log' context).
 * [tcsh--filetest](https://github.com/D630/bin/blob/master/tcsh--filetest): Use the filetest builtin command of tcsh.
 * [tcsh--printenv](https://github.com/D630/bin/blob/master/tcsh--printenv): Use the printenv builtin command of tcsh.
 * [template-new](https://github.com/D630/bin/blob/master/template-new): Prepare new file from a template.
@@ -147,6 +150,9 @@ List:
 * [text-editor](https://github.com/D630/bin/blob/master/text-editor): Default text editor.
 * [text-visual](https://github.com/D630/bin/blob/master/text-visual): Default text visual editor.
 * [theme](https://github.com/D630/bin/blob/master/theme): Adjust theme configuration.
+* [todo-editor](https://github.com/D630/bin/blob/master/todo-editor): Add a task to Taskwarrior ('todo' context) via vim (yaml).
+* [todo-read](https://github.com/D630/bin/blob/master/todo-read): Add a task to Taskwarrior ('todo' context) via read ({d,s}menu).
+* [todo](https://github.com/D630/bin/blob/master/todo): Wrapper: Use taskwarrior in my 'todo' context.
 * [transmission-cli-w](https://github.com/D630/bin/blob/master/transmission-cli-w): Wrapper for transmission-cli.
 * [update-packages](https://github.com/D630/bin/blob/master/update-packages): Update via some package managers.
 * [vfh](https://github.com/D630/bin/blob/master/vfh): Preview files in a directory like in vifm.
