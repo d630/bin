@@ -72,11 +72,13 @@ List:
 * [log](https://github.com/D630/bin/blob/master/log): Wrapper: Use taskwarrior in my 'log' context.
 * [loggi](https://github.com/D630/bin/blob/master/loggi): Wrap up logger for local scripting.
 * [lsort](https://github.com/D630/bin/blob/master/lsort): Sort input by lenght.
+* [mail-deliver](https://github.com/D630/bin/blob/master/mail-deliver): Deliver mails (msmtp).
 * [mail-get](https://github.com/D630/bin/blob/master/mail-get): Get mail and give notification + sound.
 * [mail-hook-post](https://github.com/D630/bin/blob/master/mail-hook-post): Run command after mail-get.
 * [mail-hook-pre](https://github.com/D630/bin/blob/master/mail-hook-pre): Run command before mail-get.
 * [mail-inbox](https://github.com/D630/bin/blob/master/mail-inbox): Looking for new/unseen mails (imapfilter).
 * [mail-queue](https://github.com/D630/bin/blob/master/mail-queue): Looking for mail queue (msmtp).
+* [mail-retrieve](https://github.com/D630/bin/blob/master/mail-retrieve): Retrieve mails (mpop).
 * [mail-send](https://github.com/D630/bin/blob/master/mail-send): Send mail via msmtp-queue and give notification + sound.
 * [mail-update](https://github.com/D630/bin/blob/master/mail-update): Update mail dirs.
 * [mail-viewer](https://github.com/D630/bin/blob/master/mail-viewer): Default mail viewer (tui).

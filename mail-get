@@ -8,7 +8,8 @@ flock -n 9 || {
     exit 1;
 };
 
-mpop -a >> "${XDG_VAR_HOME:?}/"log/mpop.log 2>&1;
+mail-retrieve ||
+    exit $?;
 
 mapfile -t reply < <(imapfilter-localhost-unseen);
 

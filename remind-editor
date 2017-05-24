@@ -28,7 +28,7 @@ cat > "$f" <<-TEMPLATE
 	# priority:
 
 	tags:
-	    -remind
+	    - remind
 
 	# annotations:
 	#     -
