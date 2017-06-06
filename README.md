@@ -39,6 +39,8 @@ List:
 * [disownw](https://github.com/D630/bin/blob/master/disownw): Disown job.
 * [dnsmasq-backup-urls](https://github.com/D630/bin/blob/master/dnsmasq-backup-urls): Backup all uris from dnsmasq log.
 * [dunst-restart](https://github.com/D630/bin/blob/master/dunst-restart): Restart dunst.
+* [event-editor](https://github.com/D630/bin/blob/master/event-editor): Add a task to Taskwarrior ('event' context) via vim (yaml).
+* [event](https://github.com/D630/bin/blob/master/event): Wrapper: Use taskwarrior in my 'event' context.
 * [fb-image-viewer](https://github.com/D630/bin/blob/master/fb-image-viewer): Default image viewer (framebuffer).
 * [fc-edit](https://github.com/D630/bin/blob/master/fc-edit): Default fc editor ($FCEDIT).
 * [feed2newsbeuter](https://github.com/D630/bin/blob/master/feed2newsbeuter): Record url of feed in newsbeuter via dmenu.
@@ -57,6 +59,8 @@ List:
 * [get-news](https://github.com/D630/bin/blob/master/get-news): Wrapper for getting my news.
 * [get-webheader](https://github.com/D630/bin/blob/master/get-webheader): Get webheader via curl.
 * [get-wetter](https://github.com/D630/bin/blob/master/get-wetter): Get infos from http://wetter.tagesschau.de.
+* [habit-editor](https://github.com/D630/bin/blob/master/habit-editor): Add a task to Taskwarrior ('habit' context) via vim (yaml).
+* [habit](https://github.com/D630/bin/blob/master/habit): Wrapper: Use taskwarrior in my 'habit' context.
 * [hblock](https://github.com/D630/bin/blob/master/hblock): Simple ad- and malware-blocking-list builder for dnsmasq.
 * [highlighter](https://github.com/D630/bin/blob/master/highlighter): Wrapper: Default highlighting tool.
 * [iface](https://github.com/D630/bin/blob/master/iface): Configure my Wlan.
@@ -108,8 +112,6 @@ List:
 * [pyrandgen-xsel](https://github.com/D630/bin/blob/master/pyrandgen-xsel): X-select random password.
 * [pyrandgen](https://github.com/D630/bin/blob/master/pyrandgen): Generate random password.
 * [readline-editor](https://github.com/D630/bin/blob/master/readline-editor): Default readline editor.
-* [remind-editor](https://github.com/D630/bin/blob/master/remind-editor): Add a task to Taskwarrior ('remind' context) via vim (yaml).
-* [remind](https://github.com/D630/bin/blob/master/remind): Wrapper: Use taskwarrior in my 'reminder' context.
 * [repeat](https://github.com/D630/bin/blob/master/repeat): Repeat a command n times.
 * [rtcwakew](https://github.com/D630/bin/blob/master/rtcwakew): Use rtcwake and play music on wakeup.
 * [run](https://github.com/D630/bin/blob/master/run): Run that command.
@@ -153,7 +155,6 @@ List:
 * [text-visual](https://github.com/D630/bin/blob/master/text-visual): Default text visual editor.
 * [theme](https://github.com/D630/bin/blob/master/theme): Adjust theme configuration.
 * [todo-editor](https://github.com/D630/bin/blob/master/todo-editor): Add a task to Taskwarrior ('todo' context) via vim (yaml).
-* [todo-read](https://github.com/D630/bin/blob/master/todo-read): Add a task to Taskwarrior ('todo' context) via read ({d,s}menu).
 * [todo](https://github.com/D630/bin/blob/master/todo): Wrapper: Use taskwarrior in my 'todo' context.
 * [transmission-cli-w](https://github.com/D630/bin/blob/master/transmission-cli-w): Wrapper for transmission-cli.
 * [update-packages](https://github.com/D630/bin/blob/master/update-packages): Update via some package managers.

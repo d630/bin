@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Wrapper: Use taskwarrior in my 'habit' context.
+
+export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-habit;
+exec task "$@";
+
+# vim: set ts=4 sw=4 tw=0 et :

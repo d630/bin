@@ -2,7 +2,7 @@
 #
 # Log a task into Taskwarrior ('log' context) via vim (yaml).
 
-export TASKRC=$XDG_CONFIG_HOME/taskrc-life;
+export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-todo;
 
 eval "$(date +'s=%s d=%Y-%m-%d t=%H:%M')";
 f=${TMPDIR:-${XDG_RUNTIME_DIR}/tmp}/$s.task;
@@ -15,6 +15,12 @@ cat > "$f" <<-TEMPLATE
 	description:
 
 	status: completed
+
+	# citizen|member|employee|customer|me|alias
+	# role: me
+	# opposite: me
+	# contact: none
+
 	entry: ${d}_${t}
 	# due: ${d}_${t}
 
@@ -22,6 +28,7 @@ cat > "$f" <<-TEMPLATE
 
 	tags:
 	    - log
+	    - todo
 
 	# annotations:
 	#     -

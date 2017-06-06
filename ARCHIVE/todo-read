@@ -2,7 +2,7 @@
 #
 # Add a task to Taskwarrior ('todo' context) via read ({d,s}menu).
 
-export TASKRC=$XDG_CONFIG_HOME/taskrc-life;
+export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-todo;
 
 if
     test-tty 2>/dev/null;
@@ -74,14 +74,15 @@ done;
 
 tags+=(todo);
 
-read -re -p 'priority:       ' priority;
+read -re -p 'entry:          ' entry;
 read -re -p 'due:            ' due;
-read -re -p 'recur:          ' recur;
+read -re -p 'scheduled:      ' scheduled;
 read -re -p 'wait:           ' wait;
 read -re -p 'until:          ' until;
-read -re -p 'scheduled:      ' scheduled;
+
+read -re -p 'recur:          ' recur;
 read -re -p 'depends:        ' depends;
-read -re -p 'entry:          ' entry;
+read -re -p 'priority:       ' priority;
 
 printf '\ncommand:       task add %s project:%s due:%s priority:%s recur:%s wait:%s until:%s scheduled:%s depends:%s entry:%s %s\n' "$description" "$project" "$due" "$priority" "$recur" "$wait" "$until" "$scheduled" "$depends" "$entry" "${tags[*]/#/+}";
 

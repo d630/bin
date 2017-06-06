@@ -2,11 +2,11 @@
 #
 # Wrapper: Use taskwarrior in my 'log' context.
 
-export TASKRC=$XDG_CONFIG_HOME/taskrc-life;
+export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-todo;
 
 {
     task context log > /dev/null;
-    task +log "$@";
+    task +log +todo "$@";
     s=$?;
     task context none > /dev/null;
 } 2> /dev/null;

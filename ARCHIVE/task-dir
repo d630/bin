@@ -1,0 +1,252 @@
+#!/bin/sh
+#
+# Taskwarrior: Fake task/subtask "feature" via file directories and x rc files.
+
+add () {
+	init 1 &&
+	 {
+		 TASKSUBDIR=$tasksubdir task add "$@" ||
+			{
+				printf '%s\n' "error: add failed. see $tasksubdir" 1>&2;
+				return 1;
+			};
+		};
+};
+
+_archive () {
+	test "$(
+		exec task rc.context:0 rc.hooks:0 rc.verbose:nothing \
+		 "(status:pending or status:recurring or status:waiting)" \
+		 count 2>/dev/null;
+	)" -eq 0 &&
+	 set -- * &&
+	 test "$#" -gt 0 -a "$1" != './*' &&
+	 command touch .archive &&
+	 cd .. &&
+	 command mv -- "$OLDPWD" "${OLDPWD%/*}/.${OLDPWD##*/}";
+};
+
+archive () {
+	test "$TASKHOME" != "$PWD" &&
+	 _archive;
+};
+
+archive_all () {
+	cd -- "$TASKHOME" ||
+	 return 1;
+
+	export LC_ALL=C;
+
+	exec find -H . \
+	 -mindepth 1 \
+	 -name '.*' -prune -o -type d -print |
+	exec sort -r |
+	while
+		read -r dir;
+	do
+		cd -- "$dir";
+		_archive;
+		cd -- "$TASKHOME";
+	done;
+};
+
+goto () {
+	test "$TASKHOME" = "$PWD" ||
+	 {
+		 printf '%s\n' "error: cd into '$TASKHOME' first" 1>&2;
+		 return 1;
+	 };
+
+	local d;
+	d=$(exec task _get "${1:?}.description");
+
+	test -n "$d" ||
+	 exit 1;
+
+	exec find -H . -type d -name "$d" -o -name ".$d";
+};
+
+init () {
+	if
+		test -n "$1";
+	then
+		tasksubdir=$(command mktemp -d -p "$PWD");
+	else
+		command mkdir -p -- "${tasksubdir=$TASKHOME}";
+	fi;
+
+	cd -- "$tasksubdir";
+
+	test -e ./.task -o -e ./.taskrc &&
+	 {
+		 printf '%s\n' "error: is already task repo" 1>&2;
+		 return 1;
+	 };
+
+	if
+		test "$PWD" != "$TASKHOME" -a -r ../.taskrc;
+	then
+		command cp ../.taskrc .taskrc;
+		command mkdir .task;
+		command cp -R ../.task/hooks .task/hooks;
+	else
+		command task config alias.d 'execute "task-dir"';
+		init_hooks;
+	fi;
+};
+
+init_hooks () {
+	command cat > .task/hooks/on-add-d630.sh <<'HOOK'
+#!/bin/sh
+#
+# s: Rename subtask directory.
+# d: Set dependencies.
+
+test "$1" = "api:2" ||
+ : ${api:?error: needs Hooks API v2};
+
+test "${3#command:}" = "add" ||
+	exec cat;
+
+s () {
+	exec jq -cMr --unbuffered '
+		.description = "\(.uuid|sub("-.*"; ""))_\(.description|gsub("\\s"; "_"))" |
+		., .description
+	' |
+	if
+		read -r j;
+		printf '%s' "$j";
+		exec 1>&-;
+		read -r REPLY;
+	then
+		(exec mv -- "$TASKSUBDIR" "${TASKSUBDIR%/*}/$REPLY" &);
+	fi;
+};
+
+d () {
+	uuid_p=${PWD##*/};
+	uuid_p=${uuid_p%%_*};
+
+	exec jq -cMr --unbuffered '., .uuid' |
+	if
+		read -r j;
+		printf '%s' "$j";
+		exec 1>&-;
+		read -r uuid_c;
+	then
+		exec task \
+	 	 "$4" \
+	 	 rc.hooks:0 \
+	 	 rc.verbose:nothing \
+	 	 "uuid:$uuid_p" modify "depends:$uuid_c";
+	fi;
+};
+
+if
+	test -n "$TASKSUBDIR";
+then
+	s;
+elif
+	test "$PWD" = "$TASKHOME";
+then
+	exec cat;
+else
+	d;
+fi;
+
+exit 0;
+
+# vim: set ts=2 sw=2 tw=0 noet :
+HOOK
+
+	command chmod +x .task/hooks/on-add-d630.sh;
+};
+
+merge () {
+	test "$TASKHOME" = "$PWD" &&
+	 return 1;
+
+	export \
+	 TASKDATA=$TASKHOME/.task \
+	 TASKRC=$TASKHOME/.taskrc;
+
+	TASKRC=./.taskrc TASKDATA=./.task \
+	 task rc.hooks:0 rc.verbose:nothing rc.json.array:off export |
+	exec task rc.hooks:0 rc.verbose:nothing rc.json.array:off import 1>/dev/null;
+
+	local c p u;
+
+	c=${PWD##*/};
+	c=${c%%_*};
+	p=${PWD%/*};
+	p=${p##*/};
+	p=${p%%_*};
+
+	u=$(exec task uuids "$c");
+
+	exec task rc.hooks:0 rc.verbose:nothing \
+	 "uuid:$p" modify "dep:$u" 1>/dev/null;
+};
+
+merge_all () {
+	cd -- "$TASKHOME" ||
+	 return 1;
+
+	# exec tree --charset unicode -din -f -I '.task' --prune --noreport . |
+	exec find -H . \
+	 -mindepth 1 \
+	 -name '.*' -prune -o -type d -print |
+	{
+		exec tee /dev/fd/8 |
+		exec xargs -I {} -P 8 -n 1 sh -c '
+			cd -- "{}" &&
+			 exec task rc.hooks:0 rc.verbose:nothing rc.json.array:off export;
+		' |
+		exec task rc.hooks:0 rc.verbose:nothing rc.json.array:off import 1>/dev/null;
+	} 8>&1 |
+	exec awk -F / '
+		NF > 2 {
+			sub("_.*", "", $(NF - 1));
+			sub("_.*", "", $NF);
+			print $NF, $(NF - 1);
+		}
+	' |
+	exec xargs -I {} -n 1 -P 8 sh -c "
+		exec task uuids {} |
+		exec sed 's#\([^ ]*\) \(.*\)#uuid:\1 modify dep:\2#'
+	" |
+	exec xargs -n 3 -P 8 task rc.hooks:0 rc.verbose:nothing 1>/dev/null;
+};
+
+main () {
+	local cmd=${1:?};
+	shift 1;
+
+	export \
+	 TASKDATA=./.task \
+	 TASKHOME=${TASKHOME:?} \
+	 TASKRC=./.taskrc;
+
+	case $cmd in
+		(archiveall)
+			archive_all;;
+		(archive)
+			archive;;
+		(init)
+			init;;
+		(add)
+			add "$@";;
+		(merge)
+			merge;;
+		(mergeall)
+			merge_all;;
+		(goto)
+			goto "$1";;
+		(*)
+			printf '%s\n' "error: unknown command: $cmd" 1>&2;
+			return 1;
+	esac;
+};
+
+main "$@";
+

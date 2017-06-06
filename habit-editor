@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# Add a task to Taskwarrior ('todo' context) via vim (yaml).
+# Add a task to Taskwarrior ('habit' context) via vim (yaml).
 
-export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-todo;
+export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-habit;
 
 eval "$(date +'s=%s d=%Y-%m-%d t=%H:%M')";
 f=${TMPDIR:-${XDG_RUNTIME_DIR}/tmp}/$s.task;
@@ -33,7 +33,7 @@ cat > "$f" <<-TEMPLATE
 	# priority:
 
 	tags:
-	    - todo
+	    - habit
 
 	# annotations:
 	#     -

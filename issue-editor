@@ -2,7 +2,7 @@
 #
 # Add a task into Taskwarrior ('issue' context) via vim (yaml).
 
-export TASKRC=$XDG_CONFIG_HOME/taskrc-life;
+export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-issue;
 
 eval "$(date +'s=%s d=%Y-%m-%d t=%H:%M')";
 f=${TMPDIR:-${XDG_RUNTIME_DIR}/tmp}/$s.task;
@@ -15,14 +15,8 @@ cat > "$f" <<-TEMPLATE
 	description:
 
 	priority: L
-	# due: ${d}_${t}
-
 	origin: mind
-	project: issue
-
-	# todo, log or remind?
-	tags:
-	    - issue
+	# due: ${d}_${t}
 	...
 TEMPLATE
 

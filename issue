@@ -2,15 +2,7 @@
 #
 # Wrapper: Use taskwarrior in my 'issue' context.
 
-export TASKRC=$XDG_CONFIG_HOME/taskrc-life;
-
-{
-    task context issue > /dev/null;
-    task +issue "$@";
-    s=$?;
-    task context none > /dev/null;
-} 2> /dev/null;
-
-exit $s;
+export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-issue;
+exec task "$@";
 
 # vim: set ts=4 sw=4 tw=0 et :

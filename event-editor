@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# Add a task to Taskwarrior ('remind' context) via vim (yaml).
+# Add a task to Taskwarrior ('event' context) via vim (yaml).
 
-export TASKRC=$XDG_CONFIG_HOME/taskrc-life;
+export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-event;
 
 eval "$(date +'s=%s d=%Y-%m-%d t=%H:%M')";
 f=${TMPDIR:-${XDG_RUNTIME_DIR}/tmp}/$s.task;
@@ -15,25 +15,14 @@ cat > "$f" <<-TEMPLATE
 	description:
 
 	entry: now
-	# due: ${d}_00:00
-	# recur:
 	# scheduled: ${d}_00:00
+	# due: ${d}_00:00
 	# until: ${d}_00:00
-	# wait: ${d}_00:00
 
-	# depends:
-	#     - 1
-
-	# project:
-	# priority:
+	# recur:
 
 	tags:
-	    - remind
-
-	# annotations:
-	#     -
-	#         entry: now
-	#         description:
+	    - event
 	...
 TEMPLATE
 
