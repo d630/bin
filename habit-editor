@@ -14,10 +14,11 @@ cat > "$f" <<-TEMPLATE
 	---
 	description:
 
-	# citizen|member|employee|customer|me|alias
 	# role: me
 	# opposite: me
-	# contact: none
+	# contact: face-to-face
+	# location: somewhere
+	# participant: me
 
 	entry: now
 	# due: ${d}_00:00
@@ -27,13 +28,14 @@ cat > "$f" <<-TEMPLATE
 	# recur:
 
 	# depends:
-	#     - 1
+	#     -
 
 	# project:
 	# priority:
 
 	tags:
 	    - habit
+	    - deletable
 
 	# annotations:
 	#     -

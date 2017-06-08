@@ -10,8 +10,9 @@ exec sudo HOME=$HOME obnam_conf=$HOME/.obnam.conf sh -c '
         /home/ \
         /root/ \
         /var/backups/ \
-        /var/mail/ \
         /var/lib/bitlbee \
+        /var/mail/ \
+        /var/sieve/ \
         /var/vmail/ \
         /var/www/;
 

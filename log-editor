@@ -16,10 +16,10 @@ cat > "$f" <<-TEMPLATE
 
 	status: completed
 
-	# citizen|member|employee|customer|me|alias
 	# role: me
 	# opposite: me
-	# contact: none
+	# contact:
+	# location:
 
 	entry: ${d}_${t}
 	# due: ${d}_${t}
