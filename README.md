@@ -147,7 +147,7 @@ List:
 * [tcsh--filetest](https://github.com/D630/bin/blob/master/tcsh--filetest): Use the filetest builtin command of tcsh.
 * [tcsh--printenv](https://github.com/D630/bin/blob/master/tcsh--printenv): Use the printenv builtin command of tcsh.
 * [template-new](https://github.com/D630/bin/blob/master/template-new): Prepare new file from a template.
-* [test-bat](https://github.com/D630/bin/blob/master/test-bat): Test if battery capacity is high.
+* [test-bat](https://github.com/D630/bin/blob/master/test-bat): Print battery capacity.
 * [test-daylight](https://github.com/D630/bin/blob/master/test-daylight): Test daytime.
 * [test-inet](https://github.com/D630/bin/blob/master/test-inet): Check inet connection.
 * [test-tty](https://github.com/D630/bin/blob/master/test-tty): Test if tty is available.
