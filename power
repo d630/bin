@@ -2,9 +2,10 @@
 #
 # Notify, if power is (almost) gone.
 
-test-bat > /dev/null || {
-	loggi 3 .device.error 'Power is very low. Go and charge!';
+c=$(test-bat) ||
 	exit 1;
-};
+
+test "$c" -le 25 &&
+	loggi 3 .device.error "Power is very low, ${c}%. Go and connect charger!";
 
 # vim: set ts=2 sw=2 tw=0 noet :

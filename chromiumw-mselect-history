@@ -6,7 +6,7 @@
 cols=$(($(tput cols) / 3));
 sep={{::}};
 
-cp -f -- "${XDG_RUNTIME_DIR:?}/"chromiumw/Default/History "${TMPDIR:?}/"h.chromium;
+cp -f -- "${TMPDIR:?}/"chromiumw/Default/History "${TMPDIR:?}/"h.chromium;
 
 __sqlite () {
     sqlite3 -separator "$sep" "$TMPDIR/"h.chromium "

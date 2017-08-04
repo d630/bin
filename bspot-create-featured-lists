@@ -16,6 +16,7 @@ declare -A Features=(
     [key]=1AQLPDXxdK1KQ31Bvdpc3g
     [liveness]=31FjqV4SOYfEyYn1qphrKJ
     [loudness]=390AjCYjLGFHD50cDFjmxo
+    [mode]=5s6CqTSZrAcWPtHlaemOXS
     [speechiness]=6Onff4ga9prvw0SQP1jSDK
     [tempo]=3uZ6JqwEDpgZH088NhvrYo
     [time_signature]=4kOLmgDP3hVv0Lf4FHovpq

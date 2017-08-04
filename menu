@@ -5,7 +5,7 @@
 menu=${1:?} \
 menu_prompt=$2;
 
-fn="-xos4-terminus-medium-r-normal-*-16-*-*-*-*-*-iso10646-*";
+fn="Terminus:size=11";
 
 color () {
     if
@@ -35,9 +35,7 @@ case $menu in
             -l 10 \
             -nb "$nb" \
             -nf "$nf" \
-            -p "${menu_prompt:->}" \
-            -sb "$sb" \
-            -sf "$sf";;
+            -p "${menu_prompt:->}";;
     (dmenu2)
         exec dmenu2 -b -i \
             -class dmenu2 \

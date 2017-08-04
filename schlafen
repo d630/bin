@@ -2,8 +2,8 @@
 #
 # My suspend wrapper.
 
-sudo rtcwake -m mem -t "$(date -d year +%s)";
-#sudo systemctl suspend
+# sudo rtcwake -m mem -t "$(date -d year +%s)";
+sudo systemctl suspend
 
 sleep 5;
 

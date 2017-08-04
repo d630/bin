@@ -2,7 +2,7 @@
 #
 # Wrapper: firefox
 
-r=${XDG_RUNTIME_DIR:?}/firefoxw;
+r=${TMPDIR:?}/firefoxw;
 
 test -r "$r" -a -n "$force_new" && {
     t=$(mktemp -d);

@@ -19,9 +19,10 @@ case $class in
 (XCalc) echo state=floating\ layer=normal;;
 (Xmessage) echo state=floating\ layer=normal;;
 ([cC]hromium|Chromium-browser) echo desktop=^2;;
+([sS]urf) echo desktop=^2;;
 (libreoffice*|LibreOffice*) echo state=tiled\ layer=normal;;
 (mpv) echo state=floating\ layer=normal;;
-(stj[12]) echo state=floating\ layer=above\ border=on\ sticky=on;;
+(stj1) echo state=floating\ layer=above\ sticky=on;;
 (weechat) echo desktop=^3;;
 ('')
     case $(ps -p "$(xdo pid $id)" -o comm= 2>/dev/null) in

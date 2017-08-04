@@ -8,11 +8,9 @@ dz () {
     test -e "$XDG_RUNTIME_DIR/"DAYLIGHT &&
         shift 1;
 
-    daemonize "$1" -i -c stj1 -t stj1 -g 176x33+1+0 -e "$SHELL" -c '
+    exec daemonize "$1" -c stj1 -n stj1 -t stj1 -i -g 289x48+1+1 -e "$SHELL" -c '
         printf "%x\n" "$WINDOWID" > "${XDG_RUNTIME_DIR:?}/stj1";
         exec "$0";';
-
-    exit 0;
 };
 
 read -r id < "${XDG_RUNTIME_DIR:?}/"stj1 2>/dev/null;
@@ -24,10 +22,10 @@ if
     xprop -root -notype -f _NET_CLIENT_LIST 32x \$0+, _NET_CLIENT_LIST |
     grep -F -q "0x$id,";
 then
-    xdotool windowunmap "0x$id";
+    exec xdotool windowunmap "0x$id";
 else
     #xdotool mousemove --sync 0 0
-    xdotool windowmap --sync "0x$id";
+    exec xdotool windowmap --sync "0x$id";
     #wmctrl -i -a "0x${id}"
     #xdotool windowraise "0x${id}"
     #xdotool windowfocus --sync "0x${id}"

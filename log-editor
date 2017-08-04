@@ -18,8 +18,8 @@ cat > "$f" <<-TEMPLATE
 
 	# role: me
 	# opposite: me
-	# contact:
-	# location:
+	# contact: face-to-face
+	# location: somewhere
 
 	entry: ${d}_${t}
 	# due: ${d}_${t}

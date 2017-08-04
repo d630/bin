@@ -6,14 +6,17 @@
 (($#)) &&
     exec sudo "$(type -P "$BASH_SOURCE")";
 
+systemctl stop dnsmasq;
+
 typeset -x \
+    LC_ALL=C \
     hblock_cachedir=${TMPDIR:-/tmp}/hostfiles \
-    hblock_tmpdir=${TMPDIR:-/tmp}/hblock;
+    hblock_tmpdir=${TMPDIR:-/tmp}/hblock \
+    hblock_white=/home/user1/etc/hblock/white.txt;
 
 #hostfile_regular=/etc/hosts.regular
 hblock_hlist=/home/user1/etc/hblock/hlist.txt \
 hblock_black=/home/user1/etc/hblock/black.txt \
-hblock_white=/home/user1/etc/hblock/white.txt \
 hostfile_block=/etc/hosts.block;
 
 function __hblock_do {
@@ -38,15 +41,17 @@ function __hblock_do {
         /^(0.0.0.0|127.0.0.1)/ {
             s/^127.0.0.1/0.0.0.0/;
             s/[[:space:]][[:space:]]*/ /g;
-            s/[[:space:]]$//;
+            s/[[:space:]]#.*$//;
+            s/[[:space:]]*$//;
             s/^$//;
-            s/^#.*//;
             p
-        }' > "$hblock_tmpdir/$outfile.clean";
+        }
+    ' |
+    grep -E -v -f "$hblock_white" > "$hblock_tmpdir/$outfile.clean";
 };
 
 typeset -xf __hblock_do;
-trap "rm -fr -- "$hblock_tmpdir"; exit 0" INT TERM QUIT EXIT;
+# trap "rm -fr -- "$hblock_tmpdir"; exit 0" INT TERM QUIT EXIT;
 mkdir -p -- "$hblock_cachedir" "$hblock_tmpdir";
 
 ## Do the thing.
@@ -59,8 +64,9 @@ xargs \
 cat -- "$hblock_black" <(
     echo;
     echo;
-    sort -u "$hblock_tmpdir/"*.clean |
-    grep -E -v -f "$hblock_white";
+    #sort -u "$hblock_tmpdir/"*.clean;
+    sort "$hblock_tmpdir/"*.clean |
+    uniq;
 ) > "$hostfile_block";
 
 chmod 644 "$hostfile_block" /etc/resolv-dnsmasq.conf;

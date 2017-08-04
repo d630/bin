@@ -9,7 +9,7 @@ then
     printf 'Must be run as root\n' 1>&2;
     exit 1;
 else
-    iface=${IFACE:-wlan0};
+    iface=${IFACE:-wlp3s0};
 fi;
 
 case $1 in

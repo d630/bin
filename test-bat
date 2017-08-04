@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 #
-# Test if battery capacity is high.
+# Print battery capacity.
 
 shopt -s nullglob;
 
-b=(/sys/class/power_supply/BAT*);
-[[ ${#b} -eq 0 || $(< $b/status) != Discharging ]] &&
-		exit 0;
-
-(((c=$(< $b/capacity)), c > 25)) &&
-		echo "$c";
+b=(/sys/class/power_supply/CMB*);
+[[ ${#b} -ne 0 && $(< $b/status) == Discharging ]] &&
+	echo $(< $b/capacity);
 
 # vim: set ts=2 sw=2 tw=0 noet :

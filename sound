@@ -24,10 +24,10 @@ esac;
 case $summary in
     (.device.added)
         f=mac-sound-pack-Device_Connect.wav;;
-    (.device*)
-        $urgency && f=mac-sound-pack-Device_Failed.wav;;
     (.device.removed)
         f=mac-sound-pack-Device_Disconnect.wav;;
+    (.device*)
+        $urgency && f=mac-sound-pack-Device_Failed.wav;;
     (.email.arrived)
         f=mac-sound-pack-new-mail.wav;;
     (.email.bounced)

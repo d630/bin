@@ -54,6 +54,7 @@ then
         [x.1]=Solarized-Dark.xcolor
         [x.2]=\#002B36
         [x.3]=debian-minimal-dark.png
+        # [x.3]=berlin-dist-dark.png
         [bspwm.1]=\#222222
         [dunst.1]=dark
     );
@@ -67,6 +68,7 @@ else
         [x.1]=Solarized-Light.xcolor
         [x.2]=\#FDF6E3
         [x.3]=debian-minimal-light.png
+        # [x.3]=berlin-dist-light.png
         [bspwm.1]=\#E0E0E0
         [dunst.1]=light
     );

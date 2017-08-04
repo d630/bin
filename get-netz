@@ -12,7 +12,7 @@ else
     printf 'WAN-IP: offline\n';
 fi;
 
-ip a show wlan0 |
+ip a show ${IFACE:-wlp3s0} |
 mawk '/inet/ { print $0 }';
 
 echo;
