@@ -186,8 +186,8 @@ INSERT INTO `meta` (key,value) VALUES ('mmap_status','-1'),
  ('last_compatible_version','71'),
  ('version','71'),
  ('Builtin Keyword Version','97');
-CREATE TABLE "masked_credit_cards" (id VARCHAR,status VARCHAR,name_on_card VARCHAR,type VARCHAR,last_four VARCHAR,exp_month INTEGER DEFAULT 0,exp_year INTEGER DEFAULT 0);
-CREATE TABLE "keywords" (id INTEGER PRIMARY KEY,short_name VARCHAR NOT NULL,keyword VARCHAR NOT NULL,favicon_url VARCHAR NOT NULL,url VARCHAR NOT NULL,safe_for_autoreplace INTEGER,originating_url VARCHAR,date_created INTEGER DEFAULT 0,usage_count INTEGER DEFAULT 0,input_encodings VARCHAR,suggest_url VARCHAR,prepopulate_id INTEGER DEFAULT 0,created_by_policy INTEGER DEFAULT 0,instant_url VARCHAR,last_modified INTEGER DEFAULT 0,sync_guid VARCHAR,alternate_urls VARCHAR,search_terms_replacement_key VARCHAR,image_url VARCHAR,search_url_post_params VARCHAR,suggest_url_post_params VARCHAR,instant_url_post_params VARCHAR,image_url_post_params VARCHAR,new_tab_url VARCHAR, last_visited INTEGER DEFAULT 0);
+CREATE TABLE masked_credit_cards (id VARCHAR,status VARCHAR,name_on_card VARCHAR,network VARCHAR,last_four VARCHAR,exp_month INTEGER DEFAULT 0,exp_year INTEGER DEFAULT 0);
+CREATE TABLE keywords (id INTEGER PRIMARY KEY,short_name VARCHAR NOT NULL,keyword VARCHAR NOT NULL,favicon_url VARCHAR NOT NULL,url VARCHAR NOT NULL,safe_for_autoreplace INTEGER,originating_url VARCHAR,date_created INTEGER DEFAULT 0,usage_count INTEGER DEFAULT 0,input_encodings VARCHAR,suggest_url VARCHAR,prepopulate_id INTEGER DEFAULT 0,created_by_policy INTEGER DEFAULT 0,instant_url VARCHAR,last_modified INTEGER DEFAULT 0,sync_guid VARCHAR,alternate_urls VARCHAR,search_terms_replacement_key VARCHAR,image_url VARCHAR,search_url_post_params VARCHAR,suggest_url_post_params VARCHAR,instant_url_post_params VARCHAR,image_url_post_params VARCHAR,new_tab_url VARCHAR, last_visited INTEGER DEFAULT 0);
 INSERT INTO `keywords` (id,short_name,keyword,favicon_url,url,safe_for_autoreplace,originating_url,date_created,usage_count,input_encodings,suggest_url,prepopulate_id,created_by_policy,instant_url,last_modified,sync_guid,alternate_urls,search_terms_replacement_key,image_url,search_url_post_params,suggest_url_post_params,instant_url_post_params,image_url_post_params,new_tab_url,last_visited) VALUES (2,'DuckDuckGo','dd','','https://duckduckgo.com/?q={searchTerms}&atb=v50-6_b',0,'',1486391745,0,'UTF-8','',0,0,'',1486391745,'3bf7b295-90d8-4a87-acce-8379f7da45f6','','','','','','','','',0),
  (3,'debian => code','code','','http://codesearch.debian.net/search?q={searchTerms}',0,'',1493274260,0,'','',0,0,'',1493274260,'fc62f54e-769d-4173-87e6-084183d06265','','','','','','','','',0),
  (4,'duden','du','','http://www.duden.de/suchen/dudenonline?s={searchTerms}&scope=all',0,'',1493274285,0,'','',0,0,'',1493274285,'08f765ef-4aa0-43c4-b641-00be5ad78bc4','','','','','','','','',0),
@@ -240,7 +240,9 @@ exec chromium \
     --enable-strict-mixed-content-checking \
     --enable-strict-powerful-feature-restrictions \
     --enable-tab-audio-muting \
+    --enable-webkit-text-subpixel-positioning \
     --error-console \
+    --force-device-scale-factor=2 \
     --hide-scrollbars \
     --log-net-log \
     --no-first-run \

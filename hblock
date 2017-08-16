@@ -51,7 +51,7 @@ function __hblock_do {
 };
 
 typeset -xf __hblock_do;
-# trap "rm -fr -- "$hblock_tmpdir"; exit 0" INT TERM QUIT EXIT;
+trap "rm -fr -- "$hblock_tmpdir"; exit 0" INT TERM QUIT EXIT;
 mkdir -p -- "$hblock_cachedir" "$hblock_tmpdir";
 
 ## Do the thing.
