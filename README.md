@@ -63,7 +63,7 @@ List:
 * [habit](https://github.com/D630/bin/blob/master/habit): Wrapper: Use taskwarrior in my 'habit' context.
 * [hblock](https://github.com/D630/bin/blob/master/hblock): Simple ad- and malware-blocking-list builder for dnsmasq.
 * [highlighter](https://github.com/D630/bin/blob/master/highlighter): Wrapper: Default highlighting tool.
-* [iface](https://github.com/D630/bin/blob/master/iface): Configure my Wlan.
+* [iface](https://github.com/D630/bin/blob/master/iface): Configure my network devices.
 * [image-viewer](https://github.com/D630/bin/blob/master/image-viewer): Default image viewer (tui).
 * [imapfilter-localhost-action](https://github.com/D630/bin/blob/master/imapfilter-localhost-action): Wrapper: imapfilter with config localhost-action.lua.
 * [imapfilter-localhost-unseen](https://github.com/D630/bin/blob/master/imapfilter-localhost-unseen): Wrapper: imapfilter with config localhost-unseen.lua.
@@ -131,6 +131,7 @@ List:
 * [skel-home](https://github.com/D630/bin/blob/master/skel-home): Prepare home directory.
 * [sound](https://github.com/D630/bin/blob/master/sound): Play specific sounds (meant to be used with dunst and rsyslog).
 * [spotify-mpris](https://github.com/D630/bin/blob/master/spotify-mpris): Control spotify via mpris player interface.
+* [spotifyw](https://github.com/D630/bin/blob/master/spotifyw): Wrap up spotify.
 * [ssudo](https://github.com/D630/bin/blob/master/ssudo): Using sudo with dmenu2 via SUDO_ASKPASS.
 * [startx.sh](https://github.com/D630/bin/blob/master/startx.sh): My mini wrapper for xinit.
 * [stat-1](https://github.com/D630/bin/blob/master/stat-1): Stat a file and build an associative array.

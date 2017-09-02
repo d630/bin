@@ -1,42 +1,66 @@
 #!/usr/bin/env bash
 #
-# Configure my Wlan.
+# Configure my network devices.
 # Source: https://github.com/vain/bin-pub/blob/master/cwm
 
-if
-    ((UID));
-then
+((UID)) && {
     printf 'Must be run as root\n' 1>&2;
     exit 1;
-else
+};
+
+e () {
+    iface=${IFACE:-enp0s25};
+
+    case $1 in
+        (-c)
+            ip link set dev "$iface" up;
+            sleep 1;
+            dhclient "$iface";;
+        (-d)
+            dhclient -x "$iface";
+            ip link set dev "$iface" down;;
+        (*)
+            printf ?\\n 1>&2;;
+    esac;
+};
+
+w () {
     iface=${IFACE:-wlp3s0};
-fi;
+
+    case $1 in
+        (-wpa)
+            : "${2:?}" "${3:?}";
+            ip link set dev "$iface" up;
+            sleep 1;
+            wpa_supplicant -B -i "$iface" -c <(wpa_passphrase "$2" "$3") &&
+                dhclient "$iface";;
+        (-c)
+            ip link set dev "$iface" up;
+            sleep 1;
+            wpa_supplicant -B \
+                    -c /etc/wpa_supplicant/wpa_supplicant.conf -i "$iface" &&
+                dhclient "$iface";;
+        (-s)
+            ip link set dev "$iface" up;
+            sleep 1;
+            iw dev "$iface" scan |
+            grep 'SSID\|freq\|signal\|capability' |
+            tac;;
+        (-d)
+            dhclient -x "$iface" &&
+                wpa_cli -i "$iface" terminate;
+            ip link set dev "$iface" down;;
+        (*)
+            printf ?\\n 1>&2;;
+    esac;
+};
 
 case $1 in
-    (-wpa)
-        : "${2:?}" "${3:?}";
-        ip link set dev "$iface" up;
-        sleep 1;
-        wpa_supplicant -B -i "$iface" -c <(wpa_passphrase "$2" "$3") &&
-            dhclient "$iface";;
-    (-c)
-        ip link set dev "$iface" up;
-        sleep 1;
-        wpa_supplicant -B \
-                -c /etc/wpa_supplicant/wpa_supplicant.conf -i "$iface" &&
-            dhclient "$iface";;
-    (-s)
-        ip link set dev "$iface" up;
-        sleep 1;
-        iw dev "$iface" scan |
-        grep 'SSID\|freq\|signal\|capability' |
-        tac;;
-    (-d)
-        dhclient -x "$iface" &&
-            wpa_cli -i "$iface" terminate;
-        ip link set dev "$iface" down;;
+    ([ew])
+        "$1" "${@:2}";;
     (*)
-        printf ?\\n 1>&2;;
+        printf 'unknown device\n' 1>&2;
+        exit 1;;
 esac;
 
 # vim: set ts=4 sw=4 tw=0 et :

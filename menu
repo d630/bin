@@ -5,7 +5,7 @@
 menu=${1:?} \
 menu_prompt=$2;
 
-fn="Monospace:size=9";
+fn="monospace:size=9";
 
 color () {
     if

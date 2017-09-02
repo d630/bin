@@ -8,7 +8,8 @@ dz () {
     test -e "$XDG_RUNTIME_DIR/"DAYLIGHT &&
         shift 1;
 
-    exec daemonize "$1" -c stj1 -n stj1 -t stj1 -i -g 227x48+1+1 -e "$SHELL" -c '
+    exec daemonize "$1" -c stj1 -n stj1 -t stj1 -i -g 0x0+1+1 -e "$SHELL" -c '
+        xdotool windowsize "$WINDOWID" 99% 66%;
         printf "%x\n" "$WINDOWID" > "${XDG_RUNTIME_DIR:?}/stj1";
         exec "$0";';
 };

@@ -242,7 +242,7 @@ exec chromium \
     --enable-tab-audio-muting \
     --enable-webkit-text-subpixel-positioning \
     --error-console \
-    --force-device-scale-factor=2 \
+    --force-device-scale-factor="${GDK_SCALE:-1}" \
     --hide-scrollbars \
     --log-net-log \
     --no-first-run \
