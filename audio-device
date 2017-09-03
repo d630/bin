@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# Configure/Switch my audio devices.
+
+case $1 in
+	(PCH)
+		c=PCH;
+		d=0;;
+	(HDMI)
+		c=HDMI;
+		d=3;;
+	(*)
+		printf '?\n';
+		exit 1;;
+esac;
+
+
+sudo ed -s /etc/asound.conf <<S
+/^c = /s/=.*$/= $c/
+/^d = /s/=.*$/= $d/
+w
+S
+
+# vim: set ts=4 sw=4 tw=0 noet :

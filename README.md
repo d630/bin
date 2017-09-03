@@ -2,6 +2,7 @@ Short scripts, which do not belong to my dotfiles. Unless otherwise stated,
 these files are in the public domain.
 
 List:
+* [audio-device](https://github.com/D630/bin/blob/master/audio-device): Configure/Switch my audio devices.
 * [audio-player](https://github.com/D630/bin/blob/master/audio-player): Default audio player (cli).
 * [backup-meta-apt](https://github.com/D630/bin/blob/master/backup-meta-apt): Backup infos about installed packages on Debian.
 * [backup-meta-bin](https://github.com/D630/bin/blob/master/backup-meta-bin): Backup installed executables.
@@ -63,7 +64,6 @@ List:
 * [habit](https://github.com/D630/bin/blob/master/habit): Wrapper: Use taskwarrior in my 'habit' context.
 * [hblock](https://github.com/D630/bin/blob/master/hblock): Simple ad- and malware-blocking-list builder for dnsmasq.
 * [highlighter](https://github.com/D630/bin/blob/master/highlighter): Wrapper: Default highlighting tool.
-* [iface](https://github.com/D630/bin/blob/master/iface): Configure my network devices.
 * [image-viewer](https://github.com/D630/bin/blob/master/image-viewer): Default image viewer (tui).
 * [imapfilter-localhost-action](https://github.com/D630/bin/blob/master/imapfilter-localhost-action): Wrapper: imapfilter with config localhost-action.lua.
 * [imapfilter-localhost-unseen](https://github.com/D630/bin/blob/master/imapfilter-localhost-unseen): Wrapper: imapfilter with config localhost-unseen.lua.
@@ -95,6 +95,7 @@ List:
 * [mutt--posteo](https://github.com/D630/bin/blob/master/mutt--posteo): Wrapper: mutt posteo.
 * [mutt--spool](https://github.com/D630/bin/blob/master/mutt--spool): Wrapper: mutt spool.
 * [mutt-save-attachments](https://github.com/D630/bin/blob/master/mutt-save-attachments): Save attachements in Mutt.
+* [network-device](https://github.com/D630/bin/blob/master/network-device): Configure my network devices.
 * [newsbeuter2taskum](https://github.com/D630/bin/blob/master/newsbeuter2taskum): Add a bookmark to taswarrior-um in newsbeuter.
 * [noti](https://github.com/D630/bin/blob/master/noti): Send notifications (meant to be used with dunst and rsyslog).
 * [obnam-weekly](https://github.com/D630/bin/blob/master/obnam-weekly): Weekly backup with obnam.
