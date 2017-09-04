@@ -15,7 +15,6 @@ rm -frv -- \
     "$HOME/"cache/* \
     "$XDG_CONFIG_HOME/"freshwrapper-data \
     "$XDG_DATA_HOME/"webkit \
-    "${XDG_CACHE_HOME:?}/"* \
     "${XDG_CONFIG_HOME:?}/"cef_user_data \
     "${XDG_DATA_HOME:?}/"gegl-0.3;
 
