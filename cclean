@@ -4,7 +4,6 @@
 
 rm -frv -- \
     "$HOME/".adobe \
-    "$HOME/".cache \
     "$HOME/".gconf \
     "$HOME/".git-credential-cache \
     "$HOME/".gnome2 \
@@ -12,7 +11,6 @@ rm -frv -- \
     "$HOME/".icedteaplugin \
     "$HOME/".macromedia \
     "$HOME/".thumbnails \
-    "$HOME/"cache/* \
     "$XDG_CONFIG_HOME/"freshwrapper-data \
     "$XDG_DATA_HOME/"webkit \
     "${XDG_CONFIG_HOME:?}/"cef_user_data \

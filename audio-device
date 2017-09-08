@@ -15,7 +15,7 @@ case $1 in
 esac;
 
 
-sudo ed -s "$HOME/".asoundrc <<S
+ed -s "$HOME/".asoundrc <<S
 /^c = /s/=.*$/= $c/
 /^d = /s/=.*$/= $d/
 w

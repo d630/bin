@@ -55,7 +55,7 @@ sort | {
     while
         IFS=: read -r p c;
     do
-        printf '* [%s](%s/blob/master/%s): %s\n' "${p#./}" "${P}" "${p#./}" "${c#\# }";
+        printf '* [%s](%s/blob/master/%s): %s\n' "${p#./}" "$P" "${p#./}" "${c#\# }";
     done;
 } > ./README.md;
 
