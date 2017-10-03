@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Wrapper: mutt posteo.archive.
+
+LOCAL_CONFIG=posteo.archive exec mutt -n "$@";
+
+# vim: set ts=4 sw=4 tw=0 et :

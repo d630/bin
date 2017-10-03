@@ -66,6 +66,7 @@ List:
 * [highlighter](https://github.com/D630/bin/blob/master/highlighter): Wrapper: Default highlighting tool.
 * [image-viewer](https://github.com/D630/bin/blob/master/image-viewer): Default image viewer (tui).
 * [imapfilter-localhost-action](https://github.com/D630/bin/blob/master/imapfilter-localhost-action): Wrapper: imapfilter with config localhost-action.lua.
+* [imapfilter-localhost-delete](https://github.com/D630/bin/blob/master/imapfilter-localhost-delete): Wrapper: imapfilter with config localhost-delete.lua.
 * [imapfilter-localhost-unseen](https://github.com/D630/bin/blob/master/imapfilter-localhost-unseen): Wrapper: imapfilter with config localhost-unseen.lua.
 * [iplog](https://github.com/D630/bin/blob/master/iplog): Daily ip logging.
 * [issue-editor](https://github.com/D630/bin/blob/master/issue-editor): Add a task into Taskwarrior ('issue' context) via vim (yaml).
@@ -90,8 +91,12 @@ List:
 * [menu](https://github.com/D630/bin/blob/master/menu): A wrapper script for selecting menu driven programs.
 * [mime-build-types](https://github.com/D630/bin/blob/master/mime-build-types): Build a mime.type file with ERE globs from /usr/share/mime.
 * [msmtpqw](https://github.com/D630/bin/blob/master/msmtpqw): Replacement for msmtpq.
+* [mutt--d630-archive](https://github.com/D630/bin/blob/master/mutt--d630-archive): Wrapper: mutt d630.archive.
 * [mutt--d630](https://github.com/D630/bin/blob/master/mutt--d630): Wrapper: mutt d630.
+* [mutt--hotmail-archive](https://github.com/D630/bin/blob/master/mutt--hotmail-archive): Wrapper: mutt hotmail.archive.
 * [mutt--hotmail](https://github.com/D630/bin/blob/master/mutt--hotmail): Wrapper: mutt hotmail.
+* [mutt--posteo-archive](https://github.com/D630/bin/blob/master/mutt--posteo-archive): Wrapper: mutt posteo.archive.
+* [mutt--posteo1-archive](https://github.com/D630/bin/blob/master/mutt--posteo1-archive): Wrapper: mutt posteo1.archive.
 * [mutt--posteo1](https://github.com/D630/bin/blob/master/mutt--posteo1): Wrapper: mutt posteo1.
 * [mutt--posteo](https://github.com/D630/bin/blob/master/mutt--posteo): Wrapper: mutt posteo.
 * [mutt--spool](https://github.com/D630/bin/blob/master/mutt--spool): Wrapper: mutt spool.
