@@ -76,6 +76,7 @@ List:
 * [log](https://github.com/D630/bin/blob/master/log): Wrapper: Use taskwarrior in my 'log' context.
 * [loggi](https://github.com/D630/bin/blob/master/loggi): Wrap up logger for local scripting.
 * [lsort](https://github.com/D630/bin/blob/master/lsort): Sort input by lenght.
+* [mail-archive](https://github.com/D630/bin/blob/master/mail-archive): Archive mails (dovecot -> maildir).
 * [mail-deliver](https://github.com/D630/bin/blob/master/mail-deliver): Deliver mails (msmtp).
 * [mail-get](https://github.com/D630/bin/blob/master/mail-get): Get mail and give notification + sound.
 * [mail-hook-post](https://github.com/D630/bin/blob/master/mail-hook-post): Run command after mail-get.

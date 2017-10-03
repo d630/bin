@@ -39,8 +39,7 @@ function Clipbuffer::Kill {
         rm -f -- "$xsels/"?*.pid 2>/dev/null;
     fi;
 
-    xsel -l /dev/null --clear --clipboard;
-    xsel -l /dev/null --clear --primary;
+    xorg-selection-clear;
 };
 
 function Clipbuffer::Clip {

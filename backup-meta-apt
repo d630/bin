@@ -17,7 +17,7 @@ sudo sh -c '
     apt-mark showmanual > ./manual.txt;
     # cp -v /etc/apt/trusted.gpg ./trusted.gpg;
     apt-clone clone .;
-'
+';
 
 # dpkg --get-selections |
 # mawk '!/deinstall|purge|hold/ { print $1 }' > ./packages.txt;
