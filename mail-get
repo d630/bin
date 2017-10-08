@@ -11,7 +11,7 @@ flock -n 9 || {
 mail-retrieve ||
     exit $?;
 
-mapfile -t reply < <(imapfilter-localhost-unseen);
+mapfile -t reply < <(mail-inbox);
 
 ((
     ${reply[0]##*:}

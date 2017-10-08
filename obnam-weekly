@@ -2,10 +2,15 @@
 #
 # Weekly backup with obnam.
 
-exec sudo HOME=$HOME obnam_conf=$HOME/.obnam.conf sh -c '
+exec sudo \
+    HOME=$HOME \
+    XDG_CACHE_HOME=$XDG_CACHE_HOME \
+    obnam_conf=$HOME/.obnam.conf \
+    sh -c '
     obnam backup --config"=$obnam_conf" --lru-size=8192 --upload-queue-size=8192 \
         --exclude=/home/latch/tmp \
         --exclude=/home/latch/var/mirror \
+        --exclude=$XDG_CACHE_HOME \
         /etc/ \
         /home/ \
         /root/ \
@@ -19,6 +24,6 @@ exec sudo HOME=$HOME obnam_conf=$HOME/.obnam.conf sh -c '
     obnam force-lock --config"=$obnam_conf";
 
     obnam forget --config"=$obnam_conf" --keep=2w;
-'
+';
 
 # vim: set ts=4 sw=4 tw=0 et :
