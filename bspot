@@ -7,6 +7,19 @@
 
 # -- web api.
 
+function spotify.albums.getSeveralAlbums {
+    # OAuth Scope: null
+    # Params: access_token
+
+    [[ -n $2 ]] ||
+        return 1;
+
+    curl \
+        -s \
+        -X GET "https://api.spotify.com/v1/albums/?ids=${@:2}" \
+        -H "Authorization: Bearer ${1:?}";
+};
+
 function spotify.playlist.addTracks {
     # OAuth Scope: playlist-modify-public, playlist-modify-private
     # Params: user_id playlist_id access_token spotify_uri ...
@@ -154,6 +167,62 @@ function getLists {
     gawk '$0 == "exit" { exit }; { print $0; };'
 };
 
+function getAlbums {
+    declare -i offset=-100;
+
+    jq -e -r --unbuffered '
+        if (.items | length) > 0
+        then .items[] | [.track.album.uri, .track.uri] | @tsv
+        else "exit"
+        end
+    ' < <(
+        while
+            'spotify.playlist.getTracks' \
+                "${1:?}" \
+                "${2:?}" \
+                "${3:?}" \
+                "$((offset+=100))";
+        do
+            :;
+        done;
+    ) |
+    gawk '$0 == "exit" { exit }; { print $0; };'
+};
+
+function getAlbumsObjects {
+    declare ato=${1:?};
+    declare -a uris=();
+
+    shift 1
+
+    if
+        [[ -p /dev/stdin || -f /dev/stdin ]];
+    then
+        mapfile -t uris;
+    else
+        (($#)) &&
+            mapfile -t uris < <(cat "$@");
+    fi;
+
+    ((${#uris[@]})) ||
+        return 1;
+
+    declare -i \
+        int=${#uris[@]}/20 \
+        mod=${#uris[@]}%20 \
+        i= \
+        x=0 \
+        y=20;
+
+    IFS=,;
+    for ((i=int; i > 0; i--, x+=20)); do
+        spotify.albums.getSeveralAlbums "$ato" "${uris[*]:x:y}";
+    done;
+
+    ((mod)) &&
+        spotify.albums.getSeveralAlbums "$ato" "${uris[*]: -mod}";
+};
+
 function getTracks {
     declare -i offset=-100;
 
@@ -221,6 +290,10 @@ case ${1:?} in
         spotify.playlist.clear "${@:2}";;
     (getLists)
         getLists "${@:2}";;
+    (getAlbums)
+        getAlbums "${@:2}";;
+    (getAlbumsObjects)
+        getAlbumsObjects "${@:2}";;
     (getTracks)
         getTracks "${@:2}";;
     (getTracksFeatures)
