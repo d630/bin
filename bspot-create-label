@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Spotify: Take pub list1 and sort it by release_date.
+# Spotify: Take pub list1 and sort it by label.
 
 user=${1:?};
 list1=${2:?};
@@ -15,9 +15,9 @@ paste /tmp/bspot_albums.txt <(
     cut -f 1 /tmp/bspot_albums.txt |
     cut -d : -f 3 |
     bspot getAlbumsObjects "$token" |
-    jq -e -r '.albums[].release_date';
+    jq -e -r '.albums[].label | [.] | @sh';
 ) |
-LC_ALL=C sort -k 3d,3d -k 1d,1d -k 2d,2d |
+LC_ALL=C sort -k 3df,3df -k 1d,1d -k 2d,2d |
 cut -f 2 |
 bspot addTracks "$user" "$list2" "$token";
 
