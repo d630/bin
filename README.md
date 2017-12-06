@@ -13,6 +13,7 @@ List:
 * [bash-mselect-freq](https://github.com/D630/bin/blob/master/bash-mselect-freq): Print frequency of the bash history and run it from dmenu.
 * [bash-print-freq](https://github.com/D630/bin/blob/master/bash-print-freq): Print frequency of the bash history.
 * [bash-toggle-options.bash](https://github.com/D630/bin/blob/master/bash-toggle-options.bash): Toggle bash options via fzf.
+* [borg-weekly](https://github.com/D630/bin/blob/master/borg-weekly): Weekly backup with borg.
 * [bspot-create-featured-lists](https://github.com/D630/bin/blob/master/bspot-create-featured-lists): Spotify: Take pub list1 and create audio-featured public lists.
 * [bspot-create-label](https://github.com/D630/bin/blob/master/bspot-create-label): Spotify: Take pub list1 and sort it by label.
 * [bspot-create-release-date](https://github.com/D630/bin/blob/master/bspot-create-release-date): Spotify: Take pub list1 and sort it by release_date.

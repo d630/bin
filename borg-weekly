@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# Weekly backup with borg.
+
+exec sudo \
+    HOME=$HOME \
+    XDG_CACHE_HOME=$XDG_CACHE_HOME \
+    BORG_REPO=/media/user1/80e47b67-5efa-4325-a205-af0d5c4e1a38/linux/$(hostname)/borg/ \
+    BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes \
+    sh -c '
+        echo CREATING ...;
+        borg create --warning --progress --stats \
+            --exclude-caches \
+            --exclude-nodump \
+            --exclude-from /dev/stdin \
+            --comment auto \
+            --compression none \
+            ::{now:%Y-%m-%dT%H:%M:%S.%f} \
+            /etc/ \
+            /home/ \
+            /root/ \
+            /var/backups/ \
+            /var/lib/bitlbee \
+            /var/mail/ \
+            /var/sieve/ \
+            /var/vmail/ \
+            /var/www/ <<EXCLUDE
+/home/latch/tmp
+/home/latch/var/mirror
+$XDG_CACHE_HOME
+EXCLUDE
+
+        test $? -eq 0 ||
+            exit;
+
+        # echo CHECKING ...;
+        # borg check --critical --progress --repository-only :: ||
+        #     exit $?;
+
+        echo PRUNING ...;
+        borg prune --warning --progress --stats --list --keep-within=6w ::;
+';
+
+# vim: set ts=4 sw=4 tw=0 et :
