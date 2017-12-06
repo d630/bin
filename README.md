@@ -107,7 +107,6 @@ List:
 * [network-device](https://github.com/D630/bin/blob/master/network-device): Configure my network devices.
 * [newsbeuter2taskum](https://github.com/D630/bin/blob/master/newsbeuter2taskum): Add a bookmark to taswarrior-um in newsbeuter.
 * [noti](https://github.com/D630/bin/blob/master/noti): Send notifications (meant to be used with dunst and rsyslog).
-* [obnam-weekly](https://github.com/D630/bin/blob/master/obnam-weekly): Weekly backup with obnam.
 * [ocean](https://github.com/D630/bin/blob/master/ocean): Simulate ocean sound.
 * [open](https://github.com/D630/bin/blob/master/open): Open files or strings in preferred applications.
 * [pass-copy](https://github.com/D630/bin/blob/master/pass-copy): Copy password from pass.
