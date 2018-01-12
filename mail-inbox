@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env mksh
 #
 # Looking for new/unseen mails (imapfilter).
 
-exec imapfilter-localhost-unseen;
+imapfilter-localhost-unseen |
+column -t -s $'\t';
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :
