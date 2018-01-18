@@ -15,4 +15,4 @@ then
         sudo gzip -S ".$(date +%Y-%m-%d_%H:%M:%S).gz" "/var/log/passivedns-archive/passivedns.log"
 fi
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

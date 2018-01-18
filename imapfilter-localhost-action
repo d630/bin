@@ -4,4 +4,4 @@
 
 exec imapfilter -c "$HOME/".imapfilter/localhost-action.lua;
 
-# vim: set ts=2 sw=2 tw=0 noet :
+# vim: set ft=sh :

@@ -33,4 +33,4 @@ esac;
 test -f "$XDG_RUNTIME_DIR/".dunst_use_$urgency &&
     notify-send -u $urgency --category"=$category" "$category" "$body";
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

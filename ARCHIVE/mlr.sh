@@ -30,4 +30,4 @@ do
         fi
 done < "${HOME}/local/var/lib/mlr/repos.txt"
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

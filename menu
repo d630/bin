@@ -59,4 +59,4 @@ case $menu in
         exec fzf -x -i +s --prompt="${menu_prompt:->} " --print-query;;
 esac;
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

@@ -5,4 +5,4 @@
 xprop -root -notype -f _NET_CLIENT_LIST 32x :\\n\$0+,\  _NET_CLIENT_LIST |
 tr -s ', ' '\n';
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

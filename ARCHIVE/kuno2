@@ -8,4 +8,4 @@ date=$(date --utc --date now +%s);
 mkdir -p -- "$store";
 ledit -x -h "${store}/${date}";
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

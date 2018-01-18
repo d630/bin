@@ -4,4 +4,4 @@
 
 daemonize.sh terminal.sh -e sh -c "xombrero-open-url-tab.sh; exec ${SHELL}"
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

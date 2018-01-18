@@ -21,4 +21,4 @@ LC_ALL=C sort -k 3df,3df -k 1d,1d -k 2d,2d |
 cut -f 2 |
 bspot addTracks "$user" "$list2" "$token";
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

@@ -15,4 +15,4 @@ IFS=:;
 whatis -w '*' $PATH /usr/bin/X11 2>&1 |
 sort -u > "$backup_dir/"whatis.txt;
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

@@ -5,4 +5,4 @@
 find . ! -type d -iname "*$2" |
 xargs grep -i "$1";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

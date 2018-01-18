@@ -4,4 +4,4 @@
 
 daemonize x-terminal -a -c weechat -t weechat -T weechat -e weechat;
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

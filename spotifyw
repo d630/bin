@@ -6,4 +6,4 @@ daemonize spotify \
     --experimental-network no-ipv6 \
     --force-device-scale-factor="${GDK_SCALE:-1}";
 
-# vim: set ts=8 sw=4 tw=0 et :
+# vim: set ft=sh :

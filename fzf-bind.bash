@@ -93,4 +93,4 @@ bind -x '"\C-xz": zcd';
 
 bind -x '"\C-xs": scd';
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

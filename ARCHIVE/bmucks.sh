@@ -107,4 +107,4 @@ trap "{ rm -f "${TMP}/${config[id]}" ; exit 255 ; }" INT TERM QUIT EXIT
 
 2>/dev/null __bmucks_parse_config "${config[file]}" || exit 79;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

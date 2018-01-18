@@ -93,4 +93,4 @@ PREF
 cp -fv /etc/apt/preferences /etc/apt/preferences.old;
 printf %s\\n "$preferences" > /etc/apt/preferences;
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

@@ -23,4 +23,4 @@ sed -i \
         -e 's/\/\/\//\//g' \
         "${XDG_CACHE_HOME}/openbox/xdg-menu.xml";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

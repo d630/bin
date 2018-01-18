@@ -15,4 +15,4 @@ exec dbus-send \
  --dest=org.mpris.MediaPlayer2.spotify \
  /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player".$1";
 
-# vim: set ts=2 sw=2 tw=0 noet :
+# vim: set ft=sh :

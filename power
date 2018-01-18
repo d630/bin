@@ -8,4 +8,4 @@ c=$(test-bat) ||
 test "$c" -le 25 &&
 	loggi 3 .device.error "Power is very low, ${c}%. Go and connect charger!";
 
-# vim: set ts=2 sw=2 tw=0 noet :
+# vim: set ft=sh :

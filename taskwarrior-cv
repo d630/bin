@@ -363,4 +363,4 @@ HEADER
     for i in "${!customs[@]}" ; do printf '%s=%s\n' "$i" "${customs[$i]}" ; done | sort;
 fi;
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

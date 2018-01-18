@@ -8,4 +8,4 @@ printf -v horiz '%*s\n%s' "${1:-$(tput cols)}" ''
 printf '%s' "${horiz// /-}"
 #eval printf %.0s- '{1..'"${1:-$(tput cols)}"\}; echo
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

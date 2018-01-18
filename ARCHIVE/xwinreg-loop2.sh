@@ -46,4 +46,4 @@ xprop -spy -root _NET_CLIENT_LIST \
         done 2>/dev/null
 }
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

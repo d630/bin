@@ -8,4 +8,4 @@ b=(/sys/class/power_supply/CMB*);
 [[ ${#b} -ne 0 && $(< $b/status) == Discharging ]] &&
 	printf '%d\n' $(< $b/capacity);
 
-# vim: set ts=2 sw=2 tw=0 noet :
+# vim: set ft=sh :

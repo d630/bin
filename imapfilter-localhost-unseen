@@ -6,4 +6,4 @@ exec imapfilter \
  -c "$HOME/".imapfilter/localhost-unseen.lua \
  -l "${XDG_VAR_HOME:?}/"log/imapfilter.log;
 
-# vim: set ts=2 sw=2 tw=0 noet :
+# vim: set ft=sh :

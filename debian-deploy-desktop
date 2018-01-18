@@ -121,7 +121,7 @@ C ()
                 atd.service \
                 avahi-daemon.service \
                 avahi-daemon.socket \
-                bluetooth.servicet \
+                bluetooth.service \
                 cups-browsed.service \
                 cups.path \
                 cups.service \
@@ -129,11 +129,10 @@ C ()
                 mpd.service \
                 mpd.socket \
                 rsync.service \
-                saned.socket;
-
-        update-rc.d bitlbee disable
-        update-rc.d minissdpd disable
-        update-rc.d polipo disable
+                saned.socket \
+                bitlbee.socket \
+                bitlbee.service \
+                minissdpd.service;
 
         {
                 read ; read
@@ -301,7 +300,7 @@ A ()
 {
         apt-get update
         apt-get install etckeeper
-        apt-get install sudo aptitude dselect deb-multimedia-keyring netselect-apt htop
+        apt-get install sudo aptitude dselect netselect-apt htop
 
         adduser user1 sudo
         adduser user1 staff
@@ -334,4 +333,4 @@ case $1 in
         exit 1
 esac
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

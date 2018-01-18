@@ -30,4 +30,4 @@ sudo sh -c '
 #         grep "^[[:space:]]*[^#[:space:]]" "$1";' \
 #     _ {} \; > ./sources.list;
 
-# vim: set ts=4 sw=4 sts=4 tw=4 et :
+# vim: set ft=sh :

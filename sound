@@ -64,4 +64,4 @@ esac;
 
 aplay "${XDG_DATA_HOME:-/home/user1/share}/sounds/${f:?}" 1>/dev/null 2>&1;
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

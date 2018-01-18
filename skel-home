@@ -63,4 +63,4 @@ for d in "${XDG2[BACKUP_HOME]}/"bash; do
     echo \* > "$d/".gitignore;
 done;
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

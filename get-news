@@ -25,4 +25,4 @@ f=$(newsbeuter -x reload print-unread);
 test "$((${d%% *} + ${f%% *}))" -gt 0 &&
     loggi 6 .transfer.complete "$d\n$f";
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

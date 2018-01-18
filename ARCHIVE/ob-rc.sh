@@ -38,4 +38,4 @@ case $1 in
         exit 1
 esac
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

@@ -6,4 +6,4 @@ BEGIN {
         printf "Lifeday: %d\n", ( systime() - mktime(ENVIRON["X_BDATE"]) ) / 60 / 60 / 24;
 }
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=awk :

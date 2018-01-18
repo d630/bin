@@ -23,4 +23,4 @@ rm -fv -- \
     "$HOME/".recently-used \
     "$XDG_DATA_HOME/"recently-used.xbel;
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

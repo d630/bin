@@ -47,4 +47,4 @@ yaml2json < "$f" |
 jq 'if (.description | length) > 0 and .status == "completed" then . else empty end' |
 task import -;
 
-# vim: set ts=2 sw=2 tw=0 noet :
+# vim: set ft=sh :

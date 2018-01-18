@@ -9,11 +9,11 @@ echo;
 lifeday;
 tput sgr0;
 #echo ; ncal -w -M -3 ; echo
-TASKRC=$XDG_CONFIG_HOME/taskrc-life \
-    task rc._forcecolor=true calendar 2>/dev/null;
+# TASKRC=$XDG_CONFIG_HOME/taskrc-life \
+#     task rc._forcecolor=true calendar 2>/dev/null;
 
 sed "s/.*/TZ=& date +\\\'%Z %t%F %T %t&\\\'/" "$HOME/".tzlist |
 xargs -I {} sh -c {};
 echo;
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

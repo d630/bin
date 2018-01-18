@@ -186,6 +186,7 @@ List:
 * [x-text-editor](https://github.com/D630/bin/blob/master/x-text-editor): Default editor (gui).
 * [x-video-player](https://github.com/D630/bin/blob/master/x-video-player): Default video player (gui).
 * [x-web-browser](https://github.com/D630/bin/blob/master/x-web-browser): Default web browser (gui).
+* [xorg-autolock](https://github.com/D630/bin/blob/master/xorg-autolock): Default xautolock programme.
 * [xorg-dpms-standby](https://github.com/D630/bin/blob/master/xorg-dpms-standby): Set DPMS to standby state.
 * [xorg-get-xclass](https://github.com/D630/bin/blob/master/xorg-get-xclass): Get interactively xclass info about a xwindow.
 * [xorg-get-xids](https://github.com/D630/bin/blob/master/xorg-get-xids): Get x window ids.

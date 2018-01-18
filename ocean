@@ -11,4 +11,4 @@ exec play -q -n -c 2 \
     gain 12 \
     tremolo 0.125 80;
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

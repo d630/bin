@@ -156,7 +156,7 @@ fi;
 
 exit 0;
 
-# vim: set ts=2 sw=2 tw=0 noet :
+# vim: set ft=sh :
 HOOK
 
 	command chmod +x .task/hooks/on-add-d630.sh;

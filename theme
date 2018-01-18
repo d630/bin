@@ -91,4 +91,4 @@ else
     theme.mutt "${C[mutt.linux.1]}";
 fi;
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

@@ -22,4 +22,4 @@ printf -v xsels '%s' "$(
 printf "$xsels" \
 | xclip -i -l 1 -selection clipboard;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

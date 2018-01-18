@@ -2,7 +2,7 @@
 #
 # Toggle bash options via fzf.
 
-function __do
+function __set
 while
     read -r b o n _;
 do
@@ -18,12 +18,11 @@ do
     esac;
 done;
 
-function __select {
-    typeset \
-        BOLD=$(tput bold || tput md) \
-        RESET=$(tput sgr0 || tput me) \
-        GREEN=$(tput setaf 2 || tput AF 2) \
-        RED=$(tput setaf 1 || tput AF 1);
+function __these {
+    BOLD=$(tput bold || tput md);
+    RESET=$(tput sgr0 || tput me);
+    GREEN=$(tput setaf 2 || tput AF 2);
+    RED=$(tput setaf 1 || tput AF 1);
 
     sed "
         / -[so] / {
@@ -32,17 +31,20 @@ function __select {
         }; {
             s/$/ ${BOLD}${RED}disabled${RESET}/;
         };
-        : return;" |
+        : return;
+    " |
     sort -k 3 |
     column -t |
     fzf --ansi --multi --with-nth=3.. --tiebreak=begin;
 };
 
-function __input {
+function __options {
     shopt -p;
     shopt -op;
 };
 
-__do < <(__select < <(__input));
+IFS=$' \t\n';
 
-# vim: set ts=4 sw=4 tw=0 et :
+__set < <(__these < <(__options));
+
+# vim: set ft=sh :

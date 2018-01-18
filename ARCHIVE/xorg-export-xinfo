@@ -15,4 +15,4 @@ env \
 
 printf '%s\n' "export DBUS_SESSION_BUS_ADDRESS" >> "${spool_dir}/xdbus";
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

@@ -5,4 +5,4 @@
 export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-todo;
 exec task "$@";
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

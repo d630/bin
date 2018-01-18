@@ -34,4 +34,4 @@ done <<IN
 /usr/bin/x-www-browser x-www-browser /usr/bin/chromium
 IN
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

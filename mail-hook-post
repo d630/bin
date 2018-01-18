@@ -4,4 +4,4 @@
 
 #exec ionice -c 3 chrt --idle 0 /bin/sh -c "{ notmuch new --quiet && nottoomuch-addresses.sh --update; } > /dev/null 2>&1"
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

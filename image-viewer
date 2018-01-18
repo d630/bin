@@ -7,4 +7,4 @@ set -- $IMAGE_VIEWER_OPTS ${1:+"$@"};
 
 exec "$IMAGE_VIEWER" "$@";
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

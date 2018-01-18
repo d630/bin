@@ -8,4 +8,4 @@ get-xids.sh \
 | xwinpp -I - --hidden --desk=curr -p \
 | xwinmo - -U;
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

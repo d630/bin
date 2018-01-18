@@ -104,4 +104,4 @@ fi
 cd -- "${SRC_BASE}/${SRC_NAME}/${SRC_NAME##*/}"
 source ../src.info
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

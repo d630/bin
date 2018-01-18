@@ -14,4 +14,4 @@ do
     printf '%-10d %-10s %-20s %s\n' $size "$prog" $fd "$(readlink $fd)";
 done;
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

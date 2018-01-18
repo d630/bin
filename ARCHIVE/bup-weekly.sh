@@ -34,4 +34,4 @@ bup init
 bup index -ux /home
 bup save -n home /home
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

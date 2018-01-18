@@ -13,4 +13,4 @@ find "$d" -mindepth 1 -type d -exec chmod 755 {} +;
 
 printf 'Saved all attachments to: %s\n' "$d";
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

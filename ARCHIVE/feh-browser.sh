@@ -33,4 +33,4 @@ fi
 
 setsid.sh feh "$@" -- "${arr[@]:c}" "${arr[@]:0:c}"
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

@@ -47,4 +47,4 @@ printf '%s: %s\n' "pkg does not exist; no directory found" "${PKG_BASE}/${PKG_NA
 
 xstow -v -dir "$PKG_BASE" -target "$PKG_DEST" ${action##*_*} "$PKG_NAME"
 
-# vim: set ts=8 sw=8 tw=0 et :
+# vim: set ft=sh :

@@ -7,4 +7,4 @@ set -- $X_PDF_VIEWER_OPTS ${1:+"$@"};
 
 exec "$X_PDF_VIEWER" "$@";
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :

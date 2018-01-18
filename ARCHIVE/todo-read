@@ -88,4 +88,4 @@ printf '\ncommand:       task add %s project:%s due:%s priority:%s recur:%s wait
 
 task add "$description" ${project:+"project:$project"} ${due:+"due:$due"} ${priority:+"priority:$priority"} ${recur:+"recur:$recur"} ${wait:+"wait:$wait"} ${until:+"until:$until"} ${scheduled:+"scheduled:$scheduled"} ${depends:+"depends:$depends"} ${entry:+"entry:$entry"} ${tags[*]/#/+};
 
-# vim: set ts=4 sw=4 tw=0 et :
+# vim: set ft=sh :
