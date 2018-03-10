@@ -19,3 +19,5 @@ then
 else
         xombrero -e "open $uri"
 fi
+
+# vim: set ft=sh :
