@@ -3,8 +3,8 @@
 # Print frequency of the bash history.
 
 cut -d ' ' -f 1 "${HISTFILE:?}" |
-sort |
-uniq -c |
-sort -nr;
+	sort |
+	uniq -c |
+	sort -nr;
 
 # vim: set ft=sh :

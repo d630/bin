@@ -2,15 +2,15 @@
 #
 # Build README.md in github.com/D630/bin.
 
-cd -- /home/stow/bin/bin ||
-    exit 1;
+cd -- /home/stow/bin/bin || exit 1;
 
 IFS=.: read -r _ _ p _  _ < <(git config --local --get remote.origin.url);
 P=https://github.com/$p;
 
 export LC_ALL=C;
 
-function __find {
+__find ()
+{
     # find . -maxdepth 1 -regextype posix-egrep \
     #         \( -path "./.*" -o -name README.md \) \
     #         -prune \
@@ -19,9 +19,9 @@ function __find {
     # git ls-files -z '*.awk' '*.py' '*.sh' \
     # | xargs -0 grep -H -m 1 '^# ';
 
-    git ls-files -z '[!A][!R]*' |
-    xargs -0 grep -E -Z -l -m 1 '^#!.*(awk|[bdtm][ack]sh|python|sh).*' |
-    xargs -0 grep -H -m 1 '^# ';
+	git ls-files -z '[!A][!R]*' |
+		xargs -0 grep -E -Z -l -m 1 '^#!.*(awk|[bdtm][ack]sh|python|sh).*' |
+		xargs -0 grep -H -m 1 '^# ';
 
     # find . -maxdepth 1 \
     #         \( -path "./.*" -o -name README.md \) \
@@ -33,10 +33,10 @@ function __find {
     # | xargs -0 grep -H -m 1 '// ' \
     # | sed 's/    \/\//#/';
 
-    git ls-files -z '[!A][!R]*' |
-    xargs -0 grep -E -Z -l -m 1 '^#!.*php.*' |
-    xargs -0 grep -H -m 1 '// ' |
-    sed 's:[[:space:]]*//:#:';
+	git ls-files -z '[!A][!R]*' |
+		xargs -0 grep -E -Z -l -m 1 '^#!.*php.*' |
+		xargs -0 grep -H -m 1 '// ' |
+		sed 's:[[:space:]]*//:#:';
 };
 
 {
@@ -50,13 +50,15 @@ List:
 HEADER
 
 __find |
-sort | {
-    printf %s\\n "$header";
-    while
-        IFS=: read -r p c;
-    do
-        printf '* [%s](%s/blob/master/%s): %s\n' "${p#./}" "$P" "${p#./}" "${c#\# }";
-    done;
-} > ./README.md;
+	sort |
+	{
+		printf %s\\n "$header";
+		while
+			IFS=: read -r p c;
+		do
+			printf '* [%s](%s/blob/master/%s): %s\n' \
+				"${p#./}" "$P" "${p#./}" "${c#\# }";
+		done;
+	} > ./README.md;
 
 # vim: set ft=sh :

@@ -2,33 +2,33 @@
 #
 # bspwm: external_rules_command
 
-id=${1?} \
-  instance=$3 \
-  class=$2;
+id=${1?};
+instance=$3;
+class=$2;
 
 case $class in
-(Emacs) echo state=tiled\ layer=normal;;
-(Firefox|Firefox-esr|Iceweasel) echo desktop=^2;;
-(Gimp*) echo follow=on;;
-(Gitk) echo state=floating\ layer=normal;;
-(MPlayer) echo state=floating\ layer=normal;;
-(Pidgin) echo desktop=^3;;
-(Pinentry-gtk-2) echo state=floating\ layer=above;;
-(Spotify) echo desktop=^5;;
-(TelegramDesktop) echo desktop=^3;;
-(XCalc) echo state=floating\ layer=normal;;
-(Xmessage) echo state=floating\ layer=normal;;
-([cC]hromium|Chromium-browser) echo desktop=^2;;
-([sS]urf) echo desktop=^2;;
-(libreoffice*|LibreOffice*) echo state=tiled\ layer=normal;;
-(mpv) echo state=floating\ layer=normal;;
-(stj1) echo state=floating\ layer=above\ sticky=on;;
-(weechat) echo desktop=^3;;
-('')
-    case $(ps -p "$(xdo pid $id)" -o comm= 2>/dev/null) in
-    (spotify)
-        echo desktop=^5;;
-    esac;;
+	(Emacs) echo state=tiled\ layer=normal;;
+	(Firefox|Firefox-esr|Iceweasel) echo desktop=^2;;
+	(Gimp*) echo follow=on;;
+	(Gitk) echo state=floating\ layer=normal;;
+	(MPlayer) echo state=floating\ layer=normal;;
+	(Pidgin) echo desktop=^3;;
+	(Pinentry-gtk-2) echo state=floating\ layer=above;;
+	(Spotify) echo desktop=^5;;
+	(TelegramDesktop) echo desktop=^3;;
+	(XCalc) echo state=floating\ layer=normal;;
+	(Xmessage) echo state=floating\ layer=normal;;
+	([cC]hromium|Chromium-browser) echo desktop=^2;;
+	([sS]urf) echo desktop=^2;;
+	(libreoffice*|LibreOffice*) echo state=tiled\ layer=normal;;
+	(mpv) echo state=floating\ layer=normal;;
+	(stj1) echo state=floating\ layer=above\ sticky=on;;
+	(weechat) echo desktop=^3;;
+	('')
+		case $(ps -p "$(xdo pid $id)" -o comm= 2>/dev/null) in
+		(spotify)
+			echo desktop=^5;;
+		esac;;
 esac;
 
 # vim: set ft=sh :

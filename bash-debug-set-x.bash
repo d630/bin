@@ -3,21 +3,23 @@
 # A debugging function for bash.
 # based on http://mywiki.wooledge.org/BashGuide/Practices#Activate_Bash.27s_Debug_Mode
 
-function debug_set_x
+debug_set_x ()
 case $1 in
-    ('')
-        ! :;;
-    (-)
-        set -x;;
-    (+)
-        set +x;
-        exec 4>&-;;
-    (*)
-        [[ -d ${1%/*} ]] && {
-            exec 4>>"$1";
-            BASH_XTRACEFD=4;
-            set -x;
-        };;
+	('')
+		! :;;
+	(-)
+		set -x;;
+	(+)
+		set +x;
+		exec 4>&-;;
+	(*)
+		if
+			[[ -d ${1%/*} ]];
+		then
+			exec 4>>"$1";
+			BASH_XTRACEFD=4;
+			set -x;
+		fi;;
 esac;
 
 # vim: set ft=sh :

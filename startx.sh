@@ -60,13 +60,14 @@ function __startx {
     systemctl --user unset-environment DISPLAY;
 
     deallocvt;
+	ProfileRcBaseConsole;
 
-    case $SHELL in
-        ($BASH)
-            . "$HOME/".bash_profile;;
-        (*)
-            . "$HOME/".profile;;
-    esac;
+    # case $SHELL in
+    #     ($BASH)
+    #         . "$HOME/".bash_profile;;
+    #     (*)
+    #         . "$HOME/".profile;;
+    # esac;
 };
 
 __startx;

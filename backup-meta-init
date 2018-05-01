@@ -3,9 +3,8 @@
 # Backup inits.
 
 {
-    find /etc/init.d/ -perm /111 -type f -printf %f\\n;
-    find /etc/init -type f -printf %f\\n;
-} |
-sort -u > "${XDG_BACKUP_HOME:?}/"init.txt;
+	find /etc/init.d/ -perm /111 -type f -printf %f\\n;
+	find /etc/init -type f -printf %f\\n;
+} | sort -u > "${XDG_BACKUP_HOME:?}/"init.txt;
 
 # vim: set ft=sh :

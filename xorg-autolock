@@ -2,6 +2,6 @@
 #
 # Default xautolock programme.
 
-daemonize xautolock -time 60 -locker "$XDG_BIN_HOME/"xorg-lock
+daemonize xautolock -time 120 -locker "$XDG_BIN_HOME/"xorg-lock
 
 # vim: set ft=sh :

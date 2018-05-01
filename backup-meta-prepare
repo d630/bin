@@ -5,8 +5,9 @@
 cd -- "$HOME";
 
 printf -v horiz %\*s 80 '';
-function PrintHeader {
-    printf %s\\n ${horiz// /-} $1 1>&2;
+PrintHeader ()
+{
+	printf %s\\n ${horiz// /-} $1 1>&2;
 };
 
 # PrintHeader update-packages;
@@ -25,8 +26,7 @@ PrintHeader cclean;
 cclean;
 
 PrintHeader etckeeper;
-cd / ||
-    exit 1;
+cd / || exit 1;
 printf -v d %\(%s\)T -1;
 sudo etckeeper commit $d\ prepare\ backup;
 
