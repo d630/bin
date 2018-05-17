@@ -7,10 +7,10 @@
     exit 1;
 };
 
-links[1]=http://www.sportschau.de/ergebnisse_tabellen/ergebnisse102~_eam-14d4fb6c588c7fcebc9c5fd4dfd21e2b_eap__liga-BL1_eap__sportart-fb.html?eap=8oI34N4hym4RDV6dhKK0OnLYM%2FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhteE%2FSifHaWb%2BD5g3qtsFGsnGotmb1PcZSS6XXfYWnKf1ELW46g2DdkfFtPY%2BHqJZgCaUEvpeNMw%3D%3D \
-links[2]=http://www.sportschau.de/ergebnisse_tabellen/ergebnisse102~_eam-14d4fb6c588c7fcebc9c5fd4dfd21e2b_eap__liga-BL2_eap__sportart-fb.html?eap=8oI34N4hym4RDV6dhKK0OnLYM%2FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhteE%2FSifHaWb%2BD5g3qtsFGsnGotmb1PcZSS6XXfYWnKf1ELW46g2DdkfFtPY%2BHqJZgCaUEvpeNMw%3D%3D \
-links[3]=http://www.sportschau.de/ergebnisse_tabellen/ergebnisse102~_eam-14d4fb6c588c7fcebc9c5fd4dfd21e2b_eap__liga-BL3_eap__sportart-fb.html?eap=8oI34N4hym4RDV6dhKK0OnLYM%2FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhteE%2FSifHaWb%2BD5g3qtsFGsnGotmb1PcZSS6XXfYWnKf1ELW46g2DdkfFtPY%2BHqJZgCaUEvpeNMw%3D%3D \
-links[0]=http://www.sportschau.de/ergebnisse_tabellen/ergebnisse102~_eam-14d4fb6c588c7fcebc9c5fd4dfd21e2b_eap__liga-uebers_eap__sportart-fb.html?eap=8oI34N4hym4RDV6dhKK0OnLYM%2FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhteE%2FSifHaWb%2BD5g3qtsFGsnGotmb1PcZSS6XXfYWnKf1ELW46g2DdkfFtPY%2BHqJZgCaUEvpeNMw%3D%3D;
+links[1]=https://www.sportschau.de/ergebnisse_tabellen/ergebnisse102~_eam-14d4fb6c588c7fcebc9c5fd4dfd21e2b_eap__liga-BL1_eap__sportart-fb.html?eap=8oI34N4hym4RDV6dhKK0OnLYM%2FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhteE%2FSifHaWb%2BD5g3qtsFGsnGotmb1PcZSS6XXfYWnKf1ELW46g2DdkfFtPY%2BHqJZgCaUEvpeNMw%3D%3D \
+links[2]=https://www.sportschau.de/ergebnisse_tabellen/ergebnisse102~_eam-14d4fb6c588c7fcebc9c5fd4dfd21e2b_eap__liga-BL2_eap__sportart-fb.html?eap=8oI34N4hym4RDV6dhKK0OnLYM%2FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhteE%2FSifHaWb%2BD5g3qtsFGsnGotmb1PcZSS6XXfYWnKf1ELW46g2DdkfFtPY%2BHqJZgCaUEvpeNMw%3D%3D \
+links[3]=https://www.sportschau.de/ergebnisse_tabellen/ergebnisse102~_eam-14d4fb6c588c7fcebc9c5fd4dfd21e2b_eap__liga-BL3_eap__sportart-fb.html?eap=8oI34N4hym4RDV6dhKK0OnLYM%2FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhteE%2FSifHaWb%2BD5g3qtsFGsnGotmb1PcZSS6XXfYWnKf1ELW46g2DdkfFtPY%2BHqJZgCaUEvpeNMw%3D%3D \
+links[0]=https://www.sportschau.de/ergebnisse_tabellen/ergebnisse102~_eam-14d4fb6c588c7fcebc9c5fd4dfd21e2b_eap__liga-uebers_eap__sportart-fb.html?eap=8oI34N4hym4RDV6dhKK0OnLYM%2FNzIoiKmKv2HkJYKgPxCIifwJGZmigVNLw42zmko7u1BzkuenhteE%2FSifHaWb%2BD5g3qtsFGsnGotmb1PcZSS6XXfYWnKf1ELW46g2DdkfFtPY%2BHqJZgCaUEvpeNMw%3D%3D;
 
 curl -s "${links[${1#-}]}" |
 scrape -be div.table |
