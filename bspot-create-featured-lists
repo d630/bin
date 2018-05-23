@@ -4,24 +4,12 @@
 
 user=${1:?};
 token=${2:?};
+file=${3:-$XDG_VAR_HOME/lib/bspot_create_featured_list.sh};
 
-list1=2WnlSygFyIGdV6hUcNygUo;
+. "$file" ||
+	exit 1;
+
 _list1=/tmp/$list1.json;
-declare -A Features=(
-	[acousticness]=6kpJlNFqONHiFkbf1RnLa9
-	[danceability]=3h1hfO0kkKZy7g4tbn2fTl
-	[duration_ms]=68PPPPoCDzFpOZMDMuPlVR
-	[energy]=3Y5mE7xPdKNPriAcu8Rpnl
-	[instrumentalness]=2GodaFWJBAGNCivcq68EKG
-	[key]=1AQLPDXxdK1KQ31Bvdpc3g
-	[liveness]=31FjqV4SOYfEyYn1qphrKJ
-	[loudness]=390AjCYjLGFHD50cDFjmxo
-	[mode]=5s6CqTSZrAcWPtHlaemOXS
-	[speechiness]=6Onff4ga9prvw0SQP1jSDK
-	[tempo]=3uZ6JqwEDpgZH088NhvrYo
-	[time_signature]=4kOLmgDP3hVv0Lf4FHovpq
-	[valence]=0liWcy2L57aJ6yZeVB88kq
-);
 
 bspot getTracks "$user" "$list1" "$token" |
 	cut -d : -f 3 |
