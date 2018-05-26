@@ -4,7 +4,7 @@
 
 user=${1:?};
 token=${2:?};
-file=${3:-$XDG_VAR_HOME/lib/bspot_create_featured_list.sh};
+file=${3:-$XDG_VAR_HOME/lib/bspot/bspot_create_featured_list.sh};
 
 . "$file" ||
 	exit 1;
