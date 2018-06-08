@@ -75,6 +75,8 @@ List:
 * [iplog](https://github.com/D630/bin/blob/master/iplog): Daily ip logging.
 * [issue-editor](https://github.com/D630/bin/blob/master/issue-editor): Add a task into Taskwarrior ('issue' context) via vim (yaml).
 * [issue](https://github.com/D630/bin/blob/master/issue): Wrapper: Use taskwarrior in my 'issue' context.
+* [lan-down](https://github.com/D630/bin/blob/master/lan-down): Wrapper: set lan off.
+* [lan-up](https://github.com/D630/bin/blob/master/lan-up): Wrapper: set lan on.
 * [lesspipew](https://github.com/D630/bin/blob/master/lesspipew): My preprocessor for less.
 * [lifeday](https://github.com/D630/bin/blob/master/lifeday): Print lifeday.
 * [log-editor](https://github.com/D630/bin/blob/master/log-editor): Log a task into Taskwarrior ('log' context) via vim (yaml).
@@ -174,6 +176,8 @@ List:
 * [volume](https://github.com/D630/bin/blob/master/volume): Set volume via amixer.
 * [web-browser](https://github.com/D630/bin/blob/master/web-browser): Default web browser (tui).
 * [weechatw](https://github.com/D630/bin/blob/master/weechatw): Wrap up weechat.
+* [wlan-down](https://github.com/D630/bin/blob/master/wlan-down): Wrapper: set wlan off.
+* [wlan-up](https://github.com/D630/bin/blob/master/wlan-up): Wrapper: set wlan on.
 * [wless](https://github.com/D630/bin/blob/master/wless): Open the result of which with less.
 * [wradio](https://github.com/D630/bin/blob/master/wradio): Simple wradio.
 * [wvim](https://github.com/D630/bin/blob/master/wvim): Open the result of which in vim.
