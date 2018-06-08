@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Wrapper: set lan off.
+
+sudo network-device \e -d;
+
+# vim: set ft=sh :

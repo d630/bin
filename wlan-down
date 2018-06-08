@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Wrapper: set wlan off.
+
+sudo network-device \w -d;
+
+# vim: set ft=sh :
