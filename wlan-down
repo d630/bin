@@ -2,6 +2,6 @@
 #
 # Wrapper: set wlan off.
 
-sudo network-device \w -d;
+exec sudo "$XDG_BIN_HOME/"network-device \w -d;
 
 # vim: set ft=sh :
