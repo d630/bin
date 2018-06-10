@@ -13,6 +13,8 @@ list=/tmp/$list1.json;
 
 bspot getTracksInMarket "$user" "$list1" "$token" "$market" > "$list";
 
+bspot clearList "$user" "$list2" "$token";
+
 jq -e -r \
 	'.items[] | if .track.is_playable then empty else .track.uri end' "$list" |
 bspot addTracks "$user" "$list2" "$token";
