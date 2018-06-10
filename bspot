@@ -7,7 +7,7 @@
 
 # -- web api.
 
-function spotify.albums.getSeveralAlbums {
+function spotify::albums::getSeveralAlbums {
     # OAuth Scope: null
     # Params: access_token
 
@@ -20,7 +20,7 @@ function spotify.albums.getSeveralAlbums {
         -H "Authorization: Bearer ${1:?}";
 };
 
-function spotify.playlist.addTracks {
+function spotify::playlist::addTracks {
     # OAuth Scope: playlist-modify-public, playlist-modify-private
     # Params: user_id playlist_id access_token spotify_uri ...
 
@@ -36,7 +36,7 @@ function spotify.playlist.addTracks {
         --data "${@:4}";
 };
 
-function spotify.playlist.clear {
+function spotify::playlist::clear {
     # OAuth Scope: playlist-modify-public, playlist-modify-private
     # Params: user_id playlist_id access_token
 
@@ -46,7 +46,7 @@ function spotify.playlist.clear {
         -H "Authorization: Bearer ${3:?}";
 };
 
-function spotify.playlist.create {
+function spotify::playlist::create {
     # OAuth Scope: playlist-modify-public, playlist-modify-private
     # Params: user_id playlist_name access_token
 
@@ -58,7 +58,7 @@ function spotify.playlist.create {
         --data "{\"name\":\"${2:?}\", \"public\":true, \"collaborative\":false}";
 };
 
-function spotify.playlist.getTracks {
+function spotify::playlist::getTracks {
     # OAuth Scope: null
     # Params: user_id playlist_id access_token [offset]
 
@@ -68,7 +68,17 @@ function spotify.playlist.getTracks {
         -H "Authorization: Bearer ${3:?}";
 };
 
-function spotify.playlist.list {
+function spotify::playlist::getTracksInMarket {
+    # OAuth Scope: null
+    # Params: user_id playlist_id access_token [offset]
+
+    curl \
+        -s \
+        -X GET "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}/tracks?fields=items(track.is_playable,track.uri)&limit=100&offset=${4:-0}&market=${5:-DE}" \
+        -H "Authorization: Bearer ${3:?}";
+};
+
+function spotify::playlist::list {
     # OAuth Scope: playlist-read-private, playlist-read-collaborative
     # Params: user_id access_token [offset]
 
@@ -78,7 +88,7 @@ function spotify.playlist.list {
         -H "Authorization: Bearer ${2:?}";
 };
 
-function spotify.playlist.privatize {
+function spotify::playlist::privatize {
     # OAuth Scope: playlist-modify-public, playlist-modify-private
     # Params: user_id playlist_id access_token
     curl \
@@ -89,7 +99,7 @@ function spotify.playlist.privatize {
         --data "{\"public\":false}";
 };
 
-function spotify.tracks.audio_features {
+function spotify::tracks::audio_features {
     # OAuth Scope:
     # Params: access_token ids
 
@@ -131,7 +141,7 @@ function addTracks {
         y=100;
 
     for ((i=int; i > 0; i--, x+=100)); do
-        spotify.playlist.addTracks "$uid" "$plid" "$ato" "$(
+        'spotify::playlist::addTracks' "$uid" "$plid" "$ato" "$(
             printf %s\\n "${uris[@]:x:y}" |
             jq -R . |
             jq -sc '{ uris: . }';
@@ -139,7 +149,7 @@ function addTracks {
     done;
 
     ((mod)) &&
-        spotify.playlist.addTracks "$uid" "$plid" "$ato" "$(
+        'spotify::playlist::addTracks' "$uid" "$plid" "$ato" "$(
             printf '%s\n' "${uris[@]: -mod}" |
             jq -R . |
             jq -sc '{ uris: . }';
@@ -156,7 +166,7 @@ function getLists {
         end
     ' < <(
         while
-            'spotify.playlist.list' \
+            'spotify::playlist::list' \
                 "${1:?}" \
                 "${2:?}" \
                 "$((offset+=50))";
@@ -177,7 +187,7 @@ function getAlbums {
         end
     ' < <(
         while
-            'spotify.playlist.getTracks' \
+            'spotify::playlist::getTracks' \
                 "${1:?}" \
                 "${2:?}" \
                 "${3:?}" \
@@ -216,11 +226,11 @@ function getAlbumsObjects {
 
     IFS=,;
     for ((i=int; i > 0; i--, x+=20)); do
-        spotify.albums.getSeveralAlbums "$ato" "${uris[*]:x:y}";
+        'spotify::albums::getSeveralAlbums' "$ato" "${uris[*]:x:y}";
     done;
 
     ((mod)) &&
-        spotify.albums.getSeveralAlbums "$ato" "${uris[*]: -mod}";
+        'spotify::albums::getSeveralAlbums' "$ato" "${uris[*]: -mod}";
 };
 
 function getTracks {
@@ -233,11 +243,34 @@ function getTracks {
         end
     ' < <(
         while
-            'spotify.playlist.getTracks' \
+            'spotify::playlist::getTracks' \
                 "${1:?}" \
                 "${2:?}" \
                 "${3:?}" \
                 "$((offset+=100))";
+        do
+            :;
+        done;
+    ) |
+    gawk '$0 == "exit" { exit }; { print $0; };'
+};
+
+function getTracksInMarket {
+    declare -i offset=-100;
+
+    jq -e -r --unbuffered '
+        if (.items | length) > 0
+        then .
+        else "exit"
+        end
+    ' < <(
+        while
+            'spotify::playlist::getTracksInMarket' \
+                "${1:?}" \
+                "${2:?}" \
+                "${3:?}" \
+                "$((offset+=100))" \
+                "$4";
         do
             :;
         done;
@@ -272,22 +305,22 @@ function getTracksFeatures {
 
     IFS=,;
     for ((i=int; i > 0; i--, x+=100)); do
-        spotify.tracks.audio_features "$ato" "${uris[*]:x:y}";
+        'spotify::tracks::audio_features' "$ato" "${uris[*]:x:y}";
     done;
 
     ((mod)) &&
-        spotify.tracks.audio_features "$ato" "${uris[*]: -mod}";
+        'spotify::tracks::audio_features' "$ato" "${uris[*]: -mod}";
 };
 
 # -- MAIN.
 
 case ${1:?} in
     (addList)
-        spotify.playlist.create "${@:2}";;
+        'spotify::playlist::create' "${@:2}";;
     (addTracks)
         addTracks "${@:2}";;
     (clearList)
-        spotify.playlist.clear "${@:2}";;
+        'spotify::playlist::clear' "${@:2}";;
     (getLists)
         getLists "${@:2}";;
     (getAlbums)
@@ -296,10 +329,12 @@ case ${1:?} in
         getAlbumsObjects "${@:2}";;
     (getTracks)
         getTracks "${@:2}";;
+    (getTracksInMarket)
+        getTracksInMarket "${@:2}";;
     (getTracksFeatures)
         getTracksFeatures "${@:2}";;
     (privatizeList)
-        spotify.playlist.privatize "${@:2}";;
+        'spotify::playlist::privatize' "${@:2}";;
 esac;
 
 # vim: set ft=sh :

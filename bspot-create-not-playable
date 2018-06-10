@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#
+# Spotify: Take pub list1 and create a list with unplayable tracks.
+# See: https://developer.spotify.com/documentation/general/guides/track-relinking-guide/
+
+user=${1:?};
+list1=${2:?};
+list2=${3:?};
+token=${4:?};
+market=${5:-DE};
+
+list=/tmp/$list1.json;
+
+bspot getTracksInMarket "$user" "$list1" "$token" "$market" > "$list";
+
+jq -e -r \
+	'.items[] | if .track.is_playable then empty else .track.uri end' "$list" |
+bspot addTracks "$user" "$list2" "$token";
+
+# vim: set ft=sh :
