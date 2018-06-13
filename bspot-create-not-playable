@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Spotify: Take pub list1 and create a list with unplayable tracks.
 # See: https://developer.spotify.com/documentation/general/guides/track-relinking-guide/
