@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Spotify: Get track infos of public a playlist.
+# Spotify: Get track infos of a public playlist.
 
 user=${1:?};
 list=${2:?};

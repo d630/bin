@@ -19,7 +19,7 @@ List:
 * [bspot-create-label](https://github.com/D630/bin/blob/master/bspot-create-label): Spotify: Take pub list1 and sort it by label.
 * [bspot-create-not-playable](https://github.com/D630/bin/blob/master/bspot-create-not-playable): Spotify: Take pub list1 and create a list with unplayable tracks.
 * [bspot-create-release-date](https://github.com/D630/bin/blob/master/bspot-create-release-date): Spotify: Take pub list1 and sort it by release_date.
-* [bspot-get-tracks](https://github.com/D630/bin/blob/master/bspot-get-tracks): Spotify: Get track infos of public a playlist.
+* [bspot-get-tracks](https://github.com/D630/bin/blob/master/bspot-get-tracks): Spotify: Get track infos of a public playlist.
 * [bspot-shuffle-list](https://github.com/D630/bin/blob/master/bspot-shuffle-list): Spotify: Take pub list1, shuffle it and add the songs to cleared pub list2.
 * [bspot](https://github.com/D630/bin/blob/master/bspot): Some functions to modify public user-playlists via Spotify's Web API.
 * [bspwm-rules](https://github.com/D630/bin/blob/master/bspwm-rules): bspwm: external_rules_command
