@@ -278,6 +278,28 @@ function getTracksInMarket {
     gawk '$0 == "exit" { exit }; { print $0; };'
 };
 
+function getTracksObjects {
+    declare -i offset=-100;
+
+    jq -e -r --unbuffered '
+        if (.items | length) > 0
+        then .
+        else "exit"
+        end
+    ' < <(
+        while
+            'spotify::playlist::getTracks' \
+                "${1:?}" \
+                "${2:?}" \
+                "${3:?}" \
+                "$((offset+=100))";
+        do
+            :;
+        done;
+    ) |
+    gawk '$0 == "exit" { exit }; { print $0; };'
+};
+
 function getTracksFeatures {
     declare ato=${1:?};
     declare -a uris=();
@@ -331,6 +353,8 @@ case ${1:?} in
         getTracks "${@:2}";;
     (getTracksInMarket)
         getTracksInMarket "${@:2}";;
+    (getTracksObjects)
+        getTracksObjects "${@:2}";;
     (getTracksFeatures)
         getTracksFeatures "${@:2}";;
     (privatizeList)
