@@ -42,10 +42,10 @@ case $summary in
         f=mac-sound-pack-sent-message.wav;;
     (.im.received)
         f=mac-sound-pack-received-message.wav;;
-    (.misc*)
-        $urgency && f=mac-sound-pack-Error.wav;;
     (.misc.exclamation)
         f=mac-sound-pack-Exclamation.wav;;
+    (.misc*)
+        $urgency && f=mac-sound-pack-Error.wav;;
     (.network.connected)
         f=mac-sound-pack-invitation-accepted.wav;;
     (.network.disconnected)
