@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+#
+# Spotify: Take pub list1 and create public gpb lists.
+
+user=${1:?};
+token=${2:?};
+file=${3:-$XDG_VAR_HOME/lib/bspot/bspot_create_gpb_lists.bash};
+
+# wants:
+# 	-A dates[%s|playlist-id]
+# 	-a dates_sorted (newest first)
+# 	list1
+. "$file" ||
+	exit 1;
+
+_list1=/tmp/$list1.txt;
+
+bspot getTracksObjects "$user" "$list1" "$token" |
+jq -r '
+	.items[] |
+	"date --date=\(.added_at) +%s_\(([.track.artists[].uri]|join("/")))_\(.track.uri)"
+	' |
+xargs -I {} -P 4 sh -c {} |
+LC_ALL=C sort -t _ -k 1nr,1nr -k 2d,2d |
+sed 's/^\([^_]*\)_\([^_]*\)_\([^_]*\)$/\1 \3/' > "$_list1";
+
+while
+	read -r time uri;
+do
+	for d in "${dates_sorted[@]}";
+	do
+		((time >= ${d%|*})) &&
+			dates[$d]+=$uri, &&
+			break;
+	done
+done < "$_list1";
+
+for k in "${!dates[@]}";
+do
+	list2=${k#*|};
+	mapfile -t -d , <<< "${dates[$k]}";
+	bspot clearList "$user" "$list2" "$token";
+	for ((i = ${#MAPFILE[@]} - 2; i >= 0; i--));
+	do
+		printf '%s\n' "${MAPFILE[$i]}";
+	done |
+	bspot addTracks "$user" "$list2" "$token";
+done;
+
+# vim: set ft=sh :
