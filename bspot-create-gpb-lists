@@ -13,17 +13,6 @@ file=${3:-$XDG_VAR_HOME/lib/bspot/bspot_create_gpb_lists.bash};
 . "$file" ||
 	exit 1;
 
-_list1=/tmp/$list1.txt;
-
-bspot getTracksObjects "$user" "$list1" "$token" |
-jq -r '
-	.items[] |
-	"date --date=\(.added_at) +%s_\(([.track.artists[].uri]|join("/")))_\(.track.uri)"
-	' |
-xargs -I {} -P 4 sh -c {} |
-LC_ALL=C sort -t _ -k 1nr,1nr -k 2d,2d |
-sed 's/^\([^_]*\)_\([^_]*\)_\([^_]*\)$/\1 \3/' > "$_list1";
-
 while
 	read -r time uri;
 do
@@ -32,8 +21,17 @@ do
 		((time >= ${d%|*})) &&
 			dates[$d]+=$uri, &&
 			break;
-	done
-done < "$_list1";
+	done;
+done < <(
+	bspot getTracksObjects "$user" "$list1" "$token" |
+	jq -r '
+		.items[] |
+		"date --date=\(.added_at) +%s_\(([.track.artists[].uri]|join("/")))_\(.track.uri)"
+		' |
+	xargs -I {} -P 4 sh -c {} |
+	LC_ALL=C sort -t _ -k 1nr,1nr -k 2d,2d |
+	sed 's/^\([^_]*\)_\([^_]*\)_\([^_]*\)$/\1 \3/';
+);
 
 for k in "${!dates[@]}";
 do
