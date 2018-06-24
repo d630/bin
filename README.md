@@ -16,6 +16,7 @@ List:
 * [binary-to-nibble](https://github.com/D630/bin/blob/master/binary-to-nibble): Group binary numbers into nibbles (used with bc output).
 * [borg-weekly](https://github.com/D630/bin/blob/master/borg-weekly): Weekly backup with borg.
 * [bspot-create-featured-lists](https://github.com/D630/bin/blob/master/bspot-create-featured-lists): Spotify: Take pub list1 and create audio-featured public lists.
+* [bspot-create-gpb-lists](https://github.com/D630/bin/blob/master/bspot-create-gpb-lists): Spotify: Take pub list1 and create public gpb lists.
 * [bspot-create-label](https://github.com/D630/bin/blob/master/bspot-create-label): Spotify: Take pub list1 and sort it by label.
 * [bspot-create-not-playable](https://github.com/D630/bin/blob/master/bspot-create-not-playable): Spotify: Take pub list1 and create a list with unplayable tracks.
 * [bspot-create-release-date](https://github.com/D630/bin/blob/master/bspot-create-release-date): Spotify: Take pub list1 and sort it by release_date.
