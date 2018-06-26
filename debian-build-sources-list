@@ -62,7 +62,7 @@ mv -v /etc/apt/sources.list /etc/apt/sources.list.old;
 cat /tmp/napt/*-source.list > /etc/apt/sources.list;
 printf %s\\n "$section" >> /etc/apt/sources.list;
 
-read -rp 'set up preferences? ';
+read -r -t 30 -p 'set up preferences? ';
 [[ $REPLY == y ]] ||
     exit 1;
 
