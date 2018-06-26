@@ -15,7 +15,7 @@ trap exit\ 1 INT TERM QUIT EXIT;
 for release in stable testing unstable; do
     mkdir -p /tmp/napt/$release;
 
-    for i in {0..9}; do
+    for i in {0..4}; do
         netselect-apt -t 20 $release > /tmp/napt/$release/$i;
     done;
 
