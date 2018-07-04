@@ -7,6 +7,8 @@ sudo systemctl suspend
 
 sleep 5;
 
-test -n "$X_XCLIENT" && xset r rate 220 150;
+test -n "$X_XCLIENT" &&
+	. "$HOME/".profile.d/run.sh &&
+		ProfileRcRunXCustoms;
 
 # vim: set ft=sh :
