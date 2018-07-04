@@ -7,4 +7,6 @@ sudo systemctl suspend
 
 sleep 5;
 
+test -n "$X_XCLIENT" && xset r rate 220 150;
+
 # vim: set ft=sh :
