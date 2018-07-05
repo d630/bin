@@ -9,7 +9,7 @@ do
 	read -r -t 3 < /dev/tty;
 	[[ $REPLY == q ]] && exit;
 done < <(
-	curl https://gist.githubusercontent.com/d630/323420bbb1466bcd58925df610ed5fcd/raw/053e161f9e8ea3102be6b3a5388bdc3e6cc701ba/spotify.md |
+	curl https://gist.githubusercontent.com/d630/323420bbb1466bcd58925df610ed5fcd/raw/spotify.md |
 	sed -n 's/^.*(\([^ ]*\))$/\1/p';
 );
 
