@@ -8,9 +8,10 @@ t () {
 };
 
 s () {
-	test "$X_DPI" = 96 &&
-		spotify-mpris PlayPause;
+	test "$X_DPI" = 96 ||
+		return;
 
+	spotify-mpris PlayPause;
 	mpc toogle;
 };
 
