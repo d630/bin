@@ -3,11 +3,20 @@
 # Default xlock programme.
 
 t () {
-    xset -dpms;
+	xset -dpms;
+	s;
+};
+
+s () {
+	test "$X_DPI" = 96 &&
+		spotify-mpris PlayPause;
+
+	mpc toogle;
 };
 
 trap t INT TERM QUIT EXIT HUP;
 xset +dpms dpms 3 3 3;
+s;
 i3lock \
     --nofork \
     --image"=$XDG_DATA_HOME/"wallpapers/current.wallpaper \
