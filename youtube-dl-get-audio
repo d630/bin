@@ -4,25 +4,21 @@
 
 #set -e
 
-IFS=;
-
-while
-	read -r i;
-do
-	youtube-dl \
-		--external-downloader=aria2c \
-		--output='%(title)s.%(ext)s' \
-		--restrict-filenames \
-		--continue \
-		--no-overwrites \
-		--no-cache-dir \
-		--print-traffic \
-		--no-call-home \
-		--prefer-free-formats \
-		--extract-audio \
-		--audio-format=${1:-vorbis} \
-		--prefer-ffmpeg \
-		"$i";
-done;
+youtube-dl \
+	--audio-format=${2:-best} \
+	--audio-quality=${3:-2} \
+	--batch-file=- \
+	--continue \
+	--external-downloader=aria2c \
+	--extract-audio \
+	--format=${1:-"bestaudio[ext=m4a]/bestaudio[ext=wbm]/bestaudio"} \
+	--no-cache-dir \
+	--no-call-home \
+	--no-overwrites \
+	--output='%(title)s.%(ext)s' \
+	--prefer-ffmpeg \
+	--prefer-free-formats \
+	--print-traffic \
+	--restrict-filenames;
 
 # vim: set ft=sh :
