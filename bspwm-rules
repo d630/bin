@@ -6,6 +6,8 @@ id=${1?};
 instance=$3;
 class=$2;
 
+echo "$@" >> /tmp/foo;
+
 case $class in
 	(Emacs) echo state=tiled\ layer=normal;;
 	(Firefox|Firefox-esr|Iceweasel) echo desktop=^2;;
@@ -20,14 +22,13 @@ case $class in
 	(Xmessage) echo state=floating\ layer=normal;;
 	([cC]hromium|Chromium-browser) echo desktop=^2;;
 	([sS]urf) echo desktop=^2;;
-	(libreoffice*|LibreOffice*) echo state=tiled\ layer=normal;;
+	([lL]ibre[oO]ffice*) echo state=tiled\ layer=normal;;
 	(mpv) echo state=floating\ layer=normal;;
 	(stj1) echo state=floating\ layer=above\ sticky=on;;
 	(weechat) echo desktop=^3;;
 	('')
 		case $(ps -p "$(xdo pid $id)" -o comm= 2>/dev/null) in
-		(spotify)
-			echo desktop=^5;;
+			(spotify) echo desktop=^5;;
 		esac;;
 esac;
 
