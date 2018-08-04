@@ -6,8 +6,6 @@ id=${1?};
 instance=$3;
 class=$2;
 
-echo "$@" >> /tmp/foo;
-
 case $class in
 	(Emacs) echo state=tiled\ layer=normal;;
 	(Firefox|Firefox-esr|Iceweasel) echo desktop=^2;;
