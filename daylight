@@ -4,17 +4,8 @@
 
 f=${XDG_RUNTIME_DIR:?}/DAYLIGHT;
 
+light ()
 case $1 in
-(dark)
-    s=1;;
-(light)
-    s=0;;
-(*)
-    test-daylight;
-    s=$?;;
-esac;
-
-case $s in
 (0)
     : > "$f";
     exec theme light;;
@@ -22,5 +13,16 @@ case $s in
     rm -f -- "$f";
     exec theme dark;;
 esac;
+
+case $1 in
+(dark)
+    light;;
+(light)
+    light 0;;
+(*)
+    test-daylight;
+    light $?;;
+esac;
+
 
 # vim: set ft=sh :
