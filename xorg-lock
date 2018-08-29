@@ -2,6 +2,12 @@
 #
 # Default xlock programme.
 
+case $1 in
+	(enable|disable)
+		xautolock "-$1";
+		exit;;
+esac;
+
 t () {
 	xset -dpms;
 	s;
@@ -19,10 +25,10 @@ trap t INT TERM QUIT EXIT HUP;
 xset +dpms dpms 3 3 3;
 s;
 i3lock \
-    --nofork \
-    --image"=$XDG_DATA_HOME/"wallpapers/current.wallpaper \
-    --no-unlock-indicator \
-    --show-failed-attempts \
-    --tiling;
+	--nofork \
+	--image"=$XDG_DATA_HOME/"wallpapers/current.wallpaper \
+	--no-unlock-indicator \
+	--show-failed-attempts \
+	--tiling;
 
 # vim: set ft=sh :
