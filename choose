@@ -1,0 +1,197 @@
+#!/usr/bin/env python3
+#
+# choose.
+# https://github.com/vain/bin-pub/blob/master/choose
+
+
+# Keys:
+#
+#   General:
+#     q       Quit
+#
+#   Selection:
+#     Space   Select the current item
+#     v       Invert the selection
+#     c       Clear the selection
+#
+#   Movement:
+#     j, k    Scroll down/up (linewise)
+#     ^F, ^B  Scroll down/up (half page)
+#     g       Go to first line
+#     G       Go to last line
+
+import argparse
+import curses
+import locale
+import sys
+import os
+
+def interactive_choice(win, args, items):
+    curses.curs_set(False)
+
+    # Set up colors.
+    curses.use_default_colors()
+    curses.init_pair(1, curses.COLOR_RED, -1)
+
+    selected = []
+    current = 0
+    offset = 0
+
+    while True:
+        win.erase()
+        height, width = win.getmaxyx()
+
+        if args.title:
+            title = args.title
+            if len(title) >= width:
+                title = title[:width - 3] + '...'
+            left = max(int(0.5 * (width - len(title))), 0)
+            top = min(height - 1, 1)
+            win.addstr(top, left, title, curses.A_BOLD)
+            starty = 3
+        else:
+            starty = 0
+
+        # Show available items. Mark selected ones and the focused one.
+        for i, item in enumerate(items):
+            if i - offset < 0 or i - offset >= height - starty:
+                continue
+
+            # Mark selected items in bold red and with a star at the
+            # beginning.
+            if i in selected:
+                line_attrs = curses.color_pair(1) | curses.A_BOLD
+                win.addstr(starty + i - offset, 1, '*', line_attrs)
+            else:
+                line_attrs = curses.A_NORMAL
+
+            # Show cursor and highlight current line.
+            if i == current:
+                line_attrs |= curses.A_REVERSE
+                win.addstr(starty + i - offset, 0, '>', curses.A_BOLD)
+
+            # Limit text length and output the current line.
+            win.addstr(starty + i - offset, 2, item.expandtabs(4)[:width - 3],
+                       line_attrs)
+
+        if len(items) == 0:
+            msg = 'There are no items to select from.'
+            left = max(int(0.5 * (width - len(msg))), 0)
+            top = min(height - 1, 3)
+            win.addstr(top, left, msg,
+                       curses.color_pair(1) | curses.A_BOLD)
+
+        win.refresh()
+        char = win.getch()
+
+        # Abort or quit.
+        if char in [ord('Q'), ord('q')]:
+            return []
+
+        if char in [13, 10]:
+            if len(items) > 0:
+                if len(selected) > 0:
+                    return [items[i] for i in sorted(selected)]
+                else:
+                    return [items[current]]
+            else:
+                return []
+
+        # Selection.
+        if char == ord(' '):
+            if current in selected:
+                selected.remove(current)
+            else:
+                selected.append(current)
+            current += 1
+
+        if char == ord('v'):
+            selected_old = selected[:]
+            for i in range(len(items)):
+                if i in selected_old:
+                    selected.remove(i)
+                else:
+                    selected.append(i)
+
+        if char == ord('c'):
+            selected = []
+
+        # Movement.
+        if char in [ord('j')]: current += 1
+        if char in [ord('k')]: current -= 1
+
+        if char in [ord('g')]: current = 0
+        if char in [ord('G')]: current = len(items) - 1
+
+        if char in [6]: current += int(0.5 * (height - starty))  # ^F
+        if char in [2]: current -= int(0.5 * (height - starty))  # ^B
+
+        if current < 0:
+            current = 0
+        if current >= len(items):
+            current = len(items) - 1
+
+        # Scroll up or down if needed.
+        if current - offset >= height - starty:
+            offset = current - height + starty + 1
+        if current - offset <= -1:
+            offset = current
+
+        if offset < 0:
+            offset = 0
+        if offset >= len(items):
+            offset = len(items) - 1
+
+def open_tty():
+    # Redirect stdout and stdin to/from the terminal. Save the old
+    # streams.
+    old_stdin = os.dup(0)
+    old_stdout = os.dup(1)
+    os.close(0)
+    os.close(1)
+    # This implicitly opens /dev/tty as fd 0 and fd 1. This is important
+    # because it's not enough to just overwrite sys.std*.
+    sys.stdin = os.open('/dev/tty', os.O_RDONLY)
+    sys.stdout = os.open('/dev/tty', os.O_RDWR)
+    return old_stdin, old_stdout
+
+def restore_stdio(old_stdin, old_stdout):
+    # Restore fd 0 and fd 1 and install proper file objects in sys.std*.
+    os.dup2(old_stdin, 0)
+    os.dup2(old_stdout, 1)
+    sys.stdin = os.fdopen(0, 'r')
+    sys.stdout = os.fdopen(1, 'w')
+
+
+if __name__ == '__main__':
+    locale.setlocale(locale.LC_ALL, '')
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-t', '--title')
+    parser.add_argument('items', nargs='+')
+    args = parser.parse_args()
+
+    # Traditional "pick" semantics: Use "-" to read from stdin,
+    # otherwise use argv.
+    if len(args.items) == 1 and args.items[0] == '-':
+        items = [i.rstrip('\r\n') for i in sys.stdin.readlines()]
+    else:
+        items = args.items
+
+    try:
+        # Directly open /dev/tty. Yes, this possibly won't work on
+        # strange systems. ;-) We do this so we can directly use this
+        # script in a shell command substitution like:
+        #   $ vim -p "$(choose *)"
+        try:
+            old_stdio = open_tty()
+            choice = curses.wrapper(interactive_choice, args, items)
+        finally:
+            restore_stdio(*old_stdio)
+
+        # Restore stdout and print the selected items.
+        for i in choice:
+            print(i)
+
+    except KeyboardInterrupt:
+        pass

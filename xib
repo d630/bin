@@ -1,0 +1,312 @@
+#!/usr/bin/env python2.7
+#
+# xib.
+# https://github.com/vain/bin-pub/blob/master/xib
+
+# Keys:
+#
+#   General:
+#     q       Quit
+#
+#   Selector pane:
+#     j, k    Scroll down/up (linewise)
+#     ^F, ^B  Scroll down/up (half page)
+#     g       Go to first line
+#     G       Go to last line
+#
+#   Output pane:
+#     J, K    Scroll down/up (linewise)
+#     ^N, ^P  Scroll down/up (half page)
+#     Space   Scroll down (half page)
+#
+#   Searching in selector pane:
+#     /, ?    Start searching downwards/upwards
+#     n, N    Go to next/previous match
+
+import argparse
+import fcntl
+import os
+import re
+import struct
+import subprocess
+import sys
+import termios
+import tty
+
+def termsize():
+    fd = sys.stdout.fileno()
+    return struct.unpack('hh', fcntl.ioctl(fd, termios.TIOCGWINSZ, 'aaaa'))
+
+def getch():
+    fd = sys.stdin.fileno()
+    old_settings = termios.tcgetattr(fd)
+    try:
+        tty.setraw(sys.stdin.fileno())
+        ch = sys.stdin.read(1)
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    return ch
+
+def interactive_choice(items, cmd, search=None):
+    current = 0
+    output_for_item = None
+    offset = 0
+    output_offset = 0
+    tilde_color = os.getenv('LESS_TERMCAP_md', '\033[1m')
+    safelen = 1 if len(items) == 0 else len(items)
+    search_forward = True
+    if not search is None:
+        initial_search = True
+        goto_next_search = True
+    else:
+        initial_search = False
+        goto_next_search = False
+        search = ''
+
+    while True:
+        # Move cursor to top left corner. This means all the previous
+        # content is still visible on screen. We will clear each line as
+        # we draw it. This significantly reduces flickering.
+        sys.stdout.write('\033[1;1H')
+
+        height, width = termsize()
+        height_show = int(height * 0.25)
+        if height_show <= 0:
+            return
+
+        # Do searching.
+        if goto_next_search and search != '':
+            goto_next_search = False
+            if initial_search:
+                # If this search was initiated by passing "search" as an
+                # argument to this function, then we must not skip the
+                # very first item.
+                search_start = 0
+                initial_search = False
+            else:
+                search_start = 1
+            if search_forward:
+                search_indices = range(current + search_start,
+                                       current + len(items))
+            else:
+                search_indices = range(current - search_start,
+                                       current - len(items), -1)
+            for i in search_indices:
+                which = i % len(items)
+                if re.search(search, items[which], re.I):
+                    current = which
+                    # Scroll up or down if needed.
+                    if current - offset >= height_show:
+                        offset = current - height_show + 1
+                    if current - offset <= -1:
+                        offset = current
+                    break
+
+        # Show available items. Mark the focused one.
+        actual_lines_shown = 0
+        for i, item in enumerate(items):
+            if i - offset < 0 or i - offset >= height_show:
+                continue
+
+            # Kill the existing contents of this line.
+            sys.stdout.write('\033[K')
+
+            # Show cursor.
+            if i == current:
+                sys.stdout.write('\033[0m\033[1;31m─>\033[0m ')
+
+                # When printing "item", extend existing escape sequences
+                # with "bold underline".
+                sys.stdout.write('\033[4;1m')
+                sys.stdout.write(re.sub(r'(\x1b[^m]+m)', '\\1\x1b[4;1m', item))
+                sys.stdout.write('\033[0m')
+            else:
+                sys.stdout.write('   ')
+                sys.stdout.write(item)
+
+            # Output the current line. Wrapping mode is activated, so
+            # there's no need to limit the line's length.
+            sys.stdout.write('\n')
+            actual_lines_shown += 1
+
+        sys.stdout.write('\033[0m\033[1;37;44m')
+        sys.stdout.write(' ' * (width - 5))
+        sys.stdout.write('{: 4.0f}%'.format((current + 1) * 100 / safelen))
+        sys.stdout.write('\033[0m')
+        sys.stdout.write('\n')
+        actual_lines_shown += 1
+
+        # Run external command and display output.
+        if current != output_for_item:
+            if len(items) == 0:
+                output = ''
+            else:
+                try:
+                    p = subprocess.Popen(cmd + [items[current]],
+                                         stdout=subprocess.PIPE,
+                                         stderr=subprocess.STDOUT)
+                    output = p.communicate()[0]
+                except Exception, e:
+                    output = 'Error while executing command:\n\n{}'.format(e)
+            lines = output.splitlines()
+            output_for_item = current
+        output_line_at = output_offset
+        while actual_lines_shown < height:
+            if output_line_at >= len(lines):
+                break
+            sys.stdout.write('\033[K')
+            sys.stdout.write(lines[output_line_at])
+            if actual_lines_shown < height - 1:
+                sys.stdout.write('\n')
+            else:
+                sys.stdout.flush()
+            output_line_at += 1
+            actual_lines_shown += 1
+        sys.stdout.write(tilde_color)
+        while actual_lines_shown < height:
+            sys.stdout.write('\033[K')
+            sys.stdout.write('~')
+            if actual_lines_shown < height - 1:
+                sys.stdout.write('\n')
+            else:
+                sys.stdout.flush()
+            actual_lines_shown += 1
+        sys.stdout.write('\033[0m')
+
+        # Wait for next command.
+        char = getch()
+
+        # Quit.
+        if char in ['q', 'Q', '\003']:   # \003 = ^C
+            sys.stdout.write('\n')
+            sys.stdout.flush()
+            return
+
+        # Movement.
+        if char in ['j']:
+            current += 1
+            output_offset = 0
+        if char in ['k']:
+            current -= 1
+            output_offset = 0
+
+        if char in ['\006']:    # ^F
+            current += int(0.5 * height_show)
+            output_offset = 0
+        if char in ['\002']:    # ^B
+            current -= int(0.5 * height_show)
+            output_offset = 0
+
+        if char in ['g']:
+            current = 0
+            output_offset = 0
+        if char in ['G']:
+            current = len(items) - 1
+            output_offset = 0
+
+        if current < 0:
+            current = 0
+        if current >= len(items):
+            current = len(items) - 1
+
+        # Scroll up or down if needed.
+        if current - offset >= height_show:
+            offset = current - height_show + 1
+        if current - offset <= -1:
+            offset = current
+
+        if offset < 0:
+            offset = 0
+        if offset >= len(items):
+            offset = len(items) - 1
+
+        # Scroll external output.
+        if char in ['J']: output_offset += 1
+        if char in ['K']: output_offset -= 1
+
+        if char in ['\016', ' ']:   # ^N
+            output_offset += int(0.5 * (height - height_show - 1))
+        if char in ['\020']:        # ^P
+            output_offset -= int(0.5 * (height - height_show - 1))
+
+        if output_offset < 0:
+            output_offset = 0
+        if len(lines) > 0 and output_offset >= len(lines):
+            output_offset = len(lines) - 1
+
+        # Query search argument.
+        if char in ['/', '?']:
+            tty_echo(True)
+            sys.stdout.write('\033[?25h')  # Make cursor visible
+            sys.stdout.write('\033[{};0H'.format(height_show + 1))
+            sys.stdout.write('\033[0m\033[1;37;44m')
+            sys.stdout.write(char)
+            sys.stdout.flush()
+            search = raw_input()
+            sys.stdout.write('\033[0m')
+            sys.stdout.write('\033[?25l')  # Make cursor invisible
+            tty_echo(False)
+            goto_next_search = True
+            if char == '/':
+                search_forward = True
+            else:
+                search_forward = False
+            output_offset = 0
+        if char in ['n']:
+            goto_next_search = True
+            search_forward = True
+            output_offset = 0
+        if char in ['N']:
+            goto_next_search = True
+            search_forward = False
+            output_offset = 0
+
+def open_tty():
+    os.close(0)
+    os.close(1)
+    sys.stdin = open('/dev/tty', 'r')
+    sys.stdout = open('/dev/tty', 'w')
+
+def tty_echo(enabled):
+    fd = sys.stdout.fileno()
+    flags = termios.tcgetattr(fd)
+    newflags = flags[:]
+    if enabled:
+        newflags[3] |= termios.ECHO
+    else:
+        newflags[3] &= ~termios.ECHO
+    termios.tcsetattr(fd, termios.TCSANOW, newflags)
+    return flags
+
+def setup_terminal():
+    open_tty()
+
+    sys.stdout.write('\033[?1049h')  # Switch to secondary screen
+    sys.stdout.write('\033[?25l')    # Make cursor invisible
+    sys.stdout.write('\033[?7l')     # Turn off wrapping (XTerm, RXVT)
+
+    return tty_echo(False)
+
+def reset_terminal(flags):
+    fd = sys.stdout.fileno()
+    termios.tcsetattr(fd, termios.TCSANOW, flags)
+
+    sys.stdout.write('\033[?7h')     # Turn on wrapping (XTerm, RXVT)
+    sys.stdout.write('\033[?25h')    # Make cursor visible
+    sys.stdout.write('\033[?1049l')  # Switch from secondary screen
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='XTerm Interactive Browser')
+    parser.add_argument('-g', '--goto')
+    parser.add_argument('cmd', nargs='+')
+    args = parser.parse_args()
+
+    try:
+        items = [i.rstrip('\r\n') for i in sys.stdin.readlines()]
+        try:
+            flags = setup_terminal()
+            interactive_choice(items, args.cmd, search=args.goto)
+        finally:
+            reset_terminal(flags)
+    except KeyboardInterrupt:
+        pass

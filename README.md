@@ -28,6 +28,7 @@ List:
 * [calculate-date](https://github.com/D630/bin/blob/master/calculate-date): Calculate dates via taskwarrior.
 * [camshot-dirty](https://github.com/D630/bin/blob/master/camshot-dirty): Take a quick camshot.
 * [cclean](https://github.com/D630/bin/blob/master/cclean): Clean up some dirs and files.
+* [choose](https://github.com/D630/bin/blob/master/choose): choose.
 * [chromiumw--proxy](https://github.com/D630/bin/blob/master/chromiumw--proxy): Start chromiumw and redirect traffic through a proxy server.
 * [chromiumw-mselect-history](https://github.com/D630/bin/blob/master/chromiumw-mselect-history): Browse the history of chromium via fzf, and then open selection.
 * [chromiumw](https://github.com/D630/bin/blob/master/chromiumw): Wrapper: chromium
@@ -194,6 +195,7 @@ List:
 * [x-text-editor](https://github.com/D630/bin/blob/master/x-text-editor): Default editor (gui).
 * [x-video-player](https://github.com/D630/bin/blob/master/x-video-player): Default video player (gui).
 * [x-web-browser](https://github.com/D630/bin/blob/master/x-web-browser): Default web browser (gui).
+* [xib](https://github.com/D630/bin/blob/master/xib): xib.
 * [xorg-autolock](https://github.com/D630/bin/blob/master/xorg-autolock): Default xautolock programme.
 * [xorg-dpms-standby](https://github.com/D630/bin/blob/master/xorg-dpms-standby): Set DPMS to standby state.
 * [xorg-get-xclass](https://github.com/D630/bin/blob/master/xorg-get-xclass): Get interactively xclass info about a xwindow.
