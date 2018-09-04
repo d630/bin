@@ -8,8 +8,8 @@ flock -n 9 || {
     exit 1;
 };
 
-mail-retrieve ||
-    exit $?;
+mail-retrieve #||
+    # exit $?;
 
 mapfile -t reply < <(mail-inbox);
 
