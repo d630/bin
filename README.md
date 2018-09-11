@@ -68,6 +68,7 @@ List:
 * [get-news](https://github.com/D630/bin/blob/master/get-news): Wrapper for getting my news.
 * [get-webheader](https://github.com/D630/bin/blob/master/get-webheader): Get webheader via curl.
 * [get-wetter](https://github.com/D630/bin/blob/master/get-wetter): Get infos from http://wetter.tagesschau.de.
+* [grep-urls](https://github.com/D630/bin/blob/master/grep-urls): Grep urls from stdin.
 * [habit-editor](https://github.com/D630/bin/blob/master/habit-editor): Add a task to Taskwarrior ('habit' context) via vim (yaml).
 * [habit](https://github.com/D630/bin/blob/master/habit): Wrapper: Use taskwarrior in my 'habit' context.
 * [hblock](https://github.com/D630/bin/blob/master/hblock): Simple ad- and malware-blocking-list builder for dnsmasq.
