@@ -1,39 +1,23 @@
-#!/usr/bin/env perl
+#!/bin/sh
 #
 # Grep urls from stdin.
 # Source: https://gist.github.com/GuillaumeLestringant/36c11afcc35c8c5b9123
 
-use utf8;
+proto="((?:https?|ftp)://|)";
+id="?:\S+(?::\S*)?@";
+ip_excluded="(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})";
+ip_included="(?:1\d\d|2[01]\d|22[0-3]|[1-9]\d?)(?:\.(?:2[0-4]\\d|25[0-5]|1?\\d{1,2})){2}(?:\.(?:1\d\d|2[0-4]\d|25[0-4]|[1-9]\d?))";
+ip="$ip_excluded$ip_included";
+chars="a-z\x{00a1}-\x{ffff}";
+base="(?:[${chars}0-9]-*)*[${chars}0-9]+";
+host="(?:$base)";
+domain="(?:\.$base)*";
+tld="(?:\.(?:[${chars}]{2,}))";
+fulldomain=$host$domain$tld"\.?";
+name="(?:$ip|$fulldomain)";
+port="(?::\d{2,5})?";
+path="(?:[/?#]\S*)?";
 
-sub url_regex {
-	my $proto = "((?:https?|ftp)://|)";
-	my $id = "?:\\S+(?::\\S*)?@";
-	my $ip_excluded = "(?!(?:10|127)(?:\\.\\d{1,3}){3})"
-		. "(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})"
-		. "(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})";
-	my $ip_included = "(?:1\\d\\d|2[01]\\d|22[0-3]|[1-9]\\d?)"
-		. "(?:\\.(?:2[0-4]\\d|25[0-5]|1?\\d{1,2})){2}"
-		. "(?:\\.(?:1\\d\\d|2[0-4]\\d|25[0-4]|[1-9]\\d?))";
-	my $ip = "$ip_excluded$ip_included";
-	my $chars = "a-z\\x{00a1}-\\x{ffff}";
-	my $base = "(?:[${chars}0-9]-*)*[${chars}0-9]+";
-	my $host = "(?:$base)";
-	my $domain = "(?:\\.$base)*";
-	my $tld = "(?:\\.(?:[${chars}]{2,}))";
-	my $fulldomain = $host . $domain . $tld . "\\.?";
-	my $name = "(?:$ip|$fulldomain)";
-	my $port = "(?::\\d{2,5})?";
-	my $path = "(?:[/?#]\\S*)?";
+exec grep -P -i -e "^($proto($id)?$name$port$path)\$";
 
-	return "^($proto($id)?$name$port$path)\$";
-}
-
-my $URL_MATCH = url_regex();
-
-while (<>) {
-	if ($_ =~ m=$URL_MATCH=i) {
-		print "$_";
-	}
-}
-
-# vim: set ft=perl :
+# vim: set ft=sh :
