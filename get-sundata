@@ -15,8 +15,7 @@
     $sunrise = date_sunrise($now, SUNFUNCS_RET_STRING, $latitude, $longitude, 90.583333, $offset);
     $sunset = date_sunset($now, SUNFUNCS_RET_STRING, $latitude, $longitude, 90.583333, $offset);
 
-    print $sunrise . PHP_EOL;
-    print $sunset . PHP_EOL;
+    print $sunrise . PHP_EOL . $sunset . PHP_EOL;
 
     // vim: set ft=php :
 ?>
