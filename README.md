@@ -66,6 +66,7 @@ List:
 * [get-gaisma](https://github.com/D630/bin/blob/master/get-gaisma): Get sun data infos from http://www.gaisma.com.
 * [get-netz](https://github.com/D630/bin/blob/master/get-netz): Show network connections.
 * [get-news](https://github.com/D630/bin/blob/master/get-news): Wrapper for getting my news.
+* [get-sundata](https://github.com/D630/bin/blob/master/get-sundata): Get sunrise and sunset.
 * [get-webheader](https://github.com/D630/bin/blob/master/get-webheader): Get webheader via curl.
 * [get-wetter](https://github.com/D630/bin/blob/master/get-wetter): Get infos from http://wetter.tagesschau.de.
 * [grep-urls](https://github.com/D630/bin/blob/master/grep-urls): Grep urls from stdin.

@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+    // Get sunrise and sunset.
+
+    $now = $argv[1];
+    if (empty($now)) {
+        $now = time();
+    }
+
+    $latitude = getenv('X_MY_LATITUDE1');
+    $longitude = getenv('X_MY_LONGITUDE1');
+    $time = new DateTime('now', new DateTimeZone(getenv('TZ')));
+    $offset = $time->getOffset() / 3600;
+
+    $sunrise = date_sunrise($now, SUNFUNCS_RET_STRING, $latitude, $longitude, 90.583333, $offset);
+    $sunset = date_sunset($now, SUNFUNCS_RET_STRING, $latitude, $longitude, 90.583333, $offset);
+
+    print $sunrise . PHP_EOL;
+    print $sunset . PHP_EOL;
+
+    // vim: set ft=php :
+?>
