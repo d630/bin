@@ -3,7 +3,8 @@
 # Wrap up spotify.
 
 daemonize spotify \
-    --experimental-network no-ipv6 \
-    --force-device-scale-factor="${GDK_SCALE:-1}";
+	--experimental-network no-ipv6 \
+	--force-unicast-discovery \
+	--force-device-scale-factor="${GDK_SCALE:-1}";
 
 # vim: set ft=sh :
