@@ -18,12 +18,12 @@ sudo sh -c '
     apt-get install -f;
 ';
 
-PrintHeader Perl\ modules;
+PrintHeader cpan\ modules;
 cpan-outdated -p --exclude-core |
 cpanm -iv --self-contained;
 
 PrintHeader npm\ modules;
-npm -g update;
+npm update -g;
 
 PrintHeader go\ packages;
 go get -v -u all;
@@ -31,5 +31,8 @@ go get -v -u all;
 PrintHeader cabal\ packages;
 cabal update;
 cabal install world --upgrade-dependencies --force-reinstalls;
+
+PrintHeader composer\ packages;
+composer global update;
 
 # vim: set ft=sh :

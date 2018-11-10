@@ -32,7 +32,7 @@ for d in "${XDG[@]}" "$HOME/"{.cabal,.ghc,.cpanm,.vim/{autoload,bundle},.emacs.d
     echo \* > "$d/".gitignore;
 done;
 
-for d in "${XDG[OPT_HOME]}/"{go,npm,perl5,win32,win64}; do
+for d in "${XDG[OPT_HOME]}/"{cabal,cpanm,go,npm,perl5,win32,win64}; do
     mkdir -vp -- "$d";
     echo \* > "$d/".gitignore;
 done;

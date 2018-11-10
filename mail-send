@@ -32,7 +32,7 @@ do
             loggi 3 .email.error 'Delivery error. [posteo] Mails not sent: '"$cnt";
             exit 1;;
         (*)
-            msmtp-queue -r;
+            msmtpqw -r;
             set -- "$maildir/"!(\.*);
             ((i++));
             sleep 1;

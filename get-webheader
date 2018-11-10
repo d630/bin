@@ -2,6 +2,6 @@
 #
 # Get webheader via curl.
 
-curl -I --compress "$1";
+curl -I --compressed "$1";
 
 # vim: set ft=sh :
