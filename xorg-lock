@@ -19,7 +19,7 @@ s () {
 
 	spotify-mpris PlayPause;
 	mpc toogle;
-};
+} 2> /dev/null;
 
 trap t INT TERM QUIT EXIT HUP;
 xset +dpms dpms 3 3 3;
