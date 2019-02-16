@@ -18,6 +18,6 @@ name="(?:$ip|$fulldomain)";
 port="(?::\d{2,5})?";
 path="(?:[/?#]\S*)?";
 
-exec grep -P -i -e "^($proto($id)?$name$port$path)\$";
+exec grep ${1:+"$@"} -P -i -e "^($proto($id)?$name$port$path)\$";
 
 # vim: set ft=sh :

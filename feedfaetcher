@@ -20,7 +20,7 @@ function __feedcacher_do {
         return 1;
 
     if
-        [[ $url =~ ^https?://.*\.[a-z]*/.*$ ]];
+        grep-urls -q <<< "$url";
     then
         filename=${url:0:121};
         filename=${filename//_/-};
@@ -48,11 +48,11 @@ function __feedcacher_do {
                 1>&3;
         else
             rm -- "$onlinexml";
-            printf 'FAIL %(%Y-%m-%d_%H:%M)T URL:%s unattainable\n' -1 "$1" 1>&3;
+            printf 'FAIL %(%Y-%m-%d_%H:%M)T URL:%s unavailable\n' -1 "$1" 1>&3;
             return 1;
         fi;
     else
-        printf 'FAIL %(%Y-%m-%d_%H:%M)T URL:%s does not match\n' -1 "$1" 1>&3;
+        printf 'FAIL %(%Y-%m-%d_%H:%M)T URL:%s invalide uri\n' -1 "$1" 1>&3;
         return 1;
     fi;
 };
