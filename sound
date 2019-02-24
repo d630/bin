@@ -5,13 +5,10 @@
 if
     test -p /dev/stdin -o -f /dev/stdin;
 then
-    read -r urgency appname summary _;
+    read -r urgency summary _;
 else
-    appname=$1 \
     summary=$2 \
-    body=$3 \
-    icon=$4 \
-    urgency=$5;
+    urgency=$1;
 fi;
 
 case $urgency in
@@ -64,4 +61,4 @@ esac;
 
 aplay "${XDG_DATA_HOME:-/home/user1/share}/sounds/${f:?}" 1>/dev/null 2>&1;
 
-# vim: set ft=sh :
+# vim: set ft=sh

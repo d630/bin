@@ -39,12 +39,12 @@ $(
     printf %s\\n "# $release security";
     [[ $release == unstable ]] || {
         printf %s\\n "deb http://security.debian.org/ $release/updates main contrib non-free";
-        printf %s\\n "deb-src http://security.debian.org/ $release/updates main contrib non-free";
+        printf %s\\n "# deb-src http://security.debian.org/ $release/updates main contrib non-free";
     };
 )
 # $release multimedia
-deb http://www.deb-multimedia.org $release main non-free
-deb-src http://www.deb-multimedia.org $release main non-free
+# deb http://www.deb-multimedia.org $release main non-free
+# deb-src http://www.deb-multimedia.org $release main non-free
 SEC
 
     printf '%s\n\n' "$section" > /tmp/napt/$release-source.list;
@@ -54,8 +54,8 @@ done;
     section=$(</dev/fd/0);
 } <<SEC
 # experimental
-deb http://httpredir.debian.org/debian experimental main contrib non-free
-deb-src http://httpredir.debian.org/debian experimental main contrib non-free
+# deb http://httpredir.debian.org/debian experimental main contrib non-free
+# deb-src http://httpredir.debian.org/debian experimental main contrib non-free
 SEC
 
 mv -v /etc/apt/sources.list /etc/apt/sources.list.old;
