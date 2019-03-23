@@ -117,7 +117,6 @@ List:
 * [mutt--spool](https://github.com/D630/bin/blob/master/mutt--spool): Wrapper: mutt spool.
 * [mutt-save-attachments](https://github.com/D630/bin/blob/master/mutt-save-attachments): Save attachements in Mutt.
 * [network-device](https://github.com/D630/bin/blob/master/network-device): Configure my network devices.
-* [newsbeuter2taskum](https://github.com/D630/bin/blob/master/newsbeuter2taskum): Add a bookmark to taswarrior-um in newsbeuter.
 * [noti](https://github.com/D630/bin/blob/master/noti): Send notifications (meant to be used with dunst and rsyslog).
 * [ocean](https://github.com/D630/bin/blob/master/ocean): Simulate ocean sound.
 * [open](https://github.com/D630/bin/blob/master/open): Open files or strings in preferred applications.
@@ -166,6 +165,7 @@ List:
 * [sxhkd-restart](https://github.com/D630/bin/blob/master/sxhkd-restart): Restart sxhkd.
 * [sxiv-browser](https://github.com/D630/bin/blob/master/sxiv-browser): Open all files in the current directory with sxiv.
 * [task-local](https://github.com/D630/bin/blob/master/task-local): Simple wrapper for using taskwarrior with local "task-repos".
+* [taskum-add](https://github.com/D630/bin/blob/master/taskum-add): Add a bookmark to taswarrior-um (via newsbeuter/newsboat)
 * [taskwarrior-cv](https://github.com/D630/bin/blob/master/taskwarrior-cv): Source or print all defaults of Taskwarrior's configuration settings (v2.5.1).
 * [tcsh--filetest](https://github.com/D630/bin/blob/master/tcsh--filetest): Use the filetest builtin command of tcsh.
 * [tcsh--printenv](https://github.com/D630/bin/blob/master/tcsh--printenv): Use the printenv builtin command of tcsh.
