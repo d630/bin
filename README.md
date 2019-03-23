@@ -40,7 +40,6 @@ List:
 * [daemonize](https://github.com/D630/bin/blob/master/daemonize): Daemonize a command.
 * [daylight](https://github.com/D630/bin/blob/master/daylight): Test against daytime and adjust my config.
 * [debian-build-sources-list](https://github.com/D630/bin/blob/master/debian-build-sources-list): Build /etc/apt/sources.list with the help of netselect-apt.
-* [debian-deploy-desktop](https://github.com/D630/bin/blob/master/debian-deploy-desktop): Deploy my desktop (after Debian GNU/Linux netinstallation without use of tasksel).
 * [debian-dist-upgrade](https://github.com/D630/bin/blob/master/debian-dist-upgrade): Dist-upgrade packages from Debian.
 * [debian-update-alternatives](https://github.com/D630/bin/blob/master/debian-update-alternatives): Make Debian alternatives.
 * [debian-upgrade](https://github.com/D630/bin/blob/master/debian-upgrade): Upgrade packages from Debian.
