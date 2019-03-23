@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Record url of feed in newsboat via dmenu.
+
+cache=${XDG_VAR_HOME:?}/lib/feedfaetcher/cache \
+tagfile=$XDG_CONFIG_HOME/newsboat/tags \
+feedfile=$XDG_CONFIG_HOME/newsboat/urls \
+
+feed=$(
+    find -H "$cache" -type f |
+    menu dmenu2 FEED;
+);
+
+tags=$(
+    grep -v -e '^"_Filter' -- "$tagfile" |
+    menu dmenu2 TAGS;
+);
+
+if
+    test -n "$tags";
+then
+    printf 'file://%s %s\n' "$feed" "$tags" >> "$feedfile";
+else
+    printf 'No tag has been chosen\n' 1>&2;
+fi;
+
+# vim: set ft=sh :

@@ -52,7 +52,7 @@ List:
 * [event](https://github.com/D630/bin/blob/master/event): Wrapper: Use taskwarrior in my 'event' context.
 * [fb-image-viewer](https://github.com/D630/bin/blob/master/fb-image-viewer): Default image viewer (framebuffer).
 * [fc-edit](https://github.com/D630/bin/blob/master/fc-edit): Default fc editor ($FCEDIT).
-* [feed2newsbeuter](https://github.com/D630/bin/blob/master/feed2newsbeuter): Record url of feed in newsbeuter via dmenu.
+* [feed2newsboat](https://github.com/D630/bin/blob/master/feed2newsboat): Record url of feed in newsboat via dmenu.
 * [feedfaetcher](https://github.com/D630/bin/blob/master/feedfaetcher): Simple feed downloader based on urldiff.
 * [file-browser](https://github.com/D630/bin/blob/master/file-browser): Default file manager (tui).
 * [find-file](https://github.com/D630/bin/blob/master/find-file): Find file under the current directory with flag -ls.
