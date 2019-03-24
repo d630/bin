@@ -5,10 +5,14 @@
 log=${XDG_VAR_HOME:-/home/user1/var}/log/urls.log;
 touch -- "$log";
 
-grep -F -e reply /var/log/dnsmasq.log |
+grep -F -e ' reply ' /var/log/dnsmasq.log |
+grep -F -v -e CNAME -e NXDOMAIN -e NODATA |
 cut -d ' ' -f 6 |
+/home/user1/bin/grep-urls |
 cat -- "$log" - |
-sort -u > "$log.$$" &&
-    mv -- "$log.$$" "$log";
+sort -u > "/tmp/$log.$$" &&
+    mv -- "/tmp/$log.$$" "$log";
+
+chmod 755 "$log";
 
 # vim: set ft=sh :
