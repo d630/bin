@@ -2,7 +2,8 @@
 #
 # Backup all uris from dnsmasq log.
 
-log=${XDG_VAR_HOME:-/home/user1/var}/log/urls.log;
+file=urls.log
+log=${XDG_VAR_HOME:-/home/user1/var}/log/$file;
 touch -- "$log";
 
 grep -F -e ' reply ' /var/log/dnsmasq.log |
@@ -10,8 +11,8 @@ grep -F -v -e CNAME -e NXDOMAIN -e NODATA |
 cut -d ' ' -f 6 |
 /home/user1/bin/grep-urls |
 cat -- "$log" - |
-sort -u > "/tmp/$log.$$" &&
-    mv -- "/tmp/$log.$$" "$log";
+sort -u > "/tmp/$file.$$" &&
+    mv -- "/tmp/$file.$$" "$log";
 
 chmod 755 "$log";
 
