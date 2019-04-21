@@ -2,7 +2,7 @@
 #
 # Wrapper: chromium
 
-r=${TMPDIR:?}/chromiumw;
+r=${XDG_CACHE_HOME:?}/chromiumw;
 
 test -r "$r" -a -n "$force_new" && {
     t=$(mktemp -d);

@@ -2,7 +2,7 @@
 #
 # Wrapper: firefox
 
-r=${TMPDIR:?}/firefoxw;
+r=${XDG_CACHE_HOME:?}/firefoxw;
 
 test -r "$r" -a -n "$force_new" && {
     t=$(mktemp -d);
