@@ -14,7 +14,7 @@ t () {
 };
 
 s () {
-	test "$X_DPI" = 96 ||
+	test "${X_DPI:-96}" -eq 96 ||
 		return;
 
 	spotify-mpris PlayPause;
