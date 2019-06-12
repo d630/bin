@@ -24,11 +24,11 @@ __these ()
 	sed "
 		/ -[so] / {
 			s/$/ ${BOLD}${GREEN}enabled${RESET}/;
-			b return;
-		}; {
+			b;
+		};
+		{
 			s/$/ ${BOLD}${RED}disabled${RESET}/;
 		};
-		: return;
 	" |
 		sort -k 3 |
 		column -t |
