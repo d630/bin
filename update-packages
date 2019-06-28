@@ -38,6 +38,6 @@ cabal install world --upgrade-dependencies --force-reinstalls;
 PrintHeader python3;
 pip3 freeze --user |
 sed 's:==.*::' |
-xargs pip3 install -U;
+xargs pip3 install --user --upgrade;
 
 # vim: set ft=sh :
