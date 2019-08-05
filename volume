@@ -12,7 +12,7 @@ case $1 in
     (--)
         amixer -q sset Master 2%-;;
     (toggle)
-        amixer -q sset Master toggle;;
+        amixer -q -c 1 sset Master toggle;;
 esac;
 
 # vim: set ft=sh :
