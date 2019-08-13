@@ -14,6 +14,7 @@ List:
 * [bash-print-freq](https://github.com/D630/bin/blob/master/bash-print-freq): Print frequency of the bash history.
 * [bash-toggle-options.bash](https://github.com/D630/bin/blob/master/bash-toggle-options.bash): Toggle bash options via fzf.
 * [binary-to-nibble](https://github.com/D630/bin/blob/master/binary-to-nibble): Group binary numbers into nibbles (used with bc output).
+* [blackw](https://github.com/D630/bin/blob/master/blackw): Wrapper: black.
 * [borg-weekly](https://github.com/D630/bin/blob/master/borg-weekly): Weekly backup with borg.
 * [bspot-create-featured-lists](https://github.com/D630/bin/blob/master/bspot-create-featured-lists): Spotify: Take pub list1 and create audio-featured public lists.
 * [bspot-create-gpb-lists](https://github.com/D630/bin/blob/master/bspot-create-gpb-lists): Spotify: Take pub list1 and create public gpb lists.
@@ -58,6 +59,7 @@ List:
 * [find-file](https://github.com/D630/bin/blob/master/find-file): Find file under the current directory with flag -ls.
 * [find-string](https://github.com/D630/bin/blob/master/find-string): Grep string in all files under the current directory with find.
 * [firefoxw](https://github.com/D630/bin/blob/master/firefoxw): Wrapper: firefox
+* [flake8w](https://github.com/D630/bin/blob/master/flake8w): Wrapper: flake8
 * [furlview](https://github.com/D630/bin/blob/master/furlview): Simple replacement for urlview using fzf in X.
 * [fzf-bind.bash](https://github.com/D630/bin/blob/master/fzf-bind.bash): My fzf keybinding script for bash.
 * [fzf-ls](https://github.com/D630/bin/blob/master/fzf-ls): Select files listed in a directory.
@@ -80,6 +82,7 @@ List:
 * [imapfilter-localhost-delete](https://github.com/D630/bin/blob/master/imapfilter-localhost-delete): Wrapper: imapfilter with config localhost-delete.lua.
 * [imapfilter-localhost-unseen](https://github.com/D630/bin/blob/master/imapfilter-localhost-unseen): Wrapper: imapfilter with config localhost-unseen.lua.
 * [iplog](https://github.com/D630/bin/blob/master/iplog): Daily ip logging.
+* [isortw](https://github.com/D630/bin/blob/master/isortw): Wrapper: isort.
 * [issue-editor](https://github.com/D630/bin/blob/master/issue-editor): Add a task into Taskwarrior ('issue' context) via vim (yaml).
 * [issue](https://github.com/D630/bin/blob/master/issue): Wrapper: Use taskwarrior in my 'issue' context.
 * [lan-down](https://github.com/D630/bin/blob/master/lan-down): Wrapper: set lan off.
@@ -116,6 +119,7 @@ List:
 * [mutt--posteo](https://github.com/D630/bin/blob/master/mutt--posteo): Wrapper: mutt posteo.
 * [mutt--spool](https://github.com/D630/bin/blob/master/mutt--spool): Wrapper: mutt spool.
 * [mutt-save-attachments](https://github.com/D630/bin/blob/master/mutt-save-attachments): Save attachements in Mutt.
+* [mypyw](https://github.com/D630/bin/blob/master/mypyw): Wrapper: mypy.
 * [network-device](https://github.com/D630/bin/blob/master/network-device): Configure my network devices.
 * [noti](https://github.com/D630/bin/blob/master/noti): Send notifications (meant to be used with dunst and rsyslog).
 * [ocean](https://github.com/D630/bin/blob/master/ocean): Simulate ocean sound.
