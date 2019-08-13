@@ -52,7 +52,8 @@ List:
 * [fb-image-viewer](https://github.com/D630/bin/blob/master/fb-image-viewer): Default image viewer (framebuffer).
 * [fc-edit](https://github.com/D630/bin/blob/master/fc-edit): Default fc editor ($FCEDIT).
 * [feed2newsboat](https://github.com/D630/bin/blob/master/feed2newsboat): Record url of feed in newsboat via dmenu.
-* [feedfaetcher](https://github.com/D630/bin/blob/master/feedfaetcher): Simple feed downloader based on urldiff.
+* [feedfaetcher](https://github.com/D630/bin/blob/master/feedfaetcher): Simple news feed downloader.
+* [feedfaetcherw](https://github.com/D630/bin/blob/master/feedfaetcherw): Wrapper: feedfaetcher.
 * [file-browser](https://github.com/D630/bin/blob/master/file-browser): Default file manager (tui).
 * [find-file](https://github.com/D630/bin/blob/master/find-file): Find file under the current directory with flag -ls.
 * [find-string](https://github.com/D630/bin/blob/master/find-string): Grep string in all files under the current directory with find.
