@@ -8,11 +8,12 @@ urllist=$feedcacherdir/urls.txt;
 mkdir -p "$feedcacherdir";
 
 if
-	test -n "$1"
+	test -n "$1";
 then
-	<<< "$1" cat -- "$urllist" - |
-		sort -u > "$urllist.$$" &&
-		mv -- "$urllist.$$" "$urllist";
+	list=$(cat -- "$urllist" - | sort -u) <<-IN
+		$1
+	IN
+	echo "$list" > "$urllist";
 else
 	exec feedfaetcher;
 fi;

@@ -47,7 +47,7 @@ def handle(url):
 
 
 def get(url):
-    return requests.get(url, stream=stream)
+    return requests.get(url, stream=True)
 
 
 def write(url, resp):
