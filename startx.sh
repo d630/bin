@@ -47,10 +47,11 @@ function __startx {
     logger --id=$$ -t startx.sh -p user.info \
         'Initializing X session '"for $LOGNAME";
 
-    (
-        exec 1> >(logger -e --id=$$ -t Xorg.0 -p user.notice) 2>&1;
-        exec xinit "$XINITRC" -- "$HOME/".xserverrc -auth "$sxauth";
-    )
+	(
+		cd "$HOME";
+		exec 1> >(logger -e --id=$$ -t Xorg.0 -p user.notice) 2>&1;
+		exec xinit "$XINITRC" -- "$HOME/".xserverrc -auth "$sxauth";
+	)
 
     logger --id=$$ -t startx.sh -p user.info \
         'Finishing X session '"for $LOGNAME";

@@ -36,6 +36,8 @@ done < <(
 for k in "${!dates[@]}";
 do
 	list2=${k#*|};
+	[[ $list2 == "END" ]] &&
+		continue
 	mapfile -t -d , <<< "${dates[$k]}";
 	bspot clearList "$user" "$list2" "$token";
 	for ((i = ${#MAPFILE[@]} - 2; i >= 0; i--));
