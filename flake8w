@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# Wrapper: flake8
+
+# B		All B class violations are reported by flake8-bugbear
+# B9	All B9 class violations are optional warnings reported by flake8-bugbear
+# C		All C class violations are reported by mccabe
+# E		All E class violations are "errors" reported by pycodestyle
+# F		All F class violations are reported by pyflakes
+# W		All W class violations are "warnings" reported by pycodestyle
+# T4	All T4 violations are reported by flake8-mypy
+
+# B950	Line too long
+# E501	Line too long (82 > 79 characters)
+# T484	Relative import climbs too many namespaces
+# W503	Line break before binary operator
+
+exec flake8 \
+	--select 'B,C,E,F,W,T4,B9' \
+	--ignore 'B950,E501,W503' \
+	--max-line-length '80' \
+	--max-complexity '18' \
+	"$@";
+
+# vim: set ft=sh :
