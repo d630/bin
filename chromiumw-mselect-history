@@ -6,10 +6,10 @@
 cols=$(($(tput cols) / 3));
 sep={{::}};
 
-cp -f -- "${TMPDIR:?}/"chromiumw/Default/History "${TMPDIR:?}/"h.chromium;
+cp -f -- "${XDG_CACHE_HOME:?}/"chromiumw/Default/History "$XDG_CACHE_HOME/"h.chromium;
 
 __sqlite () {
-    sqlite3 -separator "$sep" "$TMPDIR/"h.chromium "
+    sqlite3 -separator "$sep" "$XDG_CACHE_HOME/"h.chromium "
         select substr(title, 1, $cols), url
         from urls
         order by last_visit_time desc";
