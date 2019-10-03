@@ -22,10 +22,10 @@
 
 case ${1,,} in
 	(pch|hdmi)
-		exec ln -fsr "$HOME/".asoundrc_${1,,} "$HOME/".asoundrc;;
-	(*)
-		printf '?\n';
-		! :;;
+		exec ln -fsr "$HOME/.asoundrc_${1,,}" "$HOME/.asoundrc";;
 esac;
+
+printf '?\n' 1>&2;
+! :;
 
 # vim: set ft=sh :

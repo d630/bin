@@ -8,8 +8,7 @@ flock -n 9 || {
     exit 1;
 };
 
-mail-retrieve #||
-    # exit $?;
+mail-retrieve;
 
 mapfile -t reply < <(mail-inbox);
 
@@ -23,6 +22,7 @@ mapfile -t reply < <(mail-inbox);
     exit 1;
 
 loggi 6 .email.arrived \
- "${reply[0]:-?}\n${reply[1]:-?}\n${reply[2]:-?}\n${reply[3]:-?}\n${reply[4]:-?}";
+	"\n${reply[0]:-?}\n${reply[1]:-?}\n${reply[2]:-?}\n${reply[3]:-?}\n${reply[4]:-?}" 2>/dev/null;
+printf '%s\n' "${reply[@]}";
 
 # vim: set ft=sh :

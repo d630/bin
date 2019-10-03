@@ -36,9 +36,6 @@ with open(url_list) as f:
 if not urls:
     sys.exit(1)
 
-executor = concurrent.futures.ThreadPoolExecutor(10)
-loop = asyncio.new_event_loop()
-
 
 def handle(url):
     resp = get(url)
@@ -65,6 +62,9 @@ async def make_requests():
     futures = [loop.run_in_executor(executor, handle, url) for url in urls]
     await asyncio.gather(*futures)
 
+
+executor = concurrent.futures.ThreadPoolExecutor(10)
+loop = asyncio.new_event_loop()
 
 loop.run_until_complete(make_requests())
 loop.close()
