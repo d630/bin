@@ -1,33 +1,158 @@
 #!/bin/sh
 #
 # bspwm: external_rules_command
+#
+# Absolute path to the command used to retrieve rule consequences.
+# The command will receive the following arguments: window ID, class
+# name, instance name, and intermediate consequences. The output of
+# that command must have the following format: key1=value1
+# key2=value2 ...  (the valid key/value pairs are given in the
+# description of the rule command).
+#
+#
+# Rule
+#    General Syntax
+# 	   rule COMMANDS
+#
+#    Commands
+# 	   -a, --add (<class_name>|*)[:(<instance_name>|*)] [-o|--one-shot]
+# 	   [monitor=MONITOR_SEL|desktop=DESKTOP_SEL|node=NODE_SEL]
+# 	   [state=STATE] [layer=LAYER] [split_dir=DIR] [split_ratio=RATIO]
+# 	   [(hidden|sticky|private|locked|marked|center|follow|manage|focus|border)=(on|off)]
+# 	   [rectangle=WxH+X+Y]
+# 		   Create a new rule.
+#
+# 	   -r, --remove
+# 	   ^<n>|head|tail|(<class_name>|*)[:(<instance_name>|*)]...
+# 		   Remove the given rules.
+#
+# 	   -l, --list
+# 		   List the rules.
 
 id=${1?};
-instance=$3;
 class=$2;
+instance=$3;
+
+emacs() {
+	state=tiled;
+	layer=normal;
+}
+
+firefox() {
+	desktop=^2;
+}
+
+gimp() {
+	follow=on;
+}
+
+gitk() {
+	state=floating;
+	layer=normal;
+}
+
+mplayer() {
+	state=floating;
+	layer=normal;
+}
+
+pidgin() {
+	desktop=^3;
+}
+
+pinentry_gtk_2() {
+	state=floating;
+	layer=above;
+}
+
+spotify() {
+	desktop=^5;
+}
+
+telegram_esktop() {
+	desktop=^3
+}
+
+xcalc() {
+	state=floating;
+	layer=normal;
+}
+
+xmessage() {
+	state=floating;
+	layer=normal;
+}
+
+chromium() {
+	desktop=^2;
+}
+
+surf() {
+	desktop=^2;
+}
+
+libreoffice() {
+	state=tiled;
+	layer=normal;
+}
+
+mpv() {
+	state=floating;
+	layer=normal;
+}
+
+stj1() {
+	state=floating;
+	layer=above;
+	sticky=on;
+}
+
+weecha() {
+	desktop=^3;
+}
 
 case $class in
-	(Emacs) echo state=tiled\ layer=normal;;
-	(Firefox|Firefox-esr|Iceweasel) echo desktop=^2;;
-	(Gimp*) echo follow=on;;
-	(Gitk) echo state=floating\ layer=normal;;
-	(MPlayer) echo state=floating\ layer=normal;;
-	(Pidgin) echo desktop=^3;;
-	(Pinentry-gtk-2) echo state=floating\ layer=above;;
-	(Spotify) echo desktop=^5;;
-	(TelegramDesktop) echo desktop=^3;;
-	(XCalc) echo state=floating\ layer=normal;;
-	(Xmessage) echo state=floating\ layer=normal;;
-	([cC]hromium|Chromium-browser) echo desktop=^2;;
-	([sS]urf) echo desktop=^2;;
-	([lL]ibre[oO]ffice*) echo state=tiled\ layer=normal;;
-	(mpv) echo state=floating\ layer=normal;;
-	(stj1) echo state=floating\ layer=above\ sticky=on;;
-	(weechat) echo desktop=^3;;
+	(Emacs) emacs;;
+	(Firefox|Firefox-esr|Iceweasel) firefox;;
+	(Gimp*) gimp;;
+	(Gitk) gitk;;
+	(MPlayer) mplayer;;
+	(Pidgin) pidgin;;
+	(Pinentry-gtk-2) pinentry_gtk_2;;
+	(Spotify) spotify;;
+	(TelegramDesktop) telegram_desktop;;
+	(XCalc) xcalc;;
+	(Xmessage) xmessage;;
+	([cC]hromium|Chromium-browser) chromium;;
+	([sS]urf) surf;;
+	([lL]ibre[oO]ffice*) libreoffice;;
+	(mpv) mpv;;
+	(stj1) stj1;;
+	(weechat) weechat;;
 	('')
 		case $(ps -p "$(xdo pid $id)" -o comm= 2>/dev/null) in
-			(spotify) echo desktop=^5;;
+			(spotify) spotify;;
 		esac;;
 esac;
+
+echo ${monitor:+"monitor=$monitor"} \
+	${desktop:+"desktop=$desktop"} \
+	${node:+"node=$node"} \
+	${layer:+"layer=$layer"} \
+	${sticky:+"sticky=$sticky"} \
+	${private:+"private=$private"} \
+	${locked:+"locked=$locked"} \
+	${marked:+"marked=$marked"} \
+	${urgent:+"urgent=$urgent"} \
+	${center:+"center=$center"} \
+	${follow:+"follow=$follow"} \
+	${state:+"state=$state"} \
+	${split_dir:+"split_dir=$split_dir"} \
+	${split_ratio:+"split_ratio=$split_ratio"} \
+	${rectangle:+"rectangle=$rectangle"} \
+	${hidden:+"hidden=$hidden"} \
+	${border:+"border=$border"} \
+	${focus:+"focus=$focus"} \
+	${manage:+"manage=$manage"} | tee -a /tmp/foo;
 
 # vim: set ft=sh :
