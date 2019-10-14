@@ -130,7 +130,7 @@ case $class in
 	(stj1) stj1;;
 	(weechat) weechat;;
 	('')
-		case $(ps -p "$(xdo pid $id)" -o comm= 2>/dev/null) in
+		case $(ps -p "$(xdo pid "$id")" -o comm= 2>/dev/null) in
 			(spotify) spotify;;
 		esac;;
 esac;
