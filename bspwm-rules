@@ -135,24 +135,25 @@ case $class in
 		esac;;
 esac;
 
-echo ${monitor:+"monitor=$monitor"} \
-	${desktop:+"desktop=$desktop"} \
-	${node:+"node=$node"} \
-	${layer:+"layer=$layer"} \
-	${sticky:+"sticky=$sticky"} \
-	${private:+"private=$private"} \
-	${locked:+"locked=$locked"} \
-	${marked:+"marked=$marked"} \
-	${urgent:+"urgent=$urgent"} \
+echo \
+	${border:+"border=$border"} \
 	${center:+"center=$center"} \
+	${desktop:+"desktop=$desktop"} \
+	${focus:+"focus=$focus"} \
 	${follow:+"follow=$follow"} \
-	${state:+"state=$state"} \
+	${hidden:+"hidden=$hidden"} \
+	${layer:+"layer=$layer"} \
+	${locked:+"locked=$locked"} \
+	${manage:+"manage=$manage"} \
+	${marked:+"marked=$marked"} \
+	${monitor:+"monitor=$monitor"} \
+	${node:+"node=$node"} \
+	${private:+"private=$private"} \
+	${rectangle:+"rectangle=$rectangle"} \
 	${split_dir:+"split_dir=$split_dir"} \
 	${split_ratio:+"split_ratio=$split_ratio"} \
-	${rectangle:+"rectangle=$rectangle"} \
-	${hidden:+"hidden=$hidden"} \
-	${border:+"border=$border"} \
-	${focus:+"focus=$focus"} \
-	${manage:+"manage=$manage"} | tee -a /tmp/foo;
+	${state:+"state=$state"} \
+	${sticky:+"sticky=$sticky"} \
+	${urgent:+"urgent=$urgent"};
 
 # vim: set ft=sh :
