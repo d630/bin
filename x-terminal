@@ -3,6 +3,8 @@
 # Default terminal emulator window.
 
 IFS=\|;
+set -f;
+
 if
     test -f "${XDG_RUNTIME_DIR:?}/DAYLIGHT";
 then

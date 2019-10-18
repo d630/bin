@@ -3,6 +3,7 @@
 # Default text editor.
 
 IFS=\|;
+set -f;
 set -- $EDITOR_OPTS ${1:+"$@"};
 
 exec "$EDITOR" "$@";

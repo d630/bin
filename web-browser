@@ -3,6 +3,7 @@
 # Default web browser (tui).
 
 IFS=\|;
+set -f;
 set -- ${BROWSER_OPTS} ${1:+"$@"};
 
 exec "$BROWSER" "$@";

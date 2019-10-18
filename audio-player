@@ -3,6 +3,7 @@
 # Default audio player (cli).
 
 IFS=\|;
+set -f;
 set -- $AUDIO_PLAYER_OPTS ${1:+"$@"};
 
 exec "$AUDIO_PLAYER" "$@";

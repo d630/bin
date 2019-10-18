@@ -3,6 +3,7 @@
 # Default web browser (gui).
 
 IFS=\|;
+set -f;
 set -- $X_BROWSER_OPTS ${1:+"$@"};
 
 exec "$X_BROWSER" "$@";

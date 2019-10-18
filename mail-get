@@ -9,6 +9,7 @@ flock -n 9 || {
 };
 
 mail-retrieve;
+sleep 0.5
 
 mapfile -t reply < <(mail-inbox);
 

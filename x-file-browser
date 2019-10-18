@@ -3,6 +3,7 @@
 # Default file manager (gui).
 
 IFS=\|;
+set -f;
 set -- $X_FILE_BROWSER_OPTS ${1:+"$@"};
 
 exec "$X_FILE_BROWSER" "$@";

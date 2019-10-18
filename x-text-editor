@@ -3,6 +3,7 @@
 # Default editor (gui).
 
 IFS=\|;
+set -f;
 set -- $X_VISUAL_OPTS ${1:+"$@"};
 
 exec "$X_VISUAL" "$@";
