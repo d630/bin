@@ -194,10 +194,9 @@ COMMIT;
 export CHROME_WRAPPER=$0;
 
 exec chromium \
+    --load-media-router-component-extension=0 \
     --artifacts-dir=$r/artifacts \
     --crash-dumps-dir="$r/crash-dumps" \
-    --disk-cache-dir=$r/cache \
-    --user-data-dir=$r \
     --disable-breakpad \
     --disable-cloud-import \
     --disable-component-cloud-policy \
@@ -206,6 +205,7 @@ exec chromium \
     --disable-speech-api \
     --disable-sync-preferences \
     --disable-translate \
+    --disk-cache-dir=$r/cache \
     --enable-extension-activity-logging \
     --enable-fast-unload \
     --enable-grouped-history \
@@ -226,6 +226,7 @@ exec chromium \
     --no-first-run \
     --no-wifi \
     --process-per-site \
+    --user-data-dir=$r \
     ${1:+"$@"};
 
 # vim: set ft=sh :

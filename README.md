@@ -63,7 +63,6 @@ List:
 * [furlview](https://github.com/D630/bin/blob/master/furlview): Simple replacement for urlview using fzf in X.
 * [fzf-bind.bash](https://github.com/D630/bin/blob/master/fzf-bind.bash): My fzf keybinding script for bash.
 * [fzf-ls](https://github.com/D630/bin/blob/master/fzf-ls): Select files listed in a directory.
-* [gdate2din](https://github.com/D630/bin/blob/master/gdate2din): Grep and convert german dates with dateutils using dgrep & strptime.
 * [get-fball](https://github.com/D630/bin/blob/master/get-fball): Show some soccer results from http://www.sportschau.de.
 * [get-gaisma](https://github.com/D630/bin/blob/master/get-gaisma): Get sun data infos from http://www.gaisma.com.
 * [get-netz](https://github.com/D630/bin/blob/master/get-netz): Show network connections.
