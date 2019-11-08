@@ -2,6 +2,6 @@
 #
 # Wrap up weechat.
 
-daemonize x-terminal -a -c weechat -t weechat -T weechat -e weechat;
+daemonize x-terminal -a -c st-256color -n weechatw -t weechatw -e weechat;
 
 # vim: set ft=sh :

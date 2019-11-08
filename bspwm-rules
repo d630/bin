@@ -55,7 +55,6 @@ urgent=
 
 emacs() {
 	state=tiled;
-	layer=normal;
 }
 
 firefox() {
@@ -131,25 +130,28 @@ weechat() {
 	desktop=^3;
 }
 
-case $class in
-	(Emacs) emacs;;
-	(Firefox|Firefox-esr|Iceweasel) firefox;;
-	(Gimp*) gimp;;
-	(Gitk) gitk;;
-	(MPlayer) mplayer;;
-	(Pidgin) pidgin;;
-	(Pinentry-gtk-2) pinentry_gtk_2;;
-	(Spotify) spotify;;
-	(TelegramDesktop) telegram_desktop;;
-	(XCalc) xcalc;;
-	(Xmessage) xmessage;;
-	([cC]hromium|Chromium-browser) chromium;;
-	([sS]urf) surf;;
+signal() {
+	desktop=^3;
+}
+
+case $instance.$class in
+	(*.Chromium) chromium;;
+	(*.Emacs) emacs;;
+	(*.Gimp) gimp;;
+	(*.Gitk) gitk;;
+	(*.Pidgin) pidgin;;
+	(*.Pinentry-gtk-2) pinentry_gtk_2;;
+	(*.Signal) signal;;
+	(*.Spotify) spotify;;
+	(*.TelegramDesktop) telegram_desktop;;
+	(*.XCalc) xcalc;;
+	(*.Xmessage) xmessage;;
+	(*.[Ff]irefox) firefox;;
+	(*.mpv) mpv;;
 	([lL]ibre[oO]ffice*) libreoffice;;
-	(mpv) mpv;;
-	(stj1) stj1;;
-	(weechat) weechat;;
-	('')
+	(stj*.st) stj1;;
+	(weechatw.*) weechat;;
+	(.)
 		case $(ps -p "$(xdo pid "$id")" -o comm= 2>/dev/null) in
 			(spotify) spotify;;
 		esac;;
