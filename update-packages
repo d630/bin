@@ -11,11 +11,11 @@ function PrintHeader {
 
 PrintHeader 'Apt && Packages';
 sudo sh -c '
-    dpkg --clear-avail;
-    apt-get autoclean;
-    apt-get autoremove --purge;
     dpkg --configure -a;
     apt-get install -f;
+    apt-get autoremove --purge;
+    dpkg --clear-avail;
+    apt-get autoclean;
 ';
 
 PrintHeader cpan\ modules;
@@ -32,8 +32,8 @@ PrintHeader cabal\ packages;
 cabal update;
 cabal install world --upgrade-dependencies --force-reinstalls;
 
-# PrintHeader composer\ packages;
-# composer global update;
+PrintHeader composer\ packages;
+composer global update;
 
 PrintHeader python3;
 pip3 freeze --user |
