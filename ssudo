@@ -2,8 +2,6 @@
 #
 # Using sudo with dmenu2 via SUDO_ASKPASS.
 
-export SUDO_ASKPASS=${XDG_BIN_HOME:?}/sdmenu;
-readonly SUDO_ASKPASS;
-exec sudo -A -- "$@";
+exec env SUDO_ASKPASS=${XDG_BIN_HOME:?}/sdmenu sudo -A -- "$@";
 
 # vim: set ft=sh :
