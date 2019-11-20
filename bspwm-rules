@@ -29,29 +29,29 @@
 # 	   -l, --list
 # 		   List the rules.
 
-id=${1?};
-class=$2;
-instance=$3;
-misc=$4
-border=
-center=
-desktop=
-focus=
-follow=
-hidden=
-layer=
-locked=
-manage=
-marked=
-monitor=
-node=
-private=
-rectangle=
-split_dir=
-split_ratio=
-state=
-sticky=
-urgent=
+border= \
+center= \
+class=$2
+desktop= \
+focus= \
+follow= \
+hidden= \
+id=${1?} \
+instance=$3 \
+layer= \
+locked= \
+manage= \
+marked= \
+misc=$4 \
+monitor= \
+node= \
+private= \
+rectangle= \
+split_dir= \
+split_ratio= \
+state= \
+sticky= \
+urgent=;
 
 emacs() {
 	state=tiled;
