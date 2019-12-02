@@ -20,7 +20,6 @@ exec sudo \
 			/home/ \
 			/root/ \
 			/var/backups/ \
-			/var/lib/bitlbee \
 			/var/mail/ \
 			/var/sieve/ \
 			/var/vmail/ \
@@ -28,9 +27,10 @@ exec sudo \
 				/home/latch/tmp
 				/home/latch/var/mirror
 				$XDG_CACHE_HOME
+				$HOME/opt
 			EXCLUDE
 
-		test $? -eq 0 || exit;
+		test "$?" -eq 0 || exit;
 
 		# echo CHECKING ...;
 		# borg check --critical --progress --repository-only :: || exit $?;
