@@ -2,7 +2,8 @@
 #
 # Update via some package managers.
 
-cd -- "$HOME";
+cd -- "$XDG_OPT_HOME" ||
+	exit 1;
 
 printf -v horiz %\*s 80 '';
 function PrintHeader {
@@ -11,11 +12,11 @@ function PrintHeader {
 
 PrintHeader 'Apt && Packages';
 sudo sh -c '
-    dpkg --configure -a;
-    apt-get install -f;
-    apt-get autoremove --purge;
-    dpkg --clear-avail;
-    apt-get autoclean;
+	dpkg --configure -a;
+	apt-get install -f;
+	apt-get autoremove --purge;
+	dpkg --clear-avail;
+	apt-get autoclean;
 ';
 
 PrintHeader cpan\ modules;
@@ -26,11 +27,11 @@ PrintHeader npm\ modules;
 npm update -g;
 
 PrintHeader go\ packages;
-go get -v -u all;
+go get -v -u "$GOPATH/...";
 
 PrintHeader cabal\ packages;
-cabal update;
-cabal install world --upgrade-dependencies --force-reinstalls;
+cabal v1-update;
+cabal v1-install world --upgrade-dependencies --force-reinstalls;
 
 PrintHeader composer\ packages;
 composer global update;
