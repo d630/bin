@@ -33,19 +33,15 @@ function __selectstream {
 
 function __stopstream
 if
-    [[ -s $file_webradio_pid ]];
+    [[ -r $file_webradio_pid ]];
 then
-    #pkill -F "$file_webradio_pid" &> /dev/null && rm -- "$file_webradio_pid"
-    pkill -F "$file_webradio_pid" 1>/dev/null 2>&1;
+    pkill -9 -F "$file_webradio_pid" 1>/dev/null 2>&1;
     rm -f -- "$file_webradio_pid" 1>/dev/null 2>&1;
 fi;
 
 function __playstream () (
-    0</dev/null \
-        nohup audio-player --no-terminal "${streams[$selection]}" \
-    1>/dev/null 2>&1 &
-
-    printf %d\\n $! >> "$file_webradio_pid";
+    exec audio-player --no-terminal "${streams[$selection]}" 1>/dev/null 2>&1 &
+    echo "$!" >> "$file_webradio_pid";
 );
 
 # -- MAIN.
