@@ -58,6 +58,13 @@ function spotify::playlist::create {
         --data "{\"name\":\"${2:?}\", \"public\":true, \"collaborative\":false}";
 };
 
+function spotify::get {
+	curl \
+		-s \
+		-H "Authorization: Bearer ${1:?}" \
+		-X GET "${2:?}";
+}
+
 function spotify::playlist::getTracks {
     # OAuth Scope: null
     # Params: user_id playlist_id access_token [offset]
@@ -74,7 +81,7 @@ function spotify::playlist::getTracksInMarket {
 
     curl \
         -s \
-        -X GET "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}/tracks?fields=items(track.is_playable,track.uri)&limit=100&offset=${4:-0}&market=${5:-DE}" \
+        -X GET "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}/tracks?fields=next,items(track.is_playable,track.uri)&limit=100&offset=${4:-0}&market=${5:-DE}" \
         -H "Authorization: Bearer ${3:?}";
 };
 
@@ -157,6 +164,7 @@ function addTracks {
 };
 
 function getLists {
+	# TODO
     declare -i offset=-50;
 
     jq -e -r --unbuffered '
@@ -178,25 +186,27 @@ function getLists {
 };
 
 function getAlbums {
-    declare -i offset=-100;
+	declare -i offset=-100;
+	declare  \
+		next \
+		resp;
 
-    jq -e -r --unbuffered '
-        if (.items | length) > 0
-        then .items[] | [.track.album.uri, .track.uri] | @tsv
-        else "exit"
-        end
-    ' < <(
-        while
-            'spotify::playlist::getTracks' \
-                "${1:?}" \
-                "${2:?}" \
-                "${3:?}" \
-                "$((offset+=100))";
-        do
-            :;
-        done;
-    ) |
-    gawk '$0 == "exit" { exit }; { print $0; };'
+	resp=$(
+		'spotify::playlist::getTracks' \
+			"${1:?}" \
+			"${2:?}" \
+			"${3:?}" \
+			"$((offset+=100))";
+	)
+
+	until
+		echo "$resp";
+		next=$(jq -r '.next' <<< "$resp");
+		[[ $next == null ]];
+	do
+		resp=$('spotify::get' "$3" "$next");
+	done |
+	jq -e -r '.items[] | [.track.album.uri, .track.uri] | @tsv';
 };
 
 function getAlbumsObjects {
@@ -234,70 +244,76 @@ function getAlbumsObjects {
 };
 
 function getTracks {
-    declare -i offset=-100;
+	declare -i offset=-100;
+	declare  \
+		next \
+		resp;
 
-    jq -e -r --unbuffered '
-        if (.items | length) > 0
-        then .items[].track.uri
-        else "exit"
-        end
-    ' < <(
-        while
-            'spotify::playlist::getTracks' \
-                "${1:?}" \
-                "${2:?}" \
-                "${3:?}" \
-                "$((offset+=100))";
-        do
-            :;
-        done;
-    ) |
-    gawk '$0 == "exit" { exit }; { print $0; };'
+	resp=$(
+		'spotify::playlist::getTracks' \
+			"${1:?}" \
+			"${2:?}" \
+			"${3:?}" \
+			"$((offset+=100))";
+	)
+
+	until
+		echo "$resp";
+		next=$(jq -r '.next' <<< "$resp");
+		[[ $next == null ]];
+	do
+		resp=$('spotify::get' "$3" "$next");
+	done |
+	jq -e -r '.items[].track.uri';
 };
 
 function getTracksInMarket {
-    declare -i offset=-100;
+	declare -i offset=-100;
+	declare  \
+		next \
+		resp;
 
-    jq -e -r --unbuffered '
-        if (.items | length) > 0
-        then .
-        else "exit"
-        end
-    ' < <(
-        while
-            'spotify::playlist::getTracksInMarket' \
-                "${1:?}" \
-                "${2:?}" \
-                "${3:?}" \
-                "$((offset+=100))" \
-                "$4";
-        do
-            :;
-        done;
-    ) |
-    gawk '$0 == "exit" { exit }; { print $0; };'
+	resp=$(
+		'spotify::playlist::getTracksInMarket' \
+			"${1:?}" \
+			"${2:?}" \
+			"${3:?}" \
+			"$((offset+=100))" \
+			"$4"
+	)
+
+	until
+		echo "$resp";
+		next=$(jq -r '.next' <<< "$resp");
+		[[ $next == null ]];
+	do
+		resp=$('spotify::get' "$3" "$next");
+	done |
+	jq -e -r 'del(.next)';
 };
 
 function getTracksObjects {
-    declare -i offset=-100;
+	declare -i offset=-100;
+	declare  \
+		next \
+		resp;
 
-    jq -e -r --unbuffered '
-        if (.items | length) > 0
-        then .
-        else "exit"
-        end
-    ' < <(
-        while
-            'spotify::playlist::getTracks' \
-                "${1:?}" \
-                "${2:?}" \
-                "${3:?}" \
-                "$((offset+=100))";
-        do
-            :;
-        done;
-    ) |
-    gawk '$0 == "exit" { exit }; { print $0; };'
+	resp=$(
+		'spotify::playlist::getTracks' \
+			"${1:?}" \
+			"${2:?}" \
+			"${3:?}" \
+			"$((offset+=100))";
+	)
+
+	until
+		echo "$resp";
+		next=$(jq -r '.next' <<< "$resp");
+		[[ $next == null ]];
+	do
+		resp=$('spotify::get' "$3" "$next");
+	done |
+	jq -e -r '.';
 };
 
 function getTracksFeatures {
