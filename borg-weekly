@@ -28,6 +28,7 @@ exec sudo \
 				/home/latch/var/mirror
 				$XDG_CACHE_HOME
 				$HOME/opt
+				$HOME/.vifm/Trash
 			EXCLUDE
 
 		test "$?" -eq 0 || exit;

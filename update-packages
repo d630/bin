@@ -23,6 +23,9 @@ PrintHeader cpan\ modules;
 cpan-outdated -p --exclude-core |
 cpanm -iv --self-contained;
 
+PrintHeader latch;
+/home/latch/bin/latch mr mirror;
+
 PrintHeader npm\ modules;
 npm update -g;
 

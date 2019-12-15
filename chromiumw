@@ -194,22 +194,25 @@ COMMIT;
 export CHROME_WRAPPER=$0;
 
 exec chromium \
-    --load-media-router-component-extension=0 \
     --artifacts-dir=$r/artifacts \
     --crash-dumps-dir="$r/crash-dumps" \
     --disable-breakpad \
     --disable-cloud-import \
     --disable-component-cloud-policy \
+    --disable-gpu-driver-bug-workarounds \
     --disable-infobars \
     --disable-payment-request \
+    --disable-reading-from-canvas \
     --disable-speech-api \
     --disable-sync-preferences \
     --disable-translate \
     --disk-cache-dir=$r/cache \
     --enable-extension-activity-logging \
     --enable-fast-unload \
+    --enable-gpu-rasterization \
     --enable-grouped-history \
     --enable-logging=stderr \
+    --enable-native-gpu-memory-buffers \
     --enable-potentially-annoying-security-features \
     --enable-reader-mode-toolbar-icon \
     --enable-site-settings \
@@ -219,9 +222,12 @@ exec chromium \
     --enable-strict-powerful-feature-restrictions \
     --enable-tab-audio-muting \
     --enable-webkit-text-subpixel-positioning \
+    --enable-zero-copy \
     --error-console \
     --force-device-scale-factor="${GDK_SCALE:-1}" \
     --hide-scrollbars \
+    --ignore-gpu-blacklist \
+    --load-media-router-component-extension=0 \
     --log-net-log \
     --no-first-run \
     --no-wifi \
