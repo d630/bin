@@ -176,18 +176,44 @@ test -r "$r/"Default/Preferences || {
 test -r "$r/Default/Web Data" ||
     sqlite3 -init /dev/stdin "$r/Default/Web Data" .quit <<\!
 BEGIN TRANSACTION;
-CREATE TABLE keywords (id INTEGER PRIMARY KEY,short_name VARCHAR NOT NULL,keyword VARCHAR NOT NULL,favicon_url VARCHAR NOT NULL,url VARCHAR NOT NULL,safe_for_autoreplace INTEGER,originating_url VARCHAR,date_created INTEGER DEFAULT 0,usage_count INTEGER DEFAULT 0,input_encodings VARCHAR,suggest_url VARCHAR,prepopulate_id INTEGER DEFAULT 0,created_by_policy INTEGER DEFAULT 0,instant_url VARCHAR,last_modified INTEGER DEFAULT 0,sync_guid VARCHAR,alternate_urls VARCHAR,search_terms_replacement_key VARCHAR,image_url VARCHAR,search_url_post_params VARCHAR,suggest_url_post_params VARCHAR,instant_url_post_params VARCHAR,image_url_post_params VARCHAR,new_tab_url VARCHAR, last_visited INTEGER DEFAULT 0);
-INSERT INTO `keywords` (id,short_name,keyword,favicon_url,url,safe_for_autoreplace,originating_url,date_created,usage_count,input_encodings,suggest_url,prepopulate_id,created_by_policy,instant_url,last_modified,sync_guid,alternate_urls,search_terms_replacement_key,image_url,search_url_post_params,suggest_url_post_params,instant_url_post_params,image_url_post_params,new_tab_url,last_visited) VALUES (2,'DuckDuckGo','dd','','https://duckduckgo.com/?q={searchTerms}&atb=v50-6_b',0,'',1486391745,0,'UTF-8','',0,0,'',1486391745,'3bf7b295-90d8-4a87-acce-8379f7da45f6','','','','','','','','',0),
- (3,'debian => code','code','','http://codesearch.debian.net/search?q={searchTerms}',0,'',1493274260,0,'','',0,0,'',1493274260,'fc62f54e-769d-4173-87e6-084183d06265','','','','','','','','',0),
- (4,'duden','du','','http://www.duden.de/suchen/dudenonline/{searchTerms}',0,'',1493274285,0,'','',0,0,'',1493274285,'08f765ef-4aa0-43c4-b641-00be5ad78bc4','','','','','','','','',0),
- (5,'google (DE)','gd','','https://www.google.de/search?q={searchTerms}&pws=0&gl=de&gws_rd=cr',0,'',1493274320,0,'','',0,0,'',1493274320,'50944e6a-53b5-4a89-bb48-d41f5924c7f2','','','','','','','','',0),
- (6,'google (US)','ge','','https://www.google.com/search?q={searchTerms}&pws=0&gl=us&gws_rd=cr',0,'',1493274366,0,'','',0,0,'',1493274366,'826b2d6b-3890-43ee-a935-1f16e1734c17','','','','','','','','',0),
- (7,'debian => man','man','','https://dyn.manpages.debian.org/jump?q={searchTerms}',0,'',1493274391,0,'','',0,0,'',1493274391,'8c3dbaed-bbc0-4a50-ba4d-87f5234fec17','','','','','','','','',0),
- (8,'debian => packages','pack','','https://packages.debian.org/search?keywords={searchTerms}',0,'',1493274441,0,'','',0,0,'',1493274441,'c3de8440-fcd0-4f3d-80f0-67047063e7b0','','','','','','','','',0),
- (9,'pons','po','','http://en.pons.com/translate?l=deen&q={searchTerms}',0,'',1493274487,0,'','',0,0,'',1493274487,'22069feb-caab-4970-9f82-ee89a3044c98','','','','','','','','',0),
- (10,'wikipedia (DE)','wd','','https://de.wikipedia.org/w/index.php?title=Spezial:Suche&search={searchTerms}',0,'',1493274514,0,'','',0,0,'',1493274514,'99ed896f-6aa1-4649-bccc-8d7024c47675','','','','','','','','',0),
- (11,'wikipedia (EN)','we','','https://en.wikipedia.org/w/index.php?title=Special:Search&search={searchTerms}',0,'',1493274537,0,'','',0,0,'',1493274537,'3bb76383-da37-46f2-a635-fd1d16a61d50','','','','','','','','',0),
- (12,'youtube','yt','','https://www.youtube.com/results?search_query={searchTerms}',0,'',1493274561,0,'','',0,0,'',1493274561,'d7989a3e-a9ce-4d2d-b01d-33ddcbcd7c23','','','','','','','','',0);
+CREATE TABLE keywords (
+  id INTEGER PRIMARY KEY,
+  short_name VARCHAR NOT NULL,
+  keyword VARCHAR NOT NULL,
+  favicon_url VARCHAR NOT NULL,
+  url VARCHAR NOT NULL,
+  safe_for_autoreplace INTEGER,
+  originating_url VARCHAR,
+  date_created INTEGER DEFAULT 0,
+  usage_count INTEGER DEFAULT 0,
+  input_encodings VARCHAR,
+  suggest_url VARCHAR,
+  prepopulate_id INTEGER DEFAULT 0,
+  created_by_policy INTEGER DEFAULT 0,
+  last_modified INTEGER DEFAULT 0,
+  sync_guid VARCHAR,
+  alternate_urls VARCHAR,
+  image_url VARCHAR,
+  search_url_post_params VARCHAR,
+  suggest_url_post_params VARCHAR,
+  image_url_post_params VARCHAR,
+  new_tab_url VARCHAR,
+  last_visited INTEGER DEFAULT 0,
+  created_from_play_api INTEGER DEFAULT 0
+);
+INSERT INTO `keywords` (id,short_name,keyword,favicon_url,url)
+VALUES
+ (2,'DuckDuckGo','dd','','https://duckduckgo.com/?q={searchTerms}&atb=v50-6_b'),
+ (3,'debian => code','code','','http://codesearch.debian.net/search?q={searchTerms}'),
+ (4,'duden','du','','http://www.duden.de/suchen/dudenonline/{searchTerms}'),
+ (5,'google (DE)','gd','','https://www.google.de/search?q={searchTerms}&pws=0&gl=de&gws_rd=cr'),
+ (6,'google (US)','ge','','https://www.google.com/search?q={searchTerms}&pws=0&gl=us&gws_rd=cr'),
+ (7,'debian => man','man','','https://dyn.manpages.debian.org/jump?q={searchTerms}'),
+ (8,'debian => packages','pack','','https://packages.debian.org/search?keywords={searchTerms}'),
+ (9,'pons','po','','http://en.pons.com/translate?l=deen&q={searchTerms}'),
+ (10,'wikipedia (DE)','wd','','https://de.wikipedia.org/w/index.php?title=Spezial:Suche&search={searchTerms}'),
+ (11,'wikipedia (EN)','we','','https://en.wikipedia.org/w/index.php?title=Special:Search&search={searchTerms}'),
+ (12,'youtube','yt','','https://www.youtube.com/results?search_query={searchTerms}');
 COMMIT;
 !
 

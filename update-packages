@@ -5,7 +5,7 @@
 cd -- "$XDG_OPT_HOME" ||
 	exit 1;
 
-printf -v horiz %\*s 80 '';
+printf -v horiz %80s;
 function PrintHeader {
     printf %s\\n "${horiz// /-}" "$1" 1>&2;
 };

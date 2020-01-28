@@ -1,9 +1,14 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 #
 # Pick color.
 
-import gtk
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
 
-gtk.ColorSelectionDialog('Color').run()
+w = Gtk.ColorSelectionDialog(title="color")
+w.show()
+w.connect("destroy", Gtk.main_quit)
+Gtk.main()
 
 # vim: set ft=python :
