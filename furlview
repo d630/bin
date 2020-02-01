@@ -14,6 +14,10 @@
 #
 # FILE is regular or piped, that is also <(foo)
 
+
+[[ -n $DISPLAY ]] ||
+	exit 1;
+
 function __x_web_browser {
 	setsidw x-web-browser "$1";
 };
@@ -43,28 +47,27 @@ else
 		exit 1;
 	};
 	mapfile -t furls < <(
-		for a; do
+		for a in "$@";
+		do
 			if
 				__is_file "$a";
 			then
 				cat -- "$a";
 			else
-				printf 'File %s is neather a regular file nor a named pipe, that is executable' "$a" 1>&2;
-				exit 1;
+				printf \
+					"File '%s' is neather a regular file nor a named pipe, that is executable\n" \
+					"$a" 1>&2;
 			fi;
 		done |
 		__select;
 	);
 fi;
 
-case $DISPLAY in
-	('')
-		! :;;
-	(*)
-		for u in "${furls[@]}"; do
-			__x_web_browser "$u" &
-		done;
-		wait;;
-esac;
+for u in "${furls[@]}";
+do
+	__x_web_browser "$u" &
+done;
+
+wait;
 
 # vim: set ft=sh :
