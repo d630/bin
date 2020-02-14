@@ -19,25 +19,25 @@ sudo sh -c '
 	apt-get autoclean;
 ';
 
-PrintHeader cpan\ modules;
-cpan-outdated -p --exclude-core |
-cpanm -iv --self-contained;
-
-PrintHeader latch;
-/home/latch/bin/latch mr mirror;
-
-PrintHeader npm\ modules;
-npm update -g;
-
-PrintHeader go\ packages;
-go get -v -u "$GOPATH/...";
-
 PrintHeader cabal\ packages;
 cabal v1-update;
 cabal v1-install world --upgrade-dependencies --force-reinstalls;
 
 PrintHeader composer\ packages;
 composer global update;
+
+PrintHeader cpan\ modules;
+cpan-outdated -p --exclude-core |
+cpanm -iv --self-contained;
+
+PrintHeader go\ packages;
+go get -v -u "$GOPATH/...";
+
+PrintHeader latch;
+/home/latch/bin/latch mr mirror;
+
+PrintHeader npm\ modules;
+npm update -g;
 
 PrintHeader python3;
 pip3 freeze --user |
