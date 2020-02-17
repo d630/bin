@@ -10,13 +10,14 @@ function PrintHeader {
     printf %s\\n "${horiz// /-}" "$1" 1>&2;
 };
 
-PrintHeader 'Apt && Packages';
+PrintHeader 'apt, dpkg and snap';
 sudo sh -c '
 	dpkg --configure -a;
 	apt-get install -f;
 	apt-get autoremove --purge;
 	dpkg --clear-avail;
 	apt-get autoclean;
+	snap refresh;
 ';
 
 PrintHeader cabal\ packages;
