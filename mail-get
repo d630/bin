@@ -8,7 +8,7 @@ flock -n 9 || {
     exit 1;
 };
 
-mail-retrieve;
+mail-retrieve ${1:+"$@"};
 sleep 0.5
 
 mapfile -t reply < <(mail-inbox);

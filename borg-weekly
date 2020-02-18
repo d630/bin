@@ -37,7 +37,7 @@ exec sudo \
 		# borg check --critical --progress --repository-only :: || exit $?;
 
 		echo PRUNING ...;
-		borg prune --warning --progress --stats --list --keep-within=6w ::;
+		borg prune --warning --progress --stats --list --keep-within=8w ::;
 	';
 
 # vim: set ft=sh :
