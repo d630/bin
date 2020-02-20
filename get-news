@@ -14,15 +14,10 @@ test-inet || {
 };
 
 feedfaetcher 1>/dev/null 2>&1 &
-d="$(
-    urldiff -nv 2>/dev/null |
-    grep -F -c NEW;
-) unread diffs";
-
 wait;
 f=$(newsboat -x reload print-unread);
 
-test "$((${d%% *} + ${f%% *}))" -gt 0 &&
-    loggi 6 .transfer.complete "$d\n$f";
+test "${f%% *}" -gt 0 &&
+    loggi 6 .transfer.complete "$f";
 
 # vim: set ft=sh :
