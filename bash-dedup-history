@@ -1,14 +1,13 @@
 #!/bin/sh
 #
 # Remove duplicates in history file.
-# http://unix.stackexchange.com/questions/48713/how-can-i-remove-duplicates-in-my-bash-history-preserving-order
 
-nl -- "${HISTFILE:?}" |
-	sed 's:[[:space:]]*$::' |
-	sort -k 2 -k 1,1nr |
-	uniq -f 1 |
-	sort -n |
-	cut -f 2 > "$HISTFILE~";
+sed 's:^[[:space:][:cntrl:]]*::' "${HISTFILE:?}" |
+sed 's:[[:space:][:cntrl:]]*$::' |
+nl |
+sort -u -k 2 |
+sort -n |
+cut -f 2 > "$HISTFILE~";
 
 mv -- "${HISTFILE:?}~" "$HISTFILE";
 
