@@ -2,8 +2,7 @@
 #
 # Remove duplicates in history file.
 
-sed 's:^[[:space:][:cntrl:]]*::' "${HISTFILE:?}" |
-sed 's:[[:space:][:cntrl:]]*$::' |
+sed -e 's:^[[:space:][:cntrl:]]*::' -e 's:[[:space:][:cntrl:]]*$::' "${HISTFILE:?}" |
 nl |
 sort -u -k 2 |
 sort -n |
