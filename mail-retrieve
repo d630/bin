@@ -2,6 +2,9 @@
 #
 # Retrieve mails (mpop).
 
-exec mpop -a ${1:+"$@"} >> "${XDG_VAR_HOME:?}/"log/mpop.log 2>&1;
+acc=$@;
+: "${acc:=-a}";
+
+exec mpop "$acc" >> "${XDG_VAR_HOME:?}/"log/mpop.log 2>&1;
 
 # vim: set ft=sh :
