@@ -42,26 +42,26 @@ function __startx {
 	add :0 . $mc
 	add $hn:0 . $mc
 	add $hn/unix:0 . $mc
-	IN
+    IN
 
     logger --id=$$ -t startx.sh -p user.info \
-        'Initializing X session '"for $LOGNAME";
+        'Initializing X session for '"$LOGNAME";
 
-	(
-		cd "$HOME";
-		exec 1> >(logger -e --id=$$ -t Xorg.0 -p user.notice) 2>&1;
-		exec xinit "$XINITRC" -- "$HOME/".xserverrc -auth "$sxauth";
-	)
+    (
+        cd "$HOME";
+        exec 1> >(logger -e --id=$$ -t Xorg.0 -p user.notice) 2>&1;
+        exec xinit "$XINITRC" -- "$HOME/.xserverrc" -auth "$sxauth";
+    )
 
     logger --id=$$ -t startx.sh -p user.info \
-        'Finishing X session '"for $LOGNAME";
+        'Finishing X session for '"$LOGNAME";
 
     # TODO
     dbus-update-activation-environment DISPLAY=;
     systemctl --user unset-environment DISPLAY;
 
     deallocvt;
-	ProfileRcBaseConsole;
+    ProfileRcBaseConsole;
 
     # case $SHELL in
     #     ($BASH)
