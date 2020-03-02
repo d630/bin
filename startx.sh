@@ -42,7 +42,7 @@ function __startx {
 	add :0 . $mc
 	add $hn:0 . $mc
 	add $hn/unix:0 . $mc
-    IN
+	IN
 
     logger --id=$$ -t startx.sh -p user.info \
         'Initializing X session for '"$LOGNAME";
