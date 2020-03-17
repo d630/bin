@@ -10,7 +10,7 @@ import sys
 
 import requests
 
-var_dir = os.environ["XDG_VAR_HOME"]
+var_dir = os.environ.get("XDG_VAR_HOME")
 if var_dir is None or not os.path.exists(var_dir):
     sys.exit(1)
 
