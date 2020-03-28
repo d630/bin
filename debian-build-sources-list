@@ -124,17 +124,17 @@ done;
 command cat /tmp/napt/*-source.list > /etc/apt/sources.list;
 
 command cat > /etc/apt/preferences <<-IN
-		Package: *
-		Pin: release o=Debian
-		Pin-Priority: -10
+		# Package: *
+		# Pin: release a=unstable
+		# Pin-Priority: 900
 
-		Package: *
-		Pin: release a=testing
-		Pin-Priority: 800
+		# Package: *
+		# Pin: release a=testing
+		# Pin-Priority: 800
 
-		Package: *
-		Pin: release a=unstable
-		Pin-Priority: 900
+		# Package: *
+		# Pin: release o=Debian
+		# Pin-Priority: -10
 	IN
 
 # vim: set ft=sh :

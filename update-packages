@@ -41,8 +41,8 @@ PrintHeader npm\ modules;
 npm update -g;
 
 PrintHeader python3;
-pip3 freeze --user |
+python3 -m pip freeze --user |
 sed 's:==.*::' |
-xargs pip3 install --user --upgrade;
+xargs python3 -m pip install --user --upgrade;
 
 # vim: set ft=sh :
