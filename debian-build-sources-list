@@ -72,17 +72,17 @@ do
 				#
 				# $release
 				#
-				#deb $server $release main contrib non-free
-				#deb-src $server $release main contrib non-free
+				deb $server $release main contrib non-free
+				deb-src $server $release main contrib non-free
 				#
 				# $release-security
 				#
-				#deb http://security.debian.org/ $release-security main contrib non-free
-				#deb-src http://security.debian.org/ $release-security main contrib non-free
+				deb http://security.debian.org/ $release-security main contrib non-free
+				deb-src http://security.debian.org/ $release-security main contrib non-free
 				#
 				# $release-debug
 				#
-				#deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
+				deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
 				#
 			IN
 			;;
@@ -91,12 +91,12 @@ do
 				#
 				# $release
 				#
-				#deb $server $release main contrib non-free
-				#deb-src $server $release main contrib non-free
+				deb $server $release main contrib non-free
+				deb-src $server $release main contrib non-free
 				#
 				# $release-debug
 				#
-				#deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
+				deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
 				#
 			IN
 			;;
@@ -105,12 +105,12 @@ do
 				#
 				# $release
 				#
-				#deb $server $release main contrib non-free
-				#deb-src $server $release main contrib non-free
+				deb $server $release main contrib non-free
+				deb-src $server $release main contrib non-free
 				#
 				# $release-debug
 				#
-				#deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
+				deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
 				#
 			IN
 			;;
@@ -124,17 +124,17 @@ done;
 command cat /tmp/napt/*-source.list > /etc/apt/sources.list;
 
 command cat > /etc/apt/preferences <<-IN
-		# Package: *
-		# Pin: release a=stable
-		# Pin-Priority: 700
+		Package: *
+		Pin: release o=Debian
+		Pin-Priority: -10
 
-		# Package: *
-		# Pin: release a=testing
-		# Pin-Priority: 650
+		Package: *
+		Pin: release a=testing
+		Pin-Priority: 800
 
-		# Package: *
-		# Pin: release a=unstable
-		# Pin-Priority: 600
+		Package: *
+		Pin: release a=unstable
+		Pin-Priority: 900
 	IN
 
 # vim: set ft=sh :
