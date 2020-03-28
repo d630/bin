@@ -16,7 +16,7 @@ command rm -frv /tmp/napt;
 
 trap exit\ 1 INT TERM QUIT;
 
-for release in stable #testing unstable experimental;
+for release in stable testing unstable experimental;
 do
 	command mkdir -p "/tmp/napt/$release";
 
