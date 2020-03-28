@@ -16,15 +16,15 @@ command rm -frv /tmp/napt;
 
 trap exit\ 1 INT TERM QUIT;
 
-for release in stable testing unstable experimental;
+for release in stable #testing unstable experimental;
 do
 	command mkdir -p "/tmp/napt/$release";
 
 	i=0
 	while
-		test "$i" -le 1;
+		test "$i" -le 2;
 	do
-		command netselect-apt -t 20 "$release" > "/tmp/napt/$release/$i";
+		command netselect-apt -t 10 "$release" > "/tmp/napt/$release/$i";
 		i=$((i + 1));
 	done;
 
@@ -32,12 +32,14 @@ do
 		grep -o -h 'https\?.*$' "/tmp/napt/$release/"?* |
 		sort |
 		uniq -cd |
-		tac |
-		head -n 1
+		tac | {
+			read -r _ l;
+			printf '%s' "$l";
+		}
 	);
 	case $release in
 		(stable|bullseye)
-			command cat >> "/tmp/napt/$release-source.list" <<-IN
+			command cat >> "/tmp/napt/01-$release-source.list" <<-IN
 				#
 				# $release
 				#
@@ -64,10 +66,9 @@ do
 				#deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
 				#
 			IN
-
 			;;
 		(testing)
-			command cat >> "/tmp/napt/$release-source.list" <<-IN
+			command cat >> "/tmp/napt/02-$release-source.list" <<-IN
 				#
 				# $release
 				#
@@ -86,7 +87,7 @@ do
 			IN
 			;;
 		(unstable)
-			command cat >> "/tmp/napt/$release-source.list" <<-IN
+			command cat >> "/tmp/napt/03-$release-source.list" <<-IN
 				#
 				# $release
 				#
@@ -100,7 +101,7 @@ do
 			IN
 			;;
 		(experimental)
-			command cat >> "/tmp/napt/$release-source.list" <<-IN
+			command cat >> "/tmp/napt/04-$release-source.list" <<-IN
 				#
 				# $release
 				#
@@ -123,17 +124,17 @@ done;
 command cat /tmp/napt/*-source.list > /etc/apt/sources.list;
 
 command cat > /etc/apt/preferences <<-IN
-		Package: *
-		Pin: release a=stable
-		Pin-Priority: 700
+		# Package: *
+		# Pin: release a=stable
+		# Pin-Priority: 700
 
-		Package: *
-		Pin: release a=testing
-		Pin-Priority: 650
+		# Package: *
+		# Pin: release a=testing
+		# Pin-Priority: 650
 
-		Package: *
-		Pin: release a=unstable
-		Pin-Priority: 600
+		# Package: *
+		# Pin: release a=unstable
+		# Pin-Priority: 600
 	IN
 
 # vim: set ft=sh :
