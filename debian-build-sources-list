@@ -1,96 +1,139 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Build /etc/apt/sources.list with the help of netselect-apt.
 
-((UID)) && {
-    printf 'damn. invoke me as root, please\n' 1>&2;
-    exit 1;
+test "$(command id -u)" -ne 0 && {
+	echo 'damn. invoke me as root, please' 1>&2;
+	exit 1;
 };
 
-cd /tmp;
-rm -frv /tmp/napt;
+cd /tmp ||
+	exit 1;
 
-trap exit\ 1 INT TERM QUIT EXIT;
+command cp -fv /etc/apt/sources.list /etc/apt/sources.list.old;
+command cp -fv /etc/apt/preferences /etc/apt/preferences.old;
+command rm -frv /tmp/napt;
 
-for release in stable testing unstable; do
-    mkdir -p /tmp/napt/$release;
+trap exit\ 1 INT TERM QUIT;
 
-    for i in {0..4}; do
-        netselect-apt -t 20 $release > /tmp/napt/$release/$i;
-    done;
+for release in stable testing unstable experimental;
+do
+	command mkdir -p "/tmp/napt/$release";
 
-    server=$(
-        grep -h http /tmp/napt/$release/?* |
-        sort |
-        uniq -cd |
-        tac | {
-            read -r _ s;
-            printf %s "$s";
-        };
-    );
+	i=0
+	while
+		test "$i" -le 1;
+	do
+		command netselect-apt -t 20 "$release" > "/tmp/napt/$release/$i";
+		i=$((i + 1));
+	done;
 
-    {
-        section=$(</dev/fd/0);
-    } <<SEC
-# $release
-deb $server $release main contrib non-free
-deb-src $server $release main contrib non-free
-$(
-    printf %s\\n "# $release security";
-    [[ $release == unstable ]] || {
-        printf %s\\n "deb http://security.debian.org/ $release/updates main contrib non-free";
-        printf %s\\n "# deb-src http://security.debian.org/ $release/updates main contrib non-free";
-    };
-)
-# $release multimedia
-# deb http://www.deb-multimedia.org $release main non-free
-# deb-src http://www.deb-multimedia.org $release main non-free
-SEC
+	server=$(
+		grep -o -h 'https\?.*$' "/tmp/napt/$release/"?* |
+		sort |
+		uniq -cd |
+		tac |
+		head -n 1
+	);
+	case $release in
+		(stable|bullseye)
+			command cat >> "/tmp/napt/$release-source.list" <<-IN
+				#
+				# $release
+				#
+				#deb $server $release main contrib non-free
+				#deb-src $server $release main contrib non-free
+				#
+				# $release-updates
+				#
+				#deb $server $release-updates main contrib non-free
+				#deb-src $server $release-updates main contrib non-free
+				#
+				# $release-security
+				#
+				#deb http://security.debian.org/ $release-security main contrib non-free
+				#deb-src http://security.debian.org/ $release-security main contrib non-free
+				#
+				# $release-backports
+				#
+				#deb $server $release-backports main contrib non-free
+				#deb-src $server $release-backports main contrib non-free
+				#
+				# $release-debug
+				#
+				#deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
+				#
+			IN
 
-    printf '%s\n\n' "$section" > /tmp/napt/$release-source.list;
+			;;
+		(testing)
+			command cat >> "/tmp/napt/$release-source.list" <<-IN
+				#
+				# $release
+				#
+				#deb $server $release main contrib non-free
+				#deb-src $server $release main contrib non-free
+				#
+				# $release-security
+				#
+				#deb http://security.debian.org/ $release-security main contrib non-free
+				#deb-src http://security.debian.org/ $release-security main contrib non-free
+				#
+				# $release-debug
+				#
+				#deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
+				#
+			IN
+			;;
+		(unstable)
+			command cat >> "/tmp/napt/$release-source.list" <<-IN
+				#
+				# $release
+				#
+				#deb $server $release main contrib non-free
+				#deb-src $server $release main contrib non-free
+				#
+				# $release-debug
+				#
+				#deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
+				#
+			IN
+			;;
+		(experimental)
+			command cat >> "/tmp/napt/$release-source.list" <<-IN
+				#
+				# $release
+				#
+				#deb $server $release main contrib non-free
+				#deb-src $server $release main contrib non-free
+				#
+				# $release-debug
+				#
+				#deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
+				#
+			IN
+			;;
+		(*)
+			printf 'unknown release: %s\n' "$release" 1>&2;
+			exit 1;
+			;;
+		esac
 done;
 
-{
-    section=$(</dev/fd/0);
-} <<SEC
-# experimental
-# deb http://httpredir.debian.org/debian experimental main contrib non-free
-# deb-src http://httpredir.debian.org/debian experimental main contrib non-free
-SEC
+command cat /tmp/napt/*-source.list > /etc/apt/sources.list;
 
-mv -v /etc/apt/sources.list /etc/apt/sources.list.old;
-cat /tmp/napt/*-source.list > /etc/apt/sources.list;
-printf %s\\n "$section" >> /etc/apt/sources.list;
+command cat > /etc/apt/preferences <<-IN
+		Package: *
+		Pin: release a=stable
+		Pin-Priority: 700
 
-read -r -t 30 -p 'set up preferences? ';
-[[ $REPLY == y ]] ||
-    exit 1;
+		Package: *
+		Pin: release a=testing
+		Pin-Priority: 650
 
-{
-    preferences=$(</dev/fd/0);
-} <<PREF
-Package: *
-Pin: release a=testing
-Pin-Priority: 900
-
-Package: *
-Pin: release a=unstable
-Pin-Priority: 300
-
-Package: *
-Pin: release o=Unofficial Multimedia Packages
-Pin-Priority: 2
-
-Package: *
-Pin: release o=Debian
-Pin-Priority: 1
-
-Package: *
-Pin: release a=experimental
-Pin-Priority: -1
-PREF
-
-cp -fv /etc/apt/preferences /etc/apt/preferences.old;
-printf %s\\n "$preferences" > /etc/apt/preferences;
+		Package: *
+		Pin: release a=unstable
+		Pin-Priority: 600
+	IN
 
 # vim: set ft=sh :
