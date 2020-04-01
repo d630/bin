@@ -2,14 +2,14 @@
 #
 # Restart dunst.
 
-p=${XDG_RUNTIME_DIR:?}/dunst.pid;
+p=${XDG_RUNTIME_DIR:?}/dunst${DISPLAY:?}.pid;
 
-test -f "$p" &&
+test -r "$p" &&
     pkill -F "$p";
 
 (
-    exec dunst -to 10 -config "${XDG_CONFIG_HOME:?}/"dunst/dunstrc &
-    echo $! > "$p";
+    exec dunst -to 10 -config "${XDG_CONFIG_HOME:?}/dunst/dunstrc" &
+    echo "$!" > "$p";
 );
 
 # vim: set ft=sh :

@@ -6,19 +6,20 @@
 # Idea from: http://chneukirchen.org/dotfiles/bin/backclip
 
 function Clipbuffer::Daemon {
-    typeset -i i=-1;
+    typeset -i i;
+    i=-1;
 
     mkdir -p -m 700 -- "$xsels";
-    printf %d $$ > "$xsels/"$$.pid;
+    printf %d "$$" > "$xsels/$$$DISPLAY.pid";
 
     exec xprop -root -spy CUT_BUFFER0 |
     while
         read;
     do
         oi=$i;
-        xorg-selection-primary-out > "$xsels/".$oi;
-        cmp -s -- "$xsels/".$oi "$xsels/"$oi ||
-            mv -- "$xsels/".$oi "$xsels/"$((i = ++i % 32));
+        xorg-selection-primary-out > "$xsels/.$oi";
+        cmp -s -- "$xsels/.$oi" "$xsels/$oi" ||
+            mv -- "$xsels/.$oi" "$xsels/$((i = ++i % 32))";
     done;
 };
 
@@ -26,9 +27,9 @@ function Clipbuffer::Kill {
     typeset p;
     shopt -s nullglob;
 
-    for p in "$xsels/"?*.pid; do
+    for p in "$xsels/"?*"$DISPLAY.pid"; do
         p=${p##*/};
-        pkill -TERM -P "${p%.pid}";
+        pkill -TERM -P "${p%$DISPLAY.pid}";
     done;
 
     if
@@ -36,7 +37,7 @@ function Clipbuffer::Kill {
     then
         rm -fr -- "$xsels" 2>/dev/null;
     else
-        rm -f -- "$xsels/"?*.pid 2>/dev/null;
+        rm -f -- "$xsels/"?*"$DISPLAY.pid" 2>/dev/null;
     fi;
 
     xorg-selection-clear;
@@ -125,9 +126,10 @@ then
 elif
     $opt_restart;
 then
+    [[ -n $DISPLAY ]] ||
+        return 1;
     Clipbuffer::Kill;
-    [[ -n $DISPLAY ]] &&
-        daemonize "$BASH_SOURCE" -d;
+    daemonize "$BASH_SOURCE" -d;
 else
     Clipbuffer::Clip;
 fi;

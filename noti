@@ -30,7 +30,7 @@ case $urgency in
         exit 1;
 esac;
 
-test -f "$XDG_RUNTIME_DIR/".dunst_use_$urgency &&
-    notify-send -u $urgency --category"=$category" "$category" "$body";
+test -f "$XDG_RUNTIME_DIR/.dunst_use_$urgency$DISPLAY" &&
+    exec notify-send -u "$urgency" --category"=$category" "$category" "$body";
 
 # vim: set ft=sh :

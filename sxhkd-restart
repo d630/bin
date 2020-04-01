@@ -2,19 +2,14 @@
 #
 # Restart sxhkd.
 
-p=${XDG_RUNTIME_DIR:?}/sxhkd.pid;
+p=${XDG_RUNTIME_DIR:?}/sxhkd${DISPLAY:?}.pid;
 
-if
-    test -r "$p";
-then
+test -r "$p" &&
     pkill -F "$p";
-else
-    pkill -f sxhkd\ -c;
-fi;
 
 (
-    exec sxhkd -c "$XDG_CONFIG_HOME/"sxhkd/sxhkdrc &
-    echo $! > "$p";
+    exec sxhkd -c "$XDG_CONFIG_HOME/sxhkd/sxhkdrc" &
+    echo "$!" > "$p";
 );
 
 # vim: set ft=sh :
