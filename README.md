@@ -48,6 +48,7 @@ List:
 * [disownw](https://github.com/D630/bin/blob/master/disownw): Disown job.
 * [dnsmasq-backup-urls](https://github.com/D630/bin/blob/master/dnsmasq-backup-urls): Backup all uris from dnsmasq log.
 * [dunst-restart](https://github.com/D630/bin/blob/master/dunst-restart): Restart dunst.
+* [emacsd](https://github.com/D630/bin/blob/master/emacsd): Wrapper: emacs --daemon.
 * [event-editor](https://github.com/D630/bin/blob/master/event-editor): Add a task to Taskwarrior ('event' context) via vim (yaml).
 * [event](https://github.com/D630/bin/blob/master/event): Wrapper: Use taskwarrior in my 'event' context.
 * [fb-image-viewer](https://github.com/D630/bin/blob/master/fb-image-viewer): Default image viewer (framebuffer).
