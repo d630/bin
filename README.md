@@ -27,6 +27,7 @@ List:
 * [bspwm-rules](https://github.com/D630/bin/blob/master/bspwm-rules): bspwm: external_rules_command
 * [build-github-bin-readme](https://github.com/D630/bin/blob/master/build-github-bin-readme): Build README.md in github.com/D630/bin.
 * [calculate-date](https://github.com/D630/bin/blob/master/calculate-date): Calculate dates via taskwarrior.
+* [camera](https://github.com/D630/bin/blob/master/camera): Configure camera.
 * [camshot-dirty](https://github.com/D630/bin/blob/master/camshot-dirty): Take a quick camshot.
 * [cclean](https://github.com/D630/bin/blob/master/cclean): Clean up some dirs and files.
 * [choose](https://github.com/D630/bin/blob/master/choose): choose.
@@ -37,6 +38,7 @@ List:
 * [color-grab](https://github.com/D630/bin/blob/master/color-grab): Pick color via grabc.
 * [color-show](https://github.com/D630/bin/blob/master/color-show): Display color info in terminal.
 * [color-xclip](https://github.com/D630/bin/blob/master/color-xclip): X-select color code.
+* [configure-linux-console-color](https://github.com/D630/bin/blob/master/configure-linux-console-color): Configure color in linux console.
 * [countdown](https://github.com/D630/bin/blob/master/countdown): Countdown.
 * [daemonize](https://github.com/D630/bin/blob/master/daemonize): Daemonize a command.
 * [daylight](https://github.com/D630/bin/blob/master/daylight): Test against daytime and adjust my config.
@@ -85,6 +87,7 @@ List:
 * [isortw](https://github.com/D630/bin/blob/master/isortw): Wrapper: isort.
 * [issue-editor](https://github.com/D630/bin/blob/master/issue-editor): Add a task into Taskwarrior ('issue' context) via vim (yaml).
 * [issue](https://github.com/D630/bin/blob/master/issue): Wrapper: Use taskwarrior in my 'issue' context.
+* [keyboard](https://github.com/D630/bin/blob/master/keyboard): Configure keyboard.
 * [lan-down](https://github.com/D630/bin/blob/master/lan-down): Wrapper: set lan off.
 * [lan-up](https://github.com/D630/bin/blob/master/lan-up): Wrapper: set lan on.
 * [lesspipew](https://github.com/D630/bin/blob/master/lesspipew): My preprocessor for less.
@@ -106,6 +109,7 @@ List:
 * [mail-viewer](https://github.com/D630/bin/blob/master/mail-viewer): Default mail viewer (tui).
 * [menu](https://github.com/D630/bin/blob/master/menu): A wrapper script for selecting menu driven programs.
 * [mime-build-types](https://github.com/D630/bin/blob/master/mime-build-types): Build a mime.type file with ERE globs from /usr/share/mime.
+* [monitor](https://github.com/D630/bin/blob/master/monitor): Configure monitor(s).
 * [msmtpqw](https://github.com/D630/bin/blob/master/msmtpqw): Replacement for msmtpq.
 * [mutt--d630-archive](https://github.com/D630/bin/blob/master/mutt--d630-archive): Wrapper: mutt d630.archive.
 * [mutt--d630](https://github.com/D630/bin/blob/master/mutt--d630): Wrapper: mutt d630.
@@ -127,6 +131,7 @@ List:
 * [pass-copy](https://github.com/D630/bin/blob/master/pass-copy): Copy password from pass.
 * [pdf-purge-metadata](https://github.com/D630/bin/blob/master/pdf-purge-metadata): Remove PDF metadata with pdftk and exiftool.
 * [pidgin-start](https://github.com/D630/bin/blob/master/pidgin-start): Run pidgin.
+* [pointer](https://github.com/D630/bin/blob/master/pointer): Configure pointer.
 * [power](https://github.com/D630/bin/blob/master/power): Notify, if power is (almost) gone.
 * [pwgenw-xsel](https://github.com/D630/bin/blob/master/pwgenw-xsel): X-select password.
 * [pwgenw](https://github.com/D630/bin/blob/master/pwgenw): Create password.
@@ -178,6 +183,7 @@ List:
 * [test-daylight](https://github.com/D630/bin/blob/master/test-daylight): Test daytime.
 * [test-inet](https://github.com/D630/bin/blob/master/test-inet): Check inet connection.
 * [test-tty](https://github.com/D630/bin/blob/master/test-tty): Test if tty is available.
+* [test-xorg](https://github.com/D630/bin/blob/master/test-xorg): Test if running in X.
 * [text-editor](https://github.com/D630/bin/blob/master/text-editor): Default text editor.
 * [text-visual](https://github.com/D630/bin/blob/master/text-visual): Default text visual editor.
 * [theme](https://github.com/D630/bin/blob/master/theme): Adjust theme configuration.

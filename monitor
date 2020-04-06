@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Configure monitor(s).
+
+echo X_DPI= audio=\;export X_DPI;
+
+test-xorg ||
+	exit 1;
+
+case ${PRODUCT_NAME_SUM:=$(get-product-name-by-md5sum)} in
+	(dd791b3dd44b647e91524123fa1c6d0f)
+		if
+			xrandr --listmonitors |
+			grep -F -q HDMI-1;
+		then
+			xrandr \
+				--output HDMI-1 --dpi 96 --auto \
+				--output eDP-1 --off;
+			echo X_DPI=96 audio=HDMI;
+		else
+			xrandr \
+				--output eDP-1 --dpi 96 --mode 1920x1080 --rate 60.01 \
+				--output HDMI-1 --off;
+			echo X_DPI=96 audio=PCH;
+		fi;
+esac;
+
+# vim: set ft=sh :

@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# Configure keyboard.
+
+: "${XDG_CONFIG_HOME:?}" "${PRODUCT_NAME_SUM:=$(get-product-name-by-md5sum)}";
+
+if
+	test-xorg;
+then
+	get-input-devices-by-md5sum |
+	while
+		read -r sum;
+	do
+		test -e "$XDG_CONFIG_HOME/computer/plug/keyboard/$sum" && {
+			test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/keyboard" &&
+				xinput --disable "$(cat "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/keyboard")";
+			break;
+		}
+	done
+
+	# numlockx off;
+	setxkbmap \
+		-model pc105 \
+		-layout us \
+		-variant altgr-intl \
+		-option compose:menu;
+	xmodmap "$XDG_CONFIG_HOME/xmodmap/us-altgr-intl-german.rc";
+	xkbset m ma 60 10 10 5 2; xkbset exp =m;
+	xset r rate 220 150;
+
+else
+	case $TERM in
+		(linux*)
+			sudo kbdrate -d 250 -r 30.0 1>/dev/null 2>&1;
+			sudo loadkeys \
+				"$XDG_CONFIG_HOME/xmodmap/us-altgr-german.rc.map" 1>/dev/null 2>&1;
+	esac;
+fi;
+
+# vim: set ft=sh :

@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Test if running in X.
+
+systemctl is-active graphical.target 1>/dev/null 2>&1 &&
+	test -n "$DISPLAY" -a -n "$XDG_VTNR";
+
+# vim: set ft=sh :

@@ -5,10 +5,4 @@
 # sudo rtcwake -m mem -t "$(date -d year +%s)";
 sudo systemctl suspend;
 
-sleep 5;
-
-test -n "$X_XCLIENT" &&
-	. "$HOME/".profile.d/run.sh &&
-		ProfileRcRunXCustoms;
-
 # vim: set ft=sh :

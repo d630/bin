@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# Configure pointer.
+
+: "${XDG_CONFIG_HOME:?}" "${PRODUCT_NAME_SUM:=$(get-product-name-by-md5sum)}";
+
+test-xorg ||
+	exit 1;
+
+get-input-devices-by-md5sum |
+while
+	read -r sum;
+do
+	test -e "$XDG_CONFIG_HOME/computer/plug/pointer/$sum" && {
+		test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/touchpad" &&
+			xinput --disable "$(cat "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/touchpad")";
+		break;
+	}
+done
+
+xset mouse 3 4;
+
+# vim: set ft=sh :

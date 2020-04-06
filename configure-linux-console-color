@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# Configure color in linux console.
+
+test -t 1 ||
+	exit 1;
+
+case $TERM in
+	(linux*)
+		if
+			test "$1" = light;
+		then
+			printf '\e]P0eee8d5'; # S_base02
+			printf '\e]P7073642'; # S_base2
+			printf '\e]P8fdf6e3'; # S_base03
+			printf '\e]PA93a1a1'; # S_base01
+			printf '\e]PB839496'; # S_base00
+			printf '\e]PC657b83'; # S_base0
+			printf '\e]PE586e75'; # S_base1
+			printf '\e]PF002b36'; # S_base3
+		else
+			printf '\e]P0073642'; # S_base02
+			printf '\e]P7eee8d5'; # S_base2
+			printf '\e]P8002b36'; # S_base03
+			printf '\e]PA586e75'; # S_base01
+			printf '\e]PB657b83'; # S_base00
+			printf '\e]PC839496'; # S_base0
+			printf '\e]PE93a1a1'; # S_base1
+			printf '\e]PFfdf6e3'; # S_base3
+		fi;
+esac;
+
+# vim: set ft=sh :

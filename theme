@@ -40,11 +40,16 @@ function theme.x () (
     feh --bg-fill "$XDG_DATA_HOME/"wallpapers/current.wallpaper;
 );
 
+function theme.linux_console () {
+    configure-linux-console-color "$1";
+};
+
 declare -A C;
 
 if
     [[ $1 == dark ]];
 then
+    theme=dark;
     C=(
         [gtk.1]=dark
         [taskwarrior.linux.1]=dark-16.theme
@@ -54,11 +59,11 @@ then
         [x.1]=Solarized-Dark.xcolor
         [x.2]=\#002B36
         [x.3]=debian-minimal-dark.png
-        # [x.3]=berlin-dist-dark.png
         [bspwm.1]=\#222222
         [dunst.1]=dark
     );
 else
+    theme=light;
     C=(
         [gtk.1]=light
         [taskwarrior.linux.1]=light-16.theme
@@ -68,14 +73,13 @@ else
         [x.1]=Solarized-Light.xcolor
         [x.2]=\#FDF6E3
         [x.3]=debian-minimal-light.png
-        # [x.3]=berlin-dist-light.png
         [bspwm.1]=\#E0E0E0
         [dunst.1]=light
     );
 fi;
 
 if
-    [[ -n $DISPLAY ]];
+    test-xorg;
 then
     theme.taskwarrior "${C[taskwarrior.256.1]}";
     theme.mutt "${C[mutt.256.1]}";
@@ -89,6 +93,7 @@ then
 else
     theme.taskwarrior "${C[taskwarrior.linux.1]}";
     theme.mutt "${C[mutt.linux.1]}";
+    theme.linux_console "$theme";
 fi;
 
 # vim: set ft=sh :
