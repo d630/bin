@@ -68,9 +68,11 @@ List:
 * [fzf-ls](https://github.com/D630/bin/blob/master/fzf-ls): Select files listed in a directory.
 * [get-fball](https://github.com/D630/bin/blob/master/get-fball): Show some soccer results from http://www.sportschau.de.
 * [get-gaisma](https://github.com/D630/bin/blob/master/get-gaisma): Get sun data infos from http://www.gaisma.com.
+* [get-input-devices-by-md5sum](https://github.com/D630/bin/blob/master/get-input-devices-by-md5sum): Get md5sums of names in /proc/bus/input/devices.
 * [get-netz](https://github.com/D630/bin/blob/master/get-netz): Show network connections.
 * [get-news](https://github.com/D630/bin/blob/master/get-news): Wrapper for getting my news.
 * [get-nox](https://github.com/D630/bin/blob/master/get-nox): Get concubium and gallicinium.
+* [get-product-name-by-md5sum](https://github.com/D630/bin/blob/master/get-product-name-by-md5sum): Get md5sum of /sys/devices/virtual/dmi/id/product_name.
 * [get-sundata](https://github.com/D630/bin/blob/master/get-sundata): Get sunrise and sunset.
 * [get-webheader](https://github.com/D630/bin/blob/master/get-webheader): Get webheader via curl.
 * [get-wetter](https://github.com/D630/bin/blob/master/get-wetter): Get infos from http://wetter.tagesschau.de.
@@ -158,6 +160,7 @@ List:
 * [show-zeit](https://github.com/D630/bin/blob/master/show-zeit): Display times.
 * [show-zombies](https://github.com/D630/bin/blob/master/show-zombies): List all zombies and their parents to kill.
 * [skel-home](https://github.com/D630/bin/blob/master/skel-home): Prepare home directory.
+* [sort-ipv4](https://github.com/D630/bin/blob/master/sort-ipv4): Sort ipv4 addreses.
 * [sound](https://github.com/D630/bin/blob/master/sound): Play specific sounds (meant to be used with dunst and rsyslog).
 * [spotify-mpris](https://github.com/D630/bin/blob/master/spotify-mpris): Control spotify via mpris player interface.
 * [spotifyw](https://github.com/D630/bin/blob/master/spotifyw): Wrap up spotify.

@@ -23,6 +23,17 @@ case ${PRODUCT_NAME_SUM:=$(get-product-name-by-md5sum)} in
 				--output HDMI-1 --off;
 			echo X_DPI=96 audio=PCH;
 		fi;
+
+	(1cca3393c5c595d3236c7ad1bd16f0a4)
+		xrandr --listmonitors |
+		grep -F -q DP-4 &&
+			xrandr --output DP-4 --primary --mode 1920x1080 --rotate normal;
+
+		xrandr --listmonitors |
+		grep -F -q DP-5 &&
+			xrandr --output DP-5 --mode 1920x1080 --rotate normal --right-of DP-4;
+
+		echo X_DPI=96;
 esac;
 
 # vim: set ft=sh :
