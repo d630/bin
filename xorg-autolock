@@ -4,7 +4,7 @@
 
 exec daemonize xautolock \
 	-detectsleep \
-	-time 90 \
+	-time 60 \
 	-locker "$XDG_BIN_HOME/xorg-lock" \
 	-nowlocker "$XDG_BIN_HOME/xorg-lock" \
 	-notify 60 \

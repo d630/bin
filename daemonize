@@ -6,7 +6,7 @@
 #( exec setsid "$@" & )
 #exec setsid "$@" &
 #0</dev/null
-setsid "$@" 1>/dev/null 2>&1 &
+exec setsid "$@" 1>/dev/null 2>&1 &
 #setsid "$@"
 
 # vim: set ft=sh :
