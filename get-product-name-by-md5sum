@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Get md5sum of /sys/devices/virtual/dmi/id/product_name.
+
+comp=$(cat /sys/devices/virtual/dmi/id/product_name);
+comp=$(printf %s "$comp" | md5sum);
+
+echo "${comp%  -}";
+
+# vim: set ft=sh :

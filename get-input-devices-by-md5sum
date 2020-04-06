@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Get md5sums of names in /proc/bus/input/devices.
+
+sed -n '/N: Name=/ {s/^.*="\(.*\)"$/\1/;p}' /proc/bus/input/devices |
+xargs -L 1 -n 1 -P 0 -I {} sh -c 'printf %s "{}" | md5sum | cut -d " " -f 1';
+
+# vim: set ft=sh :
