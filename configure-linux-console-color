@@ -1,33 +1,68 @@
 #!/bin/sh
 #
 # Configure color in linux console.
+# See: https://github.com/adeverteuil/console-solarized/blob/master/console-solarized
 
 test -t 1 ||
-	exit 1;
+	exit 1
+
+S_base03=002b36
+S_base02=073642
+S_base01=586e75
+S_base00=657b83
+S_base0=839496
+S_base1=93a1a1
+S_base2=eee8d5
+S_base3=fdf6e3
+S_yellow=b58900
+S_orange=cb4b16
+S_red=dc322f
+S_magenta=d33682
+S_violet=6c71c4
+S_blue=268bd2
+S_cyan=2aa198
+S_green=859900
 
 case $TERM in
 	(linux*)
 		if
-			test "$1" = light;
+			test "$1" = light
 		then
-			printf '\e]P0eee8d5'; # S_base02
-			printf '\e]P7073642'; # S_base2
-			printf '\e]P8fdf6e3'; # S_base03
-			printf '\e]PA93a1a1'; # S_base01
-			printf '\e]PB839496'; # S_base00
-			printf '\e]PC657b83'; # S_base0
-			printf '\e]PE586e75'; # S_base1
-			printf '\e]PF002b36'; # S_base3
+			S_rebase03=$S_base3
+			S_rebase02=$S_base2
+			S_rebase01=$S_base1
+			S_rebase00=$S_base0
+			S_rebase0=$S_base00
+			S_rebase1=$S_base01
+			S_rebase2=$S_base02
+			S_rebase3=$S_base03
 		else
-			printf '\e]P0073642'; # S_base02
-			printf '\e]P7eee8d5'; # S_base2
-			printf '\e]P8002b36'; # S_base03
-			printf '\e]PA586e75'; # S_base01
-			printf '\e]PB657b83'; # S_base00
-			printf '\e]PC839496'; # S_base0
-			printf '\e]PE93a1a1'; # S_base1
-			printf '\e]PFfdf6e3'; # S_base3
-		fi;
-esac;
+			S_rebase03=$S_base03
+			S_rebase02=$S_base02
+			S_rebase01=$S_base01
+			S_rebase00=$S_base00
+			S_rebase0=$S_base0
+			S_rebase1=$S_base1
+			S_rebase2=$S_base2
+			S_rebase3=$S_base3
+		fi
+esac
+
+printf "\033]P0$S_rebase02" # Black
+printf "\033]P1$S_red"      # Red
+printf "\033]P2$S_green"    # Green
+printf "\033]P3$S_yellow"   # Brown
+printf "\033]P4$S_blue"     # Blue
+printf "\033]P5$S_magenta"  # Magenta
+printf "\033]P6$S_cyan"     # Cyan
+printf "\033]P7$S_rebase2"  # White
+printf "\033]P8$S_rebase03"
+printf "\033]P9$S_orange"
+printf "\033]Pa$S_rebase01"
+printf "\033]Pb$S_rebase00"
+printf "\033]Pc$S_rebase0"
+printf "\033]Pd$S_violet"
+printf "\033]Pe$S_rebase1"
+printf "\033]Pf$S_rebase3"
 
 # vim: set ft=sh :

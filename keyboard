@@ -23,7 +23,7 @@ then
 		-model pc105 \
 		-layout us \
 		-variant altgr-intl \
-		-option compose:menu;
+		-option compose:menu,terminate:ctrl_alt_bksp;
 	xmodmap "$XDG_CONFIG_HOME/xmodmap/us-altgr-intl-german.rc";
 	xkbset m ma 60 10 10 5 2; xkbset exp =m;
 	xset r rate 220 150;
@@ -31,9 +31,13 @@ then
 else
 	case $TERM in
 		(linux*)
-			sudo kbdrate -d 250 -r 30.0 1>/dev/null 2>&1;
-			sudo loadkeys \
-				"$XDG_CONFIG_HOME/xmodmap/us-altgr-german.rc.map" 1>/dev/null 2>&1;
+			test -t 1 ||
+				exit 1;
+			sudo sh -c "
+				kbdrate -s -d 250 -r 30.0;
+				kbd_mode -u;
+				loadkeys "$XDG_CONFIG_HOME/xmodmap/us-altgr-intl-german.rc.map";
+			"
 	esac;
 fi;
 
