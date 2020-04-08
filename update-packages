@@ -7,10 +7,10 @@ cd -- "$XDG_OPT_HOME" ||
 
 printf -v horiz %80s;
 function PrintHeader {
-    printf %s\\n "${horiz// /-}" "$1" 1>&2;
+    printf %s\\n "${horiz// /-}" "$1" "${horiz// /-}" 1>&2;
 };
 
-PrintHeader 'apt, dpkg and snap';
+PrintHeader 'apt, dpkg, and snap';
 sudo sh -c '
 	dpkg --configure -a;
 	apt-get install -f;
