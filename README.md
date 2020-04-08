@@ -192,6 +192,7 @@ List:
 * [theme](https://github.com/D630/bin/blob/master/theme): Adjust theme configuration.
 * [todo-editor](https://github.com/D630/bin/blob/master/todo-editor): Add a task to Taskwarrior ('todo' context) via vim (yaml).
 * [todo](https://github.com/D630/bin/blob/master/todo): Wrapper: Use taskwarrior in my 'todo' context.
+* [tput-colors](https://github.com/D630/bin/blob/master/tput-colors): Tput: export most terminfo/ANSI escape sequences needed for colorization.
 * [transmission-cli-w](https://github.com/D630/bin/blob/master/transmission-cli-w): Wrapper for transmission-cli.
 * [update-packages](https://github.com/D630/bin/blob/master/update-packages): Update via some package managers.
 * [vfh](https://github.com/D630/bin/blob/master/vfh): Preview files in a directory like in vifm.

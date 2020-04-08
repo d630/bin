@@ -31,7 +31,7 @@ then
 else
 	case $TERM in
 		(linux*)
-			test -t 1 ||
+			fgconsole 1>/dev/null 2>&1 ||
 				exit 1;
 			sudo sh -c "
 				kbdrate -s -d 250 -r 30.0;
