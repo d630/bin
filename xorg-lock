@@ -1,34 +1,7 @@
 #!/bin/sh
 #
-# Default xlock programme.
+# Manually lock screen.
 
-case $1 in
-	(enable|disable)
-		xautolock "-$1";
-		exit;;
-esac;
-
-t () {
-	xset -dpms;
-	s;
-};
-
-s () {
-	test "${X_DPI:-96}" -eq 96 ||
-		return;
-
-	spotify-mpris PlayPause;
-	mpc toogle;
-} 2> /dev/null;
-
-trap t INT TERM QUIT EXIT HUP;
-xset +dpms dpms 3 3 3;
-s;
-i3lock \
-	--nofork \
-	--image"=$XDG_DATA_HOME/"wallpapers/current.wallpaper \
-	--no-unlock-indicator \
-	--show-failed-attempts \
-	--tiling;
+exec xset s activate;
 
 # vim: set ft=sh :

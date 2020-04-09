@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Default xlock program.
+
+trap 'xset -dpms' INT TERM QUIT EXIT HUP;
+xset +dpms dpms 3 3 3;
+
+XSECURELOCK_AUTH_CURSOR_BLINK=0 \
+XSECURELOCK_BLANK_TIMEOUT=60 \
+XSECURELOCK_PASSWORD_PROMPT=time_hex \
+XSECURELOCK_SAVER=saver_blank \
+XSECURELOCK_SHOW_DATETIME=0 \
+XSECURELOCK_SHOW_HOSTNAME=0 \
+XSECURELOCK_SHOW_USERNAME=0 \
+	xsecurelock
+
+# vim: set ft=sh :
