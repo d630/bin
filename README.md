@@ -112,7 +112,7 @@ List:
 * [mail-viewer](https://github.com/d630/bin/blob/master/mail-viewer): Default mail viewer (tui).
 * [menu](https://github.com/d630/bin/blob/master/menu): A wrapper script for selecting menu driven programs.
 * [mime-build-types](https://github.com/d630/bin/blob/master/mime-build-types): Build a mime.type file with ERE globs from /usr/share/mime.
-* [monitor](https://github.com/d630/bin/blob/master/monitor): Configure monitor(s).
+* [monitor](https://github.com/d630/bin/blob/master/monitor): Configure monitor(s): xrandr, screen blanking, DPMS.
 * [msmtpqw](https://github.com/d630/bin/blob/master/msmtpqw): Replacement for msmtpq.
 * [mutt--d630-archive](https://github.com/d630/bin/blob/master/mutt--d630-archive): Wrapper: mutt d630.archive.
 * [mutt--d630](https://github.com/d630/bin/blob/master/mutt--d630): Wrapper: mutt d630.
