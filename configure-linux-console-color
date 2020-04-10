@@ -3,8 +3,8 @@
 # Configure color in linux console.
 # See: https://github.com/adeverteuil/console-solarized/blob/master/console-solarized
 
-test -t 1 ||
-	exit 1
+test -t 1 && fgconsole 1>/dev/null 2>&1 ||
+	exit 1;
 
 S_base03=002b36
 S_base02=073642
