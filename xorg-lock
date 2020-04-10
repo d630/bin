@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Manually lock screen.
+# Manually lock X screen.
 
 exec xset s activate;
 

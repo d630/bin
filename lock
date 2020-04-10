@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Manually lock screen.
+
+if
+	test-xorg;
+then
+	exec xorg-lock;
+else
+	case $TERM in
+		(linux*)
+			fgconsole 1>/dev/null 2>&1 &&
+				exec physlock -m;
+	esac;
+fi;
+
+# vim: set ft=sh :
