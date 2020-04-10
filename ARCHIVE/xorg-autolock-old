@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Default xautolock program.
+
+exec daemonize xautolock \
+	-detectsleep \
+	-time 60 \
+	-locker "$XDG_BIN_HOME/xorg-lock" \
+	-nowlocker "$XDG_BIN_HOME/xorg-lock" \
+	-notify 60 \
+	-notifier "loggi 3 .misc.exlamation 'Screen is going to be locked'";
+
+# vim: set ft=sh :
