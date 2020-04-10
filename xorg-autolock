@@ -4,6 +4,6 @@
 
 exec daemonize xss-lock \
 	-n "loggi 3 .misc.exlamation 'Screen is going to be locked'" \
-	-- "$XDG_BIN_HOME/xorg-lock";
+	-- "$XDG_BIN_HOME/xorg-locker";
 
 # vim: set ft=sh :
