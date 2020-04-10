@@ -14,7 +14,7 @@ test-inet || {
 };
 
 feedfaetcher 1>/dev/null 2>&1;
-f=$(newsboat -x reload print-unread);
+f=$(newsboat -r -x print-unread);
 
 test "${f%% *}" -gt 0 &&
     loggi 6 .transfer.complete "$f";
