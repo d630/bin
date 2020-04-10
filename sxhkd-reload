@@ -2,12 +2,14 @@
 #
 # Reload sxhkd config.
 
-p=${XDG_RUNTIME_DIR:?}/sxhkd.pid;
+p=${XDG_RUNTIME_DIR:?}/sxhkd${DISPLAY:?}.pid;
 
 test -r "$p" ||
-    exit;
+    exit 1;
 
-IFS= read -r pp < "$p" &&
-    kill -USR1 $pp;
+IFS= read -r pp < "$p";
+
+test -n "$pp" &&
+    kill -USR1 "$pp";
 
 # vim: set ft=sh :
