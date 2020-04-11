@@ -29,10 +29,10 @@ do
 	done;
 
 	server=$(
-		grep -o -h 'https\?.*$' "/tmp/napt/$release/"?* |
-		sort |
-		uniq -cd |
-		tac | {
+		command grep -o -h 'https\?.*$' "/tmp/napt/$release/"?* |
+		command sort |
+		command uniq -cd |
+		command tac | {
 			read -r _ l;
 			printf '%s' "$l";
 		}
