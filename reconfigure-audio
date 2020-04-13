@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Configure/Switch my audio devices.
+# Reconfigure/Switch audio devices.
 
 # case $1 in
 # 	(PCH)
@@ -27,7 +27,5 @@ case ${PRODUCT_NAME_SUM:=$(get-product-name-by-md5sum)} in
 				exec ln -fsr "$HOME/.asoundrc_${1,,}" "$HOME/.asoundrc";;
 		esac;
 esac;
-
-! :;
 
 # vim: set ft=sh :

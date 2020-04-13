@@ -2,7 +2,6 @@ Short scripts, which do not belong to my dotfiles. Unless otherwise stated,
 these files are in the public domain.
 
 List:
-* [audio-device](https://github.com/d630/bin/blob/master/audio-device): Configure/Switch my audio devices.
 * [audio-player](https://github.com/d630/bin/blob/master/audio-player): Default audio player (cli).
 * [backup-meta-apt](https://github.com/d630/bin/blob/master/backup-meta-apt): Backup infos about installed packages on Debian.
 * [backup-meta-bin](https://github.com/d630/bin/blob/master/backup-meta-bin): Backup installed executables.
@@ -26,7 +25,6 @@ List:
 * [bspwm-rules](https://github.com/d630/bin/blob/master/bspwm-rules): bspwm: external_rules_command
 * [build-github-bin-readme](https://github.com/d630/bin/blob/master/build-github-bin-readme): Build README.md in github.com/D630/bin.
 * [calculate-date](https://github.com/d630/bin/blob/master/calculate-date): Calculate dates via taskwarrior.
-* [camera](https://github.com/d630/bin/blob/master/camera): Configure camera.
 * [camshot-dirty](https://github.com/d630/bin/blob/master/camshot-dirty): Take a quick camshot.
 * [cclean](https://github.com/d630/bin/blob/master/cclean): Clean up some dirs and files.
 * [choose](https://github.com/d630/bin/blob/master/choose): choose.
@@ -77,7 +75,6 @@ List:
 * [iplog](https://github.com/d630/bin/blob/master/iplog): Daily ip logging.
 * [issue-editor](https://github.com/d630/bin/blob/master/issue-editor): Add a task into Taskwarrior ('issue' context) via vim (yaml).
 * [issue](https://github.com/d630/bin/blob/master/issue): Wrapper: Use taskwarrior in my 'issue' context.
-* [keyboard](https://github.com/d630/bin/blob/master/keyboard): Configure keyboard.
 * [lan-down](https://github.com/d630/bin/blob/master/lan-down): Wrapper: set lan off.
 * [lan-up](https://github.com/d630/bin/blob/master/lan-up): Wrapper: set lan on.
 * [lesspipew](https://github.com/d630/bin/blob/master/lesspipew): My preprocessor for less.
@@ -101,7 +98,6 @@ List:
 * [mail-viewer](https://github.com/d630/bin/blob/master/mail-viewer): Default mail viewer (tui).
 * [menu](https://github.com/d630/bin/blob/master/menu): A wrapper script for selecting menu driven programs.
 * [mime-build-types](https://github.com/d630/bin/blob/master/mime-build-types): Build a mime.type file with ERE globs from /usr/share/mime.
-* [monitor](https://github.com/d630/bin/blob/master/monitor): Configure monitor(s): xrandr, screen blanking, DPMS.
 * [msmtpqw](https://github.com/d630/bin/blob/master/msmtpqw): Replacement for msmtpq.
 * [mutt--d630-archive](https://github.com/d630/bin/blob/master/mutt--d630-archive): Wrapper: mutt d630.archive.
 * [mutt--d630](https://github.com/d630/bin/blob/master/mutt--d630): Wrapper: mutt d630.
@@ -125,14 +121,18 @@ List:
 * [pass-copy](https://github.com/d630/bin/blob/master/pass-copy): Copy password from pass.
 * [pdf-purge-metadata](https://github.com/d630/bin/blob/master/pdf-purge-metadata): Remove PDF metadata with pdftk and exiftool.
 * [pidgin-start](https://github.com/d630/bin/blob/master/pidgin-start): Run pidgin.
-* [pointer](https://github.com/d630/bin/blob/master/pointer): Configure pointer.
 * [power](https://github.com/d630/bin/blob/master/power): Notify, if battery power is (almost) gone.
 * [pwgenw-xsel](https://github.com/d630/bin/blob/master/pwgenw-xsel): X-select password.
 * [pwgenw](https://github.com/d630/bin/blob/master/pwgenw): Create password.
 * [pycolor](https://github.com/d630/bin/blob/master/pycolor): Pick color.
 * [pyfonts](https://github.com/d630/bin/blob/master/pyfonts): Display fonts.
 * [readline-editor](https://github.com/d630/bin/blob/master/readline-editor): Default readline editor.
+* [reconfigure-audio](https://github.com/d630/bin/blob/master/reconfigure-audio): Reconfigure/Switch audio devices.
+* [reconfigure-camera](https://github.com/d630/bin/blob/master/reconfigure-camera): Reconfigure camera.
+* [reconfigure-keyboard](https://github.com/d630/bin/blob/master/reconfigure-keyboard): Reconfigure keyboard.
 * [reconfigure-linux-console-color](https://github.com/d630/bin/blob/master/reconfigure-linux-console-color): Configure color in linux console.
+* [reconfigure-monitor](https://github.com/d630/bin/blob/master/reconfigure-monitor): Reconfigure monitor(s): xrandr, screen blanking, DPMS.
+* [reconfigure-pointer](https://github.com/d630/bin/blob/master/reconfigure-pointer): Reconfigure pointer.
 * [reload-sxhkd](https://github.com/d630/bin/blob/master/reload-sxhkd): Reload sxhkd config.
 * [repeat](https://github.com/d630/bin/blob/master/repeat): Repeat a command n times.
 * [restart-dunst](https://github.com/d630/bin/blob/master/restart-dunst): Restart dunst.

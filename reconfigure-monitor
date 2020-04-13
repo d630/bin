@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Configure monitor(s): xrandr, screen blanking, DPMS.
+# Reconfigure monitor(s): xrandr, screen blanking, DPMS.
 
 if
 	test-xorg;

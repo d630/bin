@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Configure camera.
+# Reconfigure camera.
 
 : "${XDG_CONFIG_HOME:?}" "${PRODUCT_NAME_SUM:=$(get-product-name-by-md5sum)}";
 
