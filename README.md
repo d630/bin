@@ -129,11 +129,8 @@ List:
 * [power](https://github.com/d630/bin/blob/master/power): Notify, if battery power is (almost) gone.
 * [pwgenw-xsel](https://github.com/d630/bin/blob/master/pwgenw-xsel): X-select password.
 * [pwgenw](https://github.com/d630/bin/blob/master/pwgenw): Create password.
-* [pycalendar](https://github.com/d630/bin/blob/master/pycalendar): Display calendar.
 * [pycolor](https://github.com/d630/bin/blob/master/pycolor): Pick color.
 * [pyfonts](https://github.com/d630/bin/blob/master/pyfonts): Display fonts.
-* [pyrandgen-xsel](https://github.com/d630/bin/blob/master/pyrandgen-xsel): X-select random password.
-* [pyrandgen](https://github.com/d630/bin/blob/master/pyrandgen): Generate random password.
 * [readline-editor](https://github.com/d630/bin/blob/master/readline-editor): Default readline editor.
 * [reconfigure-linux-console-color](https://github.com/d630/bin/blob/master/reconfigure-linux-console-color): Configure color in linux console.
 * [reload-sxhkd](https://github.com/d630/bin/blob/master/reload-sxhkd): Reload sxhkd config.
@@ -208,9 +205,7 @@ List:
 * [x-text-editor](https://github.com/d630/bin/blob/master/x-text-editor): Default editor (gui).
 * [x-video-player](https://github.com/d630/bin/blob/master/x-video-player): Default video player (gui).
 * [x-web-browser](https://github.com/d630/bin/blob/master/x-web-browser): Default web browser (gui).
-* [xib](https://github.com/d630/bin/blob/master/xib): xib.
 * [xorg-autolock](https://github.com/d630/bin/blob/master/xorg-autolock): Default X screen autolocker program.
-* [xorg-dpms-standby](https://github.com/d630/bin/blob/master/xorg-dpms-standby): Set DPMS to standby state.
 * [xorg-get-xclass](https://github.com/d630/bin/blob/master/xorg-get-xclass): Get interactively xclass info about a xwindow.
 * [xorg-get-xids](https://github.com/d630/bin/blob/master/xorg-get-xids): Get x window ids.
 * [xorg-lock](https://github.com/d630/bin/blob/master/xorg-lock): Manually lock X screen.
@@ -222,7 +217,6 @@ List:
 * [xorg-selection-primary-in](https://github.com/d630/bin/blob/master/xorg-selection-primary-in): Read into X primary selection.
 * [xorg-selection-primary-out](https://github.com/d630/bin/blob/master/xorg-selection-primary-out): Print the X primary selection to stdout.
 * [xorg-switch-to-desktop](https://github.com/d630/bin/blob/master/xorg-switch-to-desktop): Select desktop with a menu and then switch with wmctrl to it.
-* [xorg-touchpad](https://github.com/d630/bin/blob/master/xorg-touchpad): Xorg: Disable or enable touchpad.
 * [youtube-dl-get-audio](https://github.com/d630/bin/blob/master/youtube-dl-get-audio): Run youtoube-dl to convert video to audio.
 * [z-run](https://github.com/d630/bin/blob/master/z-run): Run z output within file manager.
 * [zeit](https://github.com/d630/bin/blob/master/zeit): Display times.

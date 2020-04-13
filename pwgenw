@@ -2,6 +2,7 @@
 #
 # Create password.
 
-printf %s $(pwgen -nc);
+pwgen -cnsyC |
+sed 's/ //g; q';
 
 # vim: set ft=sh :

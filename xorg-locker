@@ -10,6 +10,6 @@ XSECURELOCK_SAVER=saver_blank \
 XSECURELOCK_SHOW_DATETIME=0 \
 XSECURELOCK_SHOW_HOSTNAME=0 \
 XSECURELOCK_SHOW_USERNAME=0 \
-	exec xsecurelock
+	exec xsecurelock;
 
 # vim: set ft=sh :
