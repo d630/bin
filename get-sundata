@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
     // Get sunrise and sunset.
+    // Return 0, if time is between sunrise and sunset.
     // Idea: https://github.com/baskerville/bin/blob/macosx/daytime
 
     if ($argc == 2) {

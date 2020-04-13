@@ -1,10 +1,10 @@
 #!/bin/sh
 #
-# List all zombies and their parents to kill.
+# Display all zombies and their parents to kill.
 # Source: http://chneukirchen.org/dotfiles/bin/zombies
 
 ps f -eo state,pid,ppid,comm |
-gawk '
+mawk '
     { cmds[$2] = $NF }
     /^Z/ {
         print $(NF-1) "/" $2 " zombie child of " cmds[$3] "/" $3;

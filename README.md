@@ -46,6 +46,7 @@ List:
 * [detach](https://github.com/d630/bin/blob/master/detach): Detach command.
 * [disownw](https://github.com/d630/bin/blob/master/disownw): Disown job.
 * [dnsmasq-backup-urls](https://github.com/d630/bin/blob/master/dnsmasq-backup-urls): Backup all uris from dnsmasq log.
+* [dudel](https://github.com/d630/bin/blob/master/dudel): Disk usage of unlinked, but still open files.
 * [emacsd](https://github.com/d630/bin/blob/master/emacsd): Wrapper: emacs --daemon.
 * [event-editor](https://github.com/d630/bin/blob/master/event-editor): Add a task to Taskwarrior ('event' context) via vim (yaml).
 * [event](https://github.com/d630/bin/blob/master/event): Wrapper: Use taskwarrior in my 'event' context.
@@ -62,12 +63,8 @@ List:
 * [gaisma](https://github.com/d630/bin/blob/master/gaisma): Get sun data infos from http://www.gaisma.com.
 * [get-battery-capacity](https://github.com/d630/bin/blob/master/get-battery-capacity): Get battery capacity.
 * [get-input-devices-by-md5sum](https://github.com/d630/bin/blob/master/get-input-devices-by-md5sum): Get md5sums of names in /proc/bus/input/devices.
-* [get-news](https://github.com/d630/bin/blob/master/get-news): Wrapper for getting my news.
-* [get-nox](https://github.com/d630/bin/blob/master/get-nox): Get concubium and gallicinium.
 * [get-product-name-by-md5sum](https://github.com/d630/bin/blob/master/get-product-name-by-md5sum): Get md5sum of /sys/devices/virtual/dmi/id/product_name.
 * [get-sundata](https://github.com/d630/bin/blob/master/get-sundata): Get sunrise and sunset.
-* [get-webheader](https://github.com/d630/bin/blob/master/get-webheader): Get webheader via curl.
-* [get-wetter](https://github.com/d630/bin/blob/master/get-wetter): Get infos from http://wetter.tagesschau.de.
 * [grep-urls](https://github.com/d630/bin/blob/master/grep-urls): Grep urls from stdin.
 * [habit-editor](https://github.com/d630/bin/blob/master/habit-editor): Add a task to Taskwarrior ('habit' context) via vim (yaml).
 * [habit](https://github.com/d630/bin/blob/master/habit): Wrapper: Use taskwarrior in my 'habit' context.
@@ -89,6 +86,7 @@ List:
 * [log-editor](https://github.com/d630/bin/blob/master/log-editor): Log a task into Taskwarrior ('log' context) via vim (yaml).
 * [log](https://github.com/d630/bin/blob/master/log): Wrapper: Use taskwarrior in my 'log' context.
 * [loggi](https://github.com/d630/bin/blob/master/loggi): Wrap up logger for local scripting.
+* [lsdisk](https://github.com/d630/bin/blob/master/lsdisk): Display information about block devices and disk space on the file system.
 * [lsort](https://github.com/d630/bin/blob/master/lsort): Sort input by lenght.
 * [mail-archive](https://github.com/d630/bin/blob/master/mail-archive): Archive mails (dovecot -> maildir).
 * [mail-deliver](https://github.com/d630/bin/blob/master/mail-deliver): Deliver mails (msmtp).
@@ -119,7 +117,9 @@ List:
 * [mutt-save-attachments](https://github.com/d630/bin/blob/master/mutt-save-attachments): Save attachements in Mutt.
 * [network-device](https://github.com/d630/bin/blob/master/network-device): Configure my network devices.
 * [netz](https://github.com/d630/bin/blob/master/netz): Show network connections.
+* [news](https://github.com/d630/bin/blob/master/news): Wrapper for getting my news.
 * [noti](https://github.com/d630/bin/blob/master/noti): Send notifications (meant to be used with dunst and rsyslog).
+* [nox](https://github.com/d630/bin/blob/master/nox): Get concubium and gallicinium.
 * [ocean](https://github.com/d630/bin/blob/master/ocean): Simulate ocean sound.
 * [open](https://github.com/d630/bin/blob/master/open): Open files or strings in preferred applications.
 * [pass-copy](https://github.com/d630/bin/blob/master/pass-copy): Copy password from pass.
@@ -156,14 +156,6 @@ List:
 * [screenshot-multi](https://github.com/d630/bin/blob/master/screenshot-multi): Take a quick multi screenshot.
 * [screenshot-single](https://github.com/d630/bin/blob/master/screenshot-single): Take a quick single screenshot.
 * [sdmenu](https://github.com/d630/bin/blob/master/sdmenu): Wrapper for dmenu2-save.
-* [show-dudel](https://github.com/d630/bin/blob/master/show-dudel): Disk usage of unlinked, but still open files.
-* [show-platten](https://github.com/d630/bin/blob/master/show-platten): Show file system.
-* [show-ports-opened2](https://github.com/d630/bin/blob/master/show-ports-opened2): Check still open network ports.
-* [show-ports-opened](https://github.com/d630/bin/blob/master/show-ports-opened): Check open network ports.
-* [show-swaptop](https://github.com/d630/bin/blob/master/show-swaptop): Show most swap-using processes.
-* [show-who](https://github.com/d630/bin/blob/master/show-who): Who.
-* [show-zeit](https://github.com/d630/bin/blob/master/show-zeit): Display times.
-* [show-zombies](https://github.com/d630/bin/blob/master/show-zombies): List all zombies and their parents to kill.
 * [skel-home](https://github.com/d630/bin/blob/master/skel-home): Prepare home directory.
 * [sort-ipv4](https://github.com/d630/bin/blob/master/sort-ipv4): Sort ipv4 addreses.
 * [sound](https://github.com/d630/bin/blob/master/sound): Play specific sounds (meant to be used with dunst and rsyslog).
@@ -177,6 +169,7 @@ List:
 * [stow-home](https://github.com/d630/bin/blob/master/stow-home): xstow wrapper.
 * [stow-new](https://github.com/d630/bin/blob/master/stow-new): Set up a new stow package.
 * [stream-gist-spotify](https://github.com/d630/bin/blob/master/stream-gist-spotify): Stream music links from my gist file.
+* [swaptop](https://github.com/d630/bin/blob/master/swaptop): Display most swap-using processes.
 * [sxiv-browser](https://github.com/d630/bin/blob/master/sxiv-browser): Open all files in the current directory with sxiv.
 * [task-local](https://github.com/d630/bin/blob/master/task-local): Simple wrapper for using taskwarrior with local "task-repos".
 * [taskum-add](https://github.com/d630/bin/blob/master/taskum-add): Add a bookmark to taswarrior-um (via newsbeuter/newsboat)
@@ -198,6 +191,8 @@ List:
 * [vfh](https://github.com/d630/bin/blob/master/vfh): Preview files in a directory like in vifm.
 * [volume](https://github.com/d630/bin/blob/master/volume): Set volume via amixer.
 * [web-browser](https://github.com/d630/bin/blob/master/web-browser): Default web browser (tui).
+* [webheader](https://github.com/d630/bin/blob/master/webheader): Get webheader via curl.
+* [wetter](https://github.com/d630/bin/blob/master/wetter): Get infos from http://wetter.tagesschau.de.
 * [wlan-down](https://github.com/d630/bin/blob/master/wlan-down): Wrapper: set wlan off.
 * [wlan-up](https://github.com/d630/bin/blob/master/wlan-up): Wrapper: set wlan on.
 * [wless](https://github.com/d630/bin/blob/master/wless): Open the result of which with less.
@@ -230,3 +225,5 @@ List:
 * [xorg-touchpad](https://github.com/d630/bin/blob/master/xorg-touchpad): Xorg: Disable or enable touchpad.
 * [youtube-dl-get-audio](https://github.com/d630/bin/blob/master/youtube-dl-get-audio): Run youtoube-dl to convert video to audio.
 * [z-run](https://github.com/d630/bin/blob/master/z-run): Run z output within file manager.
+* [zeit](https://github.com/d630/bin/blob/master/zeit): Display times.
+* [zombies](https://github.com/d630/bin/blob/master/zombies): Display all zombies and their parents to kill.

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Show most swap-using processes.
+# Display most swap-using processes.
 # Source: http://chneukirchen.org/dotfiles/bin/swaptop
 
 if
@@ -18,8 +18,9 @@ then
             if (swap > 0) {
                 printf "%8d  %s %d\n", swap, name, pid
             }
-        }' /proc/[0-9]*/status |
-    sort -nr;
+        }
+    ' /proc/[0-9]*/status |
+    sort -r;
 else
     for f in /proc/[0-9]*; do
         mawk '
@@ -28,18 +29,19 @@ else
             };
             $30 {
                 pid = $1;
-                name = substr($2,2,length($2)-2)
+                name = substr($2, 2, length($2) - 2)
             };
-            $1=="Swap:" {
+            $1 == "Swap:" {
                 swap += $2
             };
             END {
                 if (swap > 0) {
                     printf "%8d  %s %d\n", swap, name, pid
                 }
-            }' $f/stat $f/smaps 2>/dev/null;
+            }
+        ' "$f/stat" "$f/smaps" 2>/dev/null;
     done |
-    sort -nr;
+    sort -r;
 fi;
 
 # vim: set ft=sh :

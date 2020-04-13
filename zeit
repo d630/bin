@@ -8,7 +8,10 @@ date +'%V %a %Y-%m-%d %H:%M:%S';
 echo;
 lifeday;
 tput sgr0;
-#echo ; ncal -w -M -3 ; echo
+
+echo;
+ncal -w -M;
+echo
 # TASKRC=$XDG_CONFIG_HOME/taskrc-life \
 #     task rc._forcecolor=true calendar 2>/dev/null;
 

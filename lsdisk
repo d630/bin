@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# Display information about block devices and disk space on the file system.
+
+sudo lsblk -a -i -T NAME -M \
+	-o NAME,FSTYPE,UUID,RO,RM,SIZE,STATE,OWNER,GROUP,MODE,TYPE,MOUNTPOINT,LABEL,MODEL;
+
+echo;
+
+df -a -h --total \
+	--output=source,fstype,itotal,iused,iavail,ipcent,size,used,avail,pcent,file,target |
+mawk '
+	BEGIN {
+		cmd = "head -n -1 | sort"
+	}
+
+	NR == 1 {
+		print $0;
+		next;
+	}
+
+	{
+		print $0 | cmd
+	}
+
+	END {
+		close(cmd)
+		print $0
+	}
+';
+
+# vim: set ft=sh :

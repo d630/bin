@@ -12,7 +12,8 @@ q=$(calculate-date "
 	)/4
 ");
 
-echo concubium "$(calculate-date "today + $3 + $4 + $q")";
-echo gallicinium "$(calculate-date "tomorrow + $1 + $2 - $q")";
+printf '%s %s\n' \
+	"$(calculate-date "today + $3 + $4 + $q")" \
+	"$(calculate-date "tomorrow + $1 + $2 - $q")";
 
 # vim: set ft=sh :

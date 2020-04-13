@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Get webheader via curl.
+
+exec curl \
+	--compressed \
+	--head \
+	--junk-session-cookies \
+	--location \
+	--max-redirs 50 \
+	--no-keepalive \
+	--no-sessionid \
+	--proto-redir -all,http,https \
+	--proto -all,http,https \
+	--referer ';auto' \
+	--stderr - \
+	--no-styled-output \
+	${1:+"$@"};
+
+# vim: set ft=sh :
