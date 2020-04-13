@@ -3,7 +3,7 @@
 # Run z output within file manager.
 
 if
-    test-tty 2>/dev/null;
+    test-ctty;
 then
     menu=fzf;
     __nav () {
@@ -14,7 +14,7 @@ elif
 then
     menu=dmenu2;
     __nav () {
-        setsidw x-file-browser -t "$1";
+        setsid x-file-browser -t "$1";
     };
 else
     exit 1;

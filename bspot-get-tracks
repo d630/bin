@@ -2,17 +2,22 @@
 #
 # Spotify: Get track infos of a public playlist.
 
-user=${1:?};
-list=${2:?};
-token=${3:?};
+list=${1:?};
+token=${2:?};
 
-bspot getTracksObjects "$user" "$list" "$token" > "/tmp/$list.json";
+bspot getTracksObjects "$list" "$token" > "/tmp/$list.json";
 
 jq -e -c '
-	.items[]
-	| [( [.track.artists[].name] | join(" / ") ), .track.name,
-	.track.track_number, .track.disc_number, .track.album.name,
-	.track.duration_ms, .track.uri, .added_at]
+	.items[] |
+	[
+		([.track.artists[].name] | join(" / ") ),
+		.track.name, .track.track_number,
+		.track.disc_number,
+		.track.album.name,
+		.track.duration_ms,
+		.track.uri,
+		.added_at
+	]
 ' "/tmp/$list.json" |
 LC_ALL=en_US.UTF-8 sort;
 

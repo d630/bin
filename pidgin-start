@@ -3,6 +3,6 @@
 # Run pidgin.
 
 sudo systemctl start avahi-daemon &&
-    setsidw pidgin;
+    setsid pidgin;
 
 # vim: set ft=sh :

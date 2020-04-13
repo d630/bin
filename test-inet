@@ -1,14 +1,10 @@
 #!/usr/bin/env bash
 #
-# Check inet connection.
+# Test inet connection by trying to connect/ping to google.
 
-{
-    ping -qnc2 -w10 debian.org ||
-        ping -qnc1 -w4 8.8.8.8 ||
-            nc -vz www.debian.org 80 || {
-                exec 9<>/dev/udp/debian.org/80 &&
-                    exec 9<&- &&
-                        exec 9>&-; };
-} 1>/dev/null 2>&1;
+exec 1>/dev/null 2>&1;
+
+echo > /dev/tcp/8.8.8.8/53 ||
+	exec ping -qnc1 -w4 8.8.8.8;
 
 # vim: set ft=sh :

@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+#
+# Get battery capacity.
+
+shopt -s nullglob;
+
+c=-101;
+
+case ${PRODUCT_NAME_SUM:=$(get-product-name-by-md5sum)} in
+	(dd791b3dd44b647e91524123fa1c6d0f)
+		b=(/sys/class/power_supply/CMB*);
+		((${#b})) && {
+			c=$(< "$b/capacity");
+			[[ $(< "$b/status") != Discharging ]] &&
+				c=-$c;
+		};
+esac;
+
+printf '%d\n' "$c";
+
+# vim: set ft=sh :

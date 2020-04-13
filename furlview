@@ -15,11 +15,11 @@
 # FILE is regular or piped, that is also <(foo)
 
 
-[[ -n $DISPLAY ]] ||
+test-xorg ||
 	exit 1;
 
 function __x_web_browser {
-	setsidw x-web-browser "$1";
+	setsid x-web-browser "$1";
 };
 
 function __fzf {

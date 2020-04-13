@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Test whether process has a controlling tty.
+
+ctty=$(ps -p "${1:-$PPID}" -o tty=);
+test -n "${ctty#*\?*}";
+
+# vim: set ft=sh :

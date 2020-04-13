@@ -8,8 +8,7 @@
 # -- web api.
 
 function spotify::albums::getSeveralAlbums {
-    # OAuth Scope: null
-    # Params: access_token
+    # https://developer.spotify.com/documentation/web-api/reference/albums/get-several-albums/
 
     [[ -n $2 ]] ||
         return 1;
@@ -21,34 +20,31 @@ function spotify::albums::getSeveralAlbums {
 };
 
 function spotify::playlist::addTracks {
-    # OAuth Scope: playlist-modify-public, playlist-modify-private
-    # Params: user_id playlist_id access_token spotify_uri ...
+    # https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/
 
-    [[ -n $4 ]] ||
+    [[ -n $3 ]] ||
         return 1;
 
     curl \
         -s \
-        -X POST "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}/tracks" \
-        -H "Authorization: Bearer ${3:?}" \
+        -X POST "https://api.spotify.com/v1/playlists/${1:?}/tracks" \
+        -H "Authorization: Bearer ${2:?}" \
         -H "Accept: application/json" \
         -H "Content-Type: application/json" \
-        --data "${@:4}";
+        --data "${@:3}";
 };
 
 function spotify::playlist::clear {
-    # OAuth Scope: playlist-modify-public, playlist-modify-private
-    # Params: user_id playlist_id access_token
+    # https://developer.spotify.com/documentation/web-api/reference/playlists/replace-playlists-tracks/
 
     curl \
         -s \
-        -X PUT "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}/tracks?uris=" \
-        -H "Authorization: Bearer ${3:?}";
+        -X PUT "https://api.spotify.com/v1/playlists/${1:?}/tracks?uris=" \
+        -H "Authorization: Bearer ${2:?}";
 };
 
 function spotify::playlist::create {
-    # OAuth Scope: playlist-modify-public, playlist-modify-private
-    # Params: user_id playlist_name access_token
+    # https://developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/
 
     curl \
         -s \
@@ -66,28 +62,25 @@ function spotify::get {
 }
 
 function spotify::playlist::getTracks {
-    # OAuth Scope: null
-    # Params: user_id playlist_id access_token [offset]
+    # https://developer.spotify.com/documentation/web-api/reference/playlists/get-playlists-tracks/
 
     curl \
         -s \
-        -X GET "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}/tracks?limit=100&offset=${4:-0}" \
-        -H "Authorization: Bearer ${3:?}";
+        -X GET "https://api.spotify.com/v1/playlists/${1:?}/tracks?limit=100&offset=${3:-0}" \
+        -H "Authorization: Bearer ${2:?}";
 };
 
 function spotify::playlist::getTracksInMarket {
-    # OAuth Scope: null
-    # Params: user_id playlist_id access_token [offset]
+    # https://developer.spotify.com/documentation/web-api/reference/playlists/get-playlists-tracks/
 
     curl \
         -s \
-        -X GET "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}/tracks?fields=next,items(track.is_playable,track.uri)&limit=100&offset=${4:-0}&market=${5:-DE}" \
-        -H "Authorization: Bearer ${3:?}";
+        -X GET "https://api.spotify.com/v1/playlists/${1:?}/tracks?fields=next,items(track.is_playable,track.uri)&limit=100&offset=${3:-0}&market=${4:-DE}" \
+        -H "Authorization: Bearer ${2:?}";
 };
 
 function spotify::playlist::list {
-    # OAuth Scope: playlist-read-private, playlist-read-collaborative
-    # Params: user_id access_token [offset]
+    # https://developer.spotify.com/documentation/web-api/reference/playlists/get-list-users-playlists/
 
     curl \
         -s \
@@ -96,26 +89,25 @@ function spotify::playlist::list {
 };
 
 function spotify::playlist::privatize {
-    # OAuth Scope: playlist-modify-public, playlist-modify-private
-    # Params: user_id playlist_id access_token
+    # https://developer.spotify.com/documentation/web-api/reference/playlists/change-playlist-details/
+
     curl \
         -s \
-        -X PUT "https://api.spotify.com/v1/users/${1:?}/playlists/${2:?}" \
-        -H "Authorization: Bearer ${3:?}" \
+        -X PUT "https://api.spotify.com/v1/playlists/${1:?}" \
+        -H "Authorization: Bearer ${2:?}" \
         -H "Content-Type: application/json" \
         --data "{\"public\":false}";
 };
 
 function spotify::tracks::audio_features {
-    # OAuth Scope:
-    # Params: access_token ids
+    # https://developer.spotify.com/documentation/web-api/reference/tracks/get-several-audio-features/
 
     [[ -n $2 ]] ||
         return 1;
 
     curl \
         -s \
-        -X GET "https://api.spotify.com/v1/audio-features/?ids=${@:2}" \
+        -X GET "https://api.spotify.com/v1/audio-features?ids=${@:2}" \
         -H "Accept: application/json" \
         -H "Authorization: Bearer ${1:?}";
 };
@@ -123,7 +115,7 @@ function spotify::tracks::audio_features {
 # -- misc.
 
 function addTracks {
-    declare uid=${1:?} plid=${2:?} ato=${3:?};
+    declare plid=${1:?} ato=${2:?};
     declare -a uris=();
 
     shift 3
@@ -148,7 +140,7 @@ function addTracks {
         y=100;
 
     for ((i=int; i > 0; i--, x+=100)); do
-        'spotify::playlist::addTracks' "$uid" "$plid" "$ato" "$(
+        'spotify::playlist::addTracks' "$plid" "$ato" "$(
             printf %s\\n "${uris[@]:x:y}" |
             jq -R . |
             jq -sc '{ uris: . }';
@@ -156,7 +148,7 @@ function addTracks {
     done;
 
     ((mod)) &&
-        'spotify::playlist::addTracks' "$uid" "$plid" "$ato" "$(
+        'spotify::playlist::addTracks' "$plid" "$ato" "$(
             printf '%s\n' "${uris[@]: -mod}" |
             jq -R . |
             jq -sc '{ uris: . }';
@@ -164,7 +156,7 @@ function addTracks {
 };
 
 function getLists {
-	# TODO
+    # TODO
     declare -i offset=-50;
 
     jq -e -r --unbuffered '
@@ -195,7 +187,6 @@ function getAlbums {
 		'spotify::playlist::getTracks' \
 			"${1:?}" \
 			"${2:?}" \
-			"${3:?}" \
 			"$((offset+=100))";
 	)
 
@@ -204,7 +195,7 @@ function getAlbums {
 		next=$(jq -r '.next' <<< "$resp");
 		[[ $next == null ]];
 	do
-		resp=$('spotify::get' "$3" "$next");
+		resp=$('spotify::get' "$2" "$next");
 	done |
 	jq -e -r '.items[] | [.track.album.uri, .track.uri] | @tsv';
 };
@@ -253,7 +244,6 @@ function getTracks {
 		'spotify::playlist::getTracks' \
 			"${1:?}" \
 			"${2:?}" \
-			"${3:?}" \
 			"$((offset+=100))";
 	)
 
@@ -262,7 +252,7 @@ function getTracks {
 		next=$(jq -r '.next' <<< "$resp");
 		[[ $next == null ]];
 	do
-		resp=$('spotify::get' "$3" "$next");
+		resp=$('spotify::get' "$2" "$next");
 	done |
 	jq -e -r '.items[].track.uri';
 };
@@ -277,9 +267,8 @@ function getTracksInMarket {
 		'spotify::playlist::getTracksInMarket' \
 			"${1:?}" \
 			"${2:?}" \
-			"${3:?}" \
 			"$((offset+=100))" \
-			"$4"
+			"$3"
 	)
 
 	until
@@ -287,7 +276,7 @@ function getTracksInMarket {
 		next=$(jq -r '.next' <<< "$resp");
 		[[ $next == null ]];
 	do
-		resp=$('spotify::get' "$3" "$next");
+		resp=$('spotify::get' "$2" "$next");
 	done |
 	jq -e -r 'del(.next)';
 };
@@ -302,7 +291,6 @@ function getTracksObjects {
 		'spotify::playlist::getTracks' \
 			"${1:?}" \
 			"${2:?}" \
-			"${3:?}" \
 			"$((offset+=100))";
 	)
 
@@ -311,7 +299,7 @@ function getTracksObjects {
 		next=$(jq -r '.next' <<< "$resp");
 		[[ $next == null ]];
 	do
-		resp=$('spotify::get' "$3" "$next");
+		resp=$('spotify::get' "$2" "$next");
 	done |
 	jq -e -r '.';
 };

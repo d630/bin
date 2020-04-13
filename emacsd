@@ -2,6 +2,6 @@
 #
 # Wrapper: emacs --daemon.
 
-exec daemonize" /usr/bin/emacs --daemon "$@";
+exec daemonize /usr/bin/emacs --daemon "$@";
 
 # vim: set ft=sh :

@@ -2,9 +2,8 @@
 #
 # Spotify: Take pub list1 and create public gpb lists.
 
-user=${1:?};
-token=${2:?};
-file=${3:-$XDG_VAR_HOME/lib/bspot/bspot_create_gpb_lists.bash};
+token=${1:?};
+file=${2:-$XDG_VAR_HOME/lib/bspot/bspot_create_gpb_lists.bash};
 
 # wants:
 # 	-A dates[%s|playlist-id]
@@ -23,7 +22,7 @@ do
 			break;
 	done;
 done < <(
-	bspot getTracksObjects "$user" "$list1" "$token" |
+	bspot getTracksObjects "$list1" "$token" |
 	jq -r '
 		.items[] |
 		"date --date=\(.added_at) +%s_\(([.track.artists[].uri]|join("/")))_\(.track.uri)"
@@ -39,12 +38,12 @@ do
 	[[ $list2 == "END" ]] &&
 		continue
 	mapfile -t -d , <<< "${dates[$k]}";
-	bspot clearList "$user" "$list2" "$token";
+	bspot clearList "$list2" "$token";
 	for ((i = ${#MAPFILE[@]} - 2; i >= 0; i--));
 	do
 		printf '%s\n' "${MAPFILE[$i]}";
 	done |
-	bspot addTracks "$user" "$list2" "$token";
+	bspot addTracks "$list2" "$token";
 done;
 
 # vim: set ft=sh :

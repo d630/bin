@@ -41,7 +41,7 @@ done;
 };
 
 if
-    test-tty 2>/dev/null;
+    test-ctty;
 then
     case $flag_F$flag_N$flag_K in
         (111)
@@ -49,7 +49,7 @@ then
         (110)
             daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
         (100)
-            setsidw "$cmd" "$@";;
+            setsid "$cmd" "$@";;
         (011)
             x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
         (010)
@@ -66,7 +66,7 @@ else
         (110)
             daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
         (100)
-            setsidw "$cmd" "$@";;
+            setsid "$cmd" "$@";;
         (011)
             daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
         (010)
@@ -74,7 +74,7 @@ else
         (001)
             daemonize ${SHELL:-sh} -c "$cmd ${*@Q};printf 'Press ENTER to continue\n';read";;
         (000)
-            setsidw "$cmd" "$@";;
+            setsid "$cmd" "$@";;
     esac;
 fi;
 

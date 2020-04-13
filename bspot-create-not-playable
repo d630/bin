@@ -3,20 +3,19 @@
 # Spotify: Take pub list1 and create a list with unplayable tracks.
 # See: https://developer.spotify.com/documentation/general/guides/track-relinking-guide/
 
-user=${1:?};
-list1=${2:?};
-list2=${3:?};
-token=${4:?};
-market=${5:-DE};
+list1=${1:?};
+list2=${2:?};
+token=${3:?};
+market=${4:-DE};
 
 list=/tmp/$list1.json;
 
-bspot getTracksInMarket "$user" "$list1" "$token" "$market" > "$list";
+bspot getTracksInMarket "$list1" "$token" "$market" > "$list";
 
-bspot clearList "$user" "$list2" "$token";
+bspot clearList "$list2" "$token";
 
 jq -e -r \
 	'.items[] | if .track.is_playable then empty else .track.uri end' "$list" |
-bspot addTracks "$user" "$list2" "$token";
+bspot addTracks "$list2" "$token";
 
 # vim: set ft=sh :

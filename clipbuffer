@@ -47,7 +47,7 @@ function Clipbuffer::Clip {
     typeset clip menu;
 
     if
-        test-tty 2>/dev/null;
+        test-ctty;
     then
         menu=fzf;
     else

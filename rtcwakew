@@ -8,7 +8,7 @@ function bye {
 };
 
 if
-    test-tty 2>/dev/null;
+    test-ctty;
 then
     function __menu {
         menu fzf "$1";

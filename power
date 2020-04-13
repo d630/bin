@@ -1,11 +1,13 @@
 #!/bin/sh
 #
-# Notify, if power is (almost) gone.
+# Notify, if battery power is (almost) gone.
 
-c=$(test-bat) ||
-	exit 1;
+c=$(get-battery-capacity);
 
-test "$c" -le 25 &&
-	loggi 3 .device.error "Power is very low, ${c}%. Go and connect charger!";
+! {
+	test "$c" -ge 0 -a "$c" -le 25 &&
+		loggi 3 .device.error \
+			"Battery capacity is only $c%. Go and connect charger!";
+};
 
 # vim: set ft=sh :

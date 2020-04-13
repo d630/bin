@@ -9,7 +9,7 @@ function theme.bspwm {
 function theme.dunst () (
     cd -- "$HOME";
     ln -fsr etc/dunst/dunstrc-$1 etc/dunst/dunstrc;
-    dunst-restart;
+    restart-dunst;
 );
 
 function theme.gtk () (
@@ -41,7 +41,7 @@ function theme.x () (
 );
 
 function theme.linux_console () {
-    configure-linux-console-color "$1";
+    reconfigure-linux-console-color "$1";
 };
 
 declare -A C;

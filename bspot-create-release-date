@@ -1,25 +1,23 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # Spotify: Take pub list1 and sort it by release_date.
 
-user=${1:?};
-list1=${2:?};
-list2=${3:?};
-token=${4:?};
+list1=${1:?};
+list2=${2:?};
+token=${3:?};
 
-bspot clearList "$user" "$list2" "$token";
+bspot clearList "$list2" "$token";
 
-bspot getAlbums "$user" "$list1" "$token" > /tmp/bspot_albums.txt;
+bspot getAlbums "$list1" "$token" > /tmp/bspot_albums.txt;
 
-paste /tmp/bspot_albums.txt \
-	<(
-		cut -f 1 /tmp/bspot_albums.txt |
-			cut -d : -f 3 |
-			bspot getAlbumsObjects "$token" |
-			jq -e -r '.albums[].release_date';
-	) |
-	LC_ALL=C sort -k 3d,3d -k 1d,1d -k 2d,2d |
-	cut -f 2 |
-	bspot addTracks "$user" "$list2" "$token";
+cut -f 1 /tmp/bspot_albums.txt |
+cut -d : -f 3 |
+bspot getAlbumsObjects "$token" |
+jq -e -r '.albums[].release_date' > /tmp/bspot_labels.txt;
+
+paste /tmp/bspot_albums.txt /tmp/bspot_labels.txt |
+LC_ALL=C sort -k 3d,3d -k 1d,1d -k 2d,2d |
+cut -f 2 |
+bspot addTracks "$list2" "$token";
 
 # vim: set ft=sh :

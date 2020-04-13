@@ -23,7 +23,7 @@ __while_read ()
 while
     read -r REPLY;
 do
-    setsidw chromiumw "$REPLY" 1>/dev/null 2>&1;
+    setsid chromiumw "$REPLY" 1>/dev/null 2>&1;
 done;
 
 __sqlite |

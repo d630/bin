@@ -1,7 +1,0 @@
-#!/bin/sh
-#
-# Wrapper: setsid(1).
-
-exec setsid "${@:?}" &
-
-# vim: set ft=sh :

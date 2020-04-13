@@ -14,7 +14,6 @@ List:
 * [bash-print-freq](https://github.com/d630/bin/blob/master/bash-print-freq): Print frequency of the bash history.
 * [bash-toggle-options.bash](https://github.com/d630/bin/blob/master/bash-toggle-options.bash): Toggle bash options via fzf.
 * [binary-to-nibble](https://github.com/d630/bin/blob/master/binary-to-nibble): Group binary numbers into nibbles (used with bc output).
-* [blackw](https://github.com/d630/bin/blob/master/blackw): Wrapper: black.
 * [borg-weekly](https://github.com/d630/bin/blob/master/borg-weekly): Weekly backup with borg.
 * [bspot-create-featured-lists](https://github.com/d630/bin/blob/master/bspot-create-featured-lists): Spotify: Take pub list1 and create audio-featured public lists.
 * [bspot-create-gpb-lists](https://github.com/d630/bin/blob/master/bspot-create-gpb-lists): Spotify: Take pub list1 and create public gpb lists.
@@ -33,12 +32,10 @@ List:
 * [choose](https://github.com/d630/bin/blob/master/choose): choose.
 * [chromiumw--proxy](https://github.com/d630/bin/blob/master/chromiumw--proxy): Start chromiumw and redirect traffic through a proxy server.
 * [chromiumw-mselect-history](https://github.com/d630/bin/blob/master/chromiumw-mselect-history): Browse the history of chromium via fzf, and then open selection.
-* [chromiumw](https://github.com/d630/bin/blob/master/chromiumw): Wrapper: chromium
 * [clipbuffer](https://github.com/d630/bin/blob/master/clipbuffer): Simple X primary selection manager.
 * [color-grab](https://github.com/d630/bin/blob/master/color-grab): Pick color via grabc.
 * [color-show](https://github.com/d630/bin/blob/master/color-show): Display color info in terminal.
 * [color-xclip](https://github.com/d630/bin/blob/master/color-xclip): X-select color code.
-* [configure-linux-console-color](https://github.com/d630/bin/blob/master/configure-linux-console-color): Configure color in linux console.
 * [countdown](https://github.com/d630/bin/blob/master/countdown): Countdown.
 * [daemonize](https://github.com/d630/bin/blob/master/daemonize): Daemonize a command.
 * [daylight](https://github.com/d630/bin/blob/master/daylight): Test against daytime and adjust my config.
@@ -49,7 +46,6 @@ List:
 * [detach](https://github.com/d630/bin/blob/master/detach): Detach command.
 * [disownw](https://github.com/d630/bin/blob/master/disownw): Disown job.
 * [dnsmasq-backup-urls](https://github.com/d630/bin/blob/master/dnsmasq-backup-urls): Backup all uris from dnsmasq log.
-* [dunst-restart](https://github.com/d630/bin/blob/master/dunst-restart): Restart dunst.
 * [emacsd](https://github.com/d630/bin/blob/master/emacsd): Wrapper: emacs --daemon.
 * [event-editor](https://github.com/d630/bin/blob/master/event-editor): Add a task to Taskwarrior ('event' context) via vim (yaml).
 * [event](https://github.com/d630/bin/blob/master/event): Wrapper: Use taskwarrior in my 'event' context.
@@ -57,19 +53,15 @@ List:
 * [fc-edit](https://github.com/d630/bin/blob/master/fc-edit): Default fc editor ($FCEDIT).
 * [feed2newsboat](https://github.com/d630/bin/blob/master/feed2newsboat): Record url of feed in newsboat via dmenu.
 * [feedfaetcher](https://github.com/d630/bin/blob/master/feedfaetcher): Simple news feed downloader.
-* [feedfaetcherw](https://github.com/d630/bin/blob/master/feedfaetcherw): Wrapper: feedfaetcher.
 * [file-browser](https://github.com/d630/bin/blob/master/file-browser): Default file manager (tui).
 * [find-file](https://github.com/d630/bin/blob/master/find-file): Find file under the current directory with flag -ls.
 * [find-string](https://github.com/d630/bin/blob/master/find-string): Grep string in all files under the current directory with find.
-* [firefoxw](https://github.com/d630/bin/blob/master/firefoxw): Wrapper: firefox
-* [flake8w](https://github.com/d630/bin/blob/master/flake8w): Wrapper: flake8
 * [furlview](https://github.com/d630/bin/blob/master/furlview): Simple replacement for urlview using fzf in X.
 * [fzf-bind.bash](https://github.com/d630/bin/blob/master/fzf-bind.bash): My fzf keybinding script for bash.
 * [fzf-ls](https://github.com/d630/bin/blob/master/fzf-ls): Select files listed in a directory.
-* [get-fball](https://github.com/d630/bin/blob/master/get-fball): Show some soccer results from http://www.sportschau.de.
-* [get-gaisma](https://github.com/d630/bin/blob/master/get-gaisma): Get sun data infos from http://www.gaisma.com.
+* [gaisma](https://github.com/d630/bin/blob/master/gaisma): Get sun data infos from http://www.gaisma.com.
+* [get-battery-capacity](https://github.com/d630/bin/blob/master/get-battery-capacity): Get battery capacity.
 * [get-input-devices-by-md5sum](https://github.com/d630/bin/blob/master/get-input-devices-by-md5sum): Get md5sums of names in /proc/bus/input/devices.
-* [get-netz](https://github.com/d630/bin/blob/master/get-netz): Show network connections.
 * [get-news](https://github.com/d630/bin/blob/master/get-news): Wrapper for getting my news.
 * [get-nox](https://github.com/d630/bin/blob/master/get-nox): Get concubium and gallicinium.
 * [get-product-name-by-md5sum](https://github.com/d630/bin/blob/master/get-product-name-by-md5sum): Get md5sum of /sys/devices/virtual/dmi/id/product_name.
@@ -86,7 +78,6 @@ List:
 * [imapfilter-localhost-delete](https://github.com/d630/bin/blob/master/imapfilter-localhost-delete): Wrapper: imapfilter with config localhost-delete.lua.
 * [imapfilter-localhost-unseen](https://github.com/d630/bin/blob/master/imapfilter-localhost-unseen): Wrapper: imapfilter with config localhost-unseen.lua.
 * [iplog](https://github.com/d630/bin/blob/master/iplog): Daily ip logging.
-* [isortw](https://github.com/d630/bin/blob/master/isortw): Wrapper: isort.
 * [issue-editor](https://github.com/d630/bin/blob/master/issue-editor): Add a task into Taskwarrior ('issue' context) via vim (yaml).
 * [issue](https://github.com/d630/bin/blob/master/issue): Wrapper: Use taskwarrior in my 'issue' context.
 * [keyboard](https://github.com/d630/bin/blob/master/keyboard): Configure keyboard.
@@ -126,8 +117,8 @@ List:
 * [mutt--posteo](https://github.com/d630/bin/blob/master/mutt--posteo): Wrapper: mutt posteo.
 * [mutt--spool](https://github.com/d630/bin/blob/master/mutt--spool): Wrapper: mutt spool.
 * [mutt-save-attachments](https://github.com/d630/bin/blob/master/mutt-save-attachments): Save attachements in Mutt.
-* [mypyw](https://github.com/d630/bin/blob/master/mypyw): Wrapper: mypy.
 * [network-device](https://github.com/d630/bin/blob/master/network-device): Configure my network devices.
+* [netz](https://github.com/d630/bin/blob/master/netz): Show network connections.
 * [noti](https://github.com/d630/bin/blob/master/noti): Send notifications (meant to be used with dunst and rsyslog).
 * [ocean](https://github.com/d630/bin/blob/master/ocean): Simulate ocean sound.
 * [open](https://github.com/d630/bin/blob/master/open): Open files or strings in preferred applications.
@@ -135,7 +126,7 @@ List:
 * [pdf-purge-metadata](https://github.com/d630/bin/blob/master/pdf-purge-metadata): Remove PDF metadata with pdftk and exiftool.
 * [pidgin-start](https://github.com/d630/bin/blob/master/pidgin-start): Run pidgin.
 * [pointer](https://github.com/d630/bin/blob/master/pointer): Configure pointer.
-* [power](https://github.com/d630/bin/blob/master/power): Notify, if power is (almost) gone.
+* [power](https://github.com/d630/bin/blob/master/power): Notify, if battery power is (almost) gone.
 * [pwgenw-xsel](https://github.com/d630/bin/blob/master/pwgenw-xsel): X-select password.
 * [pwgenw](https://github.com/d630/bin/blob/master/pwgenw): Create password.
 * [pycalendar](https://github.com/d630/bin/blob/master/pycalendar): Display calendar.
@@ -144,14 +135,27 @@ List:
 * [pyrandgen-xsel](https://github.com/d630/bin/blob/master/pyrandgen-xsel): X-select random password.
 * [pyrandgen](https://github.com/d630/bin/blob/master/pyrandgen): Generate random password.
 * [readline-editor](https://github.com/d630/bin/blob/master/readline-editor): Default readline editor.
+* [reconfigure-linux-console-color](https://github.com/d630/bin/blob/master/reconfigure-linux-console-color): Configure color in linux console.
+* [reload-sxhkd](https://github.com/d630/bin/blob/master/reload-sxhkd): Reload sxhkd config.
 * [repeat](https://github.com/d630/bin/blob/master/repeat): Repeat a command n times.
+* [restart-dunst](https://github.com/d630/bin/blob/master/restart-dunst): Restart dunst.
+* [restart-sxhkd](https://github.com/d630/bin/blob/master/restart-sxhkd): Restart sxhkd.
 * [rtcwakew](https://github.com/d630/bin/blob/master/rtcwakew): Use rtcwake and play music on wakeup.
+* [run-black](https://github.com/d630/bin/blob/master/run-black): Wrapper: black.
+* [run-chromium](https://github.com/d630/bin/blob/master/run-chromium): Wrapper: chromium
+* [run-feedfaetcher](https://github.com/d630/bin/blob/master/run-feedfaetcher): Wrapper: feedfaetcher.
+* [run-firefox](https://github.com/d630/bin/blob/master/run-firefox): Wrapper: firefox
+* [run-flake8](https://github.com/d630/bin/blob/master/run-flake8): Wrapper: flake8
+* [run-isort](https://github.com/d630/bin/blob/master/run-isort): Wrapper: isort.
+* [run-mypy](https://github.com/d630/bin/blob/master/run-mypy): Wrapper: mypy.
+* [run-spotify](https://github.com/d630/bin/blob/master/run-spotify): Wrap up spotify.
+* [run-transmission-cli](https://github.com/d630/bin/blob/master/run-transmission-cli): Wrapper for transmission-cli.
+* [run-weechat](https://github.com/d630/bin/blob/master/run-weechat): Wrap up weechat.
 * [run](https://github.com/d630/bin/blob/master/run): Run that command.
 * [schlafe](https://github.com/d630/bin/blob/master/schlafe): My suspend wrapper.
 * [screenshot-multi](https://github.com/d630/bin/blob/master/screenshot-multi): Take a quick multi screenshot.
 * [screenshot-single](https://github.com/d630/bin/blob/master/screenshot-single): Take a quick single screenshot.
 * [sdmenu](https://github.com/d630/bin/blob/master/sdmenu): Wrapper for dmenu2-save.
-* [setsidw](https://github.com/d630/bin/blob/master/setsidw): Wrapper: setsid(1).
 * [show-dudel](https://github.com/d630/bin/blob/master/show-dudel): Disk usage of unlinked, but still open files.
 * [show-platten](https://github.com/d630/bin/blob/master/show-platten): Show file system.
 * [show-ports-opened2](https://github.com/d630/bin/blob/master/show-ports-opened2): Check still open network ports.
@@ -164,7 +168,6 @@ List:
 * [sort-ipv4](https://github.com/d630/bin/blob/master/sort-ipv4): Sort ipv4 addreses.
 * [sound](https://github.com/d630/bin/blob/master/sound): Play specific sounds (meant to be used with dunst and rsyslog).
 * [spotify-mpris](https://github.com/d630/bin/blob/master/spotify-mpris): Control spotify via mpris player interface.
-* [spotifyw](https://github.com/d630/bin/blob/master/spotifyw): Wrap up spotify.
 * [ssudo](https://github.com/d630/bin/blob/master/ssudo): Using sudo with dmenu2 via SUDO_ASKPASS.
 * [startx.sh](https://github.com/d630/bin/blob/master/startx.sh): My mini wrapper for xinit.
 * [stat-1](https://github.com/d630/bin/blob/master/stat-1): Stat a file and build an associative array.
@@ -174,8 +177,6 @@ List:
 * [stow-home](https://github.com/d630/bin/blob/master/stow-home): xstow wrapper.
 * [stow-new](https://github.com/d630/bin/blob/master/stow-new): Set up a new stow package.
 * [stream-gist-spotify](https://github.com/d630/bin/blob/master/stream-gist-spotify): Stream music links from my gist file.
-* [sxhkd-reload](https://github.com/d630/bin/blob/master/sxhkd-reload): Reload sxhkd config.
-* [sxhkd-restart](https://github.com/d630/bin/blob/master/sxhkd-restart): Restart sxhkd.
 * [sxiv-browser](https://github.com/d630/bin/blob/master/sxiv-browser): Open all files in the current directory with sxiv.
 * [task-local](https://github.com/d630/bin/blob/master/task-local): Simple wrapper for using taskwarrior with local "task-repos".
 * [taskum-add](https://github.com/d630/bin/blob/master/taskum-add): Add a bookmark to taswarrior-um (via newsbeuter/newsboat)
@@ -183,23 +184,20 @@ List:
 * [tcsh--filetest](https://github.com/d630/bin/blob/master/tcsh--filetest): Use the filetest builtin command of tcsh.
 * [tcsh--printenv](https://github.com/d630/bin/blob/master/tcsh--printenv): Use the printenv builtin command of tcsh.
 * [template-new](https://github.com/d630/bin/blob/master/template-new): Prepare new file from a template.
-* [test-bat](https://github.com/d630/bin/blob/master/test-bat): Print battery capacity.
-* [test-daylight](https://github.com/d630/bin/blob/master/test-daylight): Test daytime.
-* [test-inet](https://github.com/d630/bin/blob/master/test-inet): Check inet connection.
-* [test-tty](https://github.com/d630/bin/blob/master/test-tty): Test if tty is available.
-* [test-xorg](https://github.com/d630/bin/blob/master/test-xorg): Test if running in X.
+* [test-ctty](https://github.com/d630/bin/blob/master/test-ctty): Test whether process has a controlling tty.
+* [test-daylight](https://github.com/d630/bin/blob/master/test-daylight): Test daylight by checking if we are between sunrise and sunset.
+* [test-inet](https://github.com/d630/bin/blob/master/test-inet): Test inet connection by trying to connect/ping to google.
+* [test-xorg](https://github.com/d630/bin/blob/master/test-xorg): Test whether we are in an X session.
 * [text-editor](https://github.com/d630/bin/blob/master/text-editor): Default text editor.
 * [text-visual](https://github.com/d630/bin/blob/master/text-visual): Default text visual editor.
 * [theme](https://github.com/d630/bin/blob/master/theme): Adjust theme configuration.
 * [todo-editor](https://github.com/d630/bin/blob/master/todo-editor): Add a task to Taskwarrior ('todo' context) via vim (yaml).
 * [todo](https://github.com/d630/bin/blob/master/todo): Wrapper: Use taskwarrior in my 'todo' context.
 * [tput-colors](https://github.com/d630/bin/blob/master/tput-colors): Tput: export most terminfo/ANSI escape sequences needed for colorization.
-* [transmission-cli-w](https://github.com/d630/bin/blob/master/transmission-cli-w): Wrapper for transmission-cli.
 * [update-packages](https://github.com/d630/bin/blob/master/update-packages): Update via some package managers.
 * [vfh](https://github.com/d630/bin/blob/master/vfh): Preview files in a directory like in vifm.
 * [volume](https://github.com/d630/bin/blob/master/volume): Set volume via amixer.
 * [web-browser](https://github.com/d630/bin/blob/master/web-browser): Default web browser (tui).
-* [weechatw](https://github.com/d630/bin/blob/master/weechatw): Wrap up weechat.
 * [wlan-down](https://github.com/d630/bin/blob/master/wlan-down): Wrapper: set wlan off.
 * [wlan-up](https://github.com/d630/bin/blob/master/wlan-up): Wrapper: set wlan on.
 * [wless](https://github.com/d630/bin/blob/master/wless): Open the result of which with less.
