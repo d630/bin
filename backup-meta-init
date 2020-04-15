@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 # Backup inits.
+# TODO
 
 {
 	find /etc/init.d/ -perm /111 -type f -printf %f\\n;

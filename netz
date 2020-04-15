@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 # Show network connections.
+# TODO
 
 if
     test-inet;

@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 # Wrapper: imapfilter with config localhost-action.lua.
+# TODO
 
 exec imapfilter -c "$HOME/".imapfilter/localhost-action.lua;
 

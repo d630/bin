@@ -2,7 +2,7 @@
 #
 # Wrapper for dmenu2-save.
 
-test -n "$DISPLAY" &&
-    exec menu dmenu2-save "$1" 0<&-;
+test-xorg &&
+	exec menu dmenu2-save ${1:+"$@"} 0<&-;
 
 # vim: set ft=sh :

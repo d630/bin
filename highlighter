@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 # Wrapper: Default highlighting tool.
+# TODO
 
 for f; do
     source-highlight \

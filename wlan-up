@@ -2,6 +2,6 @@
 #
 # Wrapper: set wlan on.
 
-exec sudo "$XDG_BIN_HOME/"network-device \w -c;
+exec sudo "$XDG_BIN_HOME/reconfigure-network-device" \w -c;
 
 # vim: set ft=sh :

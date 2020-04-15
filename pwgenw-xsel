@@ -1,8 +1,9 @@
 #!/bin/sh
 #
 # X-select password.
+# TODO
 
-pwgenw |
+run-pwgen |
 xclip -i -l 1 -selection clipboard;
 
 # vim: set ft=sh :

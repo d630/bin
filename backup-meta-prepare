@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
 # Prepare the full backup of my system.
+# TODO
 
 cd -- "$HOME";
 

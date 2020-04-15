@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
 # Use rtcwake and play music on wakeup.
+# TODO
 
 function bye {
     printf 'Bye-bye!\n' 1>&2;

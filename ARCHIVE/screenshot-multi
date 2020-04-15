@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# Take a quick screenshot.
+
+mkdir -p /tmp/screenshots;
+
+cd /tmp/screenshots ||
+	exit 1;
+
+
+exec scrot \
+    '%Y-%m-%d--%s_$wx$h.png' \
+    -q 100 \
+    -m;
+
+# vim: set ft=sh :

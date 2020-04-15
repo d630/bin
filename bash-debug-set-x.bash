@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # A debugging function for bash.
-# based on http://mywiki.wooledge.org/BashGuide/Practices#Activate_Bash.27s_Debug_Mode
+# Based on http://mywiki.wooledge.org/BashGuide/Practices#Activate_Bash.27s_Debug_Mode
 
 debug_set_x ()
 case $1 in

@@ -1,7 +1,6 @@
 #!/bin/sh
 #
 # Display color info in terminal.
-
 # TODO
 
 printf 'TERM: %s\nCOLORS: %d\nLONGNAME: %s\n' \

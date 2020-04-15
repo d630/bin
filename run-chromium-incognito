@@ -2,6 +2,6 @@
 #
 # Start chromiumw and redirect traffic through a proxy server.
 
-exec env force_new=1 chromiumw --proxy-server=127.0.0.1:3128 --temp-profile --incognito;
+force_new=1 exec run-chromium --temp-profile --incognito ${1:+"$@"};
 
 # vim: set ft=sh :

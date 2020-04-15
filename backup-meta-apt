@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 # Backup infos about installed packages on Debian.
+# TODO
 
 backup_dir=${XDG_BACKUP_HOME:?};
 

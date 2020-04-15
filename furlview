@@ -19,7 +19,7 @@ test-xorg ||
 	exit 1;
 
 function __x_web_browser {
-	setsid x-web-browser "$1";
+	setsid -f x-web-browser "$1";
 };
 
 function __fzf {

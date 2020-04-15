@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 # Wrapper: imapfilter with config localhost-unseen.lua.
+# TODO
 
 exec imapfilter \
  -c "$HOME/".imapfilter/localhost-unseen.lua \

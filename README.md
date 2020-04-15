@@ -23,12 +23,10 @@ List:
 * [bspot-shuffle-list](https://github.com/d630/bin/blob/master/bspot-shuffle-list): Spotify: Take pub list1, shuffle it and add the songs to cleared pub list2.
 * [bspot](https://github.com/d630/bin/blob/master/bspot): Some functions to modify public user-playlists via Spotify's Web API.
 * [bspwm-rules](https://github.com/d630/bin/blob/master/bspwm-rules): bspwm: external_rules_command
-* [build-github-bin-readme](https://github.com/d630/bin/blob/master/build-github-bin-readme): Build README.md in github.com/D630/bin.
 * [calculate-date](https://github.com/d630/bin/blob/master/calculate-date): Calculate dates via taskwarrior.
 * [camshot-dirty](https://github.com/d630/bin/blob/master/camshot-dirty): Take a quick camshot.
 * [cclean](https://github.com/d630/bin/blob/master/cclean): Clean up some dirs and files.
 * [choose](https://github.com/d630/bin/blob/master/choose): choose.
-* [chromiumw--proxy](https://github.com/d630/bin/blob/master/chromiumw--proxy): Start chromiumw and redirect traffic through a proxy server.
 * [chromiumw-mselect-history](https://github.com/d630/bin/blob/master/chromiumw-mselect-history): Browse the history of chromium via fzf, and then open selection.
 * [clipbuffer](https://github.com/d630/bin/blob/master/clipbuffer): Simple X primary selection manager.
 * [color-grab](https://github.com/d630/bin/blob/master/color-grab): Pick color via grabc.
@@ -63,6 +61,7 @@ List:
 * [get-input-devices-by-md5sum](https://github.com/d630/bin/blob/master/get-input-devices-by-md5sum): Get md5sums of names in /proc/bus/input/devices.
 * [get-product-name-by-md5sum](https://github.com/d630/bin/blob/master/get-product-name-by-md5sum): Get md5sum of /sys/devices/virtual/dmi/id/product_name.
 * [get-sundata](https://github.com/d630/bin/blob/master/get-sundata): Get sunrise and sunset.
+* [github-build-bin-readme](https://github.com/d630/bin/blob/master/github-build-bin-readme): Build README.md in github.com/D630/bin.
 * [grep-urls](https://github.com/d630/bin/blob/master/grep-urls): Grep urls from stdin.
 * [habit-editor](https://github.com/d630/bin/blob/master/habit-editor): Add a task to Taskwarrior ('habit' context) via vim (yaml).
 * [habit](https://github.com/d630/bin/blob/master/habit): Wrapper: Use taskwarrior in my 'habit' context.
@@ -139,6 +138,7 @@ List:
 * [restart-sxhkd](https://github.com/d630/bin/blob/master/restart-sxhkd): Restart sxhkd.
 * [rtcwakew](https://github.com/d630/bin/blob/master/rtcwakew): Use rtcwake and play music on wakeup.
 * [run-black](https://github.com/d630/bin/blob/master/run-black): Wrapper: black.
+* [run-chromium-incognito](https://github.com/d630/bin/blob/master/run-chromium-incognito): Start chromiumw and redirect traffic through a proxy server.
 * [run-chromium](https://github.com/d630/bin/blob/master/run-chromium): Wrapper: chromium
 * [run-feedfaetcher](https://github.com/d630/bin/blob/master/run-feedfaetcher): Wrapper: feedfaetcher.
 * [run-firefox](https://github.com/d630/bin/blob/master/run-firefox): Wrapper: firefox

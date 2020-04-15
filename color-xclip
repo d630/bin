@@ -1,8 +1,9 @@
 #!/bin/sh
 #
 # X-select color code.
+# TODO
 
-color-grab |
+run-grabc |
 xclip -i -l 1 -selection clipboard;
 
 # vim: set ft=sh :

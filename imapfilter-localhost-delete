@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 # Wrapper: imapfilter with config localhost-delete.lua.
+# TODO
 
 exec imapfilter \
 	-c "$HOME/".imapfilter/localhost-delete.lua \

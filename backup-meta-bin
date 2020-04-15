@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 # Backup installed executables.
+# TODO
 
 backup_dir=${XDG_BACKUP_HOME:?}/;
 

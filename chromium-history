@@ -6,10 +6,10 @@
 cols=$(($(tput cols) / 3));
 sep={{::}};
 
-cp -f -- "${XDG_CACHE_HOME:?}/"chromiumw/Default/History "$XDG_CACHE_HOME/"h.chromium;
+cp -f -- "${XDG_CACHE_HOME:?}/run-chromium/Default/History" "$XDG_CACHE_HOME/h.chromium";
 
 __sqlite () {
-    sqlite3 -separator "$sep" "$XDG_CACHE_HOME/"h.chromium "
+    sqlite3 -separator "$sep" "$XDG_CACHE_HOME/h.chromium" "
         select substr(title, 1, $cols), url
         from urls
         order by last_visit_time desc";
@@ -23,7 +23,7 @@ __while_read ()
 while
     read -r REPLY;
 do
-    setsid chromiumw "$REPLY" 1>/dev/null 2>&1;
+    daemonize run-chromium "$REPLY";
 done;
 
 __sqlite |

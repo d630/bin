@@ -8,6 +8,6 @@ sort -u -k 2 |
 sort -n |
 cut -f 2 > "$HISTFILE~";
 
-mv -- "${HISTFILE:?}~" "$HISTFILE";
+mv -- "$HISTFILE~" "$HISTFILE";
 
 # vim: set ft=sh :

@@ -28,6 +28,6 @@ for i in *; do
         c=$((${#arr[@]} - 1));
 done;
 
-setsid sxiv -- "${arr[@]:c}" "${arr[@]:0:c}";
+exec sxiv -- "${arr[@]:c}" "${arr[@]:0:c}";
 
 # vim: set ft=sh :
