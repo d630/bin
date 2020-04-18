@@ -1,13 +1,18 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
-# Repeat a command n times.
+# Exec a command n times.
 
-: ${2:?};
+: "${to:="${1:?}"}" "${2:?}";
 
-for ((i=1; i <= ${1:?}; i++)); do
-    (
-        exec -a "$2" "${@:2}";
-    );
+shift 1;
+
+until
+	from=$((from + 1));
+	test "$from" -gt "$to";
+do
+	(exec "$@");
 done;
+
+:;
 
 # vim: set ft=sh :

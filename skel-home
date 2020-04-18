@@ -29,19 +29,18 @@ typeset -A XDG2=(
 
 function doit () {
 	mkdir -vp -- "$1";
-	echo \* > "$1/".gitignore;
+	echo \* > "$1/.gitignore";
 }
 
 function forit () {
 	for d in "$@";
 	do
-		doit "$d";
-	done;
+		doit "$d" &
+	done
 }
 
-
 forit "${XDG[@]}" "$HOME/"{.cabal,.ghc,.cpanm,.vim/{autoload,bundle},.emacs.d/site-lisp,.config,.local,games,include,lib/bash,sbin,man};
-forit "${XDG[OPT_HOME]}/"{cabal,cpanm,go,npm,perl5,win32,win64};
+forit "${XDG[OPT_HOME]}/"{cabal,cpanm,go,misc/bin,npm,perl5,win32,win64};
 forit "${XDG[DATA_HOME]}/"{applications,Trash,cert,fonts,icons,sounds,themes,wallpapers,bash,zsh,desktop,keyrings,texmf/tex/latex,doc,locale,ca-certificates,dircolors,man,mutt,xcolors,source-highlight,webkit,X11};
 forit "${XDG[VAR_HOME]}/"{lib,log,mail/{storage,queue},spool,tmp};
 
@@ -50,9 +49,9 @@ do
 	sudo mkdir -vp -- "$d";
 	sudo chown -Rv "$USER:$USER" -- "$d";
 	echo \* > "$d/".gitignore;
-done;
+done
 
 forit "${XDG2[TMP_HOME]}/"{attachments,downloads/torrents};
-doit "${XDG2[BACKUP_HOME]}/"bash;
+doit "${XDG2[BACKUP_HOME]}/bash";
 
 # vim: set ft=sh :

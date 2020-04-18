@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Wrapper for dmenu2-save.
+# Run menu as dmenu2-save.
 
 test-xorg &&
 	exec menu dmenu2-save ${1:+"$@"} 0<&-;

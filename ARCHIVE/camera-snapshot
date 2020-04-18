@@ -1,15 +1,15 @@
 #!/bin/sh
 #
-# Take a quick camshot.
+# Take a quick camera snapshot.
 
-mkdir -p /tmp/camshots;
+mkdir -p /tmp/camera-snapshots;
 
-exec avconv \
+exec ffmpeg \
     -f video4linux2 \
     -s 640x480 \
     -i /dev/video0 \
     -ss 0:0:2 \
     -frames 1 \
-    /tmp/camshots/$(date +%s).jpg;
+    "/tmp/camshots/$(date +%s).jpg";
 
 # vim: set ft=sh :

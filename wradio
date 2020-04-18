@@ -4,12 +4,24 @@
 # Forked from webradio.sh (GNU GPLv3) by Markus Lux, 2013
 # https://github.com/mlux/webradio.sh/blob/master/webradio.sh
 
-# -- CONFIG.
+if
+    test-ctty;
+then
+    function __menu {
+        menu fzf PLAY;
+    };
+elif
+    [[ -n $DISPLAY ]];
+then
+    function __menu {
+        menu dmenu2 PLAY;
+    };
+else
+    exit 1;
+fi;
 
 file_webradio_streams=${XDG_VAR_HOME:?}/lib/wradio/streams;
 file_webradio_pid=${XDG_VAR_HOME:?}/lib/wradio/instance.pid;
-
-# -- FUNCTIONS.
 
 function __build_streams {
     typeset \
@@ -44,23 +56,6 @@ function __playstream () (
     echo "$!" >> "$file_webradio_pid";
 );
 
-# -- MAIN.
-
-if
-    test-ctty;
-then
-    function __menu {
-        menu fzf PLAY;
-    };
-elif
-    [[ -n $DISPLAY ]];
-then
-    function __menu {
-        menu dmenu2 PLAY;
-    };
-else
-    exit 1;
-fi;
 
 typeset -A streams;
 __build_streams;

@@ -6,7 +6,7 @@ c=$(get-battery-capacity);
 
 ! {
 	test "$c" -ge 0 -a "$c" -le 25 &&
-		loggi 3 .device.error \
+		run-logger 3 .device.error \
 			"Battery capacity is only $c%. Go and connect charger!";
 };
 

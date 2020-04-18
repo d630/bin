@@ -19,7 +19,7 @@ test-xorg ||
 	exit 1;
 
 function __x_web_browser {
-	setsid -f x-web-browser "$1";
+	daemonize run-chromium "$1";
 };
 
 function __fzf {
@@ -27,7 +27,7 @@ function __fzf {
 };
 
 function __ugrep {
-	grep-urls;
+	grep-url;
 };
 
 function __select {

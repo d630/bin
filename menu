@@ -2,14 +2,14 @@
 #
 # A wrapper script for selecting menu driven programs.
 
-menu=${1:?} \
+menu=${1:?};
 menu_prompt=$2;
 
-fn="monospace:size=9";
+fn=monospace:size=9;
 
 color () {
     if
-        test -f "${XDG_RUNTIME_DIR:?}/"DAYLIGHT;
+        test -f "${XDG_RUNTIME_DIR:?}/DAYLIGHT";
     then
         nb=\#FDF6E3; # base3
         nf=\#657B83; # base00

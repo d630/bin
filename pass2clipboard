@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
 # Copy password from pass.
+# TODO
 
 function __select {
     read -r file < <(

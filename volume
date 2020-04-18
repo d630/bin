@@ -3,16 +3,20 @@
 # Set volume via amixer.
 
 case $1 in
-    (\+)
-        amixer -q sset Master 2+;;
-    (\+\+)
-        amixer -q sset Master 2%+;;
-    (-)
-        amixer -q sset Master 2-;;
-    (--)
-        amixer -q sset Master 2%-;;
-    (toggle)
-        amixer -q -c 1 sset Master toggle;;
+	(\+)
+		set -- 2+;;
+	(\+\+)
+		set -- 2%+;;
+	(-)
+		set -- 2-;;
+	(--)
+		set -- 2%-;;
+	(toggle)
+		set -- toggle;;
+	(*)
+		exit 1;;
 esac;
+
+exec amixer -q sset Master "$@";
 
 # vim: set ft=sh :

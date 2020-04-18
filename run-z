@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# Run z output within file manager.
+
+if
+	test-ctty;
+then
+	menu=fzf;
+	__nav () {
+		exec file-browser "$1";
+	};
+elif
+	test-xorg;
+then
+	menu=dmenu2;
+	__nav () {
+		daemonize x-file-browser -t "$1";
+	};
+else
+	exit 1;
+fi;
+
+path=$(
+	sort -g "$XDG_VAR_HOME/lib/z/z.data" |
+	cut -d \| -f 1 |
+	menu "$menu" cd;
+);
+
+test -d "$path" &&
+	__nav "$path";
+
+# vim: set ft=sh :

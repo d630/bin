@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# My suspend wrapper.
+# My very creative suspend wrapper.
 
 # sudo rtcwake -m mem -t "$(date -d year +%s)";
-sudo systemctl suspend;
+systemctl suspend;
 
 # vim: set ft=sh :

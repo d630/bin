@@ -3,7 +3,7 @@
 # Print lifeday.
 
 BEGIN {
-        printf "Lifeday: %d\n", ( systime() - mktime(ENVIRON["X_BDATE"]) ) / 60 / 60 / 24;
+	printf "Lifeday: %d\n", ( systime() - mktime(ENVIRON["X_BDATE"]) ) / 60 / 60 / 24;
 }
 
 # vim: set ft=awk :

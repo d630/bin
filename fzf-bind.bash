@@ -9,6 +9,8 @@
 # "\C-xo" -> bash-toggle-options.bash
 # "\C-xz" -> zcd
 # "\C-xs" -> scd
+#
+# TODO: Shouldn't be in ~/bin.
 
 function __fzf_bind {
     bind '"\er": redraw-current-line';

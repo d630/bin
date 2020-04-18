@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+#
+# Stat a file and build an associative array.
+
+if
+    [[ $1 == -f ]];
+then
+    shift 1;
+
+    { exec stat --file-system --printf="$(</dev/fd/0)\n" "$1"; } <<'SEQ'
+STAT[|]=%n
+STAT[|%n|]='a b c d f i l s S t T'
+STAT[|%n|a]=%a
+STAT[|%n|b]=%b
+STAT[|%n|c]=%c
+STAT[|%n|d]=%d
+STAT[|%n|f]=%f
+STAT[|%n|i]=%i
+STAT[|%n|l]=%l
+STAT[|%n|s]=%s
+STAT[|%n|S]=%S
+STAT[|%n|t]=%t
+STAT[|%n|T]=%T
+SEQ
+
+else
+	{ exec stat --printf="$(</dev/fd/0)\n" "$1"; } <<'SEQ'
+STAT[|]=%n
+STAT[|%n|]='a A b B d D f F g G h i m o s t T u U w W X Y Z'
+STAT[|%n|a]=%a
+STAT[|%n|A]=%A
+STAT[|%n|b]=%b
+STAT[|%n|B]=%B
+STAT[|%n|d]=%d
+STAT[|%n|D]=%D
+STAT[|%n|f]=%f
+STAT[|%n|F]='%F'
+STAT[|%n|g]=%g
+STAT[|%n|G]='%G'
+STAT[|%n|h]=%h
+STAT[|%n|i]=%i
+STAT[|%n|m]='%m'
+STAT[|%n|o]=%o
+STAT[|%n|s]=%s
+STAT[|%n|t]=%t
+STAT[|%n|T]=%T
+STAT[|%n|u]=%u
+STAT[|%n|U]='%U'
+STAT[|%n|w]=%w
+STAT[|%n|W]=%W
+STAT[|%n|X]=%X
+STAT[|%n|Y]=%Y
+STAT[|%n|Z]=%Z
+SEQ
+
+fi;
+
+# vim: set ft=sh :

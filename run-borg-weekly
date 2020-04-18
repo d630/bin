@@ -23,18 +23,13 @@ exec sudo \
 			/var/mail/ \
 			/var/sieve/ \
 			/var/vmail/ \
-			/var/www/ <<-EXCLUDE
+			/var/www/ <<-EXCLUDE || exit;
 				/home/latch/tmp
 				/home/latch/var/mirror
 				$XDG_CACHE_HOME
 				$HOME/opt
 				$HOME/.vifm/Trash
 			EXCLUDE
-
-		test "$?" -eq 0 || exit;
-
-		# echo CHECKING ...;
-		# borg check --critical --progress --repository-only :: || exit $?;
 
 		echo PRUNING ...;
 		borg prune --warning --progress --stats --list --keep-within=8w ::;

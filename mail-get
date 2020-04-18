@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Get mail and give notification + sound.
+# Get mail and give notification + sound (via run-logger).
 
 exec 9<"$0";
 flock -n 9 || {
@@ -22,7 +22,7 @@ mapfile -t reply < <(mail-inbox);
 )) ||
     exit 1;
 
-loggi 6 .email.arrived \
+run-logger 6 .email.arrived \
 	"\n${reply[0]:-?}\n${reply[1]:-?}\n${reply[2]:-?}\n${reply[3]:-?}\n${reply[4]:-?}" 2>/dev/null;
 printf '%s\n' "${reply[@]}";
 

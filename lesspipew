@@ -14,8 +14,8 @@ newline='
 LESSMETACHARS="$space$tab$newline'"';*?"()<>[|&^`#\$%=~';
 export LESSMETACHARS;
 
-test -x "$HOME/".lessfilter &&
-    "$HOME/".lessfilter "$1" &&
+test -x "$HOME/.lessfilter" &&
+    "$HOME/.lessfilter" "$1" &&
         exit 82;
 
 for i in $LESSIGNORE; do
@@ -34,9 +34,11 @@ if
                 ! :;;
         esac;
 then
-    open -A cdog -A about -f "$1" 2>&1;
+    A=cdog;
 else
-    open -A dog -A about -f "$1" 2>&1;
+    A=dog;
 fi;
+
+exec open -A "$A" -A about -f "$1" 2>&1;
 
 # vim: set ft=sh :

@@ -7,75 +7,97 @@
 # -N open cmd in new terminal-emulator
 
 typeset \
-    cmd \
-    opt;
+	cmd \
+	opt;
 
 typeset -i \
-    flag_F= \
-    flag_K= \
-    flag_N=;
+	OLDOPTIND=1 \
+	OPTERR=0 \
+	OPTIND=1 \
+	flag_F=0 \
+	flag_K=0 \
+	flag_N=0;
 
-for opt; do
-    case $opt in
-        (-F)
-            flag_F=1;;
-        (-K)
-            flag_K=1;;
-        (-N)
-            flag_N=1;;
-        (--)
-            command -v "$2" 1>/dev/null 2>&1 || {
-                printf "error: command not found: '%s'\n" "$2" 1>&2;
-                exit 1;
-            };
-            cmd=$2;
-            shift 2;
-            break;;
-    esac;
-    shift 1;
+while
+	getopts :FKN opt
+do
+	case $opt in
+		(F)
+			flag_F=1;;
+		(K)
+			flag_K=1;;
+		(N)
+			flag_N=1;;
+		(\?)
+			printf "error: unknown flag: '%s'\n" "$OPTARG" 1>&2;
+			exit 1;;
+	esac;
+
+	((OLDOPTIND != OPTIND)) &&
+		if
+			[[ -n $2 && $2 == -- ]]
+		then
+			shift 2;
+			break;
+		else
+			OPTIND=1;
+			shift 1;
+		fi;
+
+	OLDOPTIND=$OPTIND;
 done;
 
-[[ -n $cmd ]] || {
-    printf 'error: command missing\n' 1>&2;
-    exit 1;
+(($#)) || {
+	printf 'error: command missing\n' 1>&2;
+	exit 1;
 };
 
 if
-    test-ctty;
+	command -v "$1" 1>/dev/null 2>&1;
 then
-    case $flag_F$flag_N$flag_K in
-        (111)
-            daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
-        (110)
-            daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
-        (100)
-            setsid "$cmd" "$@";;
-        (011)
-            x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
-        (010)
-            x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
-        (001)
-            exec ${SHELL:-sh} -c "$cmd ${*@Q};printf 'Press ENTER to continue\n';read";;
-        (000)
-            exec "$cmd" "$@";;
-    esac;
+	cmd=$1;
+	shift 1;
 else
-    case $flag_F$flag_N$flag_K in
-        (111)
-            daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
-        (110)
-            daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
-        (100)
-            setsid "$cmd" "$@";;
-        (011)
-            daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
-        (010)
-            daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
-        (001)
-            daemonize ${SHELL:-sh} -c "$cmd ${*@Q};printf 'Press ENTER to continue\n';read";;
-        (000)
-            setsid "$cmd" "$@";;
-    esac;
+	printf "error: command not found: '%s'\n" "$1" 1>&2;
+	exit 1;
+fi;
+
+if
+	test-ctty;
+then
+	case $flag_F$flag_N$flag_K in
+		(111)
+			exec daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
+		(110)
+			exec daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
+		(100)
+			exec daemonize -f "$cmd" "$@";;
+		(011)
+			exec x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
+		(010)
+			exec x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
+		(001)
+			exec ${SHELL:-sh} -c "$cmd ${*@Q};printf 'Press ENTER to continue\n';read";;
+		(000)
+			exec "$cmd" "$@";;
+	esac;
+else
+	case $flag_F$flag_N$flag_K in
+		(111)
+			exec daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
+		(110)
+			exec daemonize x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
+		(100)
+			exec daemonize "$cmd" "$@";;
+		(011)
+			exec x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q};exec ${SHELL:-sh}";;
+		(010)
+			exec x-terminal -e "${SHELL:-sh}" -c "$cmd ${*@Q}";;
+		(001)
+			exec ${SHELL:-sh} -c "$cmd ${*@Q};printf 'Press ENTER to continue\n';read";;
+		(000)
+			exec "$cmd" "$@";;
+	esac;
 fi;
 
 # vim: set ft=sh :

@@ -3,26 +3,25 @@
 # Clean up some dirs and files.
 
 rm -frv -- \
-	"$HOME/".adobe \
-	"$HOME/".gconf \
-	"$HOME/".git-credential-cache \
-	"$HOME/".gnome2 \
-	"$HOME/".gnome2_private \
-	"$HOME/".icedteaplugin \
-	"$HOME/".macromedia \
-	"$HOME/".thumbnails \
-	"$HOME/".vifm/Trash/* \
-	"$XDG_CONFIG_HOME/"freshwrapper-data \
-	"$XDG_DATA_HOME/"webkit \
-	"${XDG_CONFIG_HOME:?}/"cef_user_data \
-	"${XDG_DATA_HOME:?}/"gegl-0.3;
+	"$HOME/.adobe" \
+	"$HOME/.gconf" \
+	"$HOME/.git-credential-cache" \
+	"$HOME/.gnome2" \
+	"$HOME/.gnome2_private" \
+	"$HOME/.icedteaplugin" \
+	"$HOME/.macromedia" \
+	"$HOME/.thumbnails" \
+	"$HOME/.vifm/Trash/"* \
+	"$XDG_CONFIG_HOME/freshwrapper-data" \
+	"$XDG_DATA_HOME/webkit" \
+	"${XDG_CONFIG_HOME:?}/cef_user_data" \
+	"${XDG_DATA_HOME:?}/gegl-0.3";
 
 rm -fv -- \
-	"$HOME/".gksu.lock \
-	"$HOME/".newsbeuter/newsbeuter_cache.db \
-	"$XDG_CONFIG_HOME/"newsboat/newsboat_cache.db \
-	"$HOME/".recentf \
-	"$HOME/".recently-used \
-	"$XDG_DATA_HOME/"recently-used.xbel;
+	"$HOME/.gksu.lock" \
+	"$XDG_CONFIG_HOME/newsboat/newsboat_cache.db" \
+	"$HOME/.recentf" \
+	"$HOME/.recently-used" \
+	"$XDG_DATA_HOME/recently-used.xbel";
 
 # vim: set ft=sh :

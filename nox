@@ -5,7 +5,7 @@
 set -- $(get-sundata 2>/dev/null) $(get-sundata "$(date --date=tomorrow +%s)");
 set -- ${3%:*}h ${3#*:}min ${2%:*}h  ${2#*:}min;
 
-q=$(calculate-date "
+q=$(task-calc "
 	(
 		(tomorrow + $1 + $2)
 		- (today + $3 + $4)
@@ -13,7 +13,7 @@ q=$(calculate-date "
 ");
 
 printf '%s %s\n' \
-	"$(calculate-date "today + $3 + $4 + $q")" \
-	"$(calculate-date "tomorrow + $1 + $2 - $q")";
+	"$(task-calc "today + $3 + $4 + $q")" \
+	"$(task-calc "tomorrow + $1 + $2 - $q")";
 
 # vim: set ft=sh :

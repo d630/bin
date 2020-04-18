@@ -2,8 +2,8 @@
 #
 # Daily ip logging.
 
-log=${XDG_VAR_HOME:?}/log/ip-log.log \
-to=ip-log@ip-log \
+log=${XDG_VAR_HOME:?}/log/ip-log.log;
+to=ip-log;
 subject=ip-log;
 
 printf '%(%Y-%m-%d_%R)T %s\n' -1 "$(

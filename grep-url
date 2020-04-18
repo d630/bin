@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Grep urls from stdin.
+# Grep url from stdin.
 # Source: https://gist.github.com/GuillaumeLestringant/36c11afcc35c8c5b9123
 
 proto="((?:https?|ftp)://|)";

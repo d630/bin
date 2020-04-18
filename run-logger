@@ -3,7 +3,7 @@
 # Wrap up logger for local scripting.
 # Needs facility local6 to work properly with my configured rsyslog.
 #
-# $ loggi level category [summary [body]]
+# $ run-logger level category [summary [body]]
 
 l=$1 \
 c=$2;

@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+#
+# Run rtcwake with mode mem and play music/radio on wakeup.
+
+function bye {
+    printf 'Bye-bye!\n' 1>&2;
+    exit 1;
+};
+
+if
+	test-xorg;
+then
+	function __menu {
+		menu dmenu2 "$1";
+	};
+elif
+	test-ctty;
+then
+	function __menu {
+		menu fzf "$1";
+	};
+else
+	bye
+fi;
+
+declare -A music=(
+	[radio1]=http://www.radioeins.de/live.m3u
+	[open]=$XDG_MUSIC_DIR/open_your_eyes.mp3
+)
+
+days=(
+	"$(date --date=now +%F)"
+	"$(date --date=tomorrow +%F)"
+)
+
+date_time=$(
+	for d in "${days[@]}";
+	do
+		printf '%s\n' "$d "{00..23}:{00..59}
+	done |
+	__menu "Date (now: $(date +%R))";
+);
+[[ -n $date_time ]] || bye;
+
+key=$(printf "%s\n" "${!music[@]}" | __menu Play);
+[[ -n $key ]] || bye;
+
+go=$(printf %s\\n exit "rtcwake $date_time $key" | __menu Run);
+
+if
+	[[ -n $go && $go != exit ]];
+then
+	sudo rtcwake --mode mem --time "$(date -d "$date_time" +%s)" || exit 1;
+	sleep 10 && exec audio-player --loop=inf "${music[$key]}";
+else
+	bye;
+fi;
+
+# vim: set ft=sh :

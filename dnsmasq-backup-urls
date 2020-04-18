@@ -9,7 +9,7 @@ touch -- "$log";
 grep -F -e ' reply ' /var/log/dnsmasq.log |
 grep -F -v -e CNAME -e NXDOMAIN -e NODATA |
 cut -d ' ' -f 6 |
-/home/user1/bin/grep-urls |
+/home/user1/bin/grep-url |
 cat -- "$log" - |
 sort -u > "/tmp/$file.$$" &&
     mv -- "/tmp/$file.$$" "$log";

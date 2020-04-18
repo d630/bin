@@ -5,23 +5,23 @@
 export TASKRC=${TASKRC:-$PWD/.task/taskrc};
 
 case $1 in
-    (init)
-        if
-            test -d "$PWD/".task;
-        then
-            printf '%s:Error:82: Could not create a task repository: "%s/.task/" is existing\n' "$0" "$PWD" \
-                    1>&2;
-            exit 82;
-        else
-            mkdir -p -- "$PWD/".task/data &&
-                task config data.location "$PWD/".task/data;
-        fi;;
-    (--)
-        shift 1;
-        task "$@";;
-    (*)
-        printf '%s:Error:83: Unknown parameter: %s\n' "$0" "$1" 1>&2;
-        exit 83;;
+	(init)
+		if
+			test -d "$PWD/.task";
+		then
+			printf '%s:Error:82: Could not create a task repository: "%s/.task/" already exists\n' \
+				"$0" "$PWD" 1>&2;
+			exit 82;
+		else
+			mkdir -p -- "$PWD/.task/data" &&
+				task config data.location "$PWD/".task/data;
+		fi;;
+	(--)
+		shift 1;
+		task "$@";;
+	(*)
+		printf '%s:Error:83: Unknown parameter: %s\n' "$0" "$1" 1>&2;
+		exit 83;;
 esac;
 
 # vim: set ft=sh :

@@ -10,7 +10,7 @@ then
     mail-get;
     #mail-hook-post
 else
-    loggi 3 .network.error 'We are offline. Mails have not been updated';
+    run-logger 3 .network.error 'We are offline. Mails have not been updated';
     exit 1;
 fi;
 
