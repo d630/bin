@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Start chromiumw and redirect traffic through a proxy server.
+# Run chromium in incognito.
 
 force_new=1 exec run-chromium --temp-profile --incognito ${1:+"$@"};
 

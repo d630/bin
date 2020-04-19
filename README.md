@@ -3,15 +3,9 @@ these files are in the public domain.
 
 List:
 * [audio-player](https://github.com/d630/bin/blob/master/audio-player): Default audio player (cli).
-* [backup-meta-apt](https://github.com/d630/bin/blob/master/backup-meta-apt): Backup infos about installed packages on Debian.
-* [backup-meta-bin](https://github.com/d630/bin/blob/master/backup-meta-bin): Backup installed executables.
-* [backup-meta-init](https://github.com/d630/bin/blob/master/backup-meta-init): Backup inits.
-* [backup-meta-prepare](https://github.com/d630/bin/blob/master/backup-meta-prepare): Prepare the full backup of my system.
-* [bash-debug-set-x.bash](https://github.com/d630/bin/blob/master/bash-debug-set-x.bash): A debugging function for bash.
-* [bash-dedup-history](https://github.com/d630/bin/blob/master/bash-dedup-history): Remove duplicates in history file.
-* [bash-mselect-freq](https://github.com/d630/bin/blob/master/bash-mselect-freq): Print frequency of the bash history and run it from dmenu.
-* [bash-print-freq](https://github.com/d630/bin/blob/master/bash-print-freq): Print frequency of the bash history.
-* [bash-toggle-options.bash](https://github.com/d630/bin/blob/master/bash-toggle-options.bash): Toggle bash options via fzf.
+* [backup-meta](https://github.com/d630/bin/blob/master/backup-meta): Backup system.
+* [bash-count-occurence](https://github.com/d630/bin/blob/master/bash-count-occurence): Count most used commands from bash history.
+* [bash-dedup-history](https://github.com/d630/bin/blob/master/bash-dedup-history): Remove duplicates from bash history and rewrite file.
 * [binary2nibble](https://github.com/d630/bin/blob/master/binary2nibble): Group binary numbers into nibbles (used with bc output).
 * [bspot-create-featured-lists](https://github.com/d630/bin/blob/master/bspot-create-featured-lists): Spotify: Take pub list1 and create audio-featured public lists.
 * [bspot-create-gpb-lists](https://github.com/d630/bin/blob/master/bspot-create-gpb-lists): Spotify: Take pub list1 and create public gpb lists.
@@ -59,9 +53,6 @@ List:
 * [habit](https://github.com/d630/bin/blob/master/habit): Wrapper: Use taskwarrior in my 'habit' context.
 * [hblock](https://github.com/d630/bin/blob/master/hblock): Simple ad- and malware-blocking-list builder for dnsmasq.
 * [image-viewer](https://github.com/d630/bin/blob/master/image-viewer): Default image viewer (tui).
-* [imapfilter-localhost-action](https://github.com/d630/bin/blob/master/imapfilter-localhost-action): Wrapper: imapfilter with config localhost-action.lua.
-* [imapfilter-localhost-delete](https://github.com/d630/bin/blob/master/imapfilter-localhost-delete): Wrapper: imapfilter with config localhost-delete.lua.
-* [imapfilter-localhost-unseen](https://github.com/d630/bin/blob/master/imapfilter-localhost-unseen): Wrapper: imapfilter with config localhost-unseen.lua.
 * [iplog](https://github.com/d630/bin/blob/master/iplog): Daily ip logging.
 * [issue-editor](https://github.com/d630/bin/blob/master/issue-editor): Add a task into Taskwarrior ('issue' context) via vim (yaml).
 * [issue](https://github.com/d630/bin/blob/master/issue): Wrapper: Use taskwarrior in my 'issue' context.
@@ -88,17 +79,17 @@ List:
 * [menu](https://github.com/d630/bin/blob/master/menu): A wrapper script for selecting menu driven programs.
 * [mime-build-types](https://github.com/d630/bin/blob/master/mime-build-types): Build a mime.type file with ERE globs from /usr/share/mime.
 * [msmtpqw](https://github.com/d630/bin/blob/master/msmtpqw): Replacement for msmtpq.
-* [mutt--d630-archive](https://github.com/d630/bin/blob/master/mutt--d630-archive): Wrapper: mutt d630.archive.
-* [mutt--d630](https://github.com/d630/bin/blob/master/mutt--d630): Wrapper: mutt d630.
-* [mutt--gmail-archive](https://github.com/d630/bin/blob/master/mutt--gmail-archive): Wrapper: mutt gmail.archive.
-* [mutt--gmail](https://github.com/d630/bin/blob/master/mutt--gmail): Wrapper: mutt gmail.
-* [mutt--hotmail-archive](https://github.com/d630/bin/blob/master/mutt--hotmail-archive): Wrapper: mutt hotmail.archive.
-* [mutt--hotmail](https://github.com/d630/bin/blob/master/mutt--hotmail): Wrapper: mutt hotmail.
-* [mutt--posteo-archive](https://github.com/d630/bin/blob/master/mutt--posteo-archive): Wrapper: mutt posteo.archive.
-* [mutt--posteo1-archive](https://github.com/d630/bin/blob/master/mutt--posteo1-archive): Wrapper: mutt posteo1.archive.
-* [mutt--posteo1](https://github.com/d630/bin/blob/master/mutt--posteo1): Wrapper: mutt posteo1.
-* [mutt--posteo](https://github.com/d630/bin/blob/master/mutt--posteo): Wrapper: mutt posteo.
-* [mutt--spool](https://github.com/d630/bin/blob/master/mutt--spool): Wrapper: mutt spool.
+* [mutt--d630-archive](https://github.com/d630/bin/blob/master/mutt--d630-archive): Run mutt.
+* [mutt--d630](https://github.com/d630/bin/blob/master/mutt--d630): Run mutt.
+* [mutt--gmail-archive](https://github.com/d630/bin/blob/master/mutt--gmail-archive): Run mutt.
+* [mutt--gmail](https://github.com/d630/bin/blob/master/mutt--gmail): Run mutt.
+* [mutt--hotmail-archive](https://github.com/d630/bin/blob/master/mutt--hotmail-archive): Run mutt.
+* [mutt--hotmail](https://github.com/d630/bin/blob/master/mutt--hotmail): Run mutt.
+* [mutt--posteo-archive](https://github.com/d630/bin/blob/master/mutt--posteo-archive): Run mutt.
+* [mutt--posteo1-archive](https://github.com/d630/bin/blob/master/mutt--posteo1-archive): Run mutt.
+* [mutt--posteo1](https://github.com/d630/bin/blob/master/mutt--posteo1): Run mutt.
+* [mutt--posteo](https://github.com/d630/bin/blob/master/mutt--posteo): Run mutt.
+* [mutt--spool](https://github.com/d630/bin/blob/master/mutt--spool): Run mutt.
 * [mutt-save-attachments](https://github.com/d630/bin/blob/master/mutt-save-attachments): Save attachements in Mutt.
 * [news](https://github.com/d630/bin/blob/master/news): Wrapper for getting my news.
 * [nox](https://github.com/d630/bin/blob/master/nox): Get concubium and gallicinium.
@@ -123,14 +114,16 @@ List:
 * [restart-sxhkd](https://github.com/d630/bin/blob/master/restart-sxhkd): Restart sxhkd.
 * [run-black](https://github.com/d630/bin/blob/master/run-black): Wrapper: black.
 * [run-borg-weekly](https://github.com/d630/bin/blob/master/run-borg-weekly): Weekly backup with borg.
-* [run-chromium-incognito](https://github.com/d630/bin/blob/master/run-chromium-incognito): Start chromiumw and redirect traffic through a proxy server.
+* [run-chromium-incognito](https://github.com/d630/bin/blob/master/run-chromium-incognito): Run chromium in incognito.
 * [run-chromium](https://github.com/d630/bin/blob/master/run-chromium): Wrapper: chromium
 * [run-feedfaetcher](https://github.com/d630/bin/blob/master/run-feedfaetcher): Wrapper: feedfaetcher.
 * [run-firefox](https://github.com/d630/bin/blob/master/run-firefox): Wrapper: firefox
 * [run-flake8](https://github.com/d630/bin/blob/master/run-flake8): Wrapper: flake8
 * [run-grabc](https://github.com/d630/bin/blob/master/run-grabc): Pick color via grabc.
+* [run-imapfilter](https://github.com/d630/bin/blob/master/run-imapfilter): Run imapfilter with specific conf file.
 * [run-isort](https://github.com/d630/bin/blob/master/run-isort): Wrapper: isort.
 * [run-logger](https://github.com/d630/bin/blob/master/run-logger): Wrap up logger for local scripting.
+* [run-mutt](https://github.com/d630/bin/blob/master/run-mutt): Run mutt.
 * [run-mypy](https://github.com/d630/bin/blob/master/run-mypy): Wrapper: mypy.
 * [run-notify-send](https://github.com/d630/bin/blob/master/run-notify-send): Send notifications (meant to be used with dunst and rsyslog).
 * [run-pidgin](https://github.com/d630/bin/blob/master/run-pidgin): Run pidgin.
@@ -153,15 +146,12 @@ List:
 * [startx.sh](https://github.com/d630/bin/blob/master/startx.sh): My mini wrapper for xinit.
 * [stat2assoc](https://github.com/d630/bin/blob/master/stat2assoc): Stat a file and build an associative array.
 * [stj1](https://github.com/d630/bin/blob/master/stj1): Use st like kuake and yeahconsole terminal.
-* [stow-data-home](https://github.com/d630/bin/blob/master/stow-data-home): xstow wrapper.
-* [stow-data-new](https://github.com/d630/bin/blob/master/stow-data-new): Set up a new stow-data package.
-* [stow-home](https://github.com/d630/bin/blob/master/stow-home): xstow wrapper.
-* [stow-new](https://github.com/d630/bin/blob/master/stow-new): Set up a new stow package.
 * [swaptop](https://github.com/d630/bin/blob/master/swaptop): Display most swap-using processes.
 * [task-calc](https://github.com/d630/bin/blob/master/task-calc): Calculate dates via taskwarrior.
 * [task-colors](https://github.com/d630/bin/blob/master/task-colors): Display color info in terminal.
 * [task-cv](https://github.com/d630/bin/blob/master/task-cv): Source or print all defaults of Taskwarrior's configuration settings (v2.5.1).
 * [task-local](https://github.com/d630/bin/blob/master/task-local): Simple wrapper for using taskwarrior with local "task-repos".
+* [taskum-add](https://github.com/d630/bin/blob/master/taskum-add): Add a bookmark to taswarrior-um (via newsbeuter/newsboat).
 * [template](https://github.com/d630/bin/blob/master/template): Prepare new file from a template.
 * [test-ctty](https://github.com/d630/bin/blob/master/test-ctty): Test whether process has a controlling tty.
 * [test-daylight](https://github.com/d630/bin/blob/master/test-daylight): Test daylight by checking if we are between sunrise and sunset.
@@ -180,6 +170,7 @@ List:
 * [wlan-down](https://github.com/d630/bin/blob/master/wlan-down): Wrapper: set wlan off.
 * [wlan-up](https://github.com/d630/bin/blob/master/wlan-up): Wrapper: set wlan on.
 * [wless](https://github.com/d630/bin/blob/master/wless): Open the result of which with less.
+* [wots](https://github.com/d630/bin/blob/master/wots): Handle stow packages.
 * [wradio](https://github.com/d630/bin/blob/master/wradio): Simple wradio.
 * [wvim](https://github.com/d630/bin/blob/master/wvim): Open the result of which in vim.
 * [x-audio-player](https://github.com/d630/bin/blob/master/x-audio-player): Default audio player (gui).

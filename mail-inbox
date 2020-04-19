@@ -2,7 +2,7 @@
 #
 # Looking for new/unseen mails (imapfilter).
 
-imapfilter-localhost-unseen |
+run-imapfilter localhost-unseen |
 column -t -s $'\t';
 
 # vim: set ft=sh :

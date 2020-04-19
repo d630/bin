@@ -3,6 +3,6 @@
 # My very creative suspend wrapper.
 
 # sudo rtcwake -m mem -t "$(date -d year +%s)";
-systemctl suspend;
+exec systemctl suspend;
 
 # vim: set ft=sh :

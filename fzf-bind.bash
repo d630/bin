@@ -92,7 +92,7 @@ function __fzf_cd {
 bind -x '"\C-x5": \__fzf_cd';
 bind '"\C-xc": "\C-x5\C-m"';
 
-bind -x '"\C-xo": . bash-toggle-options.bash';
+bind -x '"\C-xo": toggle_options';
 bind -x '"\C-xz": \zcd';
 
 bind -x '"\C-xs": \scd';

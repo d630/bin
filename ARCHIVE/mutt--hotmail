@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Wrapper: mutt hotmail.
+
+LOCAL_CONFIG=hotmail exec mutt -n "$@";
+
+# vim: set ft=sh :

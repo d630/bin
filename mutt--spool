@@ -1,7 +1,1 @@
-#!/bin/sh
-#
-# Wrapper: mutt spool.
-
-LOCAL_CONFIG=spool exec mutt -n "$@";
-
-# vim: set ft=sh :
+./run-mutt

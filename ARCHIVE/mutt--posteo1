@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Wrapper: mutt posteo1.
+
+LOCAL_CONFIG=posteo1 exec mutt -n "$@";
+
+# vim: set ft=sh :

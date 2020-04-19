@@ -2,6 +2,4 @@
 #
 # Run command after mail-get.
 
-#exec ionice -c 3 chrt --idle 0 /bin/sh -c "{ notmuch new --quiet && nottoomuch-addresses.sh --update; } > /dev/null 2>&1"
-
 # vim: set ft=sh :

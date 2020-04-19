@@ -7,7 +7,7 @@ cd -- "$XDG_OPT_HOME" ||
 
 printf -v horiz %80s;
 function .hd {
-	printf %s\\n "${horiz// /-}" "$1" "${horiz// /-}" 1>&2;
+	printf '%s\n' "${horiz// /-}" "$1" "${horiz// /-}" 1>&2;
 };
 
 .hd 'apt and snap';

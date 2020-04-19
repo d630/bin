@@ -1,7 +1,1 @@
-#!/bin/sh
-#
-# Wrapper: mutt hotmail.archive.
-
-LOCAL_CONFIG=hotmail.archive exec mutt -n "$@";
-
-# vim: set ft=sh :
+./run-mutt

@@ -3,17 +3,16 @@
 # Update mail dirs.
 
 if
-    test-inet;
+	test-inet;
 then
-    mail-send &
-    #mail-hook-pre
-    mail-get;
-    #mail-hook-post
+	mail-send &
+	#mail-hook-pre
+	mail-get;
+	#mail-hook-post
+	wait
 else
-    run-logger 3 .network.error 'We are offline. Mails have not been updated';
-    exit 1;
+	run-logger 3 .network.error 'We are offline. Mails have not been updated';
+	! :;
 fi;
-
-wait;
 
 # vim: set ft=sh :

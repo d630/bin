@@ -1,7 +1,1 @@
-#!/bin/sh
-#
-# Wrapper: mutt posteo.
-
-LOCAL_CONFIG=posteo exec mutt -n "$@";
-
-# vim: set ft=sh :
+./run-mutt

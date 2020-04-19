@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+#
+# Set up a new stow package.
+
+set -- "${1:? need a name}" "${2:-$HOSTNAME}" "${3:-$USER}";
+
+s=$(
+	IFS=;
+	md5sum <<< "$*";
+);
+s=${s%% *};
+
+. /home/stow/map ||
+	declare -A map;
+
+map[$s]=$2/$3/$1;
+
+mkdir -v "/home/stow/$s" ||
+	exit;
+
+mv -v /home/stow/map /home/stow/map~;
+declare -p map > /home/stow/map;
+
+chmod -v 750 "/home/stow/$s";
+> "/home/stow/$s/.gitignore";
+ln -vfrs "/home/stow/$s" "/home/stow/$1";
+
+declare -x \
+	GIT_DIR=/home/stow/$s/.git \
+	GIT_WORK_TREE=/home/stow/$s;
+
+git init;
+git add -f .gitignore;
+git commit -m I;
+
+# vim: set ft=sh :

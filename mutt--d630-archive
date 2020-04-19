@@ -1,7 +1,1 @@
-#!/bin/sh
-#
-# Wrapper: mutt d630.archive.
-
-LOCAL_CONFIG=d630.archive exec mutt -n "$@";
-
-# vim: set ft=sh :
+./run-mutt

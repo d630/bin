@@ -1,7 +1,1 @@
-#!/bin/sh
-#
-# Wrapper: mutt gmail.
-
-LOCAL_CONFIG=gmail exec mutt -n "$@";
-
-# vim: set ft=sh :
+./run-mutt

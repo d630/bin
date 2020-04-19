@@ -1,7 +1,1 @@
-#!/bin/sh
-#
-# Wrapper: mutt posteo1.archive.
-
-LOCAL_CONFIG=posteo1.archive exec mutt -n "$@";
-
-# vim: set ft=sh :
+./run-mutt

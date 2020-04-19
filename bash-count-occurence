@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Count most used commands from bash history.
+
+cut -d ' ' -f 1 "${HISTFILE:?}" |
+sort |
+uniq -c |
+sort -nr;
+
+# vim: set ft=sh :

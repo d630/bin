@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Wrapper: mutt d630.
+
+LOCAL_CONFIG=d630 exec mutt -n "$@";
+
+# vim: set ft=sh :

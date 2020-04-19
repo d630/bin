@@ -2,10 +2,10 @@
 #
 # Display information about block devices and disk space on the file system.
 
-# sudo lsblk -a -i -T NAME -M \
-# 	-o NAME,FSTYPE,UUID,RO,RM,SIZE,STATE,OWNER,GROUP,MODE,TYPE,MOUNTPOINT,LABEL,MODEL;
+sudo lsblk -a -i -T NAME -M \
+	-o NAME,FSTYPE,UUID,RO,RM,SIZE,STATE,OWNER,GROUP,MODE,TYPE,MOUNTPOINT,LABEL,MODEL;
 
-# echo;
+echo;
 
 df -a -h --total \
 	--output=source,fstype,itotal,iused,iavail,ipcent,size,used,avail,pcent,file,target |

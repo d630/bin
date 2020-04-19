@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# Run imapfilter with specific conf file.
+
+case $1 in
+	(localhost-unseen)
+		set -- -c "$HOME/.imapfilter/$1.lua";;
+	(localhost-delete)
+		set -- -c "$HOME/.imapfilter/$1.lua";;
+	(localhost-action)
+		set -- -c "$HOME/.imapfilter/$1.lua";;
+	(*)
+		exit 1;;
+esac;
+
+exec imapfilter -l "${XDG_VAR_HOME:?}/log/imapfilter.log" "$@";
+
+# vim: set ft=sh :
