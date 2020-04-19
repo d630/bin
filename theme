@@ -3,97 +3,97 @@
 # Adjust theme configuration.
 
 function theme.bspwm {
-    bspc config normal_border_color "$1";
+	bspc config normal_border_color "$1";
 };
 
 function theme.dunst () (
-    cd -- "$HOME";
-    ln -fsr etc/dunst/dunstrc-$1 etc/dunst/dunstrc;
-    restart-dunst;
+	cd -- "$HOME";
+	ln -fsr etc/dunst/dunstrc-$1 etc/dunst/dunstrc;
+	restart-dunst;
 );
 
 function theme.gtk () (
-    cd -- "$HOME";
-    ln -fsr .gtkrc-2.0-$1.mine .gtkrc-2.0-theme.mine;
-    ln -fsr etc/gtk-3.0/settings-$1.ini etc/gtk-3.0/settings.ini;
+	cd -- "$HOME";
+	ln -fsr .gtkrc-2.0-$1.mine .gtkrc-2.0-theme.mine;
+	ln -fsr etc/gtk-3.0/settings-$1.ini etc/gtk-3.0/settings.ini;
 );
 
 function theme.mutt () (
-    cd -- "${XDG_DATA_HOME:?}/"mutt/colors;
-    ln -fsr $1 "$HOME/".mutt/mutt-colors.muttrc;
+	cd -- "${XDG_DATA_HOME:?}/"mutt/colors;
+	ln -fsr $1 "$HOME/".mutt/mutt-colors.muttrc;
 );
 
 function theme.taskwarrior () (
-    cd -- "$HOME";
-    ln -fsr /usr/share/taskwarrior/$1 "$HOME/".taskrc-color;
+	cd -- "$HOME";
+	ln -fsr /usr/share/taskwarrior/$1 "$HOME/".taskrc-color;
 );
 
 function theme.x () (
-    cd -- "${XDG_DATA_HOME:?}/"xcolors;
-    ln -fsr $1 current.xcolor;
-    xrdb -merge "$HOME/".Xresources;
+	cd -- "${XDG_DATA_HOME:?}/"xcolors;
+	ln -fsr $1 current.xcolor;
+	xrdb -merge "$HOME/".Xresources;
 
-    xsetroot -solid "$2";
+	xsetroot -solid "$2";
 
-    cd -- "$XDG_DATA_HOME/"wallpapers;
-    ln -fsr $3 current.wallpaper;
-    feh --bg-fill "$XDG_DATA_HOME/"wallpapers/current.wallpaper;
+	cd -- "$XDG_DATA_HOME/"wallpapers;
+	ln -fsr $3 current.wallpaper;
+	feh --bg-fill "$XDG_DATA_HOME/"wallpapers/current.wallpaper;
 );
 
 function theme.linux_console () {
-    reconfigure-linux-console-color "$1";
+	reconfigure-linux-console-color "$1";
 };
 
 declare -A C;
 
 if
-    [[ $1 == dark ]];
+	[[ $1 == dark ]];
 then
-    theme=dark;
-    C=(
-        [gtk.1]=dark
-        [taskwarrior.linux.1]=dark-16.theme
-        [taskwarrior.256.1]=solarized-dark-256.theme
-        [mutt.linux.1]=mutt-colors-solarized-dark-16.muttrc
-        [mutt.256.1]=mutt-colors-solarized-dark-256.muttrc
-        [x.1]=Solarized-Dark.xcolor
-        [x.2]=\#002B36
-        [x.3]=debian-minimal-dark.png
-        [bspwm.1]=\#222222
-        [dunst.1]=dark
-    );
+	theme=dark;
+	C=(
+		[gtk.1]=dark
+		[taskwarrior.linux.1]=dark-16.theme
+		[taskwarrior.256.1]=solarized-dark-256.theme
+		[mutt.linux.1]=mutt-colors-solarized-dark-16.muttrc
+		[mutt.256.1]=mutt-colors-solarized-dark-256.muttrc
+		[x.1]=Solarized-Dark.xcolor
+		[x.2]=\#002B36
+		[x.3]=debian-minimal-dark.png
+		[bspwm.1]=\#222222
+		[dunst.1]=dark
+	);
 else
-    theme=light;
-    C=(
-        [gtk.1]=light
-        [taskwarrior.linux.1]=light-16.theme
-        [taskwarrior.256.1]=solarized-light-256.theme
-        [mutt.linux.1]=mutt-colors-solarized-light-16.muttrc
-        [mutt.256.1]=mutt-colors-solarized-light-256.muttrc
-        [x.1]=Solarized-Light.xcolor
-        [x.2]=\#FDF6E3
-        [x.3]=debian-minimal-light.png
-        [bspwm.1]=\#E0E0E0
-        [dunst.1]=light
-    );
+	theme=light;
+	C=(
+		[gtk.1]=light
+		[taskwarrior.linux.1]=light-16.theme
+		[taskwarrior.256.1]=solarized-light-256.theme
+		[mutt.linux.1]=mutt-colors-solarized-light-16.muttrc
+		[mutt.256.1]=mutt-colors-solarized-light-256.muttrc
+		[x.1]=Solarized-Light.xcolor
+		[x.2]=\#FDF6E3
+		[x.3]=debian-minimal-light.png
+		[bspwm.1]=\#E0E0E0
+		[dunst.1]=light
+	);
 fi;
 
 if
-    test-xorg;
+	test-xorg;
 then
-    theme.taskwarrior "${C[taskwarrior.256.1]}";
-    theme.mutt "${C[mutt.256.1]}";
-    theme.x "${C[x.1]}" "${C[x.2]}" "${C[x.3]}";
-    theme.gtk "${C[gtk.1]}";
-    theme.dunst "${C[dunst.1]}";
-    case $X_XCLIENT in
-        (bspwm)
-            theme.bspwm "${C[bspwm.1]}";
-    esac;
+	theme.taskwarrior "${C[taskwarrior.256.1]}";
+	theme.mutt "${C[mutt.256.1]}";
+	theme.x "${C[x.1]}" "${C[x.2]}" "${C[x.3]}";
+	theme.gtk "${C[gtk.1]}";
+	theme.dunst "${C[dunst.1]}";
+	case $X_XCLIENT in
+		(bspwm)
+			theme.bspwm "${C[bspwm.1]}";
+	esac;
 else
-    theme.taskwarrior "${C[taskwarrior.linux.1]}";
-    theme.mutt "${C[mutt.linux.1]}";
-    theme.linux_console "$theme";
+	theme.taskwarrior "${C[taskwarrior.linux.1]}";
+	theme.mutt "${C[mutt.linux.1]}";
+	theme.linux_console "$theme";
 fi;
 
 # vim: set ft=sh :

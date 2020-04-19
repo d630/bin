@@ -5,44 +5,44 @@
 # Source: http://chneukirchen.org/dotfiles/bin/swaptop
 
 if
-    grep -q VmSwap /proc/1/status;
+	grep -q VmSwap /proc/1/status;
 then
-    mawk '
-        /^Name:/ {
-            name = $2
-        };
-        /^Pid:/ {
-            pid = $2
-        };
-        /^VmSwap:/ {
-            swap = $2
-            if (swap > 0) {
-                printf "%8d  %s %d\n", swap, name, pid
-            }
-        }
-    ' /proc/[0-9]*/status |
-    sort -r;
+	mawk '
+		/^Name:/ {
+			name = $2
+		};
+		/^Pid:/ {
+			pid = $2
+		};
+		/^VmSwap:/ {
+			swap = $2
+			if (swap > 0) {
+				printf "%8d  %s %d\n", swap, name, pid
+			}
+		}
+	' /proc/[0-9]*/status |
+	sort -r;
 else
-    for f in /proc/[0-9]*; do
-        mawk '
-            BEGIN {
-                swap=0
-            };
-            $30 {
-                pid = $1;
-                name = substr($2, 2, length($2) - 2)
-            };
-            $1 == "Swap:" {
-                swap += $2
-            };
-            END {
-                if (swap > 0) {
-                    printf "%8d  %s %d\n", swap, name, pid
-                }
-            }
-        ' "$f/stat" "$f/smaps" 2>/dev/null;
-    done |
-    sort -r;
+	for f in /proc/[0-9]*; do
+		mawk '
+			BEGIN {
+				swap=0
+			};
+			$30 {
+				pid = $1;
+				name = substr($2, 2, length($2) - 2)
+			};
+			$1 == "Swap:" {
+				swap += $2
+			};
+			END {
+				if (swap > 0) {
+					printf "%8d  %s %d\n", swap, name, pid
+				}
+			}
+		' "$f/stat" "$f/smaps" 2>/dev/null;
+	done |
+	sort -r;
 fi;
 
 # vim: set ft=sh :

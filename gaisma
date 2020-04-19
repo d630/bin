@@ -2,7 +2,6 @@
 #
 # Get sun data infos from www.gaisma.com.
 
-echo;
 curl -s https://www.gaisma.com/en/location"/${1:-$X_MY_LOCATION1}."html |
 scrape -be table.sun-data |
 w3m -dump -T text/html |

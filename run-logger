@@ -7,13 +7,13 @@
 #
 # $ run-logger level category [summary [body]]
 
-l=$1 \
+l=$1;
 c=$2;
 
 shift 2;
 
 logger -d -s --id=$PPID \
-    -t "$(basename "$(strings /proc/$PPID/cmdline)")" \
-    -p local6".$l" "$c" "$@";
+	-t "$(basename "$(strings /proc/$PPID/cmdline)")" \
+	-p local6".$l" "$c" "$@";
 
 # vim: set ft=sh :

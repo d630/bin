@@ -5,11 +5,11 @@
 export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-todo;
 
 {
-    task context log > /dev/null;
-    task +log +todo "$@";
-    s=$?;
-    task context none > /dev/null;
-} 2> /dev/null;
+	task context log >/dev/null;
+	task +log +todo "$@";
+	s=$?;
+	task context none >/dev/null;
+} 2>/dev/null;
 
 exit $s;
 

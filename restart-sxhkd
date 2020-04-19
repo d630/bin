@@ -5,11 +5,11 @@
 p=${XDG_RUNTIME_DIR:?}/sxhkd${DISPLAY:?}.pid;
 
 test -r "$p" &&
-    pkill -F "$p";
+	pkill -F "$p";
 
 (
-    exec sxhkd -c "$XDG_CONFIG_HOME/sxhkd/sxhkdrc" &
-    echo "$!" > "$p";
+	exec sxhkd -c "$XDG_CONFIG_HOME/sxhkd/sxhkdrc" &
+	echo "$!" > "$p";
 );
 
 # vim: set ft=sh :

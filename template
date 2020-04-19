@@ -9,17 +9,17 @@
 FFILE=${1##*/};
 EXT=${FFILE#*.};
 test "$FFILE" = "$EXT" &&
-    EXT=;
+	EXT=;
 
 test -r "${XDG_TEMPLATES_DIR:?}/${EXT:-_}" || {
-    printf 'no template found\n' 1>&2;
-    exit 1;
+	printf 'no template found\n' 1>&2;
+	exit 1;
 };
 
 FILE=${FFILE%.$EXT};
 
 test -n "$FILE" ||
-    FILE=x;
+	FILE=x;
 
 GUARD=$(tr -c '[a-zA-Z0-9]' '_' <<!
 $FILE
@@ -42,37 +42,37 @@ $CLASS
 );
 
 eval "$(
-    date +'DATE=%F DAY=% MONTH=%m YEAR=%Y TIME=%T FDATE="%F %T"'
+	date +'DATE=%F DAY=% MONTH=%m YEAR=%Y TIME=%T FDATE="%F %T"'
 )"
 
 m4 -G \
-    -DCAMELCLASS="$CAMELCLASS" \
-    -DCLASS="$CLASS" \
-    -DDATE="$DATE" \
-    -DDAY="$DAY" \
-    -DEUID="$EUID" \
-    -DEXT="$EXT" \
-    -DFDATE="$FDATE" \
-    -DFFILE="$FFILE" \
-    -DFILE="$FILE" \
-    -DGUARD="$GUARD" \
-    -DHOME="$HOME" \
-    -DHOSTNAME="$HOSTNAME" \
-    -DHOSTTYPE="$HOSTTYPE" \
-    -DLICENSE="GNU GPLv3" \
-    -DMACHTYPE="$MACHTYPE" \
-    -DMACROCLASS="$MACROCLASS" \
-    -DMAIL="$MAIL" \
-    -DMONTH="$MONTH" \
-    -DOSTYPE="$OSTYPE" \
-    -DPATH="$PATH" \
-    -DPWD="$PWD" \
-    -DSHELL="$SHELL" \
-    -DTERM="$TERM" \
-    -DTIME="$TIME" \
-    -DUID="$UID" \
-    -DUSER="$USER" \
-    -DYEAR="$YEAR" <<!
+	-DCAMELCLASS="$CAMELCLASS" \
+	-DCLASS="$CLASS" \
+	-DDATE="$DATE" \
+	-DDAY="$DAY" \
+	-DEUID="$EUID" \
+	-DEXT="$EXT" \
+	-DFDATE="$FDATE" \
+	-DFFILE="$FFILE" \
+	-DFILE="$FILE" \
+	-DGUARD="$GUARD" \
+	-DHOME="$HOME" \
+	-DHOSTNAME="$HOSTNAME" \
+	-DHOSTTYPE="$HOSTTYPE" \
+	-DLICENSE="GNU GPLv3" \
+	-DMACHTYPE="$MACHTYPE" \
+	-DMACROCLASS="$MACROCLASS" \
+	-DMAIL="$MAIL" \
+	-DMONTH="$MONTH" \
+	-DOSTYPE="$OSTYPE" \
+	-DPATH="$PATH" \
+	-DPWD="$PWD" \
+	-DSHELL="$SHELL" \
+	-DTERM="$TERM" \
+	-DTIME="$TIME" \
+	-DUID="$UID" \
+	-DUSER="$USER" \
+	-DYEAR="$YEAR" <<!
 changecom()dnl
 include($XDG_TEMPLATES_DIR/$EXT)dnl
 !

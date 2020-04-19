@@ -9,50 +9,50 @@
 # -- web api.
 
 function spotify::albums::getSeveralAlbums {
-    # https://developer.spotify.com/documentation/web-api/reference/albums/get-several-albums/
+	# https://developer.spotify.com/documentation/web-api/reference/albums/get-several-albums/
 
-    [[ -n $2 ]] ||
-        return 1;
+	[[ -n $2 ]] ||
+		return 1;
 
-    curl \
-        -s \
-        -X GET "https://api.spotify.com/v1/albums/?ids=${@:2}" \
-        -H "Authorization: Bearer ${1:?}";
+	curl \
+		-s \
+		-X GET "https://api.spotify.com/v1/albums/?ids=${@:2}" \
+		-H "Authorization: Bearer ${1:?}";
 };
 
 function spotify::playlist::addTracks {
-    # https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/
+	# https://developer.spotify.com/documentation/web-api/reference/playlists/add-tracks-to-playlist/
 
-    [[ -n $3 ]] ||
-        return 1;
+	[[ -n $3 ]] ||
+		return 1;
 
-    curl \
-        -s \
-        -X POST "https://api.spotify.com/v1/playlists/${1:?}/tracks" \
-        -H "Authorization: Bearer ${2:?}" \
-        -H "Accept: application/json" \
-        -H "Content-Type: application/json" \
-        --data "${@:3}";
+	curl \
+		-s \
+		-X POST "https://api.spotify.com/v1/playlists/${1:?}/tracks" \
+		-H "Authorization: Bearer ${2:?}" \
+		-H "Accept: application/json" \
+		-H "Content-Type: application/json" \
+		--data "${@:3}";
 };
 
 function spotify::playlist::clear {
-    # https://developer.spotify.com/documentation/web-api/reference/playlists/replace-playlists-tracks/
+	# https://developer.spotify.com/documentation/web-api/reference/playlists/replace-playlists-tracks/
 
-    curl \
-        -s \
-        -X PUT "https://api.spotify.com/v1/playlists/${1:?}/tracks?uris=" \
-        -H "Authorization: Bearer ${2:?}";
+	curl \
+		-s \
+		-X PUT "https://api.spotify.com/v1/playlists/${1:?}/tracks?uris=" \
+		-H "Authorization: Bearer ${2:?}";
 };
 
 function spotify::playlist::create {
-    # https://developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/
+	# https://developer.spotify.com/documentation/web-api/reference/playlists/create-playlist/
 
-    curl \
-        -s \
-        -X POST "https://api.spotify.com/v1/users/${1:?}/playlists" \
-        -H "Authorization: Bearer ${3:?}" \
-        -H "Content-Type: application/json" \
-        --data "{\"name\":\"${2:?}\", \"public\":true, \"collaborative\":false}";
+	curl \
+		-s \
+		-X POST "https://api.spotify.com/v1/users/${1:?}/playlists" \
+		-H "Authorization: Bearer ${3:?}" \
+		-H "Content-Type: application/json" \
+		--data "{\"name\":\"${2:?}\", \"public\":true, \"collaborative\":false}";
 };
 
 function spotify::get {
@@ -63,119 +63,119 @@ function spotify::get {
 }
 
 function spotify::playlist::getTracks {
-    # https://developer.spotify.com/documentation/web-api/reference/playlists/get-playlists-tracks/
+	# https://developer.spotify.com/documentation/web-api/reference/playlists/get-playlists-tracks/
 
-    curl \
-        -s \
-        -X GET "https://api.spotify.com/v1/playlists/${1:?}/tracks?limit=100&offset=${3:-0}" \
-        -H "Authorization: Bearer ${2:?}";
+	curl \
+		-s \
+		-X GET "https://api.spotify.com/v1/playlists/${1:?}/tracks?limit=100&offset=${3:-0}" \
+		-H "Authorization: Bearer ${2:?}";
 };
 
 function spotify::playlist::getTracksInMarket {
-    # https://developer.spotify.com/documentation/web-api/reference/playlists/get-playlists-tracks/
+	# https://developer.spotify.com/documentation/web-api/reference/playlists/get-playlists-tracks/
 
-    curl \
-        -s \
-        -X GET "https://api.spotify.com/v1/playlists/${1:?}/tracks?fields=next,items(track.is_playable,track.uri)&limit=100&offset=${3:-0}&market=${4:-DE}" \
-        -H "Authorization: Bearer ${2:?}";
+	curl \
+		-s \
+		-X GET "https://api.spotify.com/v1/playlists/${1:?}/tracks?fields=next,items(track.is_playable,track.uri)&limit=100&offset=${3:-0}&market=${4:-DE}" \
+		-H "Authorization: Bearer ${2:?}";
 };
 
 function spotify::playlist::list {
-    # https://developer.spotify.com/documentation/web-api/reference/playlists/get-list-users-playlists/
+	# https://developer.spotify.com/documentation/web-api/reference/playlists/get-list-users-playlists/
 
-    curl \
-        -s \
-        -X GET "https://api.spotify.com/v1/users/${1:?}/playlists?limit=50&offset=${3:-0}" \
-        -H "Authorization: Bearer ${2:?}";
+	curl \
+		-s \
+		-X GET "https://api.spotify.com/v1/users/${1:?}/playlists?limit=50&offset=${3:-0}" \
+		-H "Authorization: Bearer ${2:?}";
 };
 
 function spotify::playlist::privatize {
-    # https://developer.spotify.com/documentation/web-api/reference/playlists/change-playlist-details/
+	# https://developer.spotify.com/documentation/web-api/reference/playlists/change-playlist-details/
 
-    curl \
-        -s \
-        -X PUT "https://api.spotify.com/v1/playlists/${1:?}" \
-        -H "Authorization: Bearer ${2:?}" \
-        -H "Content-Type: application/json" \
-        --data "{\"public\":false}";
+	curl \
+		-s \
+		-X PUT "https://api.spotify.com/v1/playlists/${1:?}" \
+		-H "Authorization: Bearer ${2:?}" \
+		-H "Content-Type: application/json" \
+		--data "{\"public\":false}";
 };
 
 function spotify::tracks::audio_features {
-    # https://developer.spotify.com/documentation/web-api/reference/tracks/get-several-audio-features/
+	# https://developer.spotify.com/documentation/web-api/reference/tracks/get-several-audio-features/
 
-    [[ -n $2 ]] ||
-        return 1;
+	[[ -n $2 ]] ||
+		return 1;
 
-    curl \
-        -s \
-        -X GET "https://api.spotify.com/v1/audio-features?ids=${@:2}" \
-        -H "Accept: application/json" \
-        -H "Authorization: Bearer ${1:?}";
+	curl \
+		-s \
+		-X GET "https://api.spotify.com/v1/audio-features?ids=${@:2}" \
+		-H "Accept: application/json" \
+		-H "Authorization: Bearer ${1:?}";
 };
 
 # -- misc.
 
 function addTracks {
-    declare plid=${1:?} ato=${2:?};
-    declare -a uris=();
+	declare plid=${1:?} ato=${2:?};
+	declare -a uris=();
 
-    shift 3
+	shift 3
 
-    if
-        [[ -p /dev/stdin || -f /dev/stdin ]];
-    then
-        mapfile -t uris;
-    else
-        (($#)) &&
-            mapfile -t uris < <(cat "$@");
-    fi;
+	if
+		[[ -p /dev/stdin || -f /dev/stdin ]];
+	then
+		mapfile -t uris;
+	else
+		(($#)) &&
+			mapfile -t uris < <(cat "$@");
+	fi;
 
-    ((${#uris[@]})) ||
-        return 1;
+	((${#uris[@]})) ||
+		return 1;
 
-    declare -i \
-        int=${#uris[@]}/100 \
-        mod=${#uris[@]}%100 \
-        i= \
-        x=0 \
-        y=100;
+	declare -i \
+		int=${#uris[@]}/100 \
+		mod=${#uris[@]}%100 \
+		i= \
+		x=0 \
+		y=100;
 
-    for ((i=int; i > 0; i--, x+=100)); do
-        'spotify::playlist::addTracks' "$plid" "$ato" "$(
-            printf %s\\n "${uris[@]:x:y}" |
-            jq -R . |
-            jq -sc '{ uris: . }';
-        )";
-    done;
+	for ((i=int; i > 0; i--, x+=100)); do
+		'spotify::playlist::addTracks' "$plid" "$ato" "$(
+			printf %s\\n "${uris[@]:x:y}" |
+			jq -R . |
+			jq -sc '{ uris: . }';
+		)";
+	done;
 
-    ((mod)) &&
-        'spotify::playlist::addTracks' "$plid" "$ato" "$(
-            printf '%s\n' "${uris[@]: -mod}" |
-            jq -R . |
-            jq -sc '{ uris: . }';
-        )";
+	((mod)) &&
+		'spotify::playlist::addTracks' "$plid" "$ato" "$(
+			printf '%s\n' "${uris[@]: -mod}" |
+			jq -R . |
+			jq -sc '{ uris: . }';
+		)";
 };
 
 function getLists {
-    # TODO
-    declare -i offset=-50;
+	# TODO
+	declare -i offset=-50;
 
-    jq -e -r --unbuffered '
-        if (.items | length) > 0
-        then .items[] | [.id, .name] | @sh "spotify_playlists+=(\(.))"
-        else "exit"
-        end
-    ' < <(
-        while
-            'spotify::playlist::list' \
-                "${1:?}" \
-                "${2:?}" \
-                "$((offset+=50))";
-        do
-            :;
-        done;
-    ) |
-    gawk '$0 == "exit" { exit }; { print $0; };'
+	jq -e -r --unbuffered '
+		if (.items | length) > 0
+		then .items[] | [.id, .name] | @sh "spotify_playlists+=(\(.))"
+		else "exit"
+		end
+	' < <(
+		while
+			'spotify::playlist::list' \
+				"${1:?}" \
+				"${2:?}" \
+				"$((offset+=50))";
+		do
+			:;
+		done;
+	) |
+	gawk '$0 == "exit" { exit }; { print $0; };'
 };
 
 function getAlbums {
@@ -202,37 +202,37 @@ function getAlbums {
 };
 
 function getAlbumsObjects {
-    declare ato=${1:?};
-    declare -a uris=();
+	declare ato=${1:?};
+	declare -a uris=();
 
-    shift 1
+	shift 1
 
-    if
-        [[ -p /dev/stdin || -f /dev/stdin ]];
-    then
-        mapfile -t uris;
-    else
-        (($#)) &&
-            mapfile -t uris < <(cat "$@");
-    fi;
+	if
+		[[ -p /dev/stdin || -f /dev/stdin ]];
+	then
+		mapfile -t uris;
+	else
+		(($#)) &&
+			mapfile -t uris < <(cat "$@");
+	fi;
 
-    ((${#uris[@]})) ||
-        return 1;
+	((${#uris[@]})) ||
+		return 1;
 
-    declare -i \
-        int=${#uris[@]}/20 \
-        mod=${#uris[@]}%20 \
-        i= \
-        x=0 \
-        y=20;
+	declare -i \
+		int=${#uris[@]}/20 \
+		mod=${#uris[@]}%20 \
+		i= \
+		x=0 \
+		y=20;
 
-    IFS=,;
-    for ((i=int; i > 0; i--, x+=20)); do
-        'spotify::albums::getSeveralAlbums' "$ato" "${uris[*]:x:y}";
-    done;
+	IFS=,;
+	for ((i=int; i > 0; i--, x+=20)); do
+		'spotify::albums::getSeveralAlbums' "$ato" "${uris[*]:x:y}";
+	done;
 
-    ((mod)) &&
-        'spotify::albums::getSeveralAlbums' "$ato" "${uris[*]: -mod}";
+	((mod)) &&
+		'spotify::albums::getSeveralAlbums' "$ato" "${uris[*]: -mod}";
 };
 
 function getTracks {
@@ -306,64 +306,64 @@ function getTracksObjects {
 };
 
 function getTracksFeatures {
-    declare ato=${1:?};
-    declare -a uris=();
+	declare ato=${1:?};
+	declare -a uris=();
 
-    shift 1
+	shift 1
 
-    if
-        [[ -p /dev/stdin || -f /dev/stdin ]];
-    then
-        mapfile -t uris;
-    else
-        (($#)) &&
-            mapfile -t uris < <(cat "$@");
-    fi;
+	if
+		[[ -p /dev/stdin || -f /dev/stdin ]];
+	then
+		mapfile -t uris;
+	else
+		(($#)) &&
+			mapfile -t uris < <(cat "$@");
+	fi;
 
-    ((${#uris[@]})) ||
-        return 1;
+	((${#uris[@]})) ||
+		return 1;
 
-    declare -i \
-        int=${#uris[@]}/100 \
-        mod=${#uris[@]}%100 \
-        i= \
-        x=0 \
-        y=100;
+	declare -i \
+		int=${#uris[@]}/100 \
+		mod=${#uris[@]}%100 \
+		i= \
+		x=0 \
+		y=100;
 
-    IFS=,;
-    for ((i=int; i > 0; i--, x+=100)); do
-        'spotify::tracks::audio_features' "$ato" "${uris[*]:x:y}";
-    done;
+	IFS=,;
+	for ((i=int; i > 0; i--, x+=100)); do
+		'spotify::tracks::audio_features' "$ato" "${uris[*]:x:y}";
+	done;
 
-    ((mod)) &&
-        'spotify::tracks::audio_features' "$ato" "${uris[*]: -mod}";
+	((mod)) &&
+		'spotify::tracks::audio_features' "$ato" "${uris[*]: -mod}";
 };
 
 # -- MAIN.
 
 case ${1:?} in
-    (addList)
-        'spotify::playlist::create' "${@:2}";;
-    (addTracks)
-        addTracks "${@:2}";;
-    (clearList)
-        'spotify::playlist::clear' "${@:2}";;
-    (getLists)
-        getLists "${@:2}";;
-    (getAlbums)
-        getAlbums "${@:2}";;
-    (getAlbumsObjects)
-        getAlbumsObjects "${@:2}";;
-    (getTracks)
-        getTracks "${@:2}";;
-    (getTracksInMarket)
-        getTracksInMarket "${@:2}";;
-    (getTracksObjects)
-        getTracksObjects "${@:2}";;
-    (getTracksFeatures)
-        getTracksFeatures "${@:2}";;
-    (privatizeList)
-        'spotify::playlist::privatize' "${@:2}";;
+	(addList)
+		'spotify::playlist::create' "${@:2}";;
+	(addTracks)
+		addTracks "${@:2}";;
+	(clearList)
+		'spotify::playlist::clear' "${@:2}";;
+	(getLists)
+		getLists "${@:2}";;
+	(getAlbums)
+		getAlbums "${@:2}";;
+	(getAlbumsObjects)
+		getAlbumsObjects "${@:2}";;
+	(getTracks)
+		getTracks "${@:2}";;
+	(getTracksInMarket)
+		getTracksInMarket "${@:2}";;
+	(getTracksObjects)
+		getTracksObjects "${@:2}";;
+	(getTracksFeatures)
+		getTracksFeatures "${@:2}";;
+	(privatizeList)
+		'spotify::playlist::privatize' "${@:2}";;
 esac;
 
 # vim: set ft=sh :

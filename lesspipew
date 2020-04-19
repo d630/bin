@@ -15,28 +15,28 @@ LESSMETACHARS="$space$tab$newline'"';*?"()<>[|&^`#\$%=~';
 export LESSMETACHARS;
 
 test -x "$HOME/.lessfilter" &&
-    "$HOME/.lessfilter" "$1" &&
-        exit 82;
+	"$HOME/.lessfilter" "$1" &&
+		exit 82;
 
 for i in $LESSIGNORE; do
-    case $1 in
-        (*.$i)
-            exit 82;;
-    esac;
+	case $1 in
+		(*.$i)
+			exit 82;;
+	esac;
 done;
 
 if
-    test "${LESSCOLOR:-0}" -eq 2 ||
-        case $LESS in
-            (*-[rR]*)
-                :;;
-            (*)
-                ! :;;
-        esac;
+	test "${LESSCOLOR:-0}" -eq 2 ||
+		case $LESS in
+			(*-[rR]*)
+				:;;
+			(*)
+				! :;;
+		esac;
 then
-    A=cdog;
+	A=cdog;
 else
-    A=dog;
+	A=dog;
 fi;
 
 exec open -A "$A" -A about -f "$1" 2>&1;

@@ -6,55 +6,55 @@
 # https://github.com/mlux/webradio.sh/blob/master/webradio.sh
 
 if
-    test-ctty;
+	test-ctty;
 then
-    function __menu {
-        menu fzf PLAY;
-    };
+	function __menu {
+		menu fzf PLAY;
+	};
 elif
-    [[ -n $DISPLAY ]];
+	[[ -n $DISPLAY ]];
 then
-    function __menu {
-        menu dmenu2 PLAY;
-    };
+	function __menu {
+		menu dmenu2 PLAY;
+	};
 else
-    exit 1;
+	exit 1;
 fi;
 
 file_webradio_streams=${XDG_VAR_HOME:?}/lib/wradio/streams;
 file_webradio_pid=${XDG_VAR_HOME:?}/lib/wradio/instance.pid;
 
 function __build_streams {
-    typeset \
-        name \
-        uri;
+	typeset \
+		name \
+		uri;
 
-    while
-        IFS=\; read -r name uri;
-    do
-        streams[$name]=$uri;
-    done < "$file_webradio_streams";
+	while
+		IFS=\; read -r name uri;
+	do
+		streams[$name]=$uri;
+	done < "$file_webradio_streams";
 };
 
 function __selectstream {
-    selection=$(
-        printf %s\\n STOPSTREAM "${!streams[@]}" |
-        sort -u |
-        __menu;
-    );
+	selection=$(
+		printf %s\\n STOPSTREAM "${!streams[@]}" |
+		sort -u |
+		__menu;
+	);
 };
 
 function __stopstream
 if
-    [[ -r $file_webradio_pid ]];
+	[[ -r $file_webradio_pid ]];
 then
-    pkill -9 -F "$file_webradio_pid" 1>/dev/null 2>&1;
-    rm -f -- "$file_webradio_pid" 1>/dev/null 2>&1;
+	pkill -9 -F "$file_webradio_pid" 1>/dev/null 2>&1;
+	rm -f -- "$file_webradio_pid" 1>/dev/null 2>&1;
 fi;
 
 function __playstream () (
-    exec audio-player --no-terminal "${streams[$selection]}" 1>/dev/null 2>&1 &
-    echo "$!" >> "$file_webradio_pid";
+	exec audio-player --no-terminal "${streams[$selection]}" 1>/dev/null 2>&1 &
+	echo "$!" >> "$file_webradio_pid";
 );
 
 
@@ -62,18 +62,18 @@ typeset -A streams;
 __build_streams;
 
 while
-    :;
+	:;
 do
-    __selectstream;
-    case $selection in
-        (STOPSTREAM)
-            __stopstream;;
-        ('')
-            exit 1;;
-        (*)
-        __stopstream;
-        __playstream;;
-    esac;
+	__selectstream;
+	case $selection in
+		(STOPSTREAM)
+			__stopstream;;
+		('')
+			exit 1;;
+		(*)
+		__stopstream;
+		__playstream;;
+	esac;
 done;
 
 # vim: set ft=sh :

@@ -45,10 +45,10 @@ cat > "$f" <<-TEMPLATE
 TEMPLATE
 
 vim -f \
- '+set ft=yaml' \
- +3 \
- "+startinsert!" \
- "$f" < /dev/tty > /dev/tty;
+	'+set ft=yaml' \
+	+3 \
+	"+startinsert!" \
+	"$f" < /dev/tty > /dev/tty;
 
 yaml2json < "$f" |
 jq 'if (.description | length) > 0 then . else empty end' |

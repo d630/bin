@@ -16,72 +16,72 @@ exec msmtpq "$@";
 
 __msmpt () { IFS=" " command msmpt $* ; }
 
-
 lock_queue ()
 {
-        builtin typeset lock_file=${queue_dir}/.lock
-        builtin typeset -i \
-                lock_status= \
-                sec_max=240 \
-                SECONDS= ;
+		builtin typeset lock_file=${queue_dir}/.lock
+		builtin typeset -i \
+				lock_status= \
+				sec_max=240 \
+				SECONDS= ;
 
-        function make_lock
-        {
-                command mkdir "$lock_file"
-        }
+		function make_lock
+		{
+				command mkdir "$lock_file"
+		}
 
-        if
-                [[ $1 == -u ]]
-        then
-                command rm -r "$lock_file"
-        else
-                make_lock && lock_status+=1
-                while
-                        command sleep 0.5 && ((
-                                lock_status == 0 ||
-                                SECONDS <= sec_max
-                        ))
-                do
-                        make_lock && lock_status+=1
-                done
-                (( lock_status == 0 )) && {
-                        echo fail:
-                }
-        fi
+		if
+				[[ $1 == -u ]]
+		then
+				command rm -r "$lock_file"
+		else
+				make_lock && lock_status+=1
+				while
+						command sleep 0.5 && ((
+								lock_status == 0 ||
+								SECONDS <= sec_max
+						))
+				do
+						make_lock && lock_status+=1
+				done
+				(( lock_status == 0 )) && {
+						echo fail:
+				}
+		fi
 
-        builtin unset -f make_lock
+		builtin unset -f make_lock
 }
 
 make_id ()
 {
-        id=$(command date +%Y-%m-%d-%H.%M.%S)-${RANDOM}${RANDOM}${RANDOM}${RANDOM}${RANDOM}${RANDOM}
-        fqp=${queue_dir}/${id}
+		id=$(command date +%Y-%m-%d-%H.%M.%S)-${RANDOM}${RANDOM}${RANDOM}${RANDOM}${RANDOM}${RANDOM}
+		fqp=${queue_dir}/${id}
 }
 
 send_mail ()
 {
-        [[ $EMAIL_CONN_TEST != x ]] && connect_test || {
-                echo fail:
-        }
+		[[ $EMAIL_CONN_TEST != x ]] && connect_test || {
+				echo fail:
+		}
 
-        if
-                __msmpt "$@" < "${fqp}.mail" 1>/dev/null
-        then
-                :
-        else
-        fi
+		if
+				__msmpt "$@" < "${fqp}.mail" 1>/dev/null
+		then
+				:
+		else
+			:
+		fi
 }
 
 
 
 connect_test ()
 {
-        :
+	:
 }
 
 lock_queue ()
 {
-        :
+	:
 }
 
 # vim: set ft=sh :

@@ -3,8 +3,8 @@
 # Run grabc.
 
 c=$(
-    grabc |&
-    grep -o '#.*';
+	grabc |&
+	grep -o '#.*';
 );
 
 printf %s "${c^^}";

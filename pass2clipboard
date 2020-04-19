@@ -3,39 +3,39 @@
 # Copy password from pass.
 
 function __select {
-    read -r file < <(
-        find "$HOME/".password-store/ \
-            -type f -name \*.gpg -printf %f\\n |
-        sed 's/.gpg$//g' |
-        sort |
-        menu "$1";
-    );
+	read -r file < <(
+		find "$HOME/".password-store/ \
+			-type f -name \*.gpg -printf %f\\n |
+		sed 's/.gpg$//g' |
+		sort |
+		menu "$1";
+	);
 };
 
 if
-    test-ctty;
+	test-ctty;
 then
-    menu=fzf;
+	menu=fzf;
 else
-    menu=dmenu2;
+	menu=dmenu2;
 fi;
 
 __select "$menu";
 
 if
-    [[ -f $HOME/.password-store/$file.gpg ]];
+	[[ -f $HOME/.password-store/$file.gpg ]];
 then
-    if
-        [[ $1 == --type ]];
-    then
-        pass show "$file" |
-        xdotool type --clearmodifiers --file -;
-    else
-        PASSWORD_STORE_CLIP_TIME=10 pass show -c "$file";
-    fi;
+	if
+		[[ $1 == --type ]];
+	then
+		pass show "$file" |
+		xdotool type --clearmodifiers --file -;
+	else
+		PASSWORD_STORE_CLIP_TIME=10 pass show -c "$file";
+	fi;
 else
-    printf '%s:Error: Nothing has been chosen\n' "$BASH_SOURCE" 1>&2;
-    exit 1;
+	printf '%s:Error: Nothing has been chosen\n' "$BASH_SOURCE" 1>&2;
+	exit 1;
 fi;
 
 # vim: set ft=sh :

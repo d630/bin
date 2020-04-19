@@ -2,7 +2,8 @@
 #
 # Build README.md in github.com/D630/bin.
 
-cd -- /home/stow/bin/bin || exit 1;
+cd -- /home/stow/bin/bin ||
+	exit 1;
 
 IFS=.: read -r _ _ p _  _ < <(git config --local --get remote.origin.url);
 P=https://github.com/$p;
@@ -11,27 +12,27 @@ export LC_ALL=C;
 
 __find ()
 {
-    # find . -maxdepth 1 -regextype posix-egrep \
-    #         \( -path "./.*" -o -name README.md \) \
-    #         -prune \
-    #         -o \( -type f -a -regex "\./.*\.(awk|py|sh)" \) \
-    #         -exec grep -H -m 1 '^# ' {} +;
-    # git ls-files -z '*.awk' '*.py' '*.sh' \
-    # | xargs -0 grep -H -m 1 '^# ';
+	# find . -maxdepth 1 -regextype posix-egrep \
+	#         \( -path "./.*" -o -name README.md \) \
+	#         -prune \
+	#         -o \( -type f -a -regex "\./.*\.(awk|py|sh)" \) \
+	#         -exec grep -H -m 1 '^# ' {} +;
+	# git ls-files -z '*.awk' '*.py' '*.sh' \
+	# | xargs -0 grep -H -m 1 '^# ';
 
 	git ls-files -z '[!A][!R]*' |
 		xargs -0 grep -E -Z -l -m 1 '^#!.*(awk|[bdtm][ack]sh|python|sh|perl).*' |
 		xargs -0 grep -H -m 1 '^# ';
 
-    # find . -maxdepth 1 \
-    #         \( -path "./.*" -o -name README.md \) \
-    #         -prune \
-    #         -o \( -type f -a -name "*.php" \) \
-    #         -exec grep -H -m 1 '// ' {} + \
-    # | sed 's/    \/\//#/';
-    # git ls-files -z '*.php' \
-    # | xargs -0 grep -H -m 1 '// ' \
-    # | sed 's/    \/\//#/';
+	# find . -maxdepth 1 \
+	#         \( -path "./.*" -o -name README.md \) \
+	#         -prune \
+	#         -o \( -type f -a -name "*.php" \) \
+	#         -exec grep -H -m 1 '// ' {} + \
+	# | sed 's/    \/\//#/';
+	# git ls-files -z '*.php' \
+	# | xargs -0 grep -H -m 1 '// ' \
+	# | sed 's/    \/\//#/';
 
 	git ls-files -z '[!A][!R]*' |
 		xargs -0 grep -E -Z -l -m 1 '^#!.*php.*' |
@@ -40,7 +41,7 @@ __find ()
 };
 
 {
-    header=$(</dev/fd/0);
+	header=$(</dev/fd/0);
 } <<'HEADER'
 Short scripts, which do not belong to my dotfiles. Unless otherwise stated,
 these files are in the public domain.

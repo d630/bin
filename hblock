@@ -5,15 +5,15 @@
 # Inspired by hostblock (http://gaenserich.github.com/hostsblock)
 
 (($#)) &&
-    exec sudo "$(type -P "$BASH_SOURCE")";
+	exec sudo "$(type -P "$BASH_SOURCE")";
 
 systemctl stop dnsmasq;
 
 typeset -x \
-    LC_ALL=C \
-    hblock_cachedir=${TMPDIR:-/tmp}/hostfiles \
-    hblock_tmpdir=${TMPDIR:-/tmp}/hblock \
-    hblock_white=/home/user1/etc/hblock/white.txt;
+	LC_ALL=C \
+	hblock_cachedir=${TMPDIR:-/tmp}/hostfiles \
+	hblock_tmpdir=${TMPDIR:-/tmp}/hblock \
+	hblock_white=/home/user1/etc/hblock/white.txt;
 
 #hostfile_regular=/etc/hosts.regular
 hblock_hlist=/home/user1/etc/hblock/hlist.txt \
@@ -21,34 +21,34 @@ hblock_black=/home/user1/etc/hblock/black.txt \
 hostfile_block=/etc/hosts.block;
 
 function __hblock_do {
-    typeset outfile=${1//http:\/\//};
-    outfile=${outfile//[\/\%\&\+\?\=\\]/\.};
+	typeset outfile=${1//http:\/\//};
+	outfile=${outfile//[\/\%\&\+\?\=\\]/\.};
 
-    wget --no-verbose \
-        --connect-timeout=3 \
-        --content-on-error \
-        --dns-timeout=3 \
-        --ignore-length \
-        --inet4-only \
-        --no-cache \
-        --no-cookies \
-        --no-http-keep-alive \
-        --read-timeout=3 \
-        --tries=1 \
-        -O - \
-        "$1" |
-    tee "$hblock_cachedir/$outfile.dirty" |
-    sed -rn '
-        /^(0.0.0.0|127.0.0.1)/ {
-            s/^127.0.0.1/0.0.0.0/;
-            s/[[:space:]][[:space:]]*/ /g;
-            s/[[:space:]]#.*$//;
-            s/[[:space:]]*$//;
-            s/^$//;
-            p
-        }
-    ' |
-    grep -E -v -f "$hblock_white" > "$hblock_tmpdir/$outfile.clean";
+	wget --no-verbose \
+		--connect-timeout=3 \
+		--content-on-error \
+		--dns-timeout=3 \
+		--ignore-length \
+		--inet4-only \
+		--no-cache \
+		--no-cookies \
+		--no-http-keep-alive \
+		--read-timeout=3 \
+		--tries=1 \
+		-O - \
+		"$1" |
+	tee "$hblock_cachedir/$outfile.dirty" |
+	sed -rn '
+		/^(0.0.0.0|127.0.0.1)/ {
+			s/^127.0.0.1/0.0.0.0/;
+			s/[[:space:]][[:space:]]*/ /g;
+			s/[[:space:]]#.*$//;
+			s/[[:space:]]*$//;
+			s/^$//;
+			p
+		}
+	' |
+	grep -E -v -f "$hblock_white" > "$hblock_tmpdir/$outfile.clean";
 };
 
 typeset -xf __hblock_do;
@@ -57,17 +57,17 @@ mkdir -p -- "$hblock_cachedir" "$hblock_tmpdir";
 
 ## Do the thing.
 xargs \
-    -a "$hblock_hlist" \
-    -n 1 \
-    -P 8 \
-    -i bash -c '__hblock_do "$@"' _ {};
+	-a "$hblock_hlist" \
+	-n 1 \
+	-P 8 \
+	-i bash -c '__hblock_do "$@"' _ {};
 
 cat -- "$hblock_black" <(
-    echo;
-    echo;
-    #sort -u "$hblock_tmpdir/"*.clean;
-    sort "$hblock_tmpdir/"*.clean |
-    uniq;
+	echo;
+	echo;
+	#sort -u "$hblock_tmpdir/"*.clean;
+	sort "$hblock_tmpdir/"*.clean |
+	uniq;
 ) > "$hostfile_block";
 
 chmod 644 "$hostfile_block" /etc/resolv-dnsmasq.conf;

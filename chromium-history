@@ -10,21 +10,21 @@ sep={{::}};
 cp -f -- "${XDG_CACHE_HOME:?}/run-chromium/Default/History" "$XDG_CACHE_HOME/h.chromium";
 
 __sqlite () {
-    sqlite3 -separator "$sep" "$XDG_CACHE_HOME/h.chromium" "
-        select substr(title, 1, $cols), url
-        from urls
-        order by last_visit_time desc";
+	sqlite3 -separator "$sep" "$XDG_CACHE_HOME/h.chromium" "
+		select substr(title, 1, $cols), url
+		from urls
+		order by last_visit_time desc";
 };
 
 __awk () {
-    gawk -F "$sep" '{ printf "%-'$cols's  \x1b[36m%s\n", $1, $2 }';
+	gawk -F "$sep" '{ printf "%-'$cols's  \x1b[36m%s\n", $1, $2 }';
 };
 
 __while_read ()
 while
-    read -r REPLY;
+	read -r REPLY;
 do
-    daemonize run-chromium "$REPLY";
+	daemonize run-chromium "$REPLY";
 done;
 
 __sqlite |

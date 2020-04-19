@@ -3,8 +3,8 @@
 # Run rtcwake in mem mode and play music/radio on wakeup.
 
 function bye {
-    printf 'Bye-bye!\n' 1>&2;
-    exit 1;
+	printf 'Bye-bye!\n' 1>&2;
+	exit 1;
 };
 
 if

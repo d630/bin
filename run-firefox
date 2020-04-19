@@ -5,14 +5,14 @@
 r=${XDG_CACHE_HOME:?}/run-firefox;
 
 test -r "$r" -a -n "$force_new" && {
-    t=$(mktemp -d);
-    rsync -var --delete "$t/" "$r/";
-    rm -rf -- "$t";
+	t=$(mktemp -d);
+	rsync -var --delete "$t/" "$r/";
+	rm -rf -- "$t";
 };
 
 test -r "$r/"user.js || {
-    mkdir -p -- "$r/cache";
-    cat > "$r/"user.js <<!
+	mkdir -p -- "$r/cache";
+	cat > "$r/"user.js <<!
 user_pref("accessibility.browsewithcaret", true);
 user_pref("accessibility.force_disabled", 1);
 user_pref("app.normandy.first_run", false);
@@ -106,7 +106,7 @@ user_pref("signon.rememberSignons", false);
 export XDG_CACHE_HOME=$r/cache;
 
 exec firefox \
-    --profile "$r" \
-    ${1:+"$@"};
+	--profile "$r" \
+	${1:+"$@"};
 
 # vim: set ft=sh :

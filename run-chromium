@@ -5,14 +5,14 @@
 r=${XDG_CACHE_HOME:?}/run-chromium;
 
 test -r "$r" -a -n "$force_new" && {
-    t=$(mktemp -d);
-    rsync -var --delete "$t/" "$r/";
-    rm -rf -- "$t";
+	t=$(mktemp -d);
+	rsync -var --delete "$t/" "$r/";
+	rm -rf -- "$t";
 };
 
 test -r "$r/"Default/Preferences || {
-    mkdir -p -- "$r/"Default/Extensions;
-    cat > "$r/"Default/Preferences <<!
+	mkdir -p -- "$r/"Default/Extensions;
+	cat > "$r/"Default/Preferences <<!
 {
   "AudioCaptureAllowed": false,
   "alternate_error_pages": {
@@ -174,7 +174,7 @@ test -r "$r/"Default/Preferences || {
 };
 
 test -r "$r/Default/Web Data" ||
-    sqlite3 -init /dev/stdin "$r/Default/Web Data" .quit <<\!
+	sqlite3 -init /dev/stdin "$r/Default/Web Data" .quit <<\!
 BEGIN TRANSACTION;
 CREATE TABLE keywords (
   id INTEGER PRIMARY KEY,
@@ -220,45 +220,45 @@ COMMIT;
 export CHROME_WRAPPER=$0;
 
 exec chromium \
-    --artifacts-dir=$r/artifacts \
-    --crash-dumps-dir="$r/crash-dumps" \
-    --disable-breakpad \
-    --disable-cloud-import \
-    --disable-component-cloud-policy \
-    --disable-gpu-driver-bug-workarounds \
-    --disable-infobars \
-    --disable-payment-request \
-    --disable-reading-from-canvas \
-    --disable-speech-api \
-    --disable-sync-preferences \
-    --disable-translate \
-    --disk-cache-dir=$r/cache \
-    --enable-extension-activity-logging \
-    --enable-fast-unload \
-    --enable-gpu-rasterization \
-    --enable-grouped-history \
-    --enable-logging=stderr \
-    --enable-native-gpu-memory-buffers \
-    --enable-potentially-annoying-security-features \
-    --enable-reader-mode-toolbar-icon \
-    --enable-site-settings \
-    --enable-smooth-scrolling \
-    --enable-spatial-navigation \
-    --enable-strict-mixed-content-checking \
-    --enable-strict-powerful-feature-restrictions \
-    --enable-tab-audio-muting \
-    --enable-webkit-text-subpixel-positioning \
-    --enable-zero-copy \
-    --error-console \
-    --force-device-scale-factor="${GDK_SCALE:-1}" \
-    --hide-scrollbars \
-    --ignore-gpu-blacklist \
-    --load-media-router-component-extension=0 \
-    --log-net-log \
-    --no-first-run \
-    --no-wifi \
-    --process-per-site \
-    --user-data-dir=$r \
-    ${1:+"$@"};
+	--artifacts-dir=$r/artifacts \
+	--crash-dumps-dir="$r/crash-dumps" \
+	--disable-breakpad \
+	--disable-cloud-import \
+	--disable-component-cloud-policy \
+	--disable-gpu-driver-bug-workarounds \
+	--disable-infobars \
+	--disable-payment-request \
+	--disable-reading-from-canvas \
+	--disable-speech-api \
+	--disable-sync-preferences \
+	--disable-translate \
+	--disk-cache-dir=$r/cache \
+	--enable-extension-activity-logging \
+	--enable-fast-unload \
+	--enable-gpu-rasterization \
+	--enable-grouped-history \
+	--enable-logging=stderr \
+	--enable-native-gpu-memory-buffers \
+	--enable-potentially-annoying-security-features \
+	--enable-reader-mode-toolbar-icon \
+	--enable-site-settings \
+	--enable-smooth-scrolling \
+	--enable-spatial-navigation \
+	--enable-strict-mixed-content-checking \
+	--enable-strict-powerful-feature-restrictions \
+	--enable-tab-audio-muting \
+	--enable-webkit-text-subpixel-positioning \
+	--enable-zero-copy \
+	--error-console \
+	--force-device-scale-factor="${GDK_SCALE:-1}" \
+	--hide-scrollbars \
+	--ignore-gpu-blacklist \
+	--load-media-router-component-extension=0 \
+	--log-net-log \
+	--no-first-run \
+	--no-wifi \
+	--process-per-site \
+	--user-data-dir=$r \
+	${1:+"$@"};
 
 # vim: set ft=sh :

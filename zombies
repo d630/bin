@@ -6,9 +6,9 @@
 
 ps f -eo state,pid,ppid,comm |
 mawk '
-    { cmds[$2] = $NF }
-    /^Z/ {
-        print $(NF-1) "/" $2 " zombie child of " cmds[$3] "/" $3;
-    }';
+	{ cmds[$2] = $NF }
+	/^Z/ {
+		print $(NF-1) "/" $2 " zombie child of " cmds[$3] "/" $3;
+	}';
 
 # vim: set ft=sh :

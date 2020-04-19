@@ -5,11 +5,11 @@
 p=${XDG_RUNTIME_DIR:?}/sxhkd${DISPLAY:?}.pid;
 
 test -r "$p" ||
-    exit 1;
+	exit 1;
 
 IFS= read -r pp < "$p";
 
 test -n "$pp" &&
-    kill -USR1 "$pp";
+	kill -USR1 "$pp";
 
 # vim: set ft=sh :

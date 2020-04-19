@@ -4,13 +4,13 @@
 
 exec 9<"$0";
 flock -n 9 || {
-    printf 'sorry, I am already running\n' 1>&2;
-    exit 1;
+	printf 'sorry, I am already running\n' 1>&2;
+	exit 1;
 };
 
 test-inet || {
-    run-logger 3 .network.error 'We are offline. News have not been updated';
-    exit 1;
+	run-logger 3 .network.error 'We are offline. News have not been updated';
+	exit 1;
 };
 
 feedfaetcher 1>/dev/null 2>&1;
@@ -18,6 +18,6 @@ feedfaetcher 1>/dev/null 2>&1;
 f=$(newsboat -x reload print-unread);
 
 test "${f%% *}" -gt 0 &&
-    run-logger 6 .transfer.complete "$f";
+	run-logger 6 .transfer.complete "$f";
 
 # vim: set ft=sh :

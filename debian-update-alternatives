@@ -5,10 +5,10 @@
 set -e;
 
 while
-    read -r a b c;
+	read -r a b c;
 do
-    sudo update-alternatives --install "$a" "$b" "$c" 100;
-    sudo update-alternatives --set "$b" "$c";
+	sudo update-alternatives --install "$a" "$b" "$c" 100;
+	sudo update-alternatives --set "$b" "$c";
 done <<IN
 /bin/ksh ksh /usr/bin/ksh2020
 /usr/bin/awk awk /usr/bin/original-awk

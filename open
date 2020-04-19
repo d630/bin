@@ -12,50 +12,50 @@ mime= \
 opt=;
 
 while
-    getopts :A:f: opt;
+	getopts :A:f: opt;
 do
-    case $opt in
-        (A)
-            case $OPTARG in
-                (view|vview|edit|vedit|compose|vcompose|dog|cdog|about|gview|gedit|gcompose)
-                    flag_A=${flag_A:+$flag_A }$OPTARG;;
-                (*)
-                    printf 'Unknown action: %s\n' "$OPTARG" 1>&2;
-                    exit 1;;
-            esac;;
-        (f)
-            readonly flag_f=$OPTARG;;
-        (\?)
-            printf 'Unknown flag: -%s\n' "$OPTARG" 1>&2;
-            exit 1;;
-    esac;
+	case $opt in
+		(A)
+			case $OPTARG in
+				(view|vview|edit|vedit|compose|vcompose|dog|cdog|about|gview|gedit|gcompose)
+					flag_A=${flag_A:+$flag_A }$OPTARG;;
+				(*)
+					printf 'Unknown action: %s\n' "$OPTARG" 1>&2;
+					exit 1;;
+			esac;;
+		(f)
+			readonly flag_f=$OPTARG;;
+		(\?)
+			printf 'Unknown flag: -%s\n' "$OPTARG" 1>&2;
+			exit 1;;
+	esac;
 done;
 
 test -n "$flag_f" || {
-    printf 'File operand is missing\n' 1>&2;
-    exit 1;
+	printf 'File operand is missing\n' 1>&2;
+	exit 1;
 };
 
 eval "$(mime_database detect "$flag_f")";
 
 if
-    test "$m" != ?;
+	test "$m" != ?;
 then
-    mime=$m;
+	mime=$m;
 elif
-    test "$g" != ?;
+	test "$g" != ?;
 then
-    mime=$g;
+	mime=$g;
 else
-    mime=$(file -L -b --mime-type "$flag_f");
+	mime=$(file -L -b --mime-type "$flag_f");
 fi;
 
 . "$XDG_CONFIG_HOME/"mailcap.d/$mime;
 
 for A in $flag_A; do
-    "$A" "$flag_f" &&
-        break;
-    printf 'action for mime <%s> was <%s>\n' "$mime" "$A" 1>&2;
+	"$A" "$flag_f" &&
+		break;
+	printf 'action for mime <%s> was <%s>\n' "$mime" "$A" 1>&2;
 done;
 
 # vim: set ft=sh :
