@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Open the result of which in vim.
+# Open the result of which(1) in vim.
 
 exec vim "$(which "${1:?}")";
 

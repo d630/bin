@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Add a bookmark to taswarrior-um (via newsbeuter/newsboat).
+# Add a bookmark to taswarrior-um (used in newsbeuter/newsboat).
 
 exec taskum add "uri:${1:?}" "name:$2" "note:$3";
 

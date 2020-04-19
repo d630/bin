@@ -1,6 +1,6 @@
 #!/usr/bin/mawk -f
 #
-# Build a mime.type file with ERE globs from /usr/share/mime.
+# Parse /usr/share/mime and build a mime.type file with ERE globs.
 
 function mergeAliases() {
     FS = " "

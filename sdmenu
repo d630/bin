@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Run menu as dmenu2-save.
+# Run dmenu2-save menu.
 
 test-xorg &&
 	exec menu dmenu2-save ${1:+"$@"} 0<&-;

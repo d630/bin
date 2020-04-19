@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# bspwm: external_rules_command
+# external_rules_command
 #
 # Absolute path to the command used to retrieve rule consequences.
 # The command will receive the following arguments: window ID, class

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Reconfigure/Switch audio devices.
+# Reconfigure audio devices.
 
 # case $1 in
 # 	(PCH)

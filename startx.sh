@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 #
 # My mini wrapper for xinit.
-# $ . startx.sh
+#
 # Allow only one xserver; start always on /dev/tty1 and use :0.
+#
+# $ . startx.sh
 
 function __startx {
 	((UID)) || {

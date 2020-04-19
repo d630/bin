@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Take a screenshot.
+# Run scrot.
 
 mkdir -p /tmp/screenshots;
 

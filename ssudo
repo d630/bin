@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Use sudo with dmenu2 via SUDO_ASKPASS.
+# Use sudo with sdmenu via SUDO_ASKPASS.
 
 exec env SUDO_ASKPASS=${XDG_BIN_HOME:?}/sdmenu sudo -A -- "$@";
 

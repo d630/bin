@@ -1,6 +1,7 @@
 #!/usr/bin/gawk -f
 #
-# Sort input by lenght.
+# Sort strings by lenght.
+#
 # Source: https://github.com/izabera/bin/blob/master/lsort
 
 {

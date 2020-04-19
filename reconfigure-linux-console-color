@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 # Configure color in linux console.
+#
 # See: https://github.com/adeverteuil/console-solarized/blob/master/console-solarized
 
 test -t 1 && fgconsole 1>/dev/null 2>&1 ||

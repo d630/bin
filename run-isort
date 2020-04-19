@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Wrapper: isort.
+# Run isort.
 
 exec isort \
 	-rc \

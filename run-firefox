@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Wrapper: firefox
+# Run firefox.
 
 r=${XDG_CACHE_HOME:?}/run-firefox;
 

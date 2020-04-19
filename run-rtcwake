@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Run rtcwake with mode mem and play music/radio on wakeup.
+# Run rtcwake in mem mode and play music/radio on wakeup.
 
 function bye {
     printf 'Bye-bye!\n' 1>&2;

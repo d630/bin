@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
-# Backup system.
+# Backup my system.
 #
-# commands:
+# Commands:
 #   - prepare | pp
 
 backup_dir=${XDG_BACKUP_HOME:?};
@@ -16,7 +16,7 @@ printf -v horiz %80s;
 };
 
 apt() (
-	.hd apt
+	.hd apt;
 
 	sudo rm -rv -- "$backup_dir/pkgs";
 	mkdir -pv -- "$backup_dir/pkgs";
@@ -35,7 +35,7 @@ apt() (
 )
 
 bin() (
-	.hd bin
+	.hd bin;
 
 	find /var/lib/dpkg/info/ \
 		-daystart \( -name \*.list -a -mtime -7 \) \
@@ -51,7 +51,7 @@ bin() (
 )
 
 init() (
-	.hd init
+	.hd init;
 
 	{
 		find /etc/init.d/ -perm /111 -type f -printf '%f\n';
@@ -67,6 +67,8 @@ cclean() (
 )
 
 etckeeper() (
+	.hd etckeeper;
+
 	cd / ||
 		exit 1;
 

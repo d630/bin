@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Get mail and give notification + sound (via run-logger).
+# Get mails and give notification + sound (via run-logger).
 
 exec 9<"$0";
 flock -n 9 || {

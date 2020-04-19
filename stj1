@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 # Use st like kuake and yeahconsole terminal.
+#
 # Idea: https://wiki.archlinux.org/index.php/ \
 #       Urxvt#Improved_Kuake-like_behavior_in_Openbox
 

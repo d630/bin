@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Update via some package managers.
+# Update software packages via some package managers.
 
 cd -- "$XDG_OPT_HOME" ||
 	exit 1;

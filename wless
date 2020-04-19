@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Open the result of which with less.
+# Open the result of which(1) in less.
 
 exec less "$(which "${1:?}")";
 

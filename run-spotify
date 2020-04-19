@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# Wrap up spotify.
+# Run spotify.
 
-daemonize spotify \
+exec spotify \
 	--experimental-network no-ipv6 \
 	--force-unicast-discovery \
 	--force-device-scale-factor="${GDK_SCALE:-1}";

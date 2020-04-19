@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# A wrapper script for selecting menu driven programs.
+# A wrapper script for selecting "menu driven" programs.
 
 menu=${1:?};
 menu_prompt=$2;

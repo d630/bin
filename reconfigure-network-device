@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
-# Configure my network devices.
-# Source: https://github.com/vain/bin-pub/blob/master/cwm
+# Reconfigure network devices.
+#
+# Idea: https://github.com/vain/bin-pub/blob/master/cwm
 
 ((UID)) && {
     printf 'Must be run as root\n' 1>&2;

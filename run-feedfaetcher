@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Wrapper: feedfaetcher.
+# Run feedfaetcher.
 
 feedcacherdir=${XDG_VAR_HOME:?}/lib/feedfaetcher;
 urllist=$feedcacherdir/urls.txt;

@@ -1,6 +1,6 @@
 #!/usr/bin/env mksh
 #
-# Looking for new/unseen mails (imapfilter).
+# Display statistics about new/unseen mails (imapfilter).
 
 run-imapfilter localhost-unseen |
 column -t -s $'\t';

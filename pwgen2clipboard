@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# X-select password.
+# X-select generated password into clipboard.
 
 run-pwgen |
 xorg-selection-clipboard-in;

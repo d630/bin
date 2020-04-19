@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Spotify: Take pub list1 and create audio-featured public lists.
+# Take pub list1 and create audio-featured public lists.
 
 token=${1:?};
 file=${2:-$XDG_VAR_HOME/lib/bspot/bspot_create_featured_list.sh};

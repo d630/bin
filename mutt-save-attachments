@@ -1,6 +1,7 @@
 #!/bin/sh
 #
 # Save attachements in Mutt.
+#
 # Source: https://github.com/vain/bin-pub/blob/master/mutt-save-attachments
 
 d=${XDG_TMP_HOME:?}/attachments;

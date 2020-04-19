@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Spotify: Take pub list1 and sort it by release_date.
+# Take pub list1 and sort it by release_date.
 
 list1=${1:?};
 list2=${2:?};

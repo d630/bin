@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# X-select color code.
+# X-select color code from grabc into clipboard.
 
 run-grabc |
 xorg-selection-clipboard-in;

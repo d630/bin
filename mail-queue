@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Looking for mail queue (msmtp).
+# Display mail queue (msmtp).
 
 exec msmtp-queue -d;
 

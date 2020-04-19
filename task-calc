@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Calculate dates via taskwarrior.
+# Run task cals: Calculate dates via taskwarrior.
 
 exec task calc "$@";
 

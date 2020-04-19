@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Stat a file and build an associative array.
+# Stat a file and build an associative bash array.
 
 if
 	[[ $1 == -f ]];

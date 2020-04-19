@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Update mail dirs.
+# Update mail folders.
 
 if
 	test-inet;

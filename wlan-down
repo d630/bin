@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Wrapper: set wlan off.
+# Wrapper: Set wlan off.
 
 exec sudo "$XDG_BIN_HOME/reconfigure-network-device" \w -d;
 

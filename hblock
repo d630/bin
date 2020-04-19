@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
 # Simple ad- and malware-blocking-list builder for dnsmasq.
+#
 # Inspired by hostblock (http://gaenserich.github.com/hostsblock)
 
 (($#)) &&

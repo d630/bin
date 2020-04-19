@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Get interactively xclass info about a xwindow.
+# Grab xwindow and get xclass info.
 
 xprop |
 mawk '

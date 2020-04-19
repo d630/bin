@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Create password.
+# Run pwgen.
 
 until
 	test "${#p}" -ge 256;

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Wrapper: mypy.
+# Run mypy.
 
 # --python-version '3.5'
 

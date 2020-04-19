@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Wrapper: black.
+# Run black.
 
 exec black \
 	--line-length '88' \

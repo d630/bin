@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Display color info in terminal.
+# Run task colors: Display color info in terminal.
 
 printf 'TERM: %s\nCOLORS: %d\nLONGNAME: %s\n' \
 	"$TERM" \

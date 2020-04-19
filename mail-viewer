@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Default mail viewer (tui).
+# Default mua (tui).
 
 IFS=\|;
 set -f;

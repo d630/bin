@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Pick color via grabc.
+# Run grabc.
 
 c=$(
     grabc |&

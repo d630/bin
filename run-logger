@@ -1,6 +1,8 @@
 #!/bin/sh
 #
-# Wrap up logger for local scripting.
+# Run logger.
+#
+# For local scripting.
 # Needs facility local6 to work properly with my configured rsyslog.
 #
 # $ run-logger level category [summary [body]]

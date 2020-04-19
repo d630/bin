@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
 # Some functions to modify public user-playlists via Spotify's Web API.
-# needs: bash, curl, and jq
+#
+# Needs: bash, curl, and jq
 
 # -- FUNCTIONS.
 

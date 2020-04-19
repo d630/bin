@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Make Debian alternatives.
+# Update Debian alternatives.
 
 set -e;
 
@@ -10,7 +10,7 @@ do
     sudo update-alternatives --install "$a" "$b" "$c" 100;
     sudo update-alternatives --set "$b" "$c";
 done <<IN
-/bin/ksh ksh /bin/ksh93
+/bin/ksh ksh /usr/bin/ksh2020
 /usr/bin/awk awk /usr/bin/original-awk
 /usr/bin/csh csh /bin/bsd-csh
 /usr/bin/editor editor /bin/ed
@@ -19,9 +19,7 @@ done <<IN
 /usr/bin/infobrowser infobrowser /usr/bin/info
 /usr/bin/locate locate /usr/bin/mlocate
 /usr/bin/mailx mailx /usr/bin/s-nail
-/usr/bin/mplayer mplayer /usr/bin/mplayer1
-/usr/bin/pager pager /bin/less
-/usr/bin/pico pico /usr/bin/pico.alpine
+/usr/bin/pager pager /usr/bin/less
 /usr/bin/pinentry pinentry /usr/bin/pinentry-tty
 /usr/bin/pinentry-x11 pinentry-x11 /usr/bin/pinentry-gtk-2
 /usr/bin/readline-editor readline-editor /usr/bin/rlwrap
@@ -30,8 +28,10 @@ done <<IN
 /usr/bin/ssh-askpass ssh-askpass /usr/lib/ssh/x11-ssh-askpass
 /usr/bin/www-browser www-browser /usr/bin/elinks
 /usr/bin/x-terminal-emulator x-terminal-emulator /usr/local/bin/st
-/usr/bin/x-window-manager x-window-manager /usr/local/bin/bspwm
+/usr/bin/x-window-manager x-window-manager /usr/bin/bspwm
 /usr/bin/x-www-browser x-www-browser /usr/bin/chromium
 IN
+
+# /usr/bin/pico pico /usr/bin/pico.alpine
 
 # vim: set ft=sh :

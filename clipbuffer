@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Simple X primary selection manager.
+# Simple X selection manager.
 #
 # Depends on: autocutsel -fork -selection PRIMARY -buttonup
 # Idea from: http://chneukirchen.org/dotfiles/bin/backclip

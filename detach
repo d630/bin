@@ -1,6 +1,6 @@
 #!/usr/bin/env mksh
 #
-# Detach command.
+# Detach a command.
 
 (
     exec -a "$1" "$@" &

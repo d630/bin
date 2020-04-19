@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Wrapper: set lan on.
+# Wrapper: Set lan on.
 
 exec sudo "$XDG_BIN_HOME/reconfigure-network-device" \e -c;
 

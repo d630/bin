@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Weekly backup with borg.
+# Run weekly borg backup.
 
 exec sudo \
 	HOME=$HOME \

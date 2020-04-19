@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Prepare new file from a template.
-
+#
 # TODO(D630): Use awk instead of tr and sed.
 
 : "${1:? need arg}";

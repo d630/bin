@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Wrapper: flake8
+# Run flake8.
 
 # B		All B class violations are reported by flake8-bugbear
 # B9	All B9 class violations are optional warnings reported by flake8-bugbear

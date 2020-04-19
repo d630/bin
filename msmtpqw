@@ -1,6 +1,8 @@
 #!/bin/sh
 #
 # Replacement for msmtpq.
+#
+# TODO(d630): finish script
 
 Q=${XDG_VAR_HOME:?}/mail/queue \
 LOG=${XDG_VAR_HOME}/log/msmtp-queue.log \
@@ -12,7 +14,6 @@ export EMAIL_CONN_TEST;
 
 exec msmtpq "$@";
 
-# TODO(d630): finish script
 __msmpt () { IFS=" " command msmpt $* ; }
 
 

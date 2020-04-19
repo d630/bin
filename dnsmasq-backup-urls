@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Backup all uris from dnsmasq log.
+# Backup all urls from dnsmasq log.
 
 file=urls.log
 log=${XDG_VAR_HOME:-/home/user1/var}/log/$file;

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Get sun data infos from http://www.gaisma.com.
+# Get sun data infos from www.gaisma.com.
 
 echo;
 curl -s https://www.gaisma.com/en/location"/${1:-$X_MY_LOCATION1}."html |

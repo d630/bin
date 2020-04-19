@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Wrapper for getting my news.
+# Get news.
 
 exec 9<"$0";
 flock -n 9 || {

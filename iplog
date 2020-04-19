@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 #
-# Daily ip logging.
+# Log WAN IP.
 
 log=${XDG_VAR_HOME:?}/log/ip-log.log;
 to=ip-log;
 subject=ip-log;
 
-printf '%(%Y-%m-%d_%R)T %s\n' -1 "$(
-    dig -4 +short whoami.akamai.net @ns1-1.akamaitech.net
-)" |
+printf '%(%Y-%m-%d_%R)T %s\n' -1 "$(get-wan-ip)" |
 tee -a "$log" |
 mailx -s "$subject" "$to";
 

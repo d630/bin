@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Play specific sounds (meant to be used with dunst and rsyslog).
+# Play specific sounds.
 
 if
     test -p /dev/stdin -o -f /dev/stdin;

@@ -1,7 +1,8 @@
 #!/bin/sh
 #
-# Wrap up weechat.
+# Run weechat.
 
-daemonize x-terminal -a -c st-256color -n weechatw -t weechatw -e weechat;
+test-xorg &&
+	exec x-terminal -a -c st-256color -n weechatw -t weechatw -e weechat;
 
 # vim: set ft=sh :

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Run z output within file manager.
+# Run z output and open dir in file manager.
 
 if
 	test-ctty;

@@ -1,7 +1,8 @@
 #!/bin/sh
 #
 # Browse the history of chromium via fzf, and then open selection.
-# https://github.com/junegunn/fzf/wiki/Examples#browsing-history
+#
+# See: https://github.com/junegunn/fzf/wiki/Examples#browsing-history
 
 cols=$(($(tput cols) / 3));
 sep={{::}};

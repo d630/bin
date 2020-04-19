@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Select desktop with a menu and then switch with wmctrl to it.
+# Select X desktop with a menu and then switch with wmctrl to it.
 
 desk=$(
     wmctrl -d |
