@@ -4,9 +4,9 @@
 #
 # "\C-xr" -> __fzf_history
 # "\C-xl" -> __fzf_readline
-# "\C-xt" -> __fzf_select_dir
+# "\C-xt" -> __fzf_select
 # "\C-xc" -> __fzf_cd
-# "\C-xo" -> bash-toggle-options.bash
+# "\C-xo" -> toggle_options
 # "\C-xz" -> zcd
 # "\C-xs" -> scd
 #
@@ -14,21 +14,23 @@
 
 function __fzf_bind {
 	bind '"\er": redraw-current-line';
-	bind '"\e^": magic-space';
+	# bind '"\e^": magic-space';
 };
 
 function __fzf_unbind {
 	bind '"\er":';
-	bind '"\e^":';
+	# bind '"\e^":';
 };
 
 function __fzf_rlw
 if
 	[[ -n $1 ]];
 then
+	local ins=$1;
+	[[ -n $2 ]] && ins=${ins@Q};
+	READLINE_LINE=${READLINE_LINE:+${READLINE_LINE:0:READLINE_POINT}}$ins${READLINE_LINE:+${READLINE_LINE:READLINE_POINT}};
+	((READLINE_POINT = READLINE_POINT + ${#ins}));
 	\__fzf_bind;
-	READLINE_LINE=${READLINE_LINE:+${READLINE_LINE:0:READLINE_POINT}}$1${READLINE_LINE:+${READLINE_LINE:READLINE_POINT}};
-	((READLINE_POINT = READLINE_POINT + ${#1}));
 else
 	\__fzf_unbind;
 fi;
@@ -36,10 +38,11 @@ fi;
 function __fzf_history {
 	\__fzf_rlw "$(
 		HISTTIMEFORMAT= history |
-		command fzf +i +s --tac -n2..,.. --tiebreak=index --toggle-sort=ctrl-r |
+		command fzf --height 40% +i +s --tac -n2..,.. --tiebreak=index \
+			--bind=ctrl-r:toggle-sort +m --query "$READLINE_LINE" |
 		command sed '
-			/^ *[0-9]/ {
-				s/ *\([0-9]*\) .*/!\1/;
+			/^\s*[[:digit:]]*/ {
+				s/\s*[[:digit:]]*\s*//;
 				b end;
 			};
 			d;
@@ -47,38 +50,39 @@ function __fzf_history {
 	)";
 };
 bind -x '"\C-x1": \__fzf_history';
-bind '"\C-xr": "\C-x1\e^\er"';
+bind '"\C-xr": "\C-x1\er"';
 
 function __fzf_readline {
 	eval "
 		bind ' \
 			\"\C-x3\": $(
 				bind -l |
-				command fzf +s --toggle-sort=ctrl-r;
+				command fzf --height 40% +s --reverse --toggle-sort=ctrl-r;
 			)'";
 };
 bind -x '"\C-x2": \__fzf_readline';
 bind '"\C-xl": "\C-x2\C-x3"';
 
-function __fzf_select_dir {
+function __fzf_select {
 	\__fzf_rlw "$(
-		command find -L . \
-			\( -path '*/\.*' -o -fstype devfs -fstype devtmpfs -o -fstype proc \) \
-			-prune \
-			-o -type d -print 2>/dev/null |
-		command fzf +m;
-	)";
+		command find -L . -mindepth 1 \
+			\( -path '*/\.*' -o -fstype sysfs -o -fstype devfs -o -fstype devtmpfs -o -fstype proc \) -prune \
+			-o -type f -print \
+			-o -type d -print \
+			-o -type l -print 2>/dev/null |
+		command cut -b3- |
+		command fzf --height 40% --reverse +m;
+	)" quotes please;
 };
-bind -x '"\C-x4": \__fzf_select_dir';
-bind '"\C-xt": "\C-x4\e^\er"';
+bind -x '"\C-x4": \__fzf_select';
+bind '"\C-xt": "\C-x4\er"';
 
 function __fzf_cd {
 	READLINE_LINE="$(
-		command find -L . \
-			\( -path '*/\.*' -o -fstype devfs -fstype devtmpfs -o -fstype proc \) \
-			-prune \
+		command find -L . -mindepth 1 \
+			\( -path '*/\.*' -o -fstype sysfs -o -fstype devfs -o -fstype devtmpfs -o -fstype proc \) -prune \
 			-o -type d -print 2>/dev/null |
-		command fzf +m;
+		command fzf --height 40% +m;
 	)";
 
 	if
