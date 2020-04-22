@@ -134,6 +134,10 @@ signal() {
 	desktop=^3;
 }
 
+remmina() {
+	desktop=^4;
+}
+
 case $instance.$class in
 	(*.Chromium) chromium;;
 	(*.Emacs) emacs;;
@@ -148,6 +152,7 @@ case $instance.$class in
 	(*.Xmessage) xmessage;;
 	(*.[Ff]irefox) firefox;;
 	(*.mpv) mpv;;
+	(*org.remmina.Remmina) remmina;;
 	([lL]ibre[oO]ffice*) libreoffice;;
 	(stj*.st) stj1;;
 	(weechatw.*) weechat;;
