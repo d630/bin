@@ -138,6 +138,25 @@ remmina() {
 	desktop=^4;
 }
 
+jetbrains_idea() {
+	local name;
+
+	read -r _ _ name <<-IN
+		$(xprop -id "$id" _NET_WM_NAME)
+	IN
+
+	case $name in
+		()
+			split_ratio=0.25;
+			split_dir=west;;
+		()
+			split_ratio=0.75;
+			split_dir=east;;
+	esac;
+
+	desktop=^3;
+}
+
 case $instance.$class in
 	(*.Chromium) chromium;;
 	(*.Emacs) emacs;;
@@ -154,6 +173,7 @@ case $instance.$class in
 	(*.mpv) mpv;;
 	(*org.remmina.Remmina) remmina;;
 	([lL]ibre[oO]ffice*) libreoffice;;
+	(jetbrains-idea.jetbrains-idea) jetbrains_idea;;
 	(stj*.st) stj1;;
 	(weechatw.*) weechat;;
 	(.)
