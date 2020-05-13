@@ -146,10 +146,10 @@ jetbrains_idea() {
 	IN
 
 	case $name in
-		()
+		('"Project - '*'"')
 			split_ratio=0.25;
 			split_dir=west;;
-		()
+		('"Structure - '*'"')
 			split_ratio=0.75;
 			split_dir=east;;
 	esac;
