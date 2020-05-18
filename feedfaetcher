@@ -19,22 +19,9 @@ cache_dir = os.path.join(feedfaetcher_dir, "cache")
 url_list = os.path.join(feedfaetcher_dir, "urls.txt")
 table = os.path.join(feedfaetcher_dir, "table.txt")
 
-if os.path.exists(cache_dir):
-    shutil.rmtree(cache_dir)
-os.makedirs(cache_dir)
-
-try:
-    os.remove(table)
-except OSError:
-    pass
-
+executor = concurrent.futures.ThreadPoolExecutor(10)
+loop = asyncio.new_event_loop()
 urls = []
-with open(url_list) as f:
-    for l in f:
-        if not l.strip().startswith("#"):
-            urls.append(l.strip())
-if not urls:
-    sys.exit(1)
 
 
 def handle(url):
@@ -44,7 +31,7 @@ def handle(url):
 
 
 def get(url):
-    return requests.get(url, stream=True)
+    return requests.get(url, stream=True, timeout=5)
 
 
 def write(url, resp):
@@ -63,10 +50,24 @@ async def make_requests():
     await asyncio.gather(*futures)
 
 
-executor = concurrent.futures.ThreadPoolExecutor(10)
-loop = asyncio.new_event_loop()
+if __name__ == "__main__":
+    if os.path.exists(cache_dir):
+        shutil.rmtree(cache_dir)
+    os.makedirs(cache_dir)
 
-loop.run_until_complete(make_requests())
-loop.close()
+    try:
+        os.remove(table)
+    except OSError:
+        ...
+
+    with open(url_list) as f:
+        for l in f:
+            if not l.strip().startswith("#"):
+                urls.append(l.strip())
+    if not urls:
+        sys.exit(1)
+
+    loop.run_until_complete(make_requests())
+    loop.close()
 
 # vim: set ft=python :
