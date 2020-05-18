@@ -31,7 +31,7 @@
 
 border= \
 center= \
-class=$2
+class=$2 \
 desktop= \
 focus= \
 follow= \
@@ -182,7 +182,7 @@ case $instance.$class in
 		esac;;
 esac;
 
-echo \
+printf \
 	${border:+"border=$border"} \
 	${center:+"center=$center"} \
 	${desktop:+"desktop=$desktop"} \
