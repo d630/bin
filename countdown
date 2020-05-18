@@ -5,7 +5,7 @@
 # Source: http://askubuntu.com/questions/16149/\
 #       overwrite-previous-output-in-bash-instead-of-appending-it
 
-sec=$1;
+printf -v sec %d "$1";
 SECONDS=0;
 
 while
