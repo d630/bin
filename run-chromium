@@ -238,7 +238,6 @@ exec chromium \
 	--enable-gpu-rasterization \
 	--enable-grouped-history \
 	--enable-logging=stderr \
-	--enable-native-gpu-memory-buffers \
 	--enable-potentially-annoying-security-features \
 	--enable-reader-mode-toolbar-icon \
 	--enable-site-settings \
