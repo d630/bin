@@ -32,7 +32,7 @@ exec sudo \
 			EXCLUDE
 
 		echo PRUNING ...;
-		borg prune --warning --progress --stats --list --keep-within=8w ::;
+		borg prune --warning --progress --stats --list --keep-within=12w ::;
 	';
 
 # vim: set ft=sh :
