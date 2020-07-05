@@ -40,7 +40,7 @@ function __startx {
 	IN
 
 	logger --id=$$ -t startx.sh -p user.info \
-		'Initializing X session for '"$LOGNAME";
+		"Initializing X session for $LOGNAME";
 
 	(
 		cd "$HOME";
@@ -49,7 +49,7 @@ function __startx {
 	)
 
 	logger --id=$$ -t startx.sh -p user.info \
-		'Finishing X session for '"$LOGNAME";
+		"Finishing X session for $LOGNAME";
 
 	# TODO
 	dbus-update-activation-environment DISPLAY=;

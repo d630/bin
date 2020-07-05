@@ -14,7 +14,7 @@ case $1 in
 			exit 82;
 		else
 			mkdir -p -- "$PWD/.task/data" &&
-				task config data.location "$PWD/".task/data;
+				task config data.location "$PWD/.task/data";
 		fi;;
 	(--)
 		shift 1;

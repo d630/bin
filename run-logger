@@ -14,6 +14,6 @@ shift 2;
 
 logger -d -s --id=$PPID \
 	-t "$(basename "$(strings /proc/$PPID/cmdline)")" \
-	-p local6".$l" "$c" "$@";
+	-p "local6.$l" "$c" "$@";
 
 # vim: set ft=sh :

@@ -40,7 +40,7 @@ else
 			sudo sh -c "
 				kbdrate -s -d 250 -r 30.0;
 				kbd_mode -u;
-				loadkeys "$XDG_CONFIG_HOME/xmodmap/us-altgr-intl-german.rc.map";
+				loadkeys '$XDG_CONFIG_HOME/xmodmap/us-altgr-intl-german.rc.map';
 				setterm -bfreq 0 --blength 0;
 			"
 	esac;

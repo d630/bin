@@ -31,6 +31,6 @@ case $urgency in
 esac;
 
 test -f "$XDG_RUNTIME_DIR/.dunst_use_$urgency$DISPLAY" &&
-	exec notify-send -u "$urgency" --category"=$category" "$category" "$body";
+	exec notify-send -u "$urgency" "--category=$category" "$category" "$body";
 
 # vim: set ft=sh :
