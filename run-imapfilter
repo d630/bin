@@ -3,11 +3,7 @@
 # Run imapfilter with specific conf file.
 
 case $1 in
-	(localhost-unseen)
-		set -- -c "$HOME/.imapfilter/$1.lua";;
-	(localhost-delete)
-		set -- -c "$HOME/.imapfilter/$1.lua";;
-	(localhost-action)
+	(localhost-unseen|localhost-delete|localhost-action)
 		set -- -c "$HOME/.imapfilter/$1.lua";;
 	(*)
 		exit 1;;
