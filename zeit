@@ -16,7 +16,7 @@ echo
 #     task rc._forcecolor=true calendar 2>/dev/null;
 
 sed "s/.*/TZ=& date +\\\'%Z %t%F %T %t&\\\'/" "$HOME/".tzlist |
-xargs -I {} sh -c {};
+xargs -P 0 -I {} sh -c {};
 echo;
 
 # vim: set ft=sh :
