@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# Bitbucket REST API: Get all repo slugs and their project keys.
+
+bitbucket-rest-api get repos |
+jq -rc '
+	[
+		.values[] |
+		select(.project.key | contains("~") | not) |
+		{project_key: .project.key, repo_slug: .slug}
+	]
+';
+
+# vim: set ft=sh :

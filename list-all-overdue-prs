@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# List all open and overdue wir prs.
+
+get-all-overdue-wir-prs 2>/dev/null |
+jq -r '
+	.[] |
+	[
+		(.id | tostring) + "/" + (.version | tostring),
+		(.updatedDate / 1000 | strftime("%Y-%m-%d_%H:%M:%S")),
+		(.properties.commentCount // 0 | tostring) + "," + (.properties.openTaskCount | tostring),
+		.toRef.repository.project.key + "/" + .toRef.repository.slug + ":" + .toRef.displayId,
+		(
+			(.title | gsub("\\s"; "_")) as $title |
+			if (.title | length) <= 37
+			then $title
+			else $title[0:35] + "…"
+			end
+		)
+	] |
+	@tsv
+' |
+sort -k 2,2 |
+column -t;
+
+# vim: set ft=sh :

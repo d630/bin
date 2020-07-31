@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# Mirror all wir git repositories.
+
+export src;
+src=${1:-$HOME/src/wir};
+
+get-all-wir-repo-urls ssh 2>/dev/null |
+xargs -L 1 -n 1 -P 12 -I {} sh -c '
+	set -f;
+	IFS=/;
+
+	url="{}";
+	set -- $url;
+	path=$src/$4/${5%.git};
+
+	test -d "$path/.git" &&
+		exit 1;
+
+	mkdir -p "$path";
+
+	exec git clone --mirror "$url" "$path/.git";
+';
+
+# vim: set ft=sh :

@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# Jira REST API: Get all jira issues I have been watching.
+
+user=${1:-d630};
+
+exec jira-rest-api get "/rest/api/2/search?maxResults=999&jql=watcher=$user";
+
+# vim: set ft=sh :

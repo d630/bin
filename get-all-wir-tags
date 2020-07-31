@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# Bitbucket REST API: Get all wir tags along with repo slug and project key.
+
+cache=${TMPDIR:-/tmp}/get-all-wir-tags;
+export cache;
+
+mkdir -p "$cache";
+rm -r "$cache/"*;
+
+bitbucket-rest-api get repos 2>/dev/null |
+jq -r --unbuffered '
+	.values[] |
+	select(.project.key | contains("~") | not) |
+	.project.key, .slug
+' |
+xargs -L 1 -n 2 -P 0 sh -c '
+	bitbucket-rest-api get \
+		"/rest/api/latest/projects/$1/repos/$2/tags?limit=999" \
+		2>/dev/null |
+	jq -rc --arg project "$1" --arg repo "$2" "
+		. += {project_key: \$project, repo_slug: \$repo}
+	" > "$cache/$1-$2";
+' --;
+
+cat "$cache"/* |
+jq -rc '[inputs]';
+
+# vim: set ft=sh :

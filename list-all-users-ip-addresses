@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# List all users with their ip addresses.
+
+ldapsearch -x -H ldap://ldap.wir.invalid -LLL -b 'ou=Users,dc=wir,dc=invalid' \
+	'(&(|(departmentNumber=DEV*)(departmentNumber=MGMT))(telephoneNumber=*))' \
+	telephoneNumber |
+mawk '
+	BEGIN {
+		net = "192.168.210";
+	}
+
+	/dn: / {
+		uid = $0
+		sub(",.*", "", uid);
+		sub(".*=", "", uid);
+
+		getline;
+		telephone_number = $2;
+
+		printf("%s.%d\t%s\n", net, telephone_number, uid);
+	}
+' |
+sort-ipv4;
+
+# vim: set ft=sh :

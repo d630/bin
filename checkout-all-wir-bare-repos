@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# Turn all downloaded wir bare git repositories into normal repos.
+
+src=${1:-$HOME/src/wir};
+
+find -H "$src" \
+	-mindepth 2 \
+	-maxdepth 2 \
+	-type d \
+	-print0 |
+xargs -0 -L 1 -n 1 -P 0 -I {} sh -c '
+	test -d "{}/.git" ||
+		exit 1;
+
+	export \
+		GIT_DIR \
+		GIT_WORK_TREE;
+	GIT_WORK_TREE="{}";
+	GIT_DIR="{}/.git";
+
+	eval "$(git config --local --get --bool core.bare)" ||
+		exit 0;
+
+	git config --local core.bare false;
+	git config --local remote.origin.mirror false;
+	git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*";
+
+	git fetch origin;
+
+	head=$(git symbolic-ref --short HEAD);
+
+	git branch "--set-upstream-to=origin/$head" "$head";
+
+	git checkout "$head";
+
+	git submodule sync --recursive;
+	git submodule update --init --recursive --jobs 12;
+';
+
+# vim: set ft=sh :

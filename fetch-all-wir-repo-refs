@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# Fetch all refs from wir git repositories.
+
+export log;
+log=${TMPDIR:-/tmp}/fetch-all-wir-repo-refs;
+src=$HOME/src/wir;
+
+find -H "$src" \
+	-mindepth 2 \
+	-maxdepth 2 \
+	-type d \
+	-print0 |
+xargs -0 -L 1 -n 1 -P 0 -I {} sh -c '
+	test -d "{}/.git" ||
+		exit 0;
+
+	path="{}";
+
+	export \
+		GIT_DIR \
+		GIT_WORK_TREE;
+	GIT_WORK_TREE="$path";
+	GIT_DIR="$path/.git";
+
+	eval "$(git config --local --get --bool core.bare)" &&
+		exit 0;
+
+	mkdir -p "$log/${path%/*}";
+	> "$log/$path";
+
+	git fetch --all --prune --tags --recurse-submodules=on-demand \
+		1>>"$log/$path" 2>&1 ||
+	echo error: "$log$path";
+';
+
+# vim: set ft=sh :

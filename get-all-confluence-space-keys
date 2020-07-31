@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Confluence REST API: Get all space keys.
+
+confluence-rest-api get space 2>/dev/null |
+jq -rc '.results[] | .key';
+
+# vim: set ft=sh :

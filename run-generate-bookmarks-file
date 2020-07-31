@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# Run generate-bookmarks-file.
+# Generates bookmarks.md and converts it into bookmarks.html.
+
+repo=$HOME/src/bookmarks;
+
+cd "$repo" ||
+	exit 1;
+
+export \
+	GIT_DIR \
+	GIT_WORK_TREE;
+GIT_WORK_TREE=$repo;
+GIT_DIR=$repo/.git;
+
+generate-bookmarks-file &&
+	pandoc bookmarks.md -f markdown -s -o bookmarks.html &&
+	git add bookmarks.md bookmarks.html &&
+	git commit -m "$(fortune -as -n 80)" &&
+	git push -u --tags origin master;

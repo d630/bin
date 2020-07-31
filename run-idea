@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Run intellij-idea-ultimate.
+
+mkdir -p "/tmp/${USER:-$(id -un)}";
+
+exec env \
+	-u _JAVA_OPTIONS \
+	_JAVA_AWT_WM_NONREPARENTING=1 \
+	intellij-idea-ultimate "$@";
+
+# vim: set ft=sh :

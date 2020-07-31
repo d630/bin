@@ -1,0 +1,33 @@
+#!/bin/sh
+#
+# List all users with their contact data.
+
+search='(|(departmentNumber=DEV*)(departmentNumber=MGMT))';
+
+test "$1" = all &&
+	search='(&(departmentNumber=*)(!(givenName=Meetingroom)))';
+
+ldapsearch -x -H ldap://ldap.wir.invalid -LLL -b 'ou=Users,dc=wir,dc=invalid' \
+	"$search" \
+	uid mail telephoneNumber |
+mawk '
+	/dn: / {
+		split("", data)
+
+		while(getline && NF)
+			data[$1] = $2;
+
+		if (!data["telephoneNumber:"])
+			data["telephoneNumber:"] = -1;
+
+		printf(\
+			"%s\t%d\t%s\n",
+			data["uid:"],
+			data["telephoneNumber:"],
+			data["mail:"]\
+		);
+	}
+' |
+sort;
+
+# vim: set ft=sh :

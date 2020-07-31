@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Remove me anywhere as jira issue watcher.
+
+user=d630;
+
+get-all-my-watched-jira-issues "$user" 2>/dev/null |
+jq -r --arg user "$user" \
+	'"/rest/api/2/issue/\(.issues[].key)/watchers?username=\($user)"' |
+xargs -L 1 -n 1 -P 0 jira-rest-api delete 2>/dev/null;
+
+# vim: set ft=sh :

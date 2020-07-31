@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# Display Java file info. To be run as external tool within IDEA.
+
+jq -R --slurp . <<-IN | jq -r '. | fromjson' | vim '+set ft=json' -
+	{
+		"AffectedModuleNames": "$1",
+		"Classpathl": "$2",
+		"ClasspathEntry": "$3",
+		"ColumnNumber": "$4",
+		"ContentRoot": "$5",
+		"FileClass": "$6",
+		"FileDir": "$7",
+		"FileDirName": "$8",
+		"FileDirPathFromParent": "$9",
+		"FileDirRelativeToProjectRoot": "${10}",
+		"FileDirRelativeToSourcepath": "${11}",
+		"FileEncoding": "${12}",
+		"FileExt": "${13}",
+		"FileFQPackage": "${14}",
+		"FileName": "${15}",
+		"FileNameWithoutAllExtensions": "${16}",
+		"FileNameWithoutExtension": "${17}",
+		"FilePackage": "${18}",
+		"FileParentDir": "${19}",
+		"FilePath": "${20}",
+		"FilPatheRelativeToProjectRoot": "${21}",
+		"FilePathRelativeToSourcepath": "${22}",
+		"FileRelativeDir": "${23}",
+		"FileRelativePath": "${24}",
+		"IsMake": "${25}",
+		"JavaDocPath": "${26}",
+		"JDKPath": "${27}",
+		"LineNumber": "${28}",
+		"ModuleFileDir": "${29}",
+		"ModuleFilePath": "${30}",
+		"ModuleName": "${31}",
+		"ModuleSdkPath": "${32}",
+		"ModuleSourcePath": "${33}",
+		"OutputPath": "${34}",
+		"ProjectFileDir": "${35}",
+		"ProjectName": "${36}",
+		"Projectpath": "${37}",
+		"PyInterpreterDirectory": "${38}",
+		"SelectionEndColumn": "${39}",
+		"SelectionEndLine": "${40}",
+		"SelectionStartColumn": "${41}",
+		"SelectionStartLine": "${42}",
+		"Sourcepath": "${43}",
+		"SourcepathEntry": "${44}"
+	}
+IN
+
+# vim: set ft=sh :

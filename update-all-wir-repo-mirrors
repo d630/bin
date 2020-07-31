@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# Update all mirrored wir git repositories.
+
+src=${1:-$HOME/src/wir};
+
+find -H "$src" \
+	-mindepth 2 \
+	-maxdepth 2 \
+	-type d \
+	-print0 |
+xargs -0 -L 1 -n 1 -P 0 -I {} sh -c '
+	test -d "{}/.git" ||
+		exit 1;
+
+	export \
+		GIT_DIR \
+		GIT_WORK_TREE;
+	GIT_WORK_TREE="{}";
+	GIT_DIR="{}/.git";
+
+	eval "$(git config --local --get --bool core.bare)" &&
+		exec git remote update --prune;
+';
+
+# vim: set ft=sh :

@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# List all wir tags of all project repos.
+
+get-all-wir-tags 2>/dev/null |
+jq -r '
+	.[] |
+	.project_key as $project |
+	.repo_slug as $repo |
+	.values[] |
+	[
+		$project,
+		$repo,
+		.displayId
+	] |
+	@tsv
+' |
+sort -k 1,1 -k 2,2 -k 3,3 |
+column -t;
+
+# vim: set ft=sh :

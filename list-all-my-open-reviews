@@ -1,0 +1,66 @@
+#!/bin/sh
+#
+# List all open prs I (still) have to review.
+
+bitbucket-rest-api get '/rest/api/latest/dashboard/pull-requests?limit=999&role=reviewer&state=open&participantStatus=unapproved' 2>/dev/null |
+jq -r --unbuffered '
+	.values[] |
+	[
+		.fromRef.latestCommit,
+
+		(.id | tostring) + "/" + (.version | tostring),
+		(.updatedDate / 1000 | strftime("%Y-%m-%d_%H:%M:%S")),
+		(.properties.commentCount // 0 | tostring) + "," + (.properties.openTaskCount | tostring),
+		.toRef.repository.project.key + "/" + .toRef.repository.slug + ":" + .toRef.displayId,
+		(
+			(.title | gsub("\\s"; "_")) as $title |
+			if (.title | length) <= 51
+			then $title
+			else $title[0:49] + "…"
+			end
+		)
+	] |
+	@sh
+' |
+xargs -L 1 -n 6 -P 0 sh -c '
+	test -n "$1" ||
+		exit 0;
+
+	build=$(
+		bitbucket-rest-api get \
+			"/rest/build-status/latest/commits/$1" \
+			2>/dev/null |
+		jq -r "
+			.values[0].state as \$state |
+			if \$state == \"SUCCESSFUL\"
+			then \"B\"
+			elif \$state == \"FAILED\"
+			then \"F\"
+			else \"R\"
+			end
+		"
+	);
+
+	repo=${5#*/};
+	repo=${repo%%:*};
+
+	merge=$(
+		bitbucket-rest-api get \
+			"/rest/api/latest/projects/${5%%/*}/repos/$repo/pull-requests/${2%%/*}/merge" \
+			2>/dev/null |
+		jq -r "
+			if .canMerge
+			then \"M\"
+			elif .conflicted
+			then \"C\"
+			else \"V\\(.vetoes | length)\"
+			end
+		"
+	)
+
+	echo "$2" "$3" "$merge,${build:-?}" "$4" "$5" "$6";
+' -- |
+sort -k 2,2 |
+column -t;
+
+# vim: set ft=sh :

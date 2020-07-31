@@ -1,0 +1,23 @@
+#!/bin/sh
+#
+# List all inactive reviewers of open and overdue wir prs.
+
+get-all-overdue-wir-prs 2>/dev/null |
+jq -r '
+	.[] |
+	. as $root |
+	[
+		.reviewers[] |
+		select(
+			(has("lastReviewedCommit") | not) or
+			.lastReviewedCommit != $root.fromRef.latestCommit
+		) |
+		.user.slug
+	] |
+	select((. | length) > 0) |
+	"\($root.links.self[0].href)\t\(sort | join(","))"
+' |
+sort -k 1,1 |
+column -t;
+
+# vim: set ft=sh :

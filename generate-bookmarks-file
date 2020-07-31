@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+#
+# Extract my Bookmarks from Firefox and generate bookmarks.md file.
+#
+# https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Places/Database
+# https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsINavBookmarksService
+
+import os
+import shutil
+import sqlite3
+import sys
+from enum import Enum
+
+DB_PATH = os.environ.get("TMPDIR", "/tmp") + "/places.sqlite"
+MD_PATH = os.environ["HOME"] + "/src/bookmarks/bookmarks.md"
+FIREFOX_DB = os.environ["HOME"] + "/.mozilla/firefox/wje8tal1.default/places.sqlite"
+
+
+class Bookmark:
+    def __init__(
+        self, mb_parent=None, mp_url=None, mp_title=None, mp_description=None, **kwargs
+    ):
+        self.url = mp_url
+        self.title = mp_title
+        self.description = mp_description
+
+        if mb_parent in FOLDERS:
+            FOLDERS[mb_parent].append_bookmark(self)
+
+    def __str__(self):
+        return (
+            self.url if self.title is None else "[{}]({})".format(self.title, self.url)
+        )
+
+
+class Folder:
+    def __init__(self, mb_id=None, mb_parent=None, mb_title=None, **kwargs):
+        self.title = mb_title
+        self.parent = mb_parent
+        self.folders = []
+        self.bookmarks = []
+
+        FOLDERS[mb_id] = self
+
+    @property
+    def parent(self):
+        return self._parent
+
+    @parent.setter
+    def parent(self, mb_parent):
+        self._parent = FOLDERS.get(mb_parent, None)
+        if self._parent:
+            FOLDERS[mb_parent].append_folder(self)
+
+    def append_bookmark(self, bookmark):
+        self.bookmarks.append(bookmark)
+
+    def append_folder(self, dir):
+        self.folders.append(dir)
+
+
+class FolderTitle(Enum):
+    ROOT = 1
+    MENU = 2
+    TOOLBAR = 3
+    TAGS = 4
+    UNFILED = 5
+    MOBILE = 6
+
+
+class Separator:
+    def __init__(self, **kwargs):
+        ...
+
+
+class DynamicContainer:
+    def __init__(self, **kwargs):
+        ...
+
+
+FOLDERS = {}
+TYPE2CLASS = [Bookmark, Folder, Separator, DynamicContainer]
+
+
+def get_and_map_data():
+    con = sqlite3.connect(DB_PATH, detect_types=sqlite3.PARSE_DECLTYPES)
+    con.row_factory = sqlite3.Row
+
+    cur = con.cursor()
+    cur.execute(
+        """
+        select
+            mb.id as mb_id,
+            mb.type as mb_type,
+            mb.parent as mb_parent,
+            mb.title as mb_title,
+            mp.url as mp_url,
+            mp.title as mp_title,
+            mp.description as mp_description
+        from moz_bookmarks as mb
+        left outer join moz_places as mp on mb.fk = mp.id
+        order by mb.type desc, mb.parent asc, mb.title asc
+        """
+    )
+
+    for row in cur:
+        TYPE2CLASS[row["mb_type"] - 1](**row)
+
+    con.close()
+
+
+def generate_markdown(writer, dir, headline=1):
+    if headline == 7:
+        sys.exit("\nerror: max header number reached!")
+
+    if headline == 2:
+        writer.write("\n{} {}\n\n---\n\n".format("#" * headline, dir.title))
+    else:
+        writer.write("\n{} {}\n".format("#" * headline, dir.title))
+
+    for bm in dir.bookmarks:
+        writer.write("- {}\n".format(bm.__str__()))
+
+    for folder in dir.folders:
+        generate_markdown(writer, folder, headline + 1)
+
+
+if __name__ == "__main__":
+    shutil.copy(FIREFOX_DB, DB_PATH)
+
+    get_and_map_data()
+
+    with open(MD_PATH, "w", encoding="utf-8") as writer:
+        generate_markdown(writer, FOLDERS[FolderTitle.MENU.value])

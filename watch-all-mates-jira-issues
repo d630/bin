@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Watch all jira issues my team members have been assigned to.
+
+user=d630;
+mates=t630;
+
+get-all-mates-jira-issues "$mates" 2>/dev/null |
+jq -r '"/rest/api/2/issue/\(.issues[].key)/watchers"' |
+sort -u |
+xargs -L 1 -n 1 -P 0 -I {} jira-rest-api post "{}" "\"$user\"" 2>/dev/null;
+
+# vim: set ft=sh :
