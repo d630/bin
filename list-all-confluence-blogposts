@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# List all confluence blog posts.
+
+next='/rest/api/content?type=blogpost&expand=space,history,metadata.labels&limit=999';
+
+until
+	 next=$(
+		exec rest confluence get "$next" 2>/dev/null |
+		exec jq -r --unbuffered '
+			(
+				.results[] | [
+					.history.createdDate,
+					.space.key,
+					.history.createdBy.username,
+					([.metadata.labels.results[].name // "n.a."] | sort | join("+")),
+					.title
+				] | @tsv
+			),
+			._links.next
+		'
+	);
+	test -z "$next";
+do
+	echo "$next" | exec head -n -1;
+	next=$(echo "$next" | exec tail -1);
+done |
+exec sort -k 1,1 -k 2,2 -k 3,3 -k 4,4 -k 5,5 |
+exec column -t -s '	';
+
+# vim: set noexpandtab ft=sh :

@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+#
+# Libexec: Rocketchat REST API.
+
+export API=${API:-${api:-rocketchat-rest-api}};
+
+f_login() {
+    local pw;
+    read -e -s -r -p 'pw: ' pw;
+
+    local \
+        auth_token_file=$HOME/.rocketchat_wir_invalid_auth_token \
+        user=${1:-D630.d630};
+
+    > "$auth_token_file";
+    command chmod 640 "$auth_token_file";
+
+    local auth_token=$(
+        ROCKETCHAT_REST_TOKEN= \
+        ROCKETCHAT_REST_USER_ID= \
+        exec "$API" post \
+            /api/v1/login \
+            '{"user": "'"$user"'", "password": "'"${pw:?error: pw missing}"'"}' |
+        exec jq -r .data.authToken;
+    );
+
+    [[ -n "$auth_token" && "$auth_token" != null ]] || {
+        echo 'login failed' 1>&2;
+        exit 1;
+    }
+
+    echo "$auth_token" >> "$auth_token_file";
+    echo "$auth_token";
+}
+
+f_logout() (
+    auth_token_file=$HOME/.rocketchat_wir_invalid_auth_token;
+
+    ROCKETCHAT_REST_TOKEN=$(<"$auth_token_file") ||
+        exit 1;
+
+    ROCKETCHAT_REST_USER_ID=${1:-z6O73D6HJPjP9viLD};
+
+    export \
+        ROCKETCHAT_REST_TOKEN \
+        ROCKETCHAT_REST_USER_ID;
+
+    exec "$API" post /api/v1/logout |
+    exec jq -r .;
+
+    exec rm "$auth_token_file";
+)
+
+${1:+"f_$@"};
+
+# vim: set ft=sh :

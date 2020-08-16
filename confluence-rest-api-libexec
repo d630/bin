@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+# Libexec: Confluence REST API.
+
+export API=${API:-${api:-confluence-rest-api}};
+
+f_get_space_keys() {
+    exec "$API" get space |
+    exec jq -rc '.results[] | .key';
+}
+
+# (Un-)Watch all confluence spaces.
+f_watch_spaces() {
+    local \
+        username=d630 \
+        method=${1:-post};
+
+    \f_get_space_keys |
+    exec grep -F -v -e "~$username" -e DEV |
+    exec xargs -L 1 -n 1 -P 0 -I {} "$API" "$method" \
+        "/rest/api/user/watch/space/{}?username=$username";
+}
+
+# Add label(s) to entity.
+f_label_entity() {
+    local \
+        id=${1:?id missing} \
+        data;
+
+    data=$(exec jq -nR '[inputs | {prefix: "global", "name": .}]')
+
+    command "$API" post "/rest/api/content/$id/label" "$data";
+}
+
+# Delete label from entity.
+f_unlabel_entity() {
+    local \
+        id=${1:?id missing} \
+        label=${2:?label missing};
+
+    command "$API" delete "/rest/api/content/$id/label/$label";
+}
+
+${1:+"f_$@"};
+
+# vim: set ft=sh :

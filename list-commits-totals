@@ -1,22 +1,22 @@
 #!/bin/sh
 #
-# List all wir project repos' commit totals.
+# List all all project repos' commit totals.
 
-bitbucket-rest-api get repos 2>/dev/null |
-jq -r --unbuffered '
+exec rest bitbucket get repos 2>/dev/null |
+exec jq -r --unbuffered '
 	.values[] |
 	select(.project.key | contains("~") | not) |
 	.project.key, .slug
 ' |
-xargs -L 1 -n 2 -P 0 sh -c '
+exec xargs -L 1 -n 2 -P 0 sh -c '
 	endpoint=/rest/api/latest/projects/$1/repos/$2/commits?limit=1\&withCounts=true\&merges=exclude;
 
-	bitbucket-rest-api get "$endpoint" 2>/dev/null |
-	jq -rc --arg project "$1" --arg repo "$2" "
+	exec rest bitbucket get "$endpoint" 2>/dev/null |
+	exec jq -rc --arg project "$1" --arg repo "$2" "
 		\"\(\$project)\t\(\$repo)\t\(.authorCount // 0)\t\(.totalCount // 0)\"
 	";
 ' -- |
-sort |
-column -t;
+exec sort |
+exec column -t;
 
 # vim: set ft=sh :

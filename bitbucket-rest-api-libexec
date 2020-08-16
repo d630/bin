@@ -1,0 +1,136 @@
+#!/bin/sh
+#
+# Libexec: Bitbucket REST API.
+
+export API=${API:-${api:-bitbucket-rest-api}};
+
+# Get all open prs.
+f_get_open_prs() (
+    export CACHE=${TMPDIR:-/tmp}/bitbucket-get-open-prs;
+
+    command mkdir -p "$CACHE";
+    command rm -r "$CACHE/"*;
+
+    exec "$API" get repos |
+    exec jq -r --unbuffered '
+        .values[] |
+        select(.project.key | contains("~") | not) |
+        .project.key, .slug
+    ' |
+    exec xargs -L 1 -n 2 -P 0 sh -c '
+        exec "$API" get \
+            "/rest/api/latest/projects/$1/repos/$2/pull-requests?state=open&limit=999" |
+        exec jq -rc "select((.values | length) > 0)" > "$CACHE/$1-$2";
+    ' --;
+
+    exec cat "$CACHE"/* |
+    exec jq -rc '[inputs]';
+)
+
+# Get all open and overdue prs.
+f_get_overdue_prs() {
+    local sec=${1:-$((60*60*24*14))};
+
+    \f_get_open_prs |
+    exec jq -rc --arg sec "$sec" '
+        [
+            .[].values[] |
+            select(now - (.updatedDate / 1000) >= ($sec | tonumber))
+        ]
+    ';
+}
+
+# Get all branches along with repo slug and project key.
+f_get_branches() (
+    export CACHE=${TMPDIR:-/tmp}/bitbucket-get-branches;
+
+    command mkdir -p "$CACHE";
+    command rm -r "$CACHE/"*;
+
+
+    exec "$API" get repos |
+    exec jq -r --unbuffered '
+        .values[] |
+        select(.project.key | contains("~") | not) |
+        .project.key, .slug
+    ' |
+    exec xargs -L 1 -n 2 -P 0 sh -c '
+        exec "$API" get \
+            "/rest/api/latest/projects/$1/repos/$2/branches?limit=999" |
+        exec jq -rc --arg project "$1" --arg repo "$2" "
+            . += {project_key: \$project, repo_slug: \$repo}
+        " > "$CACHE/$1-$2";
+    ' --;
+
+    exec cat "$CACHE"/* |
+    exec jq -rc '[inputs]';
+)
+
+# Get all repo slugs and their project keys.
+f_get_repo_slugs() {
+    exec "$API" get repos |
+    exec jq -rc '
+        [
+            .values[] |
+            select(.project.key | contains("~") | not) |
+            {project_key: .project.key, repo_slug: .slug}
+        ]
+    ';
+}
+
+# Get all repo hrefs.
+f_get_repo_urls() {
+    local p=http;
+    case $1 in
+        (http|ssh)
+            p=$1;;
+    esac;
+
+    exec "$API" get repos |
+    exec jq -rc --arg p "$p" '
+        .values[].links.clone[] |
+        select((.name | contains($p)) and (.href | contains("~") | not)) |
+        .href
+    ';
+}
+
+# Get all tags along with repo slug and project key.
+f_get_tags() {
+    export CACHE=${TMPDIR:-/tmp}/get-all-tags;
+
+    command mkdir -p "$CACHE";
+    command rm -r "$CACHE/"*;
+
+    exec "$API" get repos |
+    exec jq -r --unbuffered '
+        .values[] |
+        select(.project.key | contains("~") | not) |
+        .project.key, .slug
+    ' |
+    exec xargs -L 1 -n 2 -P 0 sh -c '
+        exec "$API" get \
+            "/rest/api/latest/projects/$1/repos/$2/tags?limit=999" |
+        exec jq -rc --arg project "$1" --arg repo "$2" "
+            . += {project_key: \$project, repo_slug: \$repo}
+        " > "$CACHE/$1-$2";
+    ' --;
+
+    exec cat "$CACHE"/* |
+    exec jq -rc '[inputs]';
+}
+
+# (Un-)Watch all git repositories.
+f_watch_repos() {
+    local method=${1:-post};
+
+    \f_get_repo_slugs |
+    exec jq -r '
+        .[] |
+        "/rest/api/latest/projects/\(.project_key)/repos/\(.repo_slug)/watch"
+    ' |
+    exec xargs -L 1 -n 1 -P 0 "$API" "$method";
+}
+
+${1:+"f_$@"};
+
+# vim: set ft=sh :

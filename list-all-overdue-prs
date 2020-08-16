@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# List all open and overdue wir prs.
+# List all open and overdue prs.
 
-get-all-overdue-wir-prs 2>/dev/null |
-jq -r '
+exec rest bitbucket libexec get_overdue_prs 2>/dev/null |
+exec jq -r '
 	.[] |
 	[
 		(.id | tostring) + "/" + (.version | tostring),
@@ -20,7 +20,7 @@ jq -r '
 	] |
 	@tsv
 ' |
-sort -k 2,2 |
-column -t;
+exec sort -k 2,2 |
+exec column -t;
 
 # vim: set ft=sh :

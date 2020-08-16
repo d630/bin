@@ -1,21 +1,21 @@
 #!/bin/sh
 #
-# List all open wir prs, which can be merged.
+# List all open prs, which can be merged.
 
-get-all-open-wir-prs |
-jq -r '
+exec rest bitbucket libexec get_open_prs 2>/dev/null |
+exec jq -r '
 	.[].values[] |
 	"\(.links.self[0].href)\t/rest/api/latest/projects/\(.toRef.repository.project.key)/repos/\(.toRef.repository.slug)/pull-requests/\(.id)/merge"
 ' |
-xargs -L 1 -n 2 -P 0 sh -c '
+exec xargs -L 1 -n 2 -P 0 sh -c '
 	merge=$(
-		bitbucket-rest-api get "$2" 2>/dev/null |
-		jq -r ".canMerge"
+		exec rest bitbucket get "$2" 2>/dev/null |
+		exec jq -r ".canMerge"
 	);
 
 	test "$merge" = true &&
 		echo "$1";
 ' -- |
-sort;
+exec sort;
 
 # vim: set ft=sh :

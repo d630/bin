@@ -5,8 +5,8 @@
 export src;
 src=${1:-$HOME/src/wir};
 
-get-all-wir-repo-urls ssh 2>/dev/null |
-xargs -L 1 -n 1 -P 12 -I {} sh -c '
+exec rest bitbucket libexec get_repo_urls ssh |
+exec xargs -L 1 -n 1 -P 0 -I {} sh -c '
 	set -f;
 	IFS=/;
 

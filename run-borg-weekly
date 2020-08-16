@@ -5,7 +5,7 @@
 exec sudo \
 	HOME=$HOME \
 	XDG_CACHE_HOME=$XDG_CACHE_HOME \
-	BORG_REPO=/media/user1/a5a5b889-14f5-475d-86fc-b67bcd8f247a/linux/$(hostname)/borg/ \
+	BORG_REPO=/media/user1/a5a5b889-14f5-475d-86fc-b67bcd8f247a/linux/$(hostname | tr '[:lower:]' '[:upper:]')/borg/ \
 	BORG_UNKNOWN_UNENCRYPTED_REPO_ACCESS_IS_OK=yes \
 	sh -c '
 		echo CREATING ...;

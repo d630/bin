@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+# Generate markdown version of my confluence how-to article and push it.
+
+set -e;
+
+repo=$HOME/src/doc;
+doc_dir=$repo/how-to-articles;
+
+title=${1:?title missing};
+clean_title=$(
+	printf "$title" |
+	exec tr -cs '[:alnum:]-' - |
+	exec tr '[:upper:]' '[:lower:]'
+);
+: "${clean_title:?invalid title}"
+
+howto_dir=$doc_dir/$clean_title;
+asset_dir=$howto_dir/asset;
+pandoc_file=$howto_dir/article.pandoc.md;
+article_file=$howto_dir/article.md;
+metadata_file=$howto_dir/metadata.yaml;
+reference_links_file=$doc_dir/reference-links.pandoc.md;
+
+{
+	test -r "$asset_dir" &&
+	test -r "$pandoc_file" &&
+	test -r "$metadata_file" &&
+	test -r "$reference_links_file"
+}; ||
+	exit 1;
+
+cd "$repo" ||
+	exit 1;
+
+export \
+	GIT_DIR \
+	GIT_WORK_TREE;
+GIT_WORK_TREE=$repo;
+GIT_DIR=$repo/.git;
+
+pandoc() {
+	command pandoc \
+		-o "$article_file" \
+		-f markdown \
+		-t commonmark \
+		--indented-code-classes numberLines \
+		"$pandoc_file" "$reference_links_file";
+
+	# command pandoc \
+	# 	-s \
+	# 	-o "$article_file.html" \
+	# 	-f markdown \
+	# 	-t html5 \
+	# 	--indented-code-classes numberLines \
+	# 	"$metadata_file" "$pandoc_file" "$reference_links_file";
+}
+
+\pandoc &&
+	command git add -f "$howto_dir" &&
+	command git commit -m "edit: $title" &&
+	command git push -u --tags origin master;
+
+# vim: set ft=sh noexpandtab :

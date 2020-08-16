@@ -2,8 +2,8 @@
 #
 # List all open prs I (still) have to review.
 
-bitbucket-rest-api get '/rest/api/latest/dashboard/pull-requests?limit=999&role=reviewer&state=open&participantStatus=unapproved' 2>/dev/null |
-jq -r --unbuffered '
+exec rest bitbucket get '/rest/api/latest/dashboard/pull-requests?limit=999&role=reviewer&state=open&participantStatus=unapproved' 2>/dev/null |
+exec jq -r --unbuffered '
 	.values[] |
 	[
 		.fromRef.latestCommit,
@@ -22,15 +22,15 @@ jq -r --unbuffered '
 	] |
 	@sh
 ' |
-xargs -L 1 -n 6 -P 0 sh -c '
+exec xargs -L 1 -n 6 -P 0 sh -c '
 	test -n "$1" ||
 		exit 0;
 
 	build=$(
-		bitbucket-rest-api get \
+		exec rest bitbucket get \
 			"/rest/build-status/latest/commits/$1" \
 			2>/dev/null |
-		jq -r "
+		exec jq -r "
 			.values[0].state as \$state |
 			if \$state == \"SUCCESSFUL\"
 			then \"B\"
@@ -45,10 +45,10 @@ xargs -L 1 -n 6 -P 0 sh -c '
 	repo=${repo%%:*};
 
 	merge=$(
-		bitbucket-rest-api get \
+		exec rest bitbucket get \
 			"/rest/api/latest/projects/${5%%/*}/repos/$repo/pull-requests/${2%%/*}/merge" \
 			2>/dev/null |
-		jq -r "
+		exec jq -r "
 			if .canMerge
 			then \"M\"
 			elif .conflicted
@@ -60,7 +60,7 @@ xargs -L 1 -n 6 -P 0 sh -c '
 
 	echo "$2" "$3" "$merge,${build:-?}" "$4" "$5" "$6";
 ' -- |
-sort -k 2,2 |
-column -t;
+exec sort -k 2,2 |
+exec column -t;
 
 # vim: set ft=sh :

@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Wrapper: Use several REST APIs.
+
+case $1 in
+	(bitbucket|confluence|jira|rocketchat)
+		service=$1;
+		shift 1;;
+	(*)
+		printf 'error: unknown service %s\n' "$1";
+		exit 1;;
+esac;
+
+export API=$service-rest-api;
+
+case $1 in
+	('')
+		echo 'error: operation missing';
+		exit 1;;
+	(libexec)
+		shift 1;
+		exec "$API-libexec" "$@";;
+	(*)
+		exec "$API" "$@";;
+esac;
+
+# vim: set ft=sh noexpandtab :

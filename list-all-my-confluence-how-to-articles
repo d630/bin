@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# List all my confluence how-to articles.
+
+exec rest confluence get '/rest/api/content/21173362/child?expand=page.metadata.labels&limit=999' 2>/dev/null |
+exec jq -r --unbuffered '
+	.page.results[] |
+	[
+		.id,
+		([.metadata.labels.results[].name] | sort | join("+")),
+		.title
+	] |
+	@tsv
+' |
+exec column -t -s '	';
+
+# vim: set noexpandtab ft=sh :

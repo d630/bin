@@ -1,0 +1,56 @@
+#!/bin/sh
+#
+# Compose my confluence how-to article in vim.
+
+set -e;
+
+author=d630;
+date_=$(exec date +%Y-%m-%d);
+doc_dir=$HOME/src/doc/how-to-articles;
+v=vim;
+command test-ctty || v=gvim;
+
+title=${1:?title missing};
+shift 1; : "${1:?keyword missing}";
+keyword_list=$(printf -- '- %s\n' "$@");
+
+clean_title=$(
+	exec printf "$title" |
+	exec tr -cs '[:alnum:]-' - |
+	exec tr '[:upper:]' '[:lower:]'
+);
+: "${clean_title:?invalid title}"
+
+howto_dir=$doc_dir/$clean_title;
+
+command mkdir -p "$howto_dir/asset";
+
+command cat > "$howto_dir/metadata.yaml" <<-IN
+---
+#title: $title
+#cleantitle: $clean_title
+#subtitle:
+#author: $author
+#date: $date_
+lang: en-US
+keywords:
+- kb-how-to-article
+$keyword_list
+...
+IN
+
+command cat > "$howto_dir/article.pandoc.md" <<-IN
+
+
+# Step-by-step guide
+
+1. Step
+2. Step
+IN
+
+exec "$v" -f \
+	'+set ft=markdown' \
+	+1 \
+	"$howto_dir/article.pandoc.md";
+
+# vim: set ft=sh noexpandtab :

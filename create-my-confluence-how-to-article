@@ -1,0 +1,134 @@
+#!/bin/sh
+#
+# Create new how-to article page in my confluence space.
+
+doc_dir=$HOME/src/doc/how-to-articles;
+
+title=${1:?title missing};
+clean_title=$(
+	printf "$title" |
+	exec tr -cs '[:alnum:]-' - |
+	exec tr '[:upper:]' '[:lower:]';
+);
+: "${clean_title:?invalid title}";
+
+metadata_file=$doc_dir/$clean_title/metadata.yaml;
+test -r "$metadata_file" ||
+	exit 1;
+
+set -f;
+set -- $(
+	exec gawk '
+		/^keywords:/ {
+			while(getline && $0 ~ /^- [^\s]+/) {
+				if ($2 != "kb-how-to-article") {
+					print $2
+				}
+			}
+		}
+	' "$metadata_file";
+);
+
+test "$#" -gt 0 ||
+	exit 1;
+
+raw=https://bitbucket.wir.invalid/users/d630/repos/doc/raw/how-to-articles/$clean_title/article.md?at=refs%2Fheads%2Fmaster;
+space_key=\~d630;
+ancestor=21173362;
+
+cql_in=$(
+	for kw in "$@";
+	do
+		printf '"%s", ' "$kw";
+	done;
+);
+cql_in=${cql_in%, };
+
+value=$(
+	exec jq -R -s . <<-IN
+		<p>
+			<ac:structured-macro ac:name="markdown-from-url" ac:schema-version="1">
+				<ac:parameter ac:name="LinkifyHeaders">false</ac:parameter>
+				<ac:plain-text-body><![CDATA[$raw]]></ac:plain-text-body>
+			</ac:structured-macro>
+		</p>
+
+		<h1>Related articles</h1>
+		<p>
+			<ac:structured-macro ac:name="contentbylabel" ac:schema-version="3">
+				<ac:parameter ac:name="showLabels">false</ac:parameter>
+				<ac:parameter ac:name="max">10</ac:parameter>
+				<ac:parameter ac:name="spaces">$space_key</ac:parameter>
+				<ac:parameter ac:name="showSpace">false</ac:parameter>
+				<ac:parameter ac:name="sort">modified</ac:parameter>
+				<ac:parameter ac:name="reverse">true</ac:parameter>
+				<ac:parameter ac:name="type">page</ac:parameter>
+				<ac:parameter ac:name="excludeCurrent">true</ac:parameter>
+				<ac:parameter ac:name="cql">label in ($cql_in) and label = "kb-how-to-article" and type = "page" and space = "$space_key"</ac:parameter>
+				<ac:parameter ac:name="labels">$*</ac:parameter>
+			</ac:structured-macro>
+		</p>
+
+		<ac:structured-macro ac:name="details" ac:schema-version="1">
+			<ac:parameter ac:name="hidden">true</ac:parameter>
+			<ac:rich-text-body>
+				<p class="auto-cursor-target"><br/></p>
+				<table class="wrapped">
+					<colgroup><col/><col/></colgroup>
+					<tbody>
+						<tr>
+							<th>Related issues</th>
+							<td><br/></td>
+						</tr>
+					</tbody>
+				</table>
+				<p class="auto-cursor-target"><br/></p>
+			</ac:rich-text-body>
+		</ac:structured-macro>
+
+		<p>
+			<ac:structured-macro ac:name="hideelements-macro" ac:schema-version="1">
+				<ac:parameter ac:name="jiraissue">true</ac:parameter>
+				<ac:parameter ac:name="inlinecomment">true</ac:parameter>
+			</ac:structured-macro>
+		</p>
+
+		<p class="auto-cursor-target"><br/></p>
+	IN
+);
+
+data=$(
+	exec jq -n -f /dev/stdin \
+		<<-IN
+			{
+				"type": "page",
+				"title": "$title",
+				"space": {"key": "$space_key"},
+				"ancestors": [{"id": $ancestor}],
+				"body": {
+					"storage": {
+						"representation": "storage",
+						"value": $value
+					}
+				}
+			}
+		IN
+);
+
+id=$(
+	exec rest confluence post '/rest/api/content?expand=version' "$data" \
+		2>/dev/null |
+	exec jq -r .id
+)
+
+test -n "$id" ||
+	exit 1;
+
+printf '%s\n' kb-how-to-article "$@" |
+exec rest confluence libexec label_entity "$id" 1>/dev/null 2>&1;
+
+exec sed -i "2i\
+#confluece_id: $id
+" "$metadata_file";
+
+# vim: set ft=sh noexpandtab :
