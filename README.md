@@ -7,6 +7,7 @@ List:
 * [bash-count-occurence](https://github.com/d630/bin/blob/master/bash-count-occurence): Count most used commands from bash history.
 * [bash-dedup-history](https://github.com/d630/bin/blob/master/bash-dedup-history): Remove duplicates from bash history and rewrite file.
 * [binary2nibble](https://github.com/d630/bin/blob/master/binary2nibble): Group binary numbers into nibbles (used with bc output).
+* [bitbucket-rest-api-libexec](https://github.com/d630/bin/blob/master/bitbucket-rest-api-libexec): Libexec: Bitbucket REST API.
 * [bitbucket-rest-api](https://github.com/d630/bin/blob/master/bitbucket-rest-api): Wrapper: Bitbucket REST API.
 * [bspot-create-featured-lists](https://github.com/d630/bin/blob/master/bspot-create-featured-lists): Take pub list1 and create audio-featured public lists.
 * [bspot-create-gpb-lists](https://github.com/d630/bin/blob/master/bspot-create-gpb-lists): Take pub list1 and create public gpb lists.
@@ -22,8 +23,11 @@ List:
 * [choose](https://github.com/d630/bin/blob/master/choose): choose.
 * [chromium-history](https://github.com/d630/bin/blob/master/chromium-history): Browse the history of chromium via fzf, and then open selection.
 * [clipbuffer](https://github.com/d630/bin/blob/master/clipbuffer): Simple X selection manager.
+* [compose-my-confluence-how-to-article](https://github.com/d630/bin/blob/master/compose-my-confluence-how-to-article): Compose my confluence how-to article in vim.
+* [confluence-rest-api-libexec](https://github.com/d630/bin/blob/master/confluence-rest-api-libexec): Libexec: Confluence REST API.
 * [confluence-rest-api](https://github.com/d630/bin/blob/master/confluence-rest-api): Wrapper: Confluence REST API.
 * [countdown](https://github.com/d630/bin/blob/master/countdown): Visually count down time.
+* [create-my-confluence-how-to-article](https://github.com/d630/bin/blob/master/create-my-confluence-how-to-article): Create new how-to article page in my confluence space.
 * [daemonize](https://github.com/d630/bin/blob/master/daemonize): Daemonize a command.
 * [daylight](https://github.com/d630/bin/blob/master/daylight): Test against daytime and adjust my theme config.
 * [debian-build-sources-list](https://github.com/d630/bin/blob/master/debian-build-sources-list): Build /etc/apt/sources.list with the help of netselect-apt.
@@ -46,15 +50,7 @@ List:
 * [fzf-bind.bash](https://github.com/d630/bin/blob/master/fzf-bind.bash): My fzf keybinding script for bash.
 * [gaisma](https://github.com/d630/bin/blob/master/gaisma): Get sun data infos from www.gaisma.com.
 * [generate-bookmarks-file](https://github.com/d630/bin/blob/master/generate-bookmarks-file): Extract my Bookmarks from Firefox and generate bookmarks.md file.
-* [get-all-confluence-space-keys](https://github.com/d630/bin/blob/master/get-all-confluence-space-keys): Confluence REST API: Get all space keys.
-* [get-all-mates-jira-issues](https://github.com/d630/bin/blob/master/get-all-mates-jira-issues): Jira REST API: Get all my mate's jira issues.
-* [get-all-my-watched-jira-issues](https://github.com/d630/bin/blob/master/get-all-my-watched-jira-issues): Jira REST API: Get all jira issues I have been watching.
-* [get-all-open-wir-prs](https://github.com/d630/bin/blob/master/get-all-open-wir-prs): Bitbucket REST API: Get all open wir prs.
-* [get-all-overdue-wir-prs](https://github.com/d630/bin/blob/master/get-all-overdue-wir-prs): Bitbucket REST API: Get all open and overdue wir prs.
-* [get-all-wir-branches](https://github.com/d630/bin/blob/master/get-all-wir-branches): Bitbucket REST API: Get all wir branches along with repo slug and project key.
-* [get-all-wir-repo-slugs](https://github.com/d630/bin/blob/master/get-all-wir-repo-slugs): Bitbucket REST API: Get all repo slugs and their project keys.
-* [get-all-wir-repo-urls](https://github.com/d630/bin/blob/master/get-all-wir-repo-urls): Bitbucket REST API: Get all repo hrefs.
-* [get-all-wir-tags](https://github.com/d630/bin/blob/master/get-all-wir-tags): Bitbucket REST API: Get all wir tags along with repo slug and project key.
+* [generate-my-confluence-how-to-article](https://github.com/d630/bin/blob/master/generate-my-confluence-how-to-article): Generate markdown version of my confluence how-to article and push it.
 * [get-battery-capacity](https://github.com/d630/bin/blob/master/get-battery-capacity): Get battery capacity.
 * [get-input-devices-by-md5sum](https://github.com/d630/bin/blob/master/get-input-devices-by-md5sum): Get md5sums of names in /proc/bus/input/devices.
 * [get-lifeday](https://github.com/d630/bin/blob/master/get-lifeday): Get lifeday.
@@ -73,21 +69,24 @@ List:
 * [iplog](https://github.com/d630/bin/blob/master/iplog): Log WAN IP.
 * [issue-editor](https://github.com/d630/bin/blob/master/issue-editor): Add a task into Taskwarrior ('issue' context) via vim (yaml).
 * [issue](https://github.com/d630/bin/blob/master/issue): Wrapper: Use taskwarrior in my 'issue' context.
+* [jira-rest-api-libexec](https://github.com/d630/bin/blob/master/jira-rest-api-libexec): Libexec: Confluence REST API.
 * [jira-rest-api](https://github.com/d630/bin/blob/master/jira-rest-api): Wrapper: Jira REST API.
 * [lan-down](https://github.com/d630/bin/blob/master/lan-down): Wrapper: Set lan off.
 * [lan-up](https://github.com/d630/bin/blob/master/lan-up): Wrapper: Set lan on.
 * [lesspipew](https://github.com/d630/bin/blob/master/lesspipew): My preprocessor for less.
-* [list-all-branches](https://github.com/d630/bin/blob/master/list-all-branches): List all wir branches of all project repos.
-* [list-all-can-merge-prs](https://github.com/d630/bin/blob/master/list-all-can-merge-prs): List all open wir prs, which can be merged.
-* [list-all-inactive-reviewers](https://github.com/d630/bin/blob/master/list-all-inactive-reviewers): List all inactive reviewers of open and overdue wir prs.
+* [list-all-branches](https://github.com/d630/bin/blob/master/list-all-branches): List all branches of all project repos.
+* [list-all-can-merge-prs](https://github.com/d630/bin/blob/master/list-all-can-merge-prs): List all open prs, which can be merged.
+* [list-all-confluence-blogposts](https://github.com/d630/bin/blob/master/list-all-confluence-blogposts): List all confluence blog posts.
+* [list-all-inactive-reviewers](https://github.com/d630/bin/blob/master/list-all-inactive-reviewers): List all inactive reviewers of open and overdue prs.
+* [list-all-my-confluence-how-to-articles](https://github.com/d630/bin/blob/master/list-all-my-confluence-how-to-articles): List all my confluence how-to articles.
 * [list-all-my-open-prs](https://github.com/d630/bin/blob/master/list-all-my-open-prs): List all my open prs.
 * [list-all-my-open-reviews](https://github.com/d630/bin/blob/master/list-all-my-open-reviews): List all open prs I (still) have to review.
 * [list-all-other-rocketchat-channels](https://github.com/d630/bin/blob/master/list-all-other-rocketchat-channels): List all rocketchat channels I haven't joined yet.
-* [list-all-overdue-prs](https://github.com/d630/bin/blob/master/list-all-overdue-prs): List all open and overdue wir prs.
-* [list-all-tags](https://github.com/d630/bin/blob/master/list-all-tags): List all wir tags of all project repos.
+* [list-all-overdue-prs](https://github.com/d630/bin/blob/master/list-all-overdue-prs): List all open and overdue prs.
+* [list-all-tags](https://github.com/d630/bin/blob/master/list-all-tags): List all tags of all project repos.
 * [list-all-users-contact-data](https://github.com/d630/bin/blob/master/list-all-users-contact-data): List all users with their contact data.
 * [list-all-users-ip-addresses](https://github.com/d630/bin/blob/master/list-all-users-ip-addresses): List all users with their ip addresses.
-* [list-commits-totals](https://github.com/d630/bin/blob/master/list-commits-totals): List all wir project repos' commit totals.
+* [list-commits-totals](https://github.com/d630/bin/blob/master/list-commits-totals): List all all project repos' commit totals.
 * [list-rocketchat-user-presences](https://github.com/d630/bin/blob/master/list-rocketchat-user-presences): List all user presences in Rocket.Chat.
 * [lock](https://github.com/d630/bin/blob/master/lock): Manually lock screen.
 * [log-editor](https://github.com/d630/bin/blob/master/log-editor): Log a task into Taskwarrior ('log' context) via vim (yaml).
@@ -139,10 +138,10 @@ List:
 * [reconfigure-pointer](https://github.com/d630/bin/blob/master/reconfigure-pointer): Reconfigure pointer.
 * [reload-sxhkd](https://github.com/d630/bin/blob/master/reload-sxhkd): Reload sxhkd config.
 * [repeat](https://github.com/d630/bin/blob/master/repeat): Exec a command n times.
+* [rest](https://github.com/d630/bin/blob/master/rest): Wrapper: Use several REST APIs.
 * [restart-dunst](https://github.com/d630/bin/blob/master/restart-dunst): Restart dunst.
 * [restart-sxhkd](https://github.com/d630/bin/blob/master/restart-sxhkd): Restart sxhkd.
-* [rocketchat-login](https://github.com/d630/bin/blob/master/rocketchat-login): Log me in into rocketchat via REST.
-* [rocketchat-logout](https://github.com/d630/bin/blob/master/rocketchat-logout): Logout me out from rocketchat via REST.
+* [rocketchat-rest-api-libexec](https://github.com/d630/bin/blob/master/rocketchat-rest-api-libexec): Libexec: Rocketchat REST API.
 * [rocketchat-rest-api](https://github.com/d630/bin/blob/master/rocketchat-rest-api): Wrapper: Rocket.Chat REST API.
 * [run-black](https://github.com/d630/bin/blob/master/run-black): Run black.
 * [run-borg-weekly](https://github.com/d630/bin/blob/master/run-borg-weekly): Run weekly borg backup.
@@ -198,13 +197,9 @@ List:
 * [todo-editor](https://github.com/d630/bin/blob/master/todo-editor): Add a task to Taskwarrior ('todo' context) via vim (yaml).
 * [todo](https://github.com/d630/bin/blob/master/todo): Wrapper: Use taskwarrior in my 'todo' context.
 * [tput-colors.sh](https://github.com/d630/bin/blob/master/tput-colors.sh): Tput: export most terminfo/ANSI escape sequences needed for colorization.
-* [unwatch-all-jira-issues](https://github.com/d630/bin/blob/master/unwatch-all-jira-issues): Remove me anywhere as jira issue watcher.
 * [update-all-wir-repo-mirrors](https://github.com/d630/bin/blob/master/update-all-wir-repo-mirrors): Update all mirrored wir git repositories.
 * [update-packages](https://github.com/d630/bin/blob/master/update-packages): Update software packages via some package managers.
 * [volume](https://github.com/d630/bin/blob/master/volume): Set volume via amixer.
-* [watch-all-confluence-spaces](https://github.com/d630/bin/blob/master/watch-all-confluence-spaces): (Un-)Watch all confluece spaces.
-* [watch-all-mates-jira-issues](https://github.com/d630/bin/blob/master/watch-all-mates-jira-issues): Watch all jira issues my team members have been assigned to.
-* [watch-all-wir-repos](https://github.com/d630/bin/blob/master/watch-all-wir-repos): (Un-)Watch all wir git repositories.
 * [web-browser](https://github.com/d630/bin/blob/master/web-browser): Default web browser (tui).
 * [webheader](https://github.com/d630/bin/blob/master/webheader): Get webheader via curl.
 * [wlan-down](https://github.com/d630/bin/blob/master/wlan-down): Wrapper: Set wlan off.
