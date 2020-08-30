@@ -36,6 +36,7 @@ List:
 * [debian-upgrade](https://github.com/d630/bin/blob/master/debian-upgrade): Upgrade packages from Debian.
 * [detach](https://github.com/d630/bin/blob/master/detach): Detach a command.
 * [dnsmasq-backup-urls](https://github.com/d630/bin/blob/master/dnsmasq-backup-urls): Backup all urls from dnsmasq log.
+* [download-rocketchat-entities](https://github.com/d630/bin/blob/master/download-rocketchat-entities): Download Rocket.Chat user and channel list.
 * [dudel](https://github.com/d630/bin/blob/master/dudel): Disk usage of unlinked, but still open files.
 * [emacsd](https://github.com/d630/bin/blob/master/emacsd): Wrapper: emacs --daemon.
 * [event-editor](https://github.com/d630/bin/blob/master/event-editor): Add a task to Taskwarrior ('event' context) via vim (yaml).
@@ -143,6 +144,7 @@ List:
 * [restart-sxhkd](https://github.com/d630/bin/blob/master/restart-sxhkd): Restart sxhkd.
 * [rocketchat-rest-api-libexec](https://github.com/d630/bin/blob/master/rocketchat-rest-api-libexec): Libexec: Rocketchat REST API.
 * [rocketchat-rest-api](https://github.com/d630/bin/blob/master/rocketchat-rest-api): Wrapper: Rocket.Chat REST API.
+* [rocketchat-status](https://github.com/d630/bin/blob/master/rocketchat-status): Set Rocket.Chat online status.
 * [run-black](https://github.com/d630/bin/blob/master/run-black): Run black.
 * [run-borg-weekly](https://github.com/d630/bin/blob/master/run-borg-weekly): Run weekly borg backup.
 * [run-chromium-incognito](https://github.com/d630/bin/blob/master/run-chromium-incognito): Run chromium in incognito.
