@@ -4,9 +4,6 @@
 
 set -e;
 
-repo=$HOME/src/doc;
-doc_dir=$repo/how-to-articles;
-
 title=${1:?title missing};
 clean_title=$(
 	printf "$title" |
@@ -15,6 +12,8 @@ clean_title=$(
 );
 : "${clean_title:?invalid title}"
 
+repo=$HOME/src/doc;
+doc_dir=$repo/how-to-articles;
 howto_dir=$doc_dir/$clean_title;
 asset_dir=$howto_dir/asset;
 pandoc_file=$howto_dir/article.pandoc.md;
@@ -27,7 +26,7 @@ reference_links_file=$doc_dir/reference-links.pandoc.md;
 	test -r "$pandoc_file" &&
 	test -r "$metadata_file" &&
 	test -r "$reference_links_file"
-}; ||
+} ||
 	exit 1;
 
 cd "$repo" ||

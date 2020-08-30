@@ -2,8 +2,6 @@
 #
 # Create new how-to article page in my confluence space.
 
-doc_dir=$HOME/src/doc/how-to-articles;
-
 title=${1:?title missing};
 clean_title=$(
 	printf "$title" |
@@ -12,6 +10,7 @@ clean_title=$(
 );
 : "${clean_title:?invalid title}";
 
+doc_dir=$HOME/src/doc/how-to-articles;
 metadata_file=$doc_dir/$clean_title/metadata.yaml;
 test -r "$metadata_file" ||
 	exit 1;

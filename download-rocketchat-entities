@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# Download Rocket.Chat user and channel list.
+
+dir=$XDG_VAR_HOME/lib/rocketchat;
+
+mkdir -p "$dir";
+
+exec rest rocketchat get channels.list 2>/dev/null |
+exec jq -r .channels[].name |
+exec sort > "$dir/channels.list" &
+
+exec rest rocketchat get users.list 2>/dev/null |
+exec jq -r .users[].username |
+exec sort > "$dir/users.list" &
+
+wait;
+
+# vim: set ft=sh noexpandtab :

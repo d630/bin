@@ -27,7 +27,7 @@ curl() {
 
 get() {
 	case ${1:?'error: endpoint missing'} in
-		(channels.list|channels.list.joined|users.presence)
+		(channels.list|channels.list.joined|users.list|users.presence)
 			endpoint=/api/v1/$1?count=999;;
 		(*)
 			endpoint=$1;;

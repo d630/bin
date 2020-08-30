@@ -4,12 +4,6 @@
 
 set -e;
 
-author=d630;
-date_=$(exec date +%Y-%m-%d);
-doc_dir=$HOME/src/doc/how-to-articles;
-v=vim;
-command test-ctty || v=gvim;
-
 title=${1:?title missing};
 shift 1; : "${1:?keyword missing}";
 keyword_list=$(printf -- '- %s\n' "$@");
@@ -21,6 +15,11 @@ clean_title=$(
 );
 : "${clean_title:?invalid title}"
 
+author=d630;
+date_=$(exec date +%Y-%m-%d);
+doc_dir=$HOME/src/doc/how-to-articles;
+v=vim;
+command test-ctty || v=gvim;
 howto_dir=$doc_dir/$clean_title;
 
 command mkdir -p "$howto_dir/asset";

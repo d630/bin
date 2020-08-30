@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# Set Rocket.Chat online status.
+
+case ${1:?error: status missing} in
+	(away|busy|offline|online)
+		exec rest rocketchat post /api/v1/users.setStatus "{
+			\"status\": \"$1\",
+			\"message\": \"${2:-$1}\"
+		}";;
+	(*)
+		! :;;
+esac;
+
+# vim: set ft=sh noexpandtab :
