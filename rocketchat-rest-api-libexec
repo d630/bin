@@ -9,17 +9,16 @@ f_login() {
     read -e -s -r -p 'pw: ' pw;
 
     local \
-        auth_token_file=$HOME/.rocketchat_wir_invalid_auth_token \
-        user=${1:-D630.d630};
+        auth_token_file=$HOME/.rocketchat_auth_token \
+        user=${1:-"error: user missing"};
 
     > "$auth_token_file";
     command chmod 640 "$auth_token_file";
 
     local auth_token=$(
-        ROCKETCHAT_REST_TOKEN= \
-        ROCKETCHAT_REST_USER_ID= \
-        exec "$API" post \
-            /api/v1/login \
+        ROCKETCHAT_REST_TOKEN=. \
+        ROCKETCHAT_REST_USER_ID=. \
+        exec "$API" post login \
             '{"user": "'"$user"'", "password": "'"${pw:?error: pw missing}"'"}' |
         exec jq -r .data.authToken;
     );
@@ -29,23 +28,22 @@ f_login() {
         exit 1;
     }
 
-    echo "$auth_token" >> "$auth_token_file";
-    echo "$auth_token";
+    printf '%s\n' "$auth_token" >> "$auth_token_file";
+    printf '%s\n' "$auth_token";
 }
 
 f_logout() (
-    auth_token_file=$HOME/.rocketchat_wir_invalid_auth_token;
+    local ROCKETCHAT_REST_USER_ID=${1:-"error: user id missing};
 
-    ROCKETCHAT_REST_TOKEN=$(<"$auth_token_file") ||
+    local auth_token_file=$HOME/.rocketchat_auth_token;
+    local ROCKETCHAT_REST_TOKEN=$(<"$auth_token_file") ||
         exit 1;
-
-    ROCKETCHAT_REST_USER_ID=${1:-z6O73D6HJPjP9viLD};
 
     export \
         ROCKETCHAT_REST_TOKEN \
         ROCKETCHAT_REST_USER_ID;
 
-    exec "$API" post /api/v1/logout |
+    exec "$API" post logout |
     exec jq -r .;
 
     exec rm "$auth_token_file";

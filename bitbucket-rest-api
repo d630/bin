@@ -2,72 +2,35 @@
 #
 # Wrapper: Bitbucket REST API.
 
+. "$(which rest-api)" ||
+    exit;
+
 server_address=${BITBUCKET_SERVER_ADDRESS:-https://bitbucket.wir.invalid};
 token=${BITBUCKET_REST_TOKEN:-$(command cat "$HOME/.bitbucket-wir-invalid-read-read-token")};
 user=${BITBUCKET_REST_USER:-d630};
 
-readonly \
-	server_address \
-	token \
-	user;
+unset -v \
+	BITBUCKET_REST_TOKEN \
+	BITBUCKET_REST_USER \
+	BITBUCKET_SERVER_ADDRESS;
 
 curl() {
-	url=$server_address$endpoint;
-
-	# printf 'debug: method is %s\n' "$method" 1>&2;
-	# printf 'debug: url is %s\n' "$url" 1>&2;
-
 	exec curl -v -s \
 		--user "$user:$token" \
-		-X "$(echo "$method" | command tr '[:lower:]' '[:upper:]')" \
-		"$url" \
+		-X "$(echo "$method" | exec tr '[:lower:]' '[:upper:]')" \
+		"$server_address$endpoint" \
 		${1:+"$@"};
 }
 
-delete() {
-	endpoint=${1:?'error: endpoint missing'};
-
-	\curl;
-}
-
 get() {
-	case ${1:?'error: endpoint missing'} in
+	case $endpoint in
 		(projects|repos|users)
-			endpoint=/rest/api/latest/$1?limit=999;;
-		(*)
-			endpoint=$1;;
+			endpoint=/rest/api/latest/$endpoint?limit=999;;
 	esac;
 
 	\curl;
 }
-
-post() {
-	endpoint=${1:?'error: endpoint missing'};
-	data=$2;
-
-	\curl -H 'Content-Type: application/json' ${data:+-d "$data"};
-}
-
-main() {
-	local \
-		data \
-		endpoint \
-		method \
-		url;
-
-	case $1 in
-		(delete|get|post)
-			method=$1;;
-		(*)
-			echo 'error: valid method missing' 1>&2;
-			return 1;
-	esac;
-
-	shift 1;
-
-	"$method" "$@";
-};
 
 \main "$@";
 
-# vim: set ft=sh :
+# vim: set ft=sh noexpandtab :

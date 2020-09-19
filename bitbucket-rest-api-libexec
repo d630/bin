@@ -6,7 +6,8 @@ export API=${API:-${api:-bitbucket-rest-api}};
 
 # Get all open prs.
 f_get_open_prs() (
-    export CACHE=${TMPDIR:-/tmp}/bitbucket-get-open-prs;
+    local CACHE=${TMPDIR:-/tmp}/bitbucket-get-open-prs;
+    export CACHE;
 
     command mkdir -p "$CACHE";
     command rm -r "$CACHE/"*;
@@ -42,7 +43,8 @@ f_get_overdue_prs() {
 
 # Get all branches along with repo slug and project key.
 f_get_branches() (
-    export CACHE=${TMPDIR:-/tmp}/bitbucket-get-branches;
+    local CACHE=${TMPDIR:-/tmp}/bitbucket-get-branches;
+    export CACHE;
 
     command mkdir -p "$CACHE";
     command rm -r "$CACHE/"*;
@@ -80,14 +82,8 @@ f_get_repo_slugs() {
 
 # Get all repo hrefs.
 f_get_repo_urls() {
-    local p=http;
-    case $1 in
-        (http|ssh)
-            p=$1;;
-    esac;
-
     exec "$API" get repos |
-    exec jq -rc --arg p "$p" '
+    exec jq -rc --arg p "${1:-http}" '
         .values[].links.clone[] |
         select((.name | contains($p)) and (.href | contains("~") | not)) |
         .href
@@ -96,7 +92,8 @@ f_get_repo_urls() {
 
 # Get all tags along with repo slug and project key.
 f_get_tags() {
-    export CACHE=${TMPDIR:-/tmp}/get-all-tags;
+    local CACHE=${TMPDIR:-/tmp}/get-all-tags;
+    export CACHE;
 
     command mkdir -p "$CACHE";
     command rm -r "$CACHE/"*;
@@ -121,7 +118,7 @@ f_get_tags() {
 
 # (Un-)Watch all git repositories.
 f_watch_repos() {
-    local method=${1:-post};
+    local method=${1:-'error: method missing: delete|post'};
 
     \f_get_repo_slugs |
     exec jq -r '

@@ -4,58 +4,10 @@
 
 server_address=${JIRA_SERVER_ADDRESS:-https://jira.wir.invalid};
 
-readonly server_address;
+unset -v JIRA_SERVER_ADDRESS;
 
-curl() {
-	url=$server_address$endpoint;
-
-	# printf 'debug: method is %s\n' "$method" 1>&2;
-	# printf 'debug: url is %s\n' "$url" 1>&2;
-
-	exec curl -v -s -n \
-		-X "$(echo "$method" | command tr '[:lower:]' '[:upper:]')" \
-		"$url" \
-		${1:+"$@"};
-}
-
-delete() {
-	endpoint=${1:?'error: endpoint missing'};
-
-	\curl;
-}
-
-get() {
-	endpoint=${1:?'error: endpoint missing'};
-
-	\curl;
-}
-
-post() {
-	endpoint=${1:?'error: endpoint missing'};
-	data=$2;
-
-	\curl -H 'Content-Type: application/json' ${data:+-d "$data"};
-}
-
-main() {
-	local \
-		data \
-		endpoint \
-		method \
-		url;
-
-	case $1 in
-		(delete|get|post)
-			method=$1;;
-		(*)
-			echo 'error: valid method missing' 1>&2;
-			return 1;
-	esac;
-
-	shift 1;
-
-	"$method" "$@";
-};
+. "$(which rest-api)" ||
+    exit;
 
 \main "$@";
 

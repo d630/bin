@@ -12,11 +12,11 @@ f_get_space_keys() {
 # (Un-)Watch all confluence spaces.
 f_watch_spaces() {
     local \
-        username=d630 \
-        method=${1:-post};
+        method=${1:-'error: method missing: delete|post'};
+        username=${2:-'error: username missing'} \
 
     \f_get_space_keys |
-    exec grep -F -v -e "~$username" -e DEV |
+    exec grep -F -v -e "~$username" |
     exec xargs -L 1 -n 1 -P 0 -I {} "$API" "$method" \
         "/rest/api/user/watch/space/{}?username=$username";
 }

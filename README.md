@@ -139,6 +139,7 @@ List:
 * [reconfigure-pointer](https://github.com/d630/bin/blob/master/reconfigure-pointer): Reconfigure pointer.
 * [reload-sxhkd](https://github.com/d630/bin/blob/master/reload-sxhkd): Reload sxhkd config.
 * [repeat](https://github.com/d630/bin/blob/master/repeat): Exec a command n times.
+* [rest-api](https://github.com/d630/bin/blob/master/rest-api): Default REST API functions.
 * [rest](https://github.com/d630/bin/blob/master/rest): Wrapper: Use several REST APIs.
 * [restart-dunst](https://github.com/d630/bin/blob/master/restart-dunst): Restart dunst.
 * [restart-sxhkd](https://github.com/d630/bin/blob/master/restart-sxhkd): Restart sxhkd.

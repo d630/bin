@@ -4,24 +4,18 @@
 
 case $1 in
 	(bitbucket|confluence|jira|rocketchat)
-		service=$1;
-		shift 1;;
+		export API=$1-rest-api;
+		if test "${2:?error: operation missing}" = libexec;
+		then
+			shift 2;
+			exec "$API-libexec" "$@";
+		else
+			shift 1;
+			exec "$API" "$@";
+		fi;;
 	(*)
 		printf 'error: unknown service %s\n' "$1";
 		exit 1;;
-esac;
-
-export API=$service-rest-api;
-
-case $1 in
-	('')
-		echo 'error: operation missing';
-		exit 1;;
-	(libexec)
-		shift 1;
-		exec "$API-libexec" "$@";;
-	(*)
-		exec "$API" "$@";;
 esac;
 
 # vim: set ft=sh noexpandtab :

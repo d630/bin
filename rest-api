@@ -1,0 +1,45 @@
+#!/bin/sh
+#
+# Default REST API functions.
+
+curl() {
+	exec curl -v -s -n \
+		-X "$(echo "$method" | exec tr '[:lower:]' '[:upper:]')" \
+		"${server_address:-.}$endpoint" \
+		${1:+"$@"};
+}
+
+delete() {
+	\curl;
+}
+
+get() {
+	\curl;
+}
+
+post() {
+	\curl -H 'Content-Type: application/json' ${1:+-d "$1"};
+}
+
+main() {
+	local \
+		endpoint \
+		method;
+
+	eval "
+		case \$1 in
+			(${method_casematch:-delete|get|post})
+				method=\$1;
+				endpoint=\${2:?'error: endpoint missing'};;
+			(*)
+				echo 'error: valid method missing' 1>&2;
+				return 1;
+		esac
+	";
+
+	shift 2;
+
+	"$method" "$@";
+};
+
+# vim: set ft=sh noexpandtab :
