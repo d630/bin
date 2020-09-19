@@ -9,7 +9,7 @@ f_login() {
     read -e -s -r -p 'pw: ' pw;
 
     local \
-        auth_token_file=$HOME/.rocketchat_auth_token \
+        auth_token_file=$HOME/.rocketchat_wir_invalid_auth_token \
         user=${1:-"error: user missing"};
 
     > "$auth_token_file";
@@ -33,9 +33,9 @@ f_login() {
 }
 
 f_logout() (
-    local ROCKETCHAT_REST_USER_ID=${1:-"error: user id missing};
+    local ROCKETCHAT_REST_USER_ID=${1:-"error: user id missing"};
 
-    local auth_token_file=$HOME/.rocketchat_auth_token;
+    local auth_token_file=$HOME/.rocketchat_wir_invalid_auth_token;
     local ROCKETCHAT_REST_TOKEN=$(<"$auth_token_file") ||
         exit 1;
 
