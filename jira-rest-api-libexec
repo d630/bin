@@ -16,7 +16,7 @@ f_get_mates_unresolved_issues() {
 f_get_users_watched_issues() {
     local user=${1:-'error: user missing'};
 
-    command "$API" "/rest/api/2/search?maxResults=999&jql=watcher=$user";
+    command "$API" get "/rest/api/2/search?maxResults=999&jql=watcher=$user";
 }
 
 # Watch all issues a user's team members have been assigned to.
