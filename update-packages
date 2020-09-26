@@ -19,9 +19,9 @@ sudo sh -c '
 	snap refresh;
 ';
 
-.hd cabal\ packages;
-cabal v1-update;
-cabal v1-install world --upgrade-dependencies --force-reinstalls;
+# .hd cabal\ packages;
+# cabal v1-update;
+# cabal v1-install world --upgrade-dependencies --force-reinstalls;
 
 .hd composer\ packages;
 composer global update;

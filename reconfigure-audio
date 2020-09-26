@@ -26,8 +26,6 @@ case ${PRODUCT_NAME_SUM:=$(get-product-name-by-md5sum)} in
 			(pch|hdmi)
 				ln -fsr "$HOME/.asoundrc_${1,,}" "$HOME/.asoundrc";;
 		esac;
-		pkill -f 'play -qn';
-		daemonize play -qn;
 esac;
 
 # vim: set ft=sh :

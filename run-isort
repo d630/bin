@@ -3,7 +3,6 @@
 # Run isort.
 
 exec isort \
-	-rc \
 	--multi-line=3 \
 	--trailing-comma \
 	--force-grid-wrap=0 \
