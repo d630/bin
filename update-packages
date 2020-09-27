@@ -23,12 +23,12 @@ sudo sh -c '
 # cabal v1-update;
 # cabal v1-install world --upgrade-dependencies --force-reinstalls;
 
-.hd composer\ packages;
-composer global update;
+# .hd composer\ packages;
+# composer global update;
 
-.hd cpan\ modules;
-cpan-outdated -p --exclude-core |
-cpanm -iv --self-contained;
+# .hd cpan\ modules;
+# cpan-outdated -p --exclude-core |
+# cpanm -iv --self-contained;
 
 .hd go\ packages;
 go get -v -u "$GOPATH/...";
@@ -36,8 +36,8 @@ go get -v -u "$GOPATH/...";
 .hd latch;
 /home/latch/bin/latch mr mirror;
 
-.hd npm\ modules;
-npm update -g;
+# .hd npm\ modules;
+# npm update -g;
 
 .hd python3;
 python3 -m pip freeze --user |
