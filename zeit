@@ -3,7 +3,7 @@
 # Display times.
 
 tput bold setaf 7;
-date +'%V %a %Y-%m-%d %H:%M:%S';
+date +'%Y-%m-%d %H:%M:%S (%a; D%j; KW%V; Q%q)';
 tput sgr0;
 
 printf '\nLifeday: ';

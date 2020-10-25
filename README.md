@@ -52,6 +52,7 @@ List:
 * [gaisma](https://github.com/d630/bin/blob/master/gaisma): Get sun data infos from www.gaisma.com.
 * [generate-bookmarks-file](https://github.com/d630/bin/blob/master/generate-bookmarks-file): Extract my Bookmarks from Firefox and generate bookmarks.md file.
 * [generate-my-confluence-how-to-article](https://github.com/d630/bin/blob/master/generate-my-confluence-how-to-article): Generate markdown version of my confluence how-to article and push it.
+* [generate-workingdays-sheet](https://github.com/d630/bin/blob/master/generate-workingdays-sheet): Generate workin days sheet.
 * [get-battery-capacity](https://github.com/d630/bin/blob/master/get-battery-capacity): Get battery capacity.
 * [get-input-devices-by-md5sum](https://github.com/d630/bin/blob/master/get-input-devices-by-md5sum): Get md5sums of names in /proc/bus/input/devices.
 * [get-lifeday](https://github.com/d630/bin/blob/master/get-lifeday): Get lifeday.
@@ -208,6 +209,7 @@ List:
 * [wlan-down](https://github.com/d630/bin/blob/master/wlan-down): Wrapper: Set wlan off.
 * [wlan-up](https://github.com/d630/bin/blob/master/wlan-up): Wrapper: Set wlan on.
 * [wless](https://github.com/d630/bin/blob/master/wless): Open the result of which(1) in less.
+* [workingdays](https://github.com/d630/bin/blob/master/workingdays): Display some working day statistic.
 * [wots](https://github.com/d630/bin/blob/master/wots): Handle stow packages.
 * [wradio](https://github.com/d630/bin/blob/master/wradio): Simple wradio.
 * [wvim](https://github.com/d630/bin/blob/master/wvim): Open the result of which(1) in vim.
