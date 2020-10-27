@@ -217,11 +217,11 @@ then
 	do
 		case $d in
 			(*weekend|*holiday|*urlaub|*sick)
-				((${#off[@]})) || && read -r -a off <<<"$d" &&
-					printf 'Next off day: %d-%d-%d (%s)\n' "${off[@]:0:3}" "${off[-1]}" && \
+				((${#off[@]})) || read -r -a off <<<"$d" &&
+					printf 'Next off day: %d-%d-%d (%s)\n' "${off[@]:0:3}" "${off[-1]}" &&
 						[[ -n $work ]] && break;;
 			(*work)
-				((${#work[@]})) || && read -r -a work <<<"$d" &&
+				((${#work[@]})) || read -r -a work <<<"$d" &&
 					printf 'Next work day: %d-%d-%d\n' "${work[@]:0:3}" && [[ -n $off ]] && break;;
 		esac;
 	done
