@@ -105,6 +105,7 @@ declare -a counts=(
 	y todo 'curr_j - 1' "${#year[@]}"
 );
 
+declare i;
 for ((i=0; i < ${#counts[@]}; i+=4));
 do
 	count "${counts[@]:i:4}";
@@ -151,7 +152,7 @@ printf '%s %d %d %d %d %d %d %d %d %d %d %d\n' \
 exec mawk '
 	BEGIN {
 		OFS = "\t"
-		print "/", "#", "TOTAL", "OFF", "WE", "HOL", "UL", "SICK", "ON", "DONE", "TODO"
+		print "/", "#", "TOTAL", "OFF", "(WE)", "(HOL)", "(UL)", "(SICK)", "ON", "(DONE)", "(TODO)"
 		print "-------", "----", "-----", "----------", "-----------", "-----------", "-----------", "-----------", "-----------", "-----------", "-----------"
 	}
 
