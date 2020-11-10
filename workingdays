@@ -105,7 +105,6 @@ declare -a counts=(
 	y todo 'curr_j - 1' "${#year[@]}"
 );
 
-declare i;
 for ((i=0; i < ${#counts[@]}; i+=4));
 do
 	count "${counts[@]:i:4}";
@@ -140,7 +139,7 @@ do
 	((${t[$k]})) && break;
 done
 
-printf '%d-%d-%d (day of year: %d)\n\nYou should be %s!\n\n' \
+printf '%04d-%02d-%02d (day of year: %d)\n\nYou should be %s!\n\n' \
 	"$curr_y" "$curr_m" "$curr_d" "$curr_j" \
 	"${phrase[${k%??}]}";
 
@@ -153,7 +152,7 @@ exec mawk '
 	BEGIN {
 		OFS = "\t"
 		print "/", "#", "TOTAL", "OFF", "(WE)", "(HOL)", "(UL)", "(SICK)", "ON", "(DONE)", "(TODO)"
-		print "-------", "----", "-----", "----------", "-----------", "-----------", "-----------", "-----------", "-----------", "-----------", "-----------"
+		print "-------", "----", "-----", "-----------", "-----------", "-----------", "-----------", "-----------", "-----------", "-----------", "-----------"
 	}
 
 	{
@@ -184,7 +183,7 @@ exec mawk '
 
 		total = work + off
 
-		printf("%s\t%d\t%d\t%d (%.1f)\t%d (%.1f)\t%d (%.1f)\t%d (%.1f)\t%d (%.1f)\t%d (%.1f)\t%d (%.1f)\t%d (%.1f)\n",
+		printf("%7s\t%4d\t%5d\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\n",
 			entity,
 			number,
 
@@ -219,11 +218,11 @@ then
 		case $d in
 			(*weekend|*holiday|*urlaub|*sick)
 				! ((${#off[@]})) && read -r -a off <<<"$d" &&
-					printf 'Next off day: %d-%d-%d (%s)\n' "${off[@]:0:3}" "${off[-1]}" &&
+					printf 'Next off day: %04d-%02d-%02d (%s)\n' "${off[@]:0:3}" "${off[-1]}" &&
 						[[ -n $work ]] && break;;
 			(*work)
 				! ((${#work[@]})) && read -r -a work <<<"$d" &&
-					printf 'Next work day: %d-%d-%d\n' "${work[@]:0:3}" && [[ -n $off ]] && break;;
+					printf 'Next work day: %04d-%02d-%02d\n' "${work[@]:0:3}" && [[ -n $off ]] && break;;
 		esac;
 	done
 fi
