@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Watch all spaces on confluence.
+
+exec rest confluence libexec watch_spaces post d630 1>/dev/null 2>&1;
+
+# vim: set ft=sh :
