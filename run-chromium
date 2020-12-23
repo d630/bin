@@ -251,7 +251,7 @@ exec chromium \
 	--error-console \
 	--force-device-scale-factor="${GDK_SCALE:-1}" \
 	--hide-scrollbars \
-	--ignore-gpu-blacklist \
+	--ignore-gpu-blocklist \
 	--load-media-router-component-extension=0 \
 	--log-net-log \
 	--no-first-run \
