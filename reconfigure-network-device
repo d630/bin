@@ -9,16 +9,19 @@
 	exit 1;
 };
 
+dhcplient_cf=/etc/dhcp/dhclient-d630.conf
+
 e () {
-	iface=${IFACE:-enp0s25};
+	iface=${IFACE:-$(ip -br -4 addr | mawk '/^e/ { print $1; exit }')};
+	iface=${iface:-enp5s0}
 
 	case $1 in
 		(-c)
 			ip link set dev "$iface" up;
 			sleep 1;
-			dhclient "$iface";;
+			dhclient -cf "$dhcplient_cf" "$iface";;
 		(-d)
-			dhclient -x "$iface";
+			dhclient -cf "$dhcplient_cf" -x "$iface";
 			ip link set dev "$iface" down;;
 		(*)
 			printf ?\\n 1>&2;;
@@ -26,7 +29,8 @@ e () {
 };
 
 w () {
-	iface=${IFACE:-wlp3s0};
+	iface=${IFACE:-$(ip -br -4 addr | mawk '/^w/ { print $1; exit }')};
+	iface=${iface:-wlp3s0};
 
 	case $1 in
 		(-wpa)
@@ -34,13 +38,13 @@ w () {
 			ip link set dev "$iface" up;
 			sleep 1;
 			wpa_supplicant -B -i "$iface" -c <(wpa_passphrase "$2" "$3") &&
-				dhclient "$iface";;
+				dhclient -cf "$dhcplient_cf" "$iface";;
 		(-c)
 			ip link set dev "$iface" up;
 			sleep 1;
 			wpa_supplicant -B \
 					-c /etc/wpa_supplicant/wpa_supplicant.conf -i "$iface" &&
-				dhclient "$iface";;
+				dhclient -cf "$dhcplient_cf" "$iface";;
 		(-s)
 			ip link set dev "$iface" up;
 			sleep 1;
@@ -48,7 +52,7 @@ w () {
 			grep 'SSID\|freq\|signal\|capability' |
 			tac;;
 		(-d)
-			dhclient -x "$iface" &&
+			dhclient -cf "$dhcplient_cf" -x "$iface" &&
 				wpa_cli -i "$iface" terminate;
 			ip link set dev "$iface" down;;
 		(*)

@@ -25,7 +25,7 @@ case ${PRODUCT_NAME_SUM:=$(get-product-name-by-md5sum)} in
 		case ${1,,} in
 			(pch|hdmi)
 				ln -fsr "$HOME/.asoundrc_${1,,}" "$HOME/.asoundrc";;
-		esac;
+		esac;;
 esac;
 
 # vim: set ft=sh :

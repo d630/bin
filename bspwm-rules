@@ -182,7 +182,7 @@ case $instance.$class in
 		esac;;
 esac;
 
-printf \
+printf '%s' \
 	${border:+"border=$border"} \
 	${center:+"center=$center"} \
 	${desktop:+"desktop=$desktop"} \

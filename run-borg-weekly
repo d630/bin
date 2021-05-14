@@ -19,6 +19,8 @@ exec sudo \
 			/etc/ \
 			/home/ \
 			/root/ \
+			/usr/local/ \
+			/usr/share/chromium/ \
 			/var/backups/ \
 			/var/mail/ \
 			/var/sieve/ \

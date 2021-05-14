@@ -7,8 +7,6 @@
 (($#)) &&
 	exec sudo "$(type -P "$BASH_SOURCE")";
 
-systemctl stop dnsmasq;
-
 typeset -x \
 	LC_ALL=C \
 	hblock_cachedir=${TMPDIR:-/tmp}/hostfiles \
@@ -59,8 +57,8 @@ mkdir -p -- "$hblock_cachedir" "$hblock_tmpdir";
 xargs \
 	-a "$hblock_hlist" \
 	-n 1 \
-	-P 8 \
-	-i bash -c '__hblock_do "$@"' _ {};
+	-P 0 \
+	bash -c '__hblock_do "$@"' -- ;
 
 cat -- "$hblock_black" <(
 	echo;

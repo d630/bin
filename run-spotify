@@ -3,7 +3,6 @@
 # Run spotify.
 
 exec spotify \
-	--experimental-network no-ipv6 \
 	--force-unicast-discovery \
 	--force-device-scale-factor="${GDK_SCALE:-1}";
 

@@ -30,8 +30,8 @@ sudo sh -c '
 # cpan-outdated -p --exclude-core |
 # cpanm -iv --self-contained;
 
-.hd go\ packages;
-go get -v -u "$GOPATH/...";
+# .hd go\ packages;
+# go get -v -u "$GOPATH/...";
 
 .hd latch;
 /home/latch/bin/latch mr mirror;
@@ -39,9 +39,9 @@ go get -v -u "$GOPATH/...";
 # .hd npm\ modules;
 # npm update -g;
 
-.hd python3;
-python3 -m pip freeze --user |
-sed 's:==.*::' |
-xargs python3 -m pip install --user --upgrade;
+# .hd python3;
+# python3 -m pip freeze --user |
+# sed 's:==.*::' |
+# xargs python3 -m pip install --user --upgrade;
 
 # vim: set ft=sh :
