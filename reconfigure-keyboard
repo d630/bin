@@ -22,7 +22,7 @@ then
 
 	# numlockx off;
 	setxkbmap \
-		-model pc105 \
+		-model pc104 \
 		-layout us \
 		-variant altgr-intl \
 		-option compose:menu,terminate:ctrl_alt_bksp;
