@@ -2,9 +2,10 @@
 #
 # Default text visual editor.
 
-IFS=\|;
-set -- $VISUAL_OPTS ${1:+"$@"};
+IFS=\|
 
-exec "$VISUAL" "$@";
+set -f &&
+    set -- $VISUAL_OPTS ${1:+"$@"} &&
+    exec "$VISUAL" "$@"
 
 # vim: set ft=sh :

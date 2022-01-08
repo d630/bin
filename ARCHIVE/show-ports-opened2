@@ -2,8 +2,8 @@
 #
 # Check still open network ports.
 
-echo;
-lsof -a +L1 /;
-echo;
+echo
+lsof -a +L1 /
+echo
 
 # vim: set ft=sh :

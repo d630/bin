@@ -2,6 +2,6 @@
 #
 # Run chromium in incognito.
 
-force_new=1 exec run-chromium --temp-profile --incognito ${1:+"$@"};
+force_new=1 exec run-chromium --temp-profile --incognito ${1:+"$@"}
 
 # vim: set ft=sh :

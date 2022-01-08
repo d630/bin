@@ -2,31 +2,29 @@
 #
 # Run mutt.
 
-export LOCAL_CONFIG;
+export LOCAL_CONFIG
 
-cmd=${BASH_SOURCE##*/mutt--};
-cmd=${cmd//-/.};
+cmd=${BASH_SOURCE[0]##*/mutt--}
+cmd=${cmd//-/.}
 
 case $cmd in
-	(\
-		d630|d630.archive|\
-		gmail|gmail.archive|\
-		hotmail|hotmail.archive|\
-		posteo|posteo.archive|\
-		posteo1|posteo1.archive|\
-		spool\
-	)
-		LOCAL_CONFIG=$cmd;;
-	(*)
-		if
-			[[ -n $MUTT_LOCAL_CONFIG ]];
-		then
-			LOCAL_CONFIG=$MUTT_LOCAL_CONFIG;
-		else
-			unset -v LOCAL_CONFIG;
-		fi;;
-esac;
+    d630 | d630.archive | \
+        gmail | gmail.archive | \
+        hotmail | hotmail.archive | \
+        posteo | posteo.archive | \
+        posteo1 | posteo1.archive | \
+        spool)
+        LOCAL_CONFIG=$cmd
+        ;;
+    *)
+        if [[ -n $MUTT_LOCAL_CONFIG ]]; then
+            LOCAL_CONFIG=$MUTT_LOCAL_CONFIG
+        else
+            unset -v LOCAL_CONFIG
+        fi
+        ;;
+esac
 
-exec mutt -n "$@";
+exec -- mutt -n "$@"
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

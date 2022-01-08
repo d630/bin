@@ -2,7 +2,7 @@
 #
 # Run dmenu2-save menu.
 
-test-xorg &&
-	exec menu dmenu2-save ${1:+"$@"} 0<&-;
+command -- test-xorg &&
+    exec menu dmenu2-save ${1:+"$@"} 0<&-
 
 # vim: set ft=sh :

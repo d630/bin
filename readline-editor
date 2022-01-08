@@ -2,9 +2,9 @@
 #
 # Default readline editor.
 
-IFS=\|;
-set -- $READLINE_EDITOR_OPTS ${1:+"$@"};
-
-exec "$READLINE_EDITOR" "$@";
+IFS=\|
+set -f &&
+    set -- $READLINE_EDITOR_OPTS ${1:+"$@"} &&
+    exec "$READLINE_EDITOR" "$@"
 
 # vim: set ft=sh :

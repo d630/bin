@@ -2,101 +2,101 @@
 #
 # Taskwarrior: Fake task/subtask "feature" via file directories and x rc files.
 
-add () {
-	init 1 &&
-	 {
-		 TASKSUBDIR=$tasksubdir task add "$@" ||
-			{
-				printf '%s\n' "error: add failed. see $tasksubdir" 1>&2;
-				return 1;
-			};
-		};
-};
+add() {
+    init 1 &&
+        {
+            TASKSUBDIR=$tasksubdir task add "$@" ||
+                {
+                    printf '%s\n' "error: add failed. see $tasksubdir" 1>&2
+                    return 1
+                }
+        }
+}
 
-_archive () {
-	test "$(
-		exec task rc.context:0 rc.hooks:0 rc.verbose:nothing \
-		 "(status:pending or status:recurring or status:waiting)" \
-		 count 2>/dev/null;
-	)" -eq 0 &&
-	 set -- * &&
-	 test "$#" -gt 0 -a "$1" != './*' &&
-	 command touch .archive &&
-	 cd .. &&
-	 command mv -- "$OLDPWD" "${OLDPWD%/*}/.${OLDPWD##*/}";
-};
+_archive() {
+    test "$(
+        exec task rc.context:0 rc.hooks:0 rc.verbose:nothing \
+            "(status:pending or status:recurring or status:waiting)" \
+            count 2>/dev/null
+    )" -eq 0 &&
+        set -- * &&
+        test "$#" -gt 0 -a "$1" != './*' &&
+        command touch .archive &&
+        cd .. &&
+        command mv -- "$OLDPWD" "${OLDPWD%/*}/.${OLDPWD##*/}"
+}
 
-archive () {
-	test "$TASKHOME" != "$PWD" &&
-	 _archive;
-};
+archive() {
+    test "$TASKHOME" != "$PWD" &&
+        _archive
+}
 
-archive_all () {
-	cd -- "$TASKHOME" ||
-	 return 1;
+archive_all() {
+    cd -- "$TASKHOME" ||
+        return 1
 
-	export LC_ALL=C;
+    export LC_ALL=C
 
-	exec find -H . \
-	 -mindepth 1 \
-	 -name '.*' -prune -o -type d -print |
-	exec sort -r |
-	while
-		read -r dir;
-	do
-		cd -- "$dir";
-		_archive;
-		cd -- "$TASKHOME";
-	done;
-};
+    exec find -H . \
+        -mindepth 1 \
+        -name '.*' -prune -o -type d -print |
+        exec sort -r |
+        while
+            read -r dir
+        do
+            cd -- "$dir"
+            _archive
+            cd -- "$TASKHOME"
+        done
+}
 
-goto () {
-	test "$TASKHOME" = "$PWD" ||
-	 {
-		 printf '%s\n' "error: cd into '$TASKHOME' first" 1>&2;
-		 return 1;
-	 };
+goto() {
+    test "$TASKHOME" = "$PWD" ||
+        {
+            printf '%s\n' "error: cd into '$TASKHOME' first" 1>&2
+            return 1
+        }
 
-	local d;
-	d=$(exec task _get "${1:?}.description");
+    local d
+    d=$(exec task _get "${1:?}.description")
 
-	test -n "$d" ||
-	 exit 1;
+    test -n "$d" ||
+        exit 1
 
-	exec find -H . -type d -name "$d" -o -name ".$d";
-};
+    exec find -H . -type d -name "$d" -o -name ".$d"
+}
 
-init () {
-	if
-		test -n "$1";
-	then
-		tasksubdir=$(command mktemp -d -p "$PWD");
-	else
-		command mkdir -p -- "${tasksubdir=$TASKHOME}";
-	fi;
+init() {
+    if
+        test -n "$1"
+    then
+        tasksubdir=$(command mktemp -d -p "$PWD")
+    else
+        command mkdir -p -- "${tasksubdir=$TASKHOME}"
+    fi
 
-	cd -- "$tasksubdir";
+    cd -- "$tasksubdir"
 
-	test -e ./.task -o -e ./.taskrc &&
-	 {
-		 printf '%s\n' "error: is already task repo" 1>&2;
-		 return 1;
-	 };
+    test -e ./.task -o -e ./.taskrc &&
+        {
+            printf '%s\n' "error: is already task repo" 1>&2
+            return 1
+        }
 
-	if
-		test "$PWD" != "$TASKHOME" -a -r ../.taskrc;
-	then
-		command cp ../.taskrc .taskrc;
-		command mkdir .task;
-		command cp -R ../.task/hooks .task/hooks;
-	else
-		command task config alias.d 'execute "task-dir"';
-		init_hooks;
-	fi;
-};
+    if
+        test "$PWD" != "$TASKHOME" -a -r ../.taskrc
+    then
+        command cp ../.taskrc .taskrc
+        command mkdir .task
+        command cp -R ../.task/hooks .task/hooks
+    else
+        command task config alias.d 'execute "task-dir"'
+        init_hooks
+    fi
+}
 
-init_hooks () {
-	command cat > .task/hooks/on-add-d630.sh <<'HOOK'
+init_hooks() {
+    command cat >.task/hooks/on-add-d630.sh <<'HOOK'
 #!/bin/sh
 #
 # s: Rename subtask directory.
@@ -159,94 +159,101 @@ exit 0;
 # vim: set ft=sh :
 HOOK
 
-	command chmod +x .task/hooks/on-add-d630.sh;
-};
+    command chmod +x .task/hooks/on-add-d630.sh
+}
 
-merge () {
-	test "$TASKHOME" = "$PWD" &&
-	 return 1;
+merge() {
+    test "$TASKHOME" = "$PWD" &&
+        return 1
 
-	export \
-	 TASKDATA=$TASKHOME/.task \
-	 TASKRC=$TASKHOME/.taskrc;
+    export \
+        TASKDATA=$TASKHOME/.task \
+        TASKRC=$TASKHOME/.taskrc
 
-	TASKRC=./.taskrc TASKDATA=./.task \
-	 task rc.hooks:0 rc.verbose:nothing rc.json.array:off export |
-	exec task rc.hooks:0 rc.verbose:nothing rc.json.array:off import 1>/dev/null;
+    TASKRC=./.taskrc TASKDATA=./.task \
+        task rc.hooks:0 rc.verbose:nothing rc.json.array:off export |
+        exec task rc.hooks:0 rc.verbose:nothing rc.json.array:off import 1>/dev/null
 
-	local c p u;
+    local c p u
 
-	c=${PWD##*/};
-	c=${c%%_*};
-	p=${PWD%/*};
-	p=${p##*/};
-	p=${p%%_*};
+    c=${PWD##*/}
+    c=${c%%_*}
+    p=${PWD%/*}
+    p=${p##*/}
+    p=${p%%_*}
 
-	u=$(exec task uuids "$c");
+    u=$(exec task uuids "$c")
 
-	exec task rc.hooks:0 rc.verbose:nothing \
-	 "uuid:$p" modify "dep:$u" 1>/dev/null;
-};
+    exec task rc.hooks:0 rc.verbose:nothing \
+        "uuid:$p" modify "dep:$u" 1>/dev/null
+}
 
-merge_all () {
-	cd -- "$TASKHOME" ||
-	 return 1;
+merge_all() {
+    cd -- "$TASKHOME" ||
+        return 1
 
-	# exec tree --charset unicode -din -f -I '.task' --prune --noreport . |
-	exec find -H . \
-	 -mindepth 1 \
-	 -name '.*' -prune -o -type d -print |
-	{
-		exec tee /dev/fd/8 |
-		exec xargs -I {} -P 8 -n 1 sh -c '
+    # exec tree --charset unicode -din -f -I '.task' --prune --noreport . |
+    exec find -H . \
+        -mindepth 1 \
+        -name '.*' -prune -o -type d -print |
+        {
+            exec tee /dev/fd/8 |
+                exec xargs -I {} -P 8 -n 1 sh -c '
 			cd -- "{}" &&
 			 exec task rc.hooks:0 rc.verbose:nothing rc.json.array:off export;
 		' |
-		exec task rc.hooks:0 rc.verbose:nothing rc.json.array:off import 1>/dev/null;
-	} 8>&1 |
-	exec awk -F / '
+                exec task rc.hooks:0 rc.verbose:nothing rc.json.array:off import 1>/dev/null
+        } 8>&1 |
+        exec awk -F / '
 		NF > 2 {
 			sub("_.*", "", $(NF - 1));
 			sub("_.*", "", $NF);
 			print $NF, $(NF - 1);
 		}
 	' |
-	exec xargs -I {} -n 1 -P 8 sh -c "
+        exec xargs -I {} -n 1 -P 8 sh -c "
 		exec task uuids {} |
 		exec sed 's#\([^ ]*\) \(.*\)#uuid:\1 modify dep:\2#'
 	" |
-	exec xargs -n 3 -P 8 task rc.hooks:0 rc.verbose:nothing 1>/dev/null;
-};
+        exec xargs -n 3 -P 8 task rc.hooks:0 rc.verbose:nothing 1>/dev/null
+}
 
-main () {
-	local cmd=${1:?};
-	shift 1;
+main() {
+    local cmd=${1:?}
+    shift 1
 
-	export \
-	 TASKDATA=./.task \
-	 TASKHOME=${TASKHOME:?} \
-	 TASKRC=./.taskrc;
+    export \
+        TASKDATA=./.task \
+        TASKHOME=${TASKHOME:?} \
+        TASKRC=./.taskrc
 
-	case $cmd in
-		(archiveall)
-			archive_all;;
-		(archive)
-			archive;;
-		(init)
-			init;;
-		(add)
-			add "$@";;
-		(merge)
-			merge;;
-		(mergeall)
-			merge_all;;
-		(goto)
-			goto "$1";;
-		(*)
-			printf '%s\n' "error: unknown command: $cmd" 1>&2;
-			return 1;
-	esac;
-};
+    case $cmd in
+        archiveall)
+            archive_all
+            ;;
+        archive)
+            archive
+            ;;
+        init)
+            init
+            ;;
+        add)
+            add "$@"
+            ;;
+        merge)
+            merge
+            ;;
+        mergeall)
+            merge_all
+            ;;
+        goto)
+            goto "$1"
+            ;;
+        *)
+            printf '%s\n' "error: unknown command: $cmd" 1>&2
+            return 1
+            ;;
+    esac
+}
 
-main "$@";
-
+main "$@"

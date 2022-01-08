@@ -2,20 +2,20 @@
 #
 # Run source-highlight.
 
-for f; do
-	source-highlight \
-		--failsafe \
-		--infer-lang \
-		-f esc-solarized \
-		"--outlang-def=${XDG_DATA_HOME:?}/source-highlight/solarized/esc-solarized.outlang" \
-		"--style-file=$XDG_DATA_HOME/source-highlight/solarized/esc-solarized.style" \
-		-o STDOUT \
-		--tab=4 \
-		--line-number=0 \
-		-i "$f";
-	echo;
-done;
+trap 'exec tput sgr0' EXIT
 
-tput sgr0;
+for f; do
+    command -- source-highlight \
+        --failsafe \
+        --infer-lang \
+        -f esc-solarized \
+        --outlang-def="${XDG_DATA_HOME:?}/source-highlight/solarized/esc-solarized.outlang" \
+        --style-file="$XDG_DATA_HOME/source-highlight/solarized/esc-solarized.style" \
+        -o STDOUT \
+        --tab=4 \
+        --line-number=0 \
+        -i "$f"
+    echo
+done
 
 # vim: set ft=sh :

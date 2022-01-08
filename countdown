@@ -6,16 +6,13 @@
 #       overwrite-previous-output-in-bash-instead-of-appending-it
 
 printf -v sec %d "$1" ||
-	exit 1;
-SECONDS=0;
+    exit 1
+SECONDS=0
 
-while
-	sleep .5 &&
-		((SECONDS <= sec));
-do
-	printf "\r%0${#sec}d" "$((sec - SECONDS))";
-done;
+while command -- sleep .5 && ((SECONDS <= sec)); do
+    printf "\r%0${#sec}d" "$((sec - SECONDS))"
+done
 
-printf \\n;
+printf \\n
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

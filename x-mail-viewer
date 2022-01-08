@@ -2,10 +2,10 @@
 #
 # Default mail viewer (gui).
 
-IFS=\|;
-set -f;
-set -- $X_MAIL_VIEWER_OPTS ${1:+"$@"};
+IFS=\|
 
-exec "$X_MAIL_VIEWER" "$@";
+set -f &&
+    set -- $X_MAIL_VIEWER_OPTS ${1:+"$@"} &&
+    exec "$X_MAIL_VIEWER" "$@"
 
 # vim: set ft=sh :

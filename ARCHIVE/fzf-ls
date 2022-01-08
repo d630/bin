@@ -2,10 +2,10 @@
 #
 # Select files listed in a directory.
 
-arg=$(readlink -f "${1:-$PWD}");
+arg=$(readlink -f "${1:-$PWD}")
 
 test -d "$arg" &&
     ls -A1 --color=always "$arg" |
-    fzf -m --ansi --prompt=PRINT\ ;
+    fzf -m --ansi --prompt=PRINT\ 
 
 # vim: set ft=sh :

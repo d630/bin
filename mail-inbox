@@ -2,7 +2,7 @@
 #
 # Display statistics about new/unseen mails (imapfilter).
 
-run-imapfilter localhost-unseen |
-column -t -s $'\t';
+exec run-imapfilter localhost-unseen |
+    exec column -t -s $'\t'
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

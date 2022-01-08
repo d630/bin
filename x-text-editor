@@ -2,10 +2,10 @@
 #
 # Default editor (gui).
 
-IFS=\|;
-set -f;
-set -- $X_VISUAL_OPTS ${1:+"$@"};
+IFS=\|
 
-exec "$X_VISUAL" "$@";
+set -f &&
+    set -- $X_VISUAL_OPTS ${1:+"$@"} &&
+    exec "$X_VISUAL" "$@"
 
 # vim: set ft=sh :

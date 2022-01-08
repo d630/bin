@@ -2,6 +2,6 @@
 #
 # Run task cals: Calculate dates via taskwarrior.
 
-exec task calc "$@";
+exec task calc "$@"
 
 # vim: set ft=sh :

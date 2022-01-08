@@ -2,6 +2,6 @@
 #
 # Check open network ports.
 
-ss --all --numeric --processes --ipv4 --ipv6;
+ss --all --numeric --processes --ipv4 --ipv6
 
 # vim: set ft=sh :

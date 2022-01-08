@@ -2,12 +2,12 @@
 #
 # Notify, if battery power is (almost) gone.
 
-c=$(get-battery-capacity);
+c=$(exec get-battery-capacity)
 
 ! {
-	test "$c" -ge 0 -a "$c" -le 25 &&
-		run-logger 3 .device.error \
-			"Battery capacity is only $c%. Go and connect charger!";
-};
+    test "$c" -ge 0 -a "$c" -le 25 &&
+        command -- run-logger 3 .device.error \
+            "Battery capacity is only $c%. Go and connect charger!"
+}
 
 # vim: set ft=sh :

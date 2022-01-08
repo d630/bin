@@ -2,7 +2,7 @@
 #
 # Run weechat.
 
-test-xorg &&
-	exec x-terminal -a -c st-256color -n weechatw -t weechatw -e weechat;
+command -- test-xorg &&
+    exec x-terminal -a -c st-256color -n weechatw -t weechatw -e weechat
 
 # vim: set ft=sh :

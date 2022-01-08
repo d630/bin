@@ -1,7 +1,7 @@
 #!/bin/sh
 #
-# Open the result of which(1) in less.
+# Open the result of command -v in less.
 
-exec less "$(which "${1:?}")";
+exec less "$(command -v "${1:?}")"
 
 # vim: set ft=sh :

@@ -2,9 +2,9 @@
 #
 # Count most used commands from bash history.
 
-cut -d ' ' -f 1 "${HISTFILE:?}" |
-sort |
-uniq -c |
-sort -nr;
+exec cut -d ' ' -f 1 -- "${HISTFILE:?}" |
+    exec sort |
+    exec uniq -c |
+    command -- sort -nr
 
 # vim: set ft=sh :

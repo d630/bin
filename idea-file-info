@@ -2,7 +2,7 @@
 #
 # Display Java file info. To be run as external tool within IDEA.
 
-jq -R --slurp . <<-IN | jq -r '. | fromjson' | vim '+set ft=json' -
+exec jq -R --slurp . <<-IN | exec jq -r '. | fromjson' | exec vim '+set ft=json' -
 	{
 		"AffectedModuleNames": "$1",
 		"Classpathl": "$2",
@@ -51,4 +51,4 @@ jq -R --slurp . <<-IN | jq -r '. | fromjson' | vim '+set ft=json' -
 	}
 IN
 
-# vim: set ft=sh :
+# vim: set ft=sh noexpandtab :

@@ -5,33 +5,32 @@
 # Idea: https://wiki.archlinux.org/index.php/ \
 #       Urxvt#Improved_Kuake-like_behavior_in_Openbox
 
-dz () {
-	test -e "$XDG_RUNTIME_DIR/DAYLIGHT" &&
-		shift 1;
+dz() {
+    test -e "$XDG_RUNTIME_DIR/DAYLIGHT" &&
+        shift 1
 
-	exec daemonize "$1" -c st -n stj -t stj1 -i -g 0x0+1+1 -e "$SHELL" -c '
-		xdotool windowsize --usehints "$WINDOWID" 99% 66%;
-		printf "%x\n" "$WINDOWID" > "${XDG_RUNTIME_DIR:?}/stj1";
-		exec "$0";';
-};
+    exec daemonize "$1" -c st -n stj -t stj1 -i -g 0x0+1+1 -e "${SHELL:-/bin/bash}" -c '
+        command -- xdotool windowsize --usehints "$WINDOWID" 99% 66%
+        printf "%x\n" "$WINDOWID" >"$XDG_RUNTIME_DIR/stj1"
+        exec "$0"
+    '
+}
 
-read -r id < "${XDG_RUNTIME_DIR:?}/stj1" 2>/dev/null;
+read -r id <"${XDG_RUNTIME_DIR:?}/stj1" 2>/dev/null
 
-xprop -id "0x$id" 1>/dev/null 2>&1 ||
-	dz st-dark st-light;
+command -- xprop -id "0x$id" 1>/dev/null 2>&1 ||
+    dz st-dark st-light
 
-if
-	xprop -root -notype -f _NET_CLIENT_LIST 32x \$0+, _NET_CLIENT_LIST |
-	grep -F -q "0x$id,";
-then
-	exec xdotool windowunmap "0x$id";
+if exec xprop -root -notype -f _NET_CLIENT_LIST 32x \$0+, _NET_CLIENT_LIST |
+    command -- grep -F -q "0x$id,"; then
+    exec xdotool windowunmap "0x$id"
 else
-	#xdotool mousemove --sync 0 0
-	exec xdotool windowmap --sync "0x$id";
-	#wmctrl -i -a "0x${id}"
-	#xdotool windowraise "0x${id}"
-	#xdotool windowfocus --sync "0x${id}"
-	#xdotool mousemove --sync 0 0
-fi;
+    #xdotool mousemove --sync 0 0
+    exec xdotool windowmap --sync "0x$id"
+    #wmctrl -i -a "0x${id}"
+    #xdotool windowraise "0x${id}"
+    #xdotool windowfocus --sync "0x${id}"
+    #xdotool mousemove --sync 0 0
+fi
 
 # vim: set ft=sh :

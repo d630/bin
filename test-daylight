@@ -2,6 +2,6 @@
 #
 # Test daylight by checking if we are between sunrise and sunset.
 
-exec get-sundata 1>/dev/null 2>&1;
+exec get-sundata 1>/dev/null 2>&1
 
 # vim: set ft=sh :

@@ -2,12 +2,10 @@
 #
 # Select X desktop with a menu and then switch with wmctrl to it.
 
-desk=$(
-	wmctrl -d |
-	menu dmenu2 \>;
-);
+desk=$(exec wmctrl -d | exec menu dmenu2 \>)
 
-test -n "$desk" &&
-	wmctrl -s "${desk%% *}";
+if test -n "$desk"; then
+    exec wmctrl -s "${desk%% *}"
+fi
 
 # vim: set ft=sh :

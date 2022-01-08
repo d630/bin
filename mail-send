@@ -2,43 +2,45 @@
 #
 # Sends mail via msmtp-queue and give notification + sound (via run-logger).
 
-exec 9<"$0";
-flock -n 9 || {
-	printf 'sorry, I am already running\n' 1>&2;
-	exit 1;
-};
+exec 9<"$0"
+if ! flock -n 9; then
+    printf 'sorry, I am already running\n' 1>&2
+    exit 1
+fi
 
-maildir=${XDG_VAR_HOME:?}/mail/queue;
-[[ -d $maildir ]] || {
-	printf "maildir '%s' is not a directory\n" "$maildir" 1>&2;
-	exit 1;
-};
+maildir=${XDG_VAR_HOME:?}/mail/queue
+if ! [[ -d $maildir ]]; then
+    printf "maildir '%s' is not a directory\n" "$maildir" 1>&2
+    exit 1
+fi
 
-shopt -s nullglob;
-shopt -s extglob;
-shopt -s dotglob;
-set -- "$maildir/"!(\.*);
+shopt -s nullglob
+shopt -s extglob
+shopt -s dotglob
+set -- "$maildir/"!(\.*)
 
-(($#)) &&
-	cnt=$# ||
-		exit 1;
+if (($#)); then
+    cnt=$#
+else
+    exit 1
+fi
 
-i=0;
-until
-	! (($#));
-do
-	case $i in
-		(30)
-			run-logger 3 .email.error "Delivery error. [posteo] Mails not sent: $cnt";
-			exit 1;;
-		(*)
-			msmtpqw -r;
-			set -- "$maildir/"!(\.*);
-			((i++));
-			sleep 1;
-	esac;
-done;
+i=0
+until ! (($#)); do
+    case $i in
+        30)
+            command -- run-logger 3 .email.error "Delivery error. [posteo] Mails not sent: $cnt"
+            exit 1
+            ;;
+        *)
+            command -- msmtpqw -r
+            set -- "$maildir/"!(\.*)
+            ((i++))
+            command -- sleep 1
+            ;;
+    esac
+done
 
-run-logger 6 .email.bounced "[posteo] Sent Mails: $cnt";
+command -- run-logger 6 .email.bounced "[posteo] Sent Mails: $cnt"
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

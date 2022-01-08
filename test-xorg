@@ -3,7 +3,7 @@
 # Test whether we are in an X session.
 
 # XDG_VTNR is not set, when using TigerVNC
-systemctl is-active graphical.target 1>/dev/null 2>&1 &&
-	test -n "$DISPLAY";
+command -- systemctl is-active graphical.target 1>/dev/null 2>&1 &&
+    test -n "$DISPLAY"
 
 # vim: set ft=sh :

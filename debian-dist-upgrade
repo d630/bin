@@ -2,7 +2,7 @@
 #
 # Dist-upgrade packages from Debian.
 
-exec sudo sh -c 'apt-get update && apt-get -y dist-upgrade';
+exec sudo sh -c 'apt-get update && apt-get -y dist-upgrade'
 #sudo aptitude update && sudo aptitude full-upgrade;
 
 # vim: set ft=sh :

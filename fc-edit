@@ -2,6 +2,6 @@
 #
 # Default fc editor ($FCEDIT).
 
-exec vim -f '+set ft=sh' "$@";
+exec vim -f '+set ft=sh' "$@"
 
 # vim: set ft=sh :

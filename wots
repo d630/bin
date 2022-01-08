@@ -2,61 +2,61 @@
 #
 # Handle stow packages.
 
-arg1=${1:? args};
-dir=;
+arg1=${1:?args}
+dir=
 
-shift 1;
+shift 1
 
 wrapper() {
-	exec xstow -v 3 \
-		-F /home/latch/etc/xstow/local.ini \
-		-dir "$dir" \
-		-target "$HOME" \
-		"${@:?package missing}";
+    exec -- xstow -v 3 \
+        -F /home/latch/etc/xstow/local.ini \
+        -dir "$dir" \
+        -target "$HOME" \
+        "${@:?package missing}"
 }
 
 new() {
-	set -- "${1:? need a name}" "${2:-$HOSTNAME}" "${3:-$USER}";
+    set -- "${1:?need a name}" "${2:-$HOSTNAME}" "${3:-$USER}"
 
-	declare s;
-	s=$(
-		IFS=;
-		md5sum <<< "$*";
-	);
-	s=${s%% *};
+    declare s
+    s=$(IFS=; exec -- md5sum <<<"$*")
+    s=${s%% *}
 
-	mkdir -v "$dir/$s" ||
-		exit;
+    command -- mkdir -v -- "$dir/$s" ||
+        exit 1
 
-	. "$dir/map" && mv -v "$dir/map" "$dir/map~" ||
-		declare -A map;
+    . "$dir/map" && command -- mv -v -- "$dir/map" "$dir/map~" ||
+        declare -A map
 
-	map[$s]=$2/$3/$1;
+    map[$s]=$2/$3/$1
 
-	declare -p map > "$dir/map";
+    declare -p map >"$dir/map"
 
-	chmod -v 750 "$dir/$s";
-	> "$dir/$s/.gitignore";
-	ln -vfrs "$dir/$s" "$dir/$1";
+    command -- chmod -v 750 "$dir/$s"
+    >"$dir/$s/.gitignore"
+    command -- ln -vfrs -- "$dir/$s" "$dir/$1"
 
-	declare -x \
-		GIT_DIR=$dir/$s/.git \
-		GIT_WORK_TREE=$dir/$s;
+    declare -x \
+        GIT_DIR=$dir/$s/.git \
+        GIT_WORK_TREE=$dir/$s
 
-	git init;
-	git add -f .gitignore;
-	git commit -m I;
+    command -- git init
+    command -- git add -f .gitignore
+    exec -- git commit -m I
 }
 
 case $arg1 in
-	(stow|stow-data)
-		dir=/home/$arg1
-		wrapper "$@";;
-	(new-stow|new-stow-data)
-		dir=/home/${arg1#new-}
-		new "$@";;
-	(*)
-		exit 1;;
-esac;
+    stow | stow-data)
+        dir=/home/$arg1
+        wrapper "$@"
+        ;;
+    new-stow | new-stow-data)
+        dir=/home/${arg1#new-}
+        new "$@"
+        ;;
+    *)
+        exit 1
+        ;;
+esac
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

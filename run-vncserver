@@ -2,6 +2,6 @@
 #
 # Run vncserver.
 
-exec vncserver -localhost no -geometry 1920x1080 "${@:-:0}";
+exec vncserver -localhost no -geometry 1920x1080 "${@:-:0}"
 
 # vim: set ft=sh :

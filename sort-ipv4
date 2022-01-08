@@ -1,7 +1,9 @@
 #!/bin/sh
 #
-# Sort ipv4 addreses.
+# Sort ipv4 addreses from stdin
 
-exec sort -t . -k "1,1${1:-n}" -k "2,2${1:-n}" -k "3,3${1:-n}" -k "4,4${1:-n}";
+set -- "${1:-n}"
+
+exec sort -t . -k "1,1$1" -k "2,2$1" -k "3,3$1" -k "4,4$1"
 
 # vim: set ft=sh :

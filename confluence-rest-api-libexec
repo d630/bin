@@ -2,45 +2,45 @@
 #
 # Libexec: Confluence REST API.
 
-export API=${API:-${api:-confluence-rest-api}};
+export API=${API:-${api:-confluence-rest-api}}
 
 f_get_space_keys() {
     exec "$API" get space |
-    exec jq -rc '.results[] | .key';
+        command -- jq -rc '.results[] | .key'
 }
 
 # (Un-)Watch all confluence spaces.
 f_watch_spaces() {
     local \
-        method=${1:-'error: method missing: delete|post'};
-        username=${2:-'error: username missing'} \
+        method=${1:-'error: method missing: delete|post'} \
+        username=${2:-'error: username missing'}
 
     \f_get_space_keys |
-    exec grep -F -v -e "~$username" |
-    exec xargs -L 1 -n 1 -P 0 -I {} "$API" "$method" \
-        "/rest/api/user/watch/space/{}?username=$username";
+        exec grep -F -v -e "~$username" |
+        command -- xargs -n 1 -P 0 -I {} -- "$API" "$method" \
+            "/rest/api/user/watch/space/{}?username=$username"
 }
 
 # Add label(s) to entity.
 f_label_entity() {
     local \
         id=${1:?id missing} \
-        data;
+        data
 
     data=$(exec jq -nR '[inputs | {prefix: "global", "name": .}]')
 
-    command "$API" post "/rest/api/content/$id/label" "$data";
+    command -- "$API" post "/rest/api/content/$id/label" "$data"
 }
 
 # Delete label from entity.
 f_unlabel_entity() {
     local \
         id=${1:?id missing} \
-        label=${2:?label missing};
+        label=${2:?label missing}
 
-    command "$API" delete "/rest/api/content/$id/label/$label";
+    command -- "$API" delete "/rest/api/content/$id/label/$label"
 }
 
-${1:+"f_$@"};
+${1:+"f_$@"}
 
 # vim: set ft=sh :

@@ -2,20 +2,21 @@
 #
 # Get battery capacity.
 
-shopt -s nullglob;
+shopt -s nullglob
 
-c=-101;
+c=-101
 
-case ${PRODUCT_NAME_SUM:=$(get-product-name-by-md5sum)} in
-	(dd791b3dd44b647e91524123fa1c6d0f)
-		b=(/sys/class/power_supply/CMB*);
-		((${#b})) && {
-			c=$(< "$b/capacity");
-			[[ $(< "$b/status") != Discharging ]] &&
-				c=-$c;
-		};
-esac;
+case ${PRODUCT_NAME_SUM:=$(exec -- get-product-name-by-md5sum)} in
+    dd791b3dd44b647e91524123fa1c6d0f)
+        b=(/sys/class/power_supply/CMB*)
+        if ((${#b})); then
+            c=$(<"$b/capacity")
+            [[ $(<"$b/status") != Discharging ]] &&
+                c=-$c
+        fi
+        ;;
+esac
 
-printf '%d\n' "$c";
+printf '%d\n' "$c"
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

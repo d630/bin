@@ -2,6 +2,6 @@
 #
 # Display mail queue (msmtp).
 
-exec msmtp-queue -d;
+exec msmtp-queue -d
 
 # vim: set ft=sh :

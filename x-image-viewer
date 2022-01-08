@@ -2,10 +2,10 @@
 #
 # Default image viewer (gui).
 
-IFS=\|;
-set -f;
-set -- $X_IMAGE_VIEWER_OPTS ${1:+"$@"};
+IFS=\|
 
-exec "$X_IMAGE_VIEWER" "$@";
+set -f &&
+    set -- $X_IMAGE_VIEWER_OPTS ${1:+"$@"} &&
+    exec "$X_IMAGE_VIEWER" "$@"
 
 # vim: set ft=sh :

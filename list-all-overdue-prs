@@ -3,24 +3,24 @@
 # List all open and overdue prs.
 
 exec rest bitbucket libexec get_overdue_prs 2>/dev/null |
-exec jq -r '
-	.[] |
-	[
-		(.id | tostring) + "/" + (.version | tostring),
-		(.updatedDate / 1000 | strftime("%Y-%m-%d_%H:%M:%S")),
-		(.properties.commentCount // 0 | tostring) + "," + (.properties.openTaskCount | tostring),
-		.toRef.repository.project.key + "/" + .toRef.repository.slug + ":" + .toRef.displayId,
-		(
-			(.title | gsub("\\s"; "_")) as $title |
-			if (.title | length) <= 37
-			then $title
-			else $title[0:35] + "…"
-			end
-		)
-	] |
-	@tsv
-' |
-exec sort -k 2,2 |
-exec column -t;
+    exec jq -r '
+        .[] |
+        [
+            (.id | tostring) + "/" + (.version | tostring),
+            (.updatedDate / 1000 | strftime("%Y-%m-%d_%H:%M:%S")),
+            (.properties.commentCount // 0 | tostring) + "," + (.properties.openTaskCount | tostring),
+            .toRef.repository.project.key + "/" + .toRef.repository.slug + ":" + .toRef.displayId,
+            (
+                (.title | gsub("\\s"; "_")) as $title |
+                if (.title | length) <= 37
+                then $title
+                else $title[0:35] + "…"
+                end
+            )
+        ] |
+        @tsv
+    ' |
+    exec sort -k 2,2 |
+    exec column -t
 
 # vim: set ft=sh :

@@ -2,15 +2,15 @@
 #
 # Run scrot.
 
-mkdir -p /tmp/screenshots;
+command -- mkdir -p /tmp/screenshots
 
 cd /tmp/screenshots ||
-	exit 1;
+    exit 1
 
 exec scrot \
-	'%Y-%m-%d--%s_$wx$h.png' \
-	-q 100 \
-	-d 3 \
-	${1:+"$@"};
+    '%Y-%m-%d--%s_$wx$h.png' \
+    -q 100 \
+    -d 3 \
+    ${1:+"$@"}
 
 # vim: set ft=sh :

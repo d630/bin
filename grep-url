@@ -4,21 +4,21 @@
 #
 # Source: https://gist.github.com/GuillaumeLestringant/36c11afcc35c8c5b9123
 
-proto="((?:https?|ftp)://|)";
-id="?:\S+(?::\S*)?@";
-ip_excluded="(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})";
-ip_included="(?:1\d\d|2[01]\d|22[0-3]|[1-9]\d?)(?:\.(?:2[0-4]\\d|25[0-5]|1?\\d{1,2})){2}(?:\.(?:1\d\d|2[0-4]\d|25[0-4]|[1-9]\d?))";
-ip="$ip_excluded$ip_included";
-chars="a-z\x{00a1}-\x{ffff}";
-base="(?:[${chars}0-9]-*)*[${chars}0-9]+";
-host="(?:$base)";
-domain="(?:\.$base)*";
-tld="(?:\.(?:[${chars}]{2,}))";
-fulldomain=$host$domain$tld"\.?";
-name="(?:$ip|$fulldomain)";
-port="(?::\d{2,5})?";
-path="(?:[/?#]\S*)?";
+proto="((?:https?|ftp)://|)"
+id="?:\S+(?::\S*)?@"
+ip_excluded="(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})"
+ip_included="(?:1\d\d|2[01]\d|22[0-3]|[1-9]\d?)(?:\.(?:2[0-4]\\d|25[0-5]|1?\\d{1,2})){2}(?:\.(?:1\d\d|2[0-4]\d|25[0-4]|[1-9]\d?))"
+ip="$ip_excluded$ip_included"
+chars="a-z\x{00a1}-\x{ffff}"
+base="(?:[${chars}0-9]-*)*[${chars}0-9]+"
+host="(?:$base)"
+domain="(?:\.$base)*"
+tld="(?:\.(?:[${chars}]{2,}))"
+fulldomain=$host$domain$tld"\.?"
+name="(?:$ip|$fulldomain)"
+port="(?::\d{2,5})?"
+path="(?:[/?#]\S*)?"
 
-exec grep ${1:+"$@"} -P -i -e "^($proto($id)?$name$port$path)\$";
+exec grep ${1:+"$@"} -P -i -e "^($proto($id)?$name$port$path)\$"
 
 # vim: set ft=sh :

@@ -4,68 +4,78 @@
 #
 # Idea: https://github.com/vain/bin-pub/blob/master/cwm
 
-((UID)) && {
-	printf 'Must be run as root\n' 1>&2;
-	exit 1;
-};
+if ((EUID)); then
+    printf 'Must be run as root\n' 1>&2
+    exit 1
+fi
 
 dhcplient_cf=/etc/dhcp/dhclient-d630.conf
 
-e () {
-	iface=${IFACE:-$(ip -br -4 addr | mawk '/^e/ { print $1; exit }')};
-	iface=${iface:-enp5s0}
+e() {
+    iface=${IFACE:-$(exec -- ip -br -4 addr | exec -- mawk '/^e/ { print $1; exit }')}
+    iface=${iface:-enp5s0}
 
-	case $1 in
-		(-c)
-			ip link set dev "$iface" up;
-			sleep 1;
-			dhclient -cf "$dhcplient_cf" "$iface";;
-		(-d)
-			dhclient -cf "$dhcplient_cf" -x "$iface";
-			ip link set dev "$iface" down;;
-		(*)
-			printf ?\\n 1>&2;;
-	esac;
-};
+    case $1 in
+        -c)
+            command -- ip link set dev "$iface" up
+            command -- sleep 1
+            command -- dhclient -cf "$dhcplient_cf" "$iface"
+            ;;
+        -d)
+            command -- dhclient -cf "$dhcplient_cf" -x "$iface"
+            command -- ip link set dev "$iface" down
+            ;;
+        *)
+            printf ?\\n 1>&2
+            ;;
+    esac
+}
 
-w () {
-	iface=${IFACE:-$(ip -br -4 addr | mawk '/^w/ { print $1; exit }')};
-	iface=${iface:-wlp3s0};
+w() {
+    iface=${IFACE:-$(exec -- ip -br -4 addr | exec -- mawk '/^w/ { print $1; exit }')}
+    iface=${iface:-wlp3s0}
 
-	case $1 in
-		(-wpa)
-			: "${2:?}" "${3:?}";
-			ip link set dev "$iface" up;
-			sleep 1;
-			wpa_supplicant -B -i "$iface" -c <(wpa_passphrase "$2" "$3") &&
-				dhclient -cf "$dhcplient_cf" "$iface";;
-		(-c)
-			ip link set dev "$iface" up;
-			sleep 1;
-			wpa_supplicant -B \
-					-c /etc/wpa_supplicant/wpa_supplicant.conf -i "$iface" &&
-				dhclient -cf "$dhcplient_cf" "$iface";;
-		(-s)
-			ip link set dev "$iface" up;
-			sleep 1;
-			iw dev "$iface" scan |
-			grep 'SSID\|freq\|signal\|capability' |
-			tac;;
-		(-d)
-			dhclient -cf "$dhcplient_cf" -x "$iface" &&
-				wpa_cli -i "$iface" terminate;
-			ip link set dev "$iface" down;;
-		(*)
-			printf ?\\n 1>&2;;
-	esac;
-};
+    case $1 in
+        -wpa)
+            : "${2:?}" "${3:?}"
+            command -- ip link set dev "$iface" up
+            command -- sleep 1
+            command -- wpa_supplicant -B -i "$iface" -c <(exec -- wpa_passphrase "$2" "$3") &&
+                command -- dhclient -cf "$dhcplient_cf" "$iface"
+            ;;
+        -c)
+            command -- ip link set dev "$iface" up
+            command -- sleep 1
+            command -- wpa_supplicant -B \
+                -c /etc/wpa_supplicant/wpa_supplicant.conf -i "$iface" &&
+                command -- dhclient -cf "$dhcplient_cf" "$iface"
+            ;;
+        -s)
+            command -- ip link set dev "$iface" up
+            command -- sleep 1
+            exec -- iw dev "$iface" scan |
+                exec grep 'SSID\|freq\|signal\|capability' |
+                command -- tac
+            ;;
+        -d)
+            command -- dhclient -cf "$dhcplient_cf" -x "$iface" &&
+                command -- wpa_cli -i "$iface" terminate
+            command -- ip link set dev "$iface" down
+            ;;
+        *)
+            printf ?\\n 1>&2
+            ;;
+    esac
+}
 
 case $1 in
-	([ew])
-		"$1" "${@:2}";;
-	(*)
-		printf 'unknown device\n' 1>&2;
-		exit 1;;
-esac;
+    [ew])
+        "$1" "${@:2}"
+        ;;
+    *)
+        printf 'unknown arg\n' 1>&2
+        exit 1
+        ;;
+esac
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

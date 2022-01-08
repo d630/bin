@@ -2,7 +2,7 @@
 #
 # Archive mails (dovecot -> maildir).
 
-exec mbsync -V dovecot;
-# run-imapfilter localhost-delete;
+exec mbsync -V dovecot
+#run-imapfilter localhost-delete;
 
 # vim: set ft=sh :

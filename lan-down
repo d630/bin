@@ -2,6 +2,6 @@
 #
 # Wrapper: Set lan off.
 
-exec sudo "$XDG_BIN_HOME/reconfigure-network-device" \e -d;
+exec sudo -- "${XDG_BIN_HOME:?}/reconfigure-network-device" \e -d
 
 # vim: set ft=sh :

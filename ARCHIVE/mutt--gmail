@@ -2,6 +2,6 @@
 #
 # Wrapper: mutt gmail.
 
-LOCAL_CONFIG=gmail exec mutt -n "$@";
+LOCAL_CONFIG=gmail exec mutt -n "$@"
 
 # vim: set ft=sh :

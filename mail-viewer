@@ -2,10 +2,9 @@
 #
 # Default mua (tui).
 
-IFS=\|;
-set -f;
-set -- $MAIL_VIEWER_OPTS ${1:+"$@"};
-
-exec "$MAIL_VIEWER" "$@";
+IFS=\|
+set -f &&
+    set -- $MAIL_VIEWER_OPTS ${1:+"$@"} &&
+    exec "$MAIL_VIEWER" "$@"
 
 # vim: set ft=sh :

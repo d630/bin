@@ -2,7 +2,6 @@
 #
 # Wrapper: Use taskwarrior in my 'habit' context.
 
-export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-habit;
-exec task "$@";
+TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-habit exec task "$@"
 
 # vim: set ft=sh :

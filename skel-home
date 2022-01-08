@@ -2,56 +2,56 @@
 #
 # Prepare home directory.
 
-set -e;
+set -e
 
 typeset -A XDG=(
-	[BIN_HOME]=$HOME/bin
-	[CACHE_HOME]=$HOME/var/cache
-	[CONFIG_HOME]=$HOME/etc
-	[DATA_HOME]=$HOME/share
-	[DESKTOP_DIR]=$HOME/share/desktop
-	[OPT_HOME]=$HOME/opt
-	[PUBLICSHARE_DIR]=$HOME/var/public
-	[SRC_DIR]=$HOME/src
-	[TEMPLATES_DIR]=$HOME/share/templates
-	[VAR_HOME]=$HOME/var
-);
+    [BIN_HOME]=$HOME/bin
+    [CACHE_HOME]=$HOME/var/cache
+    [CONFIG_HOME]=$HOME/etc
+    [DATA_HOME]=$HOME/share
+    [DESKTOP_DIR]=$HOME/share/desktop
+    [OPT_HOME]=$HOME/opt
+    [PUBLICSHARE_DIR]=$HOME/var/public
+    [SRC_DIR]=$HOME/src
+    [TEMPLATES_DIR]=$HOME/share/templates
+    [VAR_HOME]=$HOME/var
+)
 
 typeset -A XDG2=(
-	[BACKUP_HOME]=/home/files/var/backups
-	[DOCUMENTS_DIR]=/home/files/share/documents
-	[DOWNLOAD_DIR]=/home/files/tmp/downloads
-	[MUSIC_DIR]=/home/files/share/music
-	[PICTURES_DIR]=/home/files/share/pictures
-	[TMP_HOME]=/home/files/tmp
-	[VIDEOS_DIR]=/home/files/share/videos
-);
+    [BACKUP_HOME]=/home/files/var/backups
+    [DOCUMENTS_DIR]=/home/files/share/documents
+    [DOWNLOAD_DIR]=/home/files/tmp/downloads
+    [MUSIC_DIR]=/home/files/share/music
+    [PICTURES_DIR]=/home/files/share/pictures
+    [TMP_HOME]=/home/files/tmp
+    [VIDEOS_DIR]=/home/files/share/videos
+)
 
-function doit () {
-	mkdir -vp -- "$1";
-	echo \* > "$1/.gitignore";
+function doit() {
+    command -- mkdir -vp -- "$1"
+    echo \* >"$1/.gitignore"
 }
 
-function forit () {
-	for d in "$@";
-	do
-		doit "$d" &
-	done
+function forit() {
+    for d in "$@"; do
+        doit "$d" &
+    done
 }
 
-forit "${XDG[@]}" "$HOME/"{.cabal,.ghc,.cpanm,.vim/{autoload,bundle},.emacs.d/site-lisp,.config,.local,games,include,lib/bash,sbin,man};
-forit "${XDG[OPT_HOME]}/"{cabal,cpanm,go,misc/bin,npm,perl5,win32,win64};
-forit "${XDG[DATA_HOME]}/"{applications,Trash,cert,fonts,icons,sounds,themes,wallpapers,bash,zsh,desktop,keyrings,texmf/tex/latex,doc,locale,ca-certificates,dircolors,man,mutt,xcolors,source-highlight,webkit,X11};
-forit "${XDG[VAR_HOME]}/"{lib,log,mail/{storage,queue},spool,tmp};
+forit "${XDG[@]}" "$HOME/"{.cabal,.ghc,.cpanm,.vim/{autoload,bundle},.emacs.d/site-lisp,.config,.local,games,include,lib/bash,sbin,man}
+forit "${XDG[OPT_HOME]}/"{cabal,cpanm,go,misc/bin,npm,perl5,win32,win64}
+forit "${XDG[DATA_HOME]}/"{applications,Trash,cert,fonts,icons,sounds,themes,wallpapers,bash,zsh,desktop,keyrings,texmf/tex/latex,doc,locale,ca-certificates,dircolors,man,mutt,xcolors,source-highlight,webkit,X11}
+forit "${XDG[VAR_HOME]}/"{lib,log,mail/{storage,queue},spool,tmp}
 
-for d in "${XDG2[@]}" /home/{files,stow,stow-data};
-do
-	sudo mkdir -vp -- "$d";
-	sudo chown -Rv "$USER:$USER" -- "$d";
-	echo \* > "$d/".gitignore;
+for d in "${XDG2[@]}" /home/{files,stow,stow-data}; do
+    command -- sudo mkdir -vp -- "$d"
+    command -- sudo chown -Rv "$USER:$USER" -- "$d"
+    echo \* >"$d/".gitignore
 done
 
-forit "${XDG2[TMP_HOME]}/"{attachments,downloads/torrents};
-doit "${XDG2[BACKUP_HOME]}/bash";
+forit "${XDG2[TMP_HOME]}/"{attachments,downloads/torrents}
+doit "${XDG2[BACKUP_HOME]}/bash"
 
-# vim: set ft=sh :
+wait
+
+# vim: set ft=zsh :

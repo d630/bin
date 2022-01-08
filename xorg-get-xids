@@ -2,7 +2,7 @@
 #
 # Get xwindow ids.
 
-xprop -root -notype -f _NET_CLIENT_LIST 32x :\\n\$0+,\  _NET_CLIENT_LIST |
-tr -s ', ' '\n';
+exec xprop -root -notype -f _NET_CLIENT_LIST 32x :\\n\$0+,\  _NET_CLIENT_LIST |
+    exec tr -s ', ' '\n'
 
 # vim: set ft=sh :

@@ -5,18 +5,18 @@
 # --python-version '3.5'
 
 exec mypy \
-	--platform 'linux' \
-	--follow-import 'normal' \
-	--ignore-missing-imports \
-	--disallow-untyped-calls \
-	--warn-return-any \
-	--strict-optional \
-	--warn-no-return \
-	--warn-redundant-casts \
-	--warn-unused-ignores \
-	--disallow-untyped-defs \
-	--check-untyped-defs \
-	--cache-dir '/dev/null' \
-	"$@";
+    --platform linux \
+    --follow-import normal \
+    --ignore-missing-imports \
+    --disallow-untyped-calls \
+    --warn-return-any \
+    --strict-optional \
+    --warn-no-return \
+    --warn-redundant-casts \
+    --warn-unused-ignores \
+    --disallow-untyped-defs \
+    --check-untyped-defs \
+    --cache-dir /dev/null \
+    "$@"
 
 # vim: set ft=sh :

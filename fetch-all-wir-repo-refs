@@ -2,36 +2,36 @@
 #
 # Fetch all refs from wir git repositories.
 
-export log;
-log=${TMPDIR:-/tmp}/fetch-all-wir-repo-refs;
-src=$HOME/src/wir;
+export log
+log=${TMPDIR:-/tmp}/fetch-all-wir-repo-refs
+src=$HOME/src/wir
 
-find -H "$src" \
-	-mindepth 2 \
-	-maxdepth 2 \
-	-type d \
-	-print0 |
-xargs -0 -L 1 -n 1 -P 0 -I {} sh -c '
-	test -d "{}/.git" ||
-		exit 0;
+exec find -H "$src" \
+    -mindepth 2 \
+    -maxdepth 2 \
+    -type d \
+    -print0 |
+    exec -- xargs -0 -n 1 -P 0 -- sh -c '
+        test -d "$1/.git" ||
+            exit 0
 
-	path="{}";
+        path=$1
 
-	export \
-		GIT_DIR \
-		GIT_WORK_TREE;
-	GIT_WORK_TREE="$path";
-	GIT_DIR="$path/.git";
+        export \
+            GIT_DIR \
+            GIT_WORK_TREE;
+        GIT_WORK_TREE="$path";
+        GIT_DIR="$path/.git";
 
-	eval "$(git config --local --get --bool core.bare)" &&
-		exit 0;
+        eval "$(exec git config --local --get --bool core.bare)" &&
+            exit 0
 
-	mkdir -p "$log/${path%/*}";
-	> "$log/$path";
+        command -- mkdir -p -- "$log/${path%/*}"
+        : >"$log/$path"
 
-	git fetch --all --prune --tags --recurse-submodules=on-demand \
-		1>>"$log/$path" 2>&1 ||
-	echo error: "$log$path";
-';
+        command -- git fetch --all --prune --tags --recurse-submodules=on-demand \
+            >>"$log/$path" 2>&1 ||
+            echo error: "$log$path"
+    ' --
 
 # vim: set ft=sh :

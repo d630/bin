@@ -2,7 +2,7 @@
 #
 # X-select generated password into clipboard.
 
-run-pwgen |
-xorg-selection-clipboard-in;
+exec run-pwgen |
+    exec xorg-selection-clipboard-in
 
 # vim: set ft=sh :

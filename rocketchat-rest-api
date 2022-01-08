@@ -2,39 +2,41 @@
 #
 # Wrapper: Rocket.Chat REST API.
 
-. "$(which rest-api)" ||
-    exit;
+. "$(command -v rest-api)" ||
+    exit
 
-server_address=${ROCKETCHAT_SERVER_ADDRESS:-https://rocketchat.wir.invalid};
-auth_token=${ROCKETCHAT_REST_TOKEN:-$(command cat "$HOME/.rocketchat_wir_invalid_auth_token")};
-user_id=${ROCKETCHAT_REST_USER_ID:-z6O73D6HJPjP9viLD};
+server_address=${ROCKETCHAT_SERVER_ADDRESS:-https://rocketchat.wir.invalid}
+auth_token=${ROCKETCHAT_REST_TOKEN:-$(exec cat -- "$HOME/.rocketchat_wir_invalid_auth_token")}
+user_id=${ROCKETCHAT_REST_USER_ID:-z6O73D6HJPjP9viLD}
 
 unset -v \
     ROCKETCHAT_REST_TOKEN \
     ROCKETCHAT_REST_USER_ID \
-    ROCKETCHAT_SERVER_ADDRESS;
+    ROCKETCHAT_SERVER_ADDRESS
 
 curl() {
-	exec curl -v -s \
-		-H "X-User-Id: $user_id" \
-		-H "X-Auth-Token: $auth_token" \
-		-X "$(echo "$method" | exec tr '[:lower:]' '[:upper:]')" \
-		"$server_address$endpoint" \
-		${1:+"$@"};
+    exec curl -v -s \
+        -H "X-User-Id: $user_id" \
+        -H "X-Auth-Token: $auth_token" \
+        -X "$(echo "$method" | exec tr '[:lower:]' '[:upper:]')" \
+        "$server_address$endpoint" \
+        ${1:+"$@"}
 }
 
 get() {
-	case $endpoint in
-		(channels.list|channels.list.joined|users.list|users.presence)
-			endpoint=/api/v1/$endpoint?count=999;;
-		(login|logout)
-			endpoint=/api/v1/$endpoint;;
-	esac;
+    case $endpoint in
+        channels.list | channels.list.joined | users.list | users.presence)
+            endpoint=/api/v1/$endpoint?count=999
+            ;;
+        login | logout)
+            endpoint=/api/v1/$endpoint
+            ;;
+    esac
 
-	\curl;
+    \curl
 }
 
-method_casematch='get|post';
-\main "$@";
+method_casematch='get|post'
+\main "$@"
 
 # vim: set ft=sh noexpandtab :

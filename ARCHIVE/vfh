@@ -3,6 +3,6 @@
 # Preview files in a directory like in vifm.
 
 ls -1a "${1:-$PWD}" |
-xib -- less -R;
+    xib -- less -R
 
 # vim: set ft=sh :

@@ -2,10 +2,10 @@
 #
 # Simple notetaker using ledit.
 
-store=${XDG_DATA_HOME:?}/kuno2;
-date=$(date --utc --date now +%s);
+store=${XDG_DATA_HOME:?}/kuno2
+date=$(date --utc --date now +%s)
 
-mkdir -p -- "$store";
-ledit -x -h "${store}/${date}";
+mkdir -p -- "$store"
+ledit -x -h "${store}/${date}"
 
 # vim: set ft=sh :

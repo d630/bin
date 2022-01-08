@@ -2,31 +2,27 @@
 #
 # Run z output and open dir in file manager.
 
-if
-	test-ctty;
-then
-	menu=fzf;
-	__nav () {
-		exec file-browser "$1";
-	};
-elif
-	test-xorg;
-then
-	menu=dmenu2;
-	__nav () {
-		daemonize x-file-browser -t "$1";
-	};
+if command -- test-ctty; then
+    menu=fzf
+    __nav() {
+        exec file-browser "$1"
+    }
+elif test-xorg; then
+    menu=dmenu2
+    __nav() {
+        exec daemonize x-file-browser -t "$1"
+    }
 else
-	exit 1;
-fi;
+    exit 1
+fi
 
 path=$(
-	sort -g "$XDG_VAR_HOME/lib/z/z.data" |
-	cut -d \| -f 1 |
-	menu "$menu" cd;
-);
+    exec sort -g "${XDG_VAR_HOME:?}/lib/z/z.data" |
+        exec cut -d \| -f 1 |
+        exec menu "$menu" cd
+)
 
 test -d "$path" &&
-	__nav "$path";
+    __nav "$path"
 
 # vim: set ft=sh :

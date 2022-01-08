@@ -2,35 +2,31 @@
 #
 # Remove PDF metadata with pdftk and exiftool.
 
-shopt -s nocaseglob;
+shopt -s nocaseglob
 
-[[ -e ./tmp ]] && {
-	printf 'There is already a tmp dir.\n' 1>&2;
-	exit 1;
-};
+if [[ -e ./tmp ]]; then
+    printf 'There is already a tmp dir.\n' 1>&2
+    exit 1
+elif [[ -e ./pdf_new ]]; then
+    printf 'There is already a pdf_new dir.\n' 1>&2
+    exit 1
+fi
 
-[[ -e ./pdf_new ]] && {
-	printf 'There is already a pdf_new dir.\n' 1>&2;
-	exit 1;
-};
+command -- mkdir ./tmp ./pdf_new
+command -- cp ./*.pdf ./tmp
 
-mkdir ./tmp ./pdf_new;
-cp ./*.pdf ./tmp;
+while IFS='' read -d '' -r; do
+    filename=$(exec -- basename "$REPLY")
 
-while
-	IFS= read -d '' -r;
-do
-	filename=$(basename "$REPLY");
+    # remove XMP-Metadata incrementell
+    command -- exiftool -all= "$REPLY"
 
-	# remove XMP-Metadata incrementell
-	exiftool -all= "$REPLY";
+    # then rewrite PDF
+    exec -- pdftk "$REPLY" dump_data |
+        exec -- sed -r -e 's/^(InfoValue:).*/\1/g' |
+        command -- pdftk "$REPLY" update_info - output "./pdf_new/$filename" 2>/dev/null
+done < <(exec -- find ./tmp -type f -iname \*.pdf -print0)
 
-	# then rewrite PDF
-	pdftk "$REPLY" dump_data |
-	sed -r -e 's/^(InfoValue:).*/\1/g' |
-	pdftk "$REPLY" update_info - output ./pdf_new"/$filename" 2>/dev/null;
-done < <(find ./tmp -type f -iname \*.pdf -print0);
+exec -- rm -r ./tmp
 
-rm -r ./tmp;
-
-# vim: set ft=sh :
+# vim: set ft=zsh :

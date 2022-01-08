@@ -2,6 +2,6 @@
 #
 # Run transmission-cli.
 
-exec transmission-cli -er -d 400 -u 25 -w "${XDG_DOWNLOAD_DIR:?}/torrents" "$@";
+exec transmission-cli -er -d 400 -u 25 -w "${XDG_DOWNLOAD_DIR:?}/torrents" "$@"
 
 # vim: set ft=sh :

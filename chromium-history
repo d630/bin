@@ -4,33 +4,32 @@
 #
 # See: https://github.com/junegunn/fzf/wiki/Examples#browsing-history
 
-cols=$(($(tput cols) / 3));
-sep={{::}};
+cols=$(($(exec tput cols) / 3))
+sep={{::}}
 
-cp -f -- "${XDG_CACHE_HOME:?}/run-chromium/Default/History" "$XDG_CACHE_HOME/h.chromium";
+command -- cp -f -- "${XDG_CACHE_HOME:?}/run-chromium/Default/History" "$XDG_CACHE_HOME/h.chromium"
 
-__sqlite () {
-	sqlite3 -separator "$sep" "$XDG_CACHE_HOME/h.chromium" "
-		select substr(title, 1, $cols), url
-		from urls
-		order by last_visit_time desc";
-};
+__sqlite() {
+    exec sqlite3 -separator "$sep" "$XDG_CACHE_HOME/h.chromium" "
+        select substr(title, 1, $cols), url
+        from urls
+        order by last_visit_time desc"
+}
 
-__awk () {
-	gawk -F "$sep" '{ printf "%-'$cols's  \x1b[36m%s\n", $1, $2 }';
-};
+__awk() {
+    exec gawk -F "$sep" '{ printf "%-'$cols's  \x1b[36m%s\n", $1, $2 }'
+}
 
-__while_read ()
-while
-	read -r REPLY;
-do
-	daemonize run-chromium "$REPLY";
-done;
+__chromium() {
+    while IFS='' read -r REPLY; do
+        command -- daemonize run-chromium "$REPLY"
+    done
+}
 
 __sqlite |
-__awk |
-fzf --ansi --multi |
-sed 's#.*\(https*://\)#\1#' |
-__while_read;
+    __awk |
+    exec fzf --ansi --multi |
+    exec sed 's#.*\(https*://\)#\1#' |
+    __chromium
 
 # vim: set ft=sh :

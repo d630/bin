@@ -2,14 +2,14 @@
 #
 # Take pub list1, shuffle it and add the songs to cleared pub list2.
 
-list1=${1:?};
-list2=${2:?};
-token=${3:?};
+list1=${1:?}
+list2=${2:?}
+token=${3:?}
 
-bspot clearList "$list2" "$token";
+command -- bspot clearList "$list2" "$token"
 
-bspot getTracks "$list1" "$token" |
-shuf |
-bspot addTracks "$list2" "$token";
+exec bspot getTracks "$list1" "$token" |
+    exec shuf |
+    command -- bspot addTracks "$list2" "$token"
 
 # vim: set ft=sh :

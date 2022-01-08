@@ -2,22 +2,21 @@
 #
 # Get news.
 
-exec 9<"$0";
-flock -n 9 || {
-	printf 'sorry, I am already running\n' 1>&2;
-	exit 1;
-};
+exec 9<"$0"
+if ! command -- flock -n 9; then
+    printf 'sorry, I am already running\n' 1>&2
+    exit 1
+fi
 
-test-inet || {
-	run-logger 3 .network.error 'We are offline. News have not been updated';
-	exit 1;
-};
+if ! command -- test-inet; then
+    command -- run-logger 3 .network.error 'We are offline. News have not been updated'
+    exit 1
+fi
 
-feedfaetcher 1>/dev/null 2>&1;
-# f=$(newsboat -r -x print-unread);
-f=$(newsboat -x reload print-unread);
+command -- feedfaetcher 1>/dev/null 2>&1
+f=$(exec newsboat -x reload print-unread)
 
 test "${f%% *}" -gt 0 &&
-	run-logger 6 .transfer.complete "$((${f%% *} / 3)) ${f#* }";
+    command -- run-logger 6 .transfer.complete "${f%% *} ${f#* }"
 
 # vim: set ft=sh :

@@ -2,24 +2,24 @@
 #
 # Mirror all wir git repositories.
 
-export src;
-src=${1:-$HOME/src/wir};
+export src
+src=${1:-$HOME/src/wir}
 
 exec rest bitbucket libexec get_repo_urls ssh |
-exec xargs -L 1 -n 1 -P 0 -I {} sh -c '
-	set -f;
-	IFS=/;
+    exec xargs -n 1 -P 0 -- sh -c '
+        set -f
+        IFS=/
 
-	url="{}";
-	set -- $url;
-	path=$src/$4/${5%.git};
+        url=$1
+        set -- $url
+        path=$src/$4/${5%.git}
 
-	test -d "$path/.git" &&
-		exit 1;
+        test -d "$path/.git" &&
+            exit 1
 
-	mkdir -p "$path";
+        command -- mkdir -p -- "$path"
 
-	exec git clone --mirror "$url" "$path/.git";
-';
+        exec git clone --mirror "$url" "$path/.git"
+    ' --
 
 # vim: set ft=sh :

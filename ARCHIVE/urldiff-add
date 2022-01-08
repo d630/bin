@@ -3,14 +3,14 @@
 # Add to urlwatch and urldiff.
 
 if
-    test -n "$1";
+    test -n "$1"
 then
-    printf '\n%s\n' URLDIFF;
-    printf %s\\n "$1" >> "${XDG_VAR_HOME:?}/"lib/urldiff/urls.txt &&
-        tail -n2 "$XDG_VAR_HOME/"lib/urldiff/urls.txt;
+    printf '\n%s\n' URLDIFF
+    printf %s\\n "$1" >>"${XDG_VAR_HOME:?}/"lib/urldiff/urls.txt &&
+        tail -n2 "$XDG_VAR_HOME/"lib/urldiff/urls.txt
 else
-    printf 'Es muss eine url angegeben werden ...\n' 1>&2;
-    exit 1;
-fi;
+    printf 'Es muss eine url angegeben werden ...\n' 1>&2
+    exit 1
+fi
 
 # vim: set ft=sh :

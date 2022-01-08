@@ -2,6 +2,6 @@
 #
 # Watch all wir git repositories on bitbucket.
 
-exec rest bitbucket libexec watch_repos post 2>/dev/null;
+exec rest bitbucket libexec watch_repos post 2>/dev/null
 
 # vim: set ft=sh :

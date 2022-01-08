@@ -3,7 +3,7 @@
 # Default X screen autolocker program.
 
 exec daemonize xss-lock \
-	-n "run-logger 3 .misc.exlamation 'Screen is going to be locked'" \
-	-- "$XDG_BIN_HOME/xorg-locker";
+    -n "run-logger 3 .misc.exlamation 'Screen is going to be locked'" \
+    -- "${XDG_BIN_HOME:?}/xorg-locker"
 
 # vim: set ft=sh :

@@ -2,15 +2,13 @@
 #
 # Wrapper: Use taskwarrior in my 'log' context.
 
-export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-todo;
+export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-todo
 
-{
-	task context log >/dev/null;
-	task +log +todo "$@";
-	s=$?;
-	task context none >/dev/null;
-} 2>/dev/null;
+exec 2>/dev/null
 
-exit $s;
+command -- task context log >/dev/null
+trap 'exec task context none >/dev/null' EXIT
+
+command -- task +log +todo "$@"
 
 # vim: set ft=sh :

@@ -2,7 +2,7 @@
 #
 # Get WAN IP.
 
-test-inet &&
-	exec dig -4 +short whoami.akamai.net @ns1-1.akamaitech.net;
+command -- test-inet &&
+    exec dig -4 +short whoami.akamai.net @ns1-1.akamaitech.net
 
 # vim: set ft=sh :

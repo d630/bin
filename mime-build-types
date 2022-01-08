@@ -3,64 +3,64 @@
 # Parse /usr/share/mime and build a mime.type file with ERE globs.
 
 function mergeAliases() {
-	FS = " "
+    FS = " "
 
-	while ((getline < aliasesFile) > 0) {
-		if (! match($1, "^#")) {
-			Types[$1] = Types[$2]
-		}
-	}
+    while ((getline < aliasesFile) > 0) {
+        if (! match($1, "^#")) {
+            Types[$1] = Types[$2]
+        }
+    }
 
-	close(aliasesFile)
+    close(aliasesFile)
 }
 
 function mergeGlobs() {
-	FS = ":"
+    FS = ":"
 
-	while ((getline < globsFile) > 0) {
-		if (! match($1, "^#")) {
-			if (length($4)) {
-				$3 = $3 FS $4
-			}
+    while ((getline < globsFile) > 0) {
+        if (! match($1, "^#")) {
+            if (length($4)) {
+                $3 = $3 FS $4
+            }
 
-			gsub(/\./, "\.", $3)
-			gsub(/\*/, ".*", $3)
+            gsub(/\./, "\.", $3)
+            gsub(/\*/, ".*", $3)
 
-			if (length(Types[$2])) {
-				Types[$2] = Types[$2] "|" $3
-			} else {
-				Types[$2] = $3
-			}
-		}
-	}
+            if (length(Types[$2])) {
+                Types[$2] = Types[$2] "|" $3
+            } else {
+                Types[$2] = $3
+            }
+        }
+    }
 
-	close(globsFile)
+    close(globsFile)
 }
 
 function loadTypes() {
-	while ((getline < typesFile) > 0) {
-		if (! match($1, "^#")) {
-			Types[$1] = ""
-		}
-	}
+    while ((getline < typesFile) > 0) {
+        if (! match($1, "^#")) {
+            Types[$1] = ""
+        }
+    }
 
-	close(typesFile)
+    close(typesFile)
 }
 
 BEGIN {
-	aliasesFile = "/usr/share/mime/aliases"
-	globsFile = "/usr/share/mime/globs2"
-	typesFile = "/usr/share/mime/types"
-	mimeFile = "/tmp/MIME"
-	split("", Types)
+    aliasesFile = "/usr/share/mime/aliases"
+    globsFile = "/usr/share/mime/globs2"
+    typesFile = "/usr/share/mime/types"
+    mimeFile = "/tmp/MIME"
+    split("", Types)
 
-	loadTypes()
-	mergeGlobs()
-	mergeAliases()
+    loadTypes()
+    mergeGlobs()
+    mergeAliases()
 
-	for (t in Types) {
-		print t, Types[t]
-	}
+    for (t in Types) {
+        print t, Types[t]
+    }
 }
 
 # vim: set ft=awk :

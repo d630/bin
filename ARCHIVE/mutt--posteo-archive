@@ -2,6 +2,6 @@
 #
 # Wrapper: mutt posteo.archive.
 
-LOCAL_CONFIG=posteo.archive exec mutt -n "$@";
+LOCAL_CONFIG=posteo.archive exec mutt -n "$@"
 
 # vim: set ft=sh :

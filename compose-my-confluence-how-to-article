@@ -2,29 +2,33 @@
 #
 # Compose my confluence how-to article in vim.
 
-set -e;
+set -e
 
-title=${1:?title missing};
-shift 1; : "${1:?keyword missing}";
-keyword_list=$(printf -- '- %s\n' "$@");
+title=${1:?title missing}
+shift 1
+: "${1:?keyword missing}"
+keyword_list=$(printf -- '- %s\n' "$@")
 
 clean_title=$(
-	exec printf "$title" |
-	exec tr -cs '[:alnum:]-' - |
-	exec tr '[:upper:]' '[:lower:]'
-);
+    printf "$title" |
+        exec tr -cs '[:alnum:]-' - |
+        exec tr '[:upper:]' '[:lower:]'
+)
 : "${clean_title:?invalid title}"
 
-author=d630;
-date_=$(exec date +%Y-%m-%d);
-doc_dir=$HOME/src/doc/how-to-articles;
-v=vim;
-command test-ctty || v=gvim;
-howto_dir=$doc_dir/$clean_title;
+author=d630
+date_=$(exec date +%Y-%m-%d)
+doc_dir=$HOME/src/doc/how-to-articles
+if command -- test-ctty; then
+    v=vim
+else
+    v=gvim
+fi
 
-command mkdir -p "$howto_dir/asset";
+howto_dir=$doc_dir/$clean_title
+command -- mkdir -p "$howto_dir/asset"
 
-command cat > "$howto_dir/metadata.yaml" <<-IN
+command -- cat >"$howto_dir/metadata.yaml" <<IN
 ---
 #title: $title
 #cleantitle: $clean_title
@@ -38,7 +42,7 @@ $keyword_list
 ...
 IN
 
-command cat > "$howto_dir/article.pandoc.md" <<-IN
+command -- cat >"$howto_dir/article.pandoc.md" <<IN
 
 
 # Step-by-step guide
@@ -48,8 +52,8 @@ command cat > "$howto_dir/article.pandoc.md" <<-IN
 IN
 
 exec "$v" -f \
-	'+set ft=markdown' \
-	+1 \
-	"$howto_dir/article.pandoc.md";
+    '+set ft=markdown' \
+    +1 \
+    "$howto_dir/article.pandoc.md"
 
-# vim: set ft=sh noexpandtab :
+# vim: set ft=sh :

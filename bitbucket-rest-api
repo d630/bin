@@ -2,35 +2,36 @@
 #
 # Wrapper: Bitbucket REST API.
 
-. "$(which rest-api)" ||
-    exit;
+. "$(command -v -- rest-api)" ||
+    exit
 
-server_address=${BITBUCKET_SERVER_ADDRESS:-https://bitbucket.wir.invalid};
-token=${BITBUCKET_REST_TOKEN:-$(command cat "$HOME/.bitbucket-wir-invalid-read-read-token")};
-user=${BITBUCKET_REST_USER:-d630};
+server_address=${BITBUCKET_SERVER_ADDRESS:-https://bitbucket.wir.invalid}
+token=${BITBUCKET_REST_TOKEN:-$(exec cat -- "$HOME/.bitbucket-wir-invalid-read-read-token")}
+user=${BITBUCKET_REST_USER:-d630}
 
 unset -v \
-	BITBUCKET_REST_TOKEN \
-	BITBUCKET_REST_USER \
-	BITBUCKET_SERVER_ADDRESS;
+    BITBUCKET_REST_TOKEN \
+    BITBUCKET_REST_USER \
+    BITBUCKET_SERVER_ADDRESS
 
 curl() {
-	exec curl -v -s \
-		--user "$user:$token" \
-		-X "$(echo "$method" | exec tr '[:lower:]' '[:upper:]')" \
-		"$server_address$endpoint" \
-		${1:+"$@"};
+    exec curl -v -s \
+        --user "$user:$token" \
+        -X "$(echo "$method" | exec tr '[:lower:]' '[:upper:]')" \
+        "$server_address$endpoint" \
+        ${1:+"$@"}
 }
 
 get() {
-	case $endpoint in
-		(projects|repos|users)
-			endpoint=/rest/api/latest/$endpoint?limit=999;;
-	esac;
+    case $endpoint in
+        projects | repos | users)
+            endpoint=/rest/api/latest/$endpoint?limit=999
+            ;;
+    esac
 
-	\curl;
+    \curl
 }
 
-\main "$@";
+\main "$@"
 
 # vim: set ft=sh noexpandtab :

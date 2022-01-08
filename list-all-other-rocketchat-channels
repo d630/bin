@@ -3,18 +3,18 @@
 # List all rocketchat channels I haven't joined yet.
 
 joined=$(
-	exec rest rocketchat get channels.list.joined 2>/dev/null |
-	exec jq -rc '.channels | map({(._id): null}) | add'
-);
+    exec rest rocketchat get channels.list.joined 2>/dev/null |
+        exec jq -rc '.channels | map({(._id): null}) | add'
+)
 
 exec rest rocketchat get channels.list 2>/dev/null |
-exec jq -r --argjson joined "$joined" '
-	.channels[] |
-	._id as $_id |
-	select($joined | has($_id?) | not) |
-	"\(.name)\t\(.u.username)\t\(.ts)"
-' |
-exec sort -s -k 3,3 |
-exec column -t;
+    exec jq -r --argjson joined "$joined" '
+        .channels[] |
+        ._id as $_id |
+        select($joined | has($_id?) | not) |
+        "\(.name)\t\(.u.username)\t\(.ts)"
+    ' |
+    exec sort -s -k 3,3 |
+    exec column -t
 
 # vim: set ft=sh :

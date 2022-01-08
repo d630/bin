@@ -20,12 +20,14 @@
 # w
 # S
 
-case ${PRODUCT_NAME_SUM:=$(get-product-name-by-md5sum)} in
-	(dd791b3dd44b647e91524123fa1c6d0f)
-		case ${1,,} in
-			(pch|hdmi)
-				ln -fsr "$HOME/.asoundrc_${1,,}" "$HOME/.asoundrc";;
-		esac;;
-esac;
+case ${PRODUCT_NAME_SUM:=$(exec -- get-product-name-by-md5sum)} in
+    dd791b3dd44b647e91524123fa1c6d0f)
+        case ${1,,} in
+            pch | hdmi)
+                exec -- ln -fsr -- "$HOME/.asoundrc_${1,,}" "$HOME/.asoundrc"
+                ;;
+        esac
+        ;;
+esac
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

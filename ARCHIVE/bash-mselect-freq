@@ -2,8 +2,8 @@
 #
 # Print most used commands of the bash history and run it from dmenu.
 
-bash-count-occurence|
-menu dmenu2 RUN |
-mawk '{ print $2 }';
+bash-count-occurence |
+    menu dmenu2 RUN |
+    mawk '{ print $2 }'
 
 # vim: set ft=sh :

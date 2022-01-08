@@ -3,6 +3,6 @@
 # Grep string in all files under the current directory with find.
 
 find . ! -type d -iname "*$2" |
-xargs grep -i "$1";
+    xargs grep -i "$1"
 
 # vim: set ft=sh :

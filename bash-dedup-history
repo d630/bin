@@ -2,12 +2,13 @@
 #
 # Remove duplicates from bash history and rewrite file.
 
-sed -e 's:^[[:space:][:cntrl:]]*::; s:[[:space:][:cntrl:]]*$::' "${HISTFILE:?}" |
-nl |
-sort -u -k 2 |
-sort -n |
-cut -f 2 > "$HISTFILE.$$";
+exec sed -e 's:^[[:space:][:cntrl:]]*::; s:[[:space:][:cntrl:]]*$::' -- "${HISTFILE:?}" |
+    exec nl |
+    exec sort -u -k 2 |
+    exec sort -n |
+    command -- cut -f 2 >"$HISTFILE.$$"
 
-exec mv -- "$HISTFILE.$$" "$HISTFILE";
+test -s "$HISTFILE.$$" &&
+    exec mv -- "$HISTFILE.$$" "$HISTFILE"
 
 # vim: set ft=sh :

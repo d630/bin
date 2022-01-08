@@ -2,12 +2,12 @@
 #
 # Who.
 
-echo;
-uptime;
-echo;
-who --all -H;
-echo;
-w;
-echo;
+echo
+uptime
+echo
+who --all -H
+echo
+w
+echo
 
 # vim: set ft=sh :

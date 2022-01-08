@@ -3,6 +3,6 @@
 # Wrapper: imapfilter with config localhost-action.lua.
 # TODO
 
-exec imapfilter -c "$HOME/".imapfilter/localhost-action.lua;
+exec imapfilter -c "$HOME/".imapfilter/localhost-action.lua
 
 # vim: set ft=sh :

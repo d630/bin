@@ -2,48 +2,47 @@
 #
 # Reconfigure keyboard.
 
-: "${XDG_CONFIG_HOME:?}";
+: "${XDG_CONFIG_HOME:?}"
 
-if
-	test-xorg;
-then
-	: "${PRODUCT_NAME_SUM:=$(get-product-name-by-md5sum)}";
+if command -- test-xorg; then
+    : "${PRODUCT_NAME_SUM:=$(exec get-product-name-by-md5sum)}"
 
-	get-input-devices-by-md5sum |
-	while
-		read -r sum;
-	do
-		test -e "$XDG_CONFIG_HOME/computer/plug/keyboard/$sum" && {
-			test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/keyboard" &&
-				xinput --disable "$(cat "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/keyboard")";
-			break;
-		}
-	done
+    exec get-input-devices-by-md5sum |
+        while IFS= read -r sum; do
+            if test -e "$XDG_CONFIG_HOME/computer/plug/keyboard/$sum"; then
+                test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/keyboard" &&
+                    command -- xinput --disable \
+                        "$(exec cat -- "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/keyboard")"
+                break
+            fi
+        done
 
-	# numlockx off;
-	setxkbmap \
-		-model pc104 \
-		-layout us \
-		-variant altgr-intl \
-		-option compose:menu,terminate:ctrl_alt_bksp;
-	xmodmap "$XDG_CONFIG_HOME/xmodmap/us-altgr-intl-german.rc";
-	xkbset m ma 60 10 10 5 2; xkbset exp =m;
-	xset r rate 220 150;
-	xset b off;
+    # command -- numlockx off
+    command -- setxkbmap \
+        -model pc104 \
+        -layout us \
+        -variant altgr-intl \
+        -option compose:menu,terminate:ctrl_alt_bksp
+    command -- xmodmap "$XDG_CONFIG_HOME/xmodmap/us-altgr-intl-german.rc"
+    command -- xkbset m ma 60 10 10 5 2
+    command -- xkbset exp =m
+    command -- xset r rate 220 150
+    command -- xset b off
 
 else
-	test -t 1 && fgconsole 1>/dev/null 2>&1 ||
-		exit 1;
+    test -t 1 && command -- fgconsole 1>/dev/null 2>&1 ||
+        exit 1
 
-	case $TERM in
-		(linux*)
-			sudo sh -c "
-				kbdrate -s -d 250 -r 30.0;
-				kbd_mode -u;
-				loadkeys '$XDG_CONFIG_HOME/xmodmap/us-altgr-intl-german.rc.map';
-				setterm -bfreq 0 --blength 0;
-			"
-	esac;
-fi;
+    case $TERM in
+        linux*)
+            sudo sh -c "
+                command -- kbdrate -s -d 250 -r 30.0
+                command -- kbd_mode -u
+                command -- loadkeys '$XDG_CONFIG_HOME/xmodmap/us-altgr-intl-german.rc.map'
+                command -- setterm -bfreq 0 --blength 0
+            "
+            ;;
+    esac
+fi
 
 # vim: set ft=sh :

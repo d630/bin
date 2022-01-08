@@ -2,10 +2,10 @@
 #
 # Simple notetaker using rlfe.
 
-store=${XDG_DATA_HOME:?}/kuno2;
-date=$(date --utc --date now +%s);
+store=${XDG_DATA_HOME:?}/kuno2
+date=$(date --utc --date now +%s)
 
-mkdir -p -- "$store";
-rlfe -h "${store}/${date}" cat;
+mkdir -p -- "$store"
+rlfe -h "${store}/${date}" cat
 
 # vim: set ft=sh :

@@ -3,7 +3,7 @@
 # Run spotify.
 
 exec spotify \
-	--force-unicast-discovery \
-	--force-device-scale-factor="${GDK_SCALE:-1}";
+    --force-unicast-discovery \
+    --force-device-scale-factor="${GDK_SCALE:-1}"
 
 # vim: set ft=sh :

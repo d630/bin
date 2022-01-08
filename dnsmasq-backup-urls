@@ -3,17 +3,18 @@
 # Backup all urls from dnsmasq log.
 
 file=urls.log
-log=${XDG_VAR_HOME:-/home/user1/var}/log/$file;
-touch -- "$log";
+log=${XDG_VAR_HOME:-/home/user1/var}/log/$file
+command -- touch -- "$log"
 
-grep -F -e ' reply ' /var/log/dnsmasq.log |
-grep -F -v -e CNAME -e NXDOMAIN -e NODATA |
-cut -d ' ' -f 6 |
-/home/user1/bin/grep-url |
-cat -- "$log" - |
-sort -u > "/tmp/$file.$$" &&
-    mv -- "/tmp/$file.$$" "$log";
+exec grep -F -e ' reply ' /var/log/dnsmasq.log |
+    exec grep -F -v -e CNAME -e NXDOMAIN -e NODATA |
+    exec cut -d ' ' -f 6 |
+    exec /home/user1/bin/grep-url |
+    exec cat -- "$log" - |
+    exec sort -u >"/tmp/$file.$$"
 
-chmod 755 "$log";
+test -s "/tmp/$file.$$" &&
+    command -- mv -- "/tmp/$file.$$" "$log" &&
+    exec chmod 755 "$log"
 
 # vim: set ft=sh :

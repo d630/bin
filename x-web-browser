@@ -2,10 +2,10 @@
 #
 # Default web browser (gui).
 
-IFS=\|;
-set -f;
-set -- $X_BROWSER_OPTS ${1:+"$@"};
+IFS=\|
 
-exec "$X_BROWSER" "$@";
+set -f &&
+    set -- $X_BROWSER_OPTS ${1:+"$@"} &&
+    exec "$X_BROWSER" "$@"
 
 # vim: set ft=sh :

@@ -2,11 +2,7 @@
 #
 # Run grabc.
 
-c=$(
-	grabc |&
-	grep -o '#.*';
-);
+c=$(exec -- grabc |& exec -- grep -o -e '#.*')
+printf %s "${c^^}"
 
-printf %s "${c^^}";
-
-# vim: set ft=sh :
+# vim: set ft=zsh :

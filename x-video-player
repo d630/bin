@@ -2,10 +2,10 @@
 #
 # Default video player (gui).
 
-IFS=\|;
-set -f;
-set -- $X_VIDEO_PLAYER_OPTS ${1:+"$@"};
+IFS=\|
 
-exec "$X_VIDEO_PLAYER" "$@";
+set -f &&
+    set -- $X_VIDEO_PLAYER_OPTS ${1:+"$@"} &&
+    exec "$X_VIDEO_PLAYER" "$@"
 
 # vim: set ft=sh :

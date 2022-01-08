@@ -3,21 +3,21 @@
 # Backup infos about installed packages on Debian.
 # TODO
 
-backup_dir=${XDG_BACKUP_HOME:?};
+backup_dir=${XDG_BACKUP_HOME:?}
 
-sudo rm -rv -- "$backup_dir/"pkgs;
-mkdir -pv -- "$backup_dir/"pkgs;
+sudo rm -rv -- "$backup_dir/"pkgs
+mkdir -pv -- "$backup_dir/"pkgs
 
-cd -- "$backup_dir/"pkgs || exit 1;
+cd -- "$backup_dir/"pkgs || exit 1
 
-COLUMNS=200 dpkg-query -l > ./query.txt;
+COLUMNS=200 dpkg-query -l >./query.txt
 sudo sh -c '
 	apt-cache policy > ./cache.txt;
 	apt-mark showauto > ./auto.txt;
 	apt-mark showmanual > ./manual.txt;
 	# cp -v /etc/apt/trusted.gpg ./trusted.gpg;
 	apt-clone clone .;
-';
+'
 
 # dpkg --get-selections |
 # mawk '!/deinstall|purge|hold/ { print $1 }' > ./packages.txt;

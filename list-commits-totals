@@ -3,20 +3,20 @@
 # List all all project repos' commit totals.
 
 exec rest bitbucket get repos 2>/dev/null |
-exec jq -r --unbuffered '
-	.values[] |
-	select(.project.key | contains("~") | not) |
-	.project.key, .slug
-' |
-exec xargs -L 1 -n 2 -P 0 sh -c '
-	endpoint=/rest/api/latest/projects/$1/repos/$2/commits?limit=1\&withCounts=true\&merges=exclude;
+    exec jq -r --unbuffered '
+        .values[] |
+        select(.project.key | contains("~") | not) |
+        .project.key, .slug
+    ' |
+    exec xargs -n 2 -P 0 -- sh -c '
+        endpoint=/rest/api/latest/projects/$1/repos/$2/commits?limit=1\&withCounts=true\&merges=exclude
 
-	exec rest bitbucket get "$endpoint" 2>/dev/null |
-	exec jq -rc --arg project "$1" --arg repo "$2" "
-		\"\(\$project)\t\(\$repo)\t\(.authorCount // 0)\t\(.totalCount // 0)\"
-	";
-' -- |
-exec sort |
-exec column -t;
+        exec rest bitbucket get "$endpoint" 2>/dev/null |
+        exec jq -rc --arg project "$1" --arg repo "$2" "
+            \"\(\$project)\t\(\$repo)\t\(.authorCount // 0)\t\(.totalCount // 0)\"
+        "
+    ' -- |
+    exec sort |
+    exec column -t
 
 # vim: set ft=sh :

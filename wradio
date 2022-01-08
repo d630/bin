@@ -5,75 +5,65 @@
 # Forked from webradio.sh (GNU GPLv3) by Markus Lux, 2013
 # https://github.com/mlux/webradio.sh/blob/master/webradio.sh
 
-if
-	test-ctty;
-then
-	function __menu {
-		menu fzf PLAY;
-	};
-elif
-	[[ -n $DISPLAY ]];
-then
-	function __menu {
-		menu dmenu2 PLAY;
-	};
+file_webradio_streams=${XDG_VAR_HOME:?}/lib/wradio/streams
+file_webradio_pid=${XDG_VAR_HOME:?}/lib/wradio/instance.pid
+
+if command -- test-ctty; then
+    __menu() {
+        command -- menu fzf PLAY
+    }
+elif [[ -n $DISPLAY ]]; then
+    __menu() {
+        command -- menu dmenu2 PLAY
+    }
 else
-	exit 1;
-fi;
+    exit 1
+fi
 
-file_webradio_streams=${XDG_VAR_HOME:?}/lib/wradio/streams;
-file_webradio_pid=${XDG_VAR_HOME:?}/lib/wradio/instance.pid;
+__build_streams() {
+    typeset \
+        name \
+        uri
 
-function __build_streams {
-	typeset \
-		name \
-		uri;
+    while IFS=\; read -r name uri; do
+        streams[$name]=$uri
+    done <"$file_webradio_streams"
+}
 
-	while
-		IFS=\; read -r name uri;
-	do
-		streams[$name]=$uri;
-	done < "$file_webradio_streams";
-};
+__selectstream() {
+    printf %s\\n STOPSTREAM "${!streams[@]}" |
+        exec -- sort -u |
+        __menu
+}
 
-function __selectstream {
-	selection=$(
-		printf %s\\n STOPSTREAM "${!streams[@]}" |
-		sort -u |
-		__menu;
-	);
-};
+__stopstream() {
+    if [[ -r $1 ]]; then
+        command -- pkill -9 -F "$1"
+        command -- rm -f -- "$1"
+    fi >/dev/null 2>&1
+}
 
-function __stopstream
-if
-	[[ -r $file_webradio_pid ]];
-then
-	pkill -9 -F "$file_webradio_pid" 1>/dev/null 2>&1;
-	rm -f -- "$file_webradio_pid" 1>/dev/null 2>&1;
-fi;
+__playstream() (
+    if [[ -n $1 ]]; then
+        exec -- audio-player --no-terminal "$1" >/dev/null 2>&1 &
+        echo "$!" >>"$file_webradio_pid"
+    fi
+)
 
-function __playstream () (
-	exec audio-player --no-terminal "${streams[$selection]}" 1>/dev/null 2>&1 &
-	echo "$!" >> "$file_webradio_pid";
-);
+typeset -A streams
+__build_streams
 
+while :; do
+    selection=$(__selectstream)
+    case $selection in
+        '')
+            exit 1
+            ;;
+        *)
+            __stopstream "$file_webradio_pid"
+            __playstream "${streams["$selection"]}"
+            ;;
+    esac
+done
 
-typeset -A streams;
-__build_streams;
-
-while
-	:;
-do
-	__selectstream;
-	case $selection in
-		(STOPSTREAM)
-			__stopstream;;
-		('')
-			exit 1;;
-		(*)
-		__stopstream;
-		__playstream;;
-	esac;
-done;
-
-# vim: set ft=sh :
+# vim: set ft=zsh :

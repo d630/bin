@@ -4,8 +4,8 @@
 
 # xclip -selection clipboard -in -loops 0;
 
-tee >(xsel -l /dev/null --clipboard --input) |
-xorg-selection-primary-in;
+exec -- tee >(exec -- xsel -l /dev/null --clipboard --input) |
+    exec -- xorg-selection-primary-in
 
 # {
 #     tee /dev/fd/9 |
@@ -13,4 +13,4 @@ xorg-selection-primary-in;
 # } 9>&1 |
 # exec xsel -l /dev/null --clipboard --input &
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

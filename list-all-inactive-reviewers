@@ -3,21 +3,21 @@
 # List all inactive reviewers of open and overdue prs.
 
 exec rest bitbucket libexec get_overdue_prs 2>/dev/null |
-exec jq -r '
-	.[] |
-	. as $root |
-	[
-		.reviewers[] |
-		select(
-			(has("lastReviewedCommit") | not) or
-			.lastReviewedCommit != $root.fromRef.latestCommit
-		) |
-		.user.slug
-	] |
-	select((. | length) > 0) |
-	"\($root.links.self[0].href)\t\(sort | join(","))"
-' |
-exec sort -k 1,1 |
-exec column -t;
+    exec jq -r '
+        .[] |
+        . as $root |
+        [
+            .reviewers[] |
+            select(
+                (has("lastReviewedCommit") | not) or
+                .lastReviewedCommit != $root.fromRef.latestCommit
+            ) |
+            .user.slug
+        ] |
+        select((. | length) > 0) |
+        "\($root.links.self[0].href)\t\(sort | join(","))"
+    ' |
+    exec sort -k 1,1 |
+    exec column -t
 
 # vim: set ft=sh :

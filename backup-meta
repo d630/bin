@@ -5,84 +5,84 @@
 # Commands:
 #   - prepare | pp
 
-backup_dir=${XDG_BACKUP_HOME:?};
+backup_dir=${XDG_BACKUP_HOME:?}
 
 [[ -d $backup_dir ]] ||
-	exit 1;
+    exit 1
 
-printf -v horiz %80s;
+printf -v horiz %80s
 .hd() {
-	printf '%s\n' "${horiz// /-}" "$1" "${horiz// /-}" 1>&2;
-};
+    printf '%s\n' "${horiz// /-}" "$1" "${horiz// /-}" 1>&2
+}
 
 apt() (
-	.hd apt;
+    .hd apt
 
-	sudo rm -rv -- "$backup_dir/pkgs";
-	mkdir -pv -- "$backup_dir/pkgs";
+    command -- sudo rm -rv -- "$backup_dir/pkgs"
+    command -- mkdir -pv -- "$backup_dir/pkgs"
 
-	cd -- "$backup_dir/pkgs" ||
-		exit 1;
+    cd -- "$backup_dir/pkgs" ||
+        exit 1
 
-	COLUMNS=200 dpkg-query -l > ./query.txt;
-	sudo sh -c '
-		apt-cache policy > ./cache.txt;
-		apt-mark showauto > ./auto.txt;
-		apt-mark showmanual > ./manual.txt;
-		# cp -v /etc/apt/trusted.gpg ./trusted.gpg;
-		apt-clone clone .;
-	';
+    COLUMNS=200 command -- dpkg-query -l >./query.txt
+    exec -- sudo sh -c '
+        command -- apt-cache policy >./cache.txt
+        command -- apt-mark showauto >./auto.txt
+        command -- apt-mark showmanual >./manual.txt
+        # command -- cp -v /etc/apt/trusted.gpg ./trusted.gpg
+        exec apt-clone clone .
+    '
 )
 
 bin() (
-	.hd bin;
+    .hd bin
 
-	find /var/lib/dpkg/info/ \
-		-daystart \( -name \*.list -a -mtime -7 \) \
-		-printf '%f\n' |
-	sed 's:.list$::' |
-	sort > "$backup_dir/7_days.txt";
+    exec -- find /var/lib/dpkg/info/ \
+        -daystart \( -name \*.list -a -mtime -7 \) \
+        -printf '%f\n' |
+        exec -- sed 's:.list$::' |
+        command -- sort >"$backup_dir/7_days.txt"
 
-	IFS=:;
-	set -f;
+    IFS=:
+    set -f
 
-	whatis -w \* $PATH /usr/bin/X11 2>&1 |
-	sort -u > "$backup_dir/whatis.txt";
+    exec -- whatis -w \* $PATH /usr/bin/X11 2>&1 |
+        exec -- sort -u >"$backup_dir/whatis.txt"
 )
 
-init() (
-	.hd init;
+# init() (
+#     .hd init
 
-	{
-		find /etc/init.d/ -perm /111 -type f -printf '%f\n';
-		find /etc/init -type f -printf '%f\n';
-	} |
-	sort -u > "$backup_dir/init.txt";
-)
+#     {
+#         command -- find /etc/init.d/ -perm /111 -type f -printf '%f\n'
+#         exec -- find /etc/init -type f -printf '%f\n'
+#     } |
+#         exec -- sort -u >"$backup_dir/init.txt"
+# )
 
 cclean() (
-	.hd cclean;
+    .hd cclean
 
-	exec cclean;
+    exec -- cclean
 )
 
 etckeeper() (
-	.hd etckeeper;
+    .hd etckeeper
 
-	cd / ||
-		exit 1;
+    cd / ||
+        exit 1
 
-	printf -v d %\(%s\)T -1;
-	sudo etckeeper commit "$d prepare backup";
+    printf -v d %\(%s\)T -1
+    exec -- sudo etckeeper commit "$d prepare backup"
 )
 
 case $1 in
-	(prepare|pp)
-		apt;
-		bin;
-		init;
-		cclean;
-		etckeeper;
-esac;
+    prepare | pp)
+        apt
+        bin
+        cclean
+        etckeeper
+        ;;
+esac
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

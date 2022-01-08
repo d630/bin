@@ -2,7 +2,7 @@
 #
 # Read into X primary selection.
 
-xsel -l /dev/null --primary --input;
+exec xsel -l /dev/null --primary --input
 # xclip -selection primary -in -loops 0;
 
 # vim: set ft=sh :

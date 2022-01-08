@@ -2,17 +2,17 @@
 #
 # Exec a command n times.
 
-: "${to:="${1:?}"}" "${2:?}";
+: "${to:="${1:?}"}" "${2:?}"
 
-shift 1;
+shift 1
 
 until
-	from=$((from + 1));
-	test "$from" -gt "$to";
+    from=$((from + 1))
+    test "$from" -gt "$to"
 do
-	(exec "$@");
-done;
+    (exec "$@")
+done
 
-:;
+:
 
 # vim: set ft=sh :

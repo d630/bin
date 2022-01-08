@@ -2,13 +2,14 @@
 #
 # Update Debian alternatives.
 
-set -e;
+if test "$(exec id -u)" -ne 0; then
+    echo 'damn. invoke me as root, please' 1>&2
+    exit 1
+fi
 
-while
-	read -r a b c;
-do
-	sudo update-alternatives --install "$a" "$b" "$c" 100;
-	sudo update-alternatives --set "$b" "$c";
+while IFS=' ' read -r a b c; do
+    update-alternatives --install "$a" "$b" "$c" 100
+    update-alternatives --set "$b" "$c"
 done <<IN
 /bin/ksh ksh /usr/bin/ksh2020
 /usr/bin/awk awk /usr/bin/original-awk

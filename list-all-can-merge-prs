@@ -3,19 +3,20 @@
 # List all open prs, which can be merged.
 
 exec rest bitbucket libexec get_open_prs 2>/dev/null |
-exec jq -r '
-	.[].values[] |
-	"\(.links.self[0].href)\t/rest/api/latest/projects/\(.toRef.repository.project.key)/repos/\(.toRef.repository.slug)/pull-requests/\(.id)/merge"
-' |
-exec xargs -L 1 -n 2 -P 0 sh -c '
-	merge=$(
-		exec rest bitbucket get "$2" 2>/dev/null |
-		exec jq -r ".canMerge"
-	);
+    exec jq -r '
+        .[].values[] |
+        "\(.links.self[0].href)\t/rest/api/latest/projects/\(.toRef.repository.project.key)/repos/\(.toRef.repository.slug)/pull-requests/\(.id)/merge"
+    ' |
+    exec xargs -n 2 -P 0 -- sh -c '
+        merge=$(
+            exec rest bitbucket get "$2" 2>/dev/null |
+            exec jq -r ".canMerge"
+        );
 
-	test "$merge" = true &&
-		echo "$1";
-' -- |
-exec sort;
+        if test "$merge" = true; then
+            echo "$1"
+        fi
+    ' -- |
+    exec sort
 
 # vim: set ft=sh :

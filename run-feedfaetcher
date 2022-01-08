@@ -2,20 +2,18 @@
 #
 # Run feedfaetcher.
 
-feedcacherdir=${XDG_VAR_HOME:?}/lib/feedfaetcher;
-urllist=$feedcacherdir/urls.txt;
+feedcacherdir=${XDG_VAR_HOME:?}/lib/feedfaetcher
+urllist=$feedcacherdir/urls.txt
 
-mkdir -p "$feedcacherdir";
+command -- mkdir -p -- "$feedcacherdir"
 
-if
-	test -n "$1";
-then
-	list=$(cat -- "$urllist" - | sort -u) <<-IN
+if test -n "$1"; then
+    list=$(exec cat -- "$urllist" - | exec sort -u) <<-IN
 		$1
 	IN
-	echo "$list" > "$urllist";
+    echo "$list" >"$urllist"
 else
-	exec feedfaetcher;
-fi;
+    exec feedfaetcher
+fi
 
-# vim: set ft=sh :
+# vim: set ft=sh noexpandtab :

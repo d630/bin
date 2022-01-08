@@ -2,6 +2,6 @@
 #
 # Manually lock X screen.
 
-exec xset s activate;
+exec xset s activate
 
 # vim: set ft=sh :

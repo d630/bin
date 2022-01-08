@@ -2,11 +2,11 @@
 #
 # man2pdf script.
 
-man -w "$@" 2>/dev/null;
+man -w "$@" 2>/dev/null
 
 man -t "$@" |
-ps2pdf - "$@.pdf";
+    ps2pdf - "$@.pdf"
 
-printf '%s.pdf\n' "$@";
+printf '%s.pdf\n' "$@"
 
 # vim: set ft=sh :

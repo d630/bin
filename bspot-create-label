@@ -2,22 +2,22 @@
 #
 # Take pub list1 and sort it by label.
 
-list1=${1:?};
-list2=${2:?};
-token=${3:?};
+list1=${1:?}
+list2=${2:?}
+token=${3:?}
 
-bspot clearList "$list2" "$token";
+command -- bspot clearList "$list2" "$token"
 
-bspot getAlbums "$list1" "$token" > /tmp/bspot_albums.txt;
+command -- bspot getAlbums "$list1" "$token" >/tmp/bspot_albums.txt
+exec cut -f 1 /tmp/bspot_albums.txt |
+    exec cut -d : -f 3 |
+    exec bspot getAlbumsObjects "$token" |
+    command -- jq -e -r '.albums[].label | [.] | @sh' >/tmp/bspot_labels.txt
 
-cut -f 1 /tmp/bspot_albums.txt |
-cut -d : -f 3 |
-bspot getAlbumsObjects "$token" |
-jq -e -r '.albums[].label | [.] | @sh' > /tmp/bspot_labels.txt;
-
-paste /tmp/bspot_albums.txt /tmp/bspot_labels.txt |
-LC_ALL=C sort -k 3df,3df -k 1d,1d -k 2d,2d |
-cut -f 2 |
-bspot addTracks "$list2" "$token";
+test -s /tmp/bspot_albums.txt && test -s /tmp/bspot_labels.txt &&
+    exec paste /tmp/bspot_albums.txt /tmp/bspot_labels.txt |
+    LC_ALL=C exec sort -k 3df,3df -k 1d,1d -k 2d,2d |
+        exec cut -f 2 |
+        command -- bspot addTracks "$list2" "$token"
 
 # vim: set ft=sh :

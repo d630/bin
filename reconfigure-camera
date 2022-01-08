@@ -2,12 +2,12 @@
 #
 # Reconfigure camera.
 
-: "${XDG_CONFIG_HOME:?}" "${PRODUCT_NAME_SUM:=$(get-product-name-by-md5sum)}";
+: "${XDG_CONFIG_HOME:?}" "${PRODUCT_NAME_SUM:=$(exec get-product-name-by-md5sum)}"
 
-test-xorg ||
-	exit 1;
+command -- test-xorg ||
+    exit 1
 
 test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/camera" &&
-	xinput --disable "$(cat "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/camera")";
+    exec xinput --disable "$(exec cat -- "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/camera")"
 
 # vim: set ft=sh :

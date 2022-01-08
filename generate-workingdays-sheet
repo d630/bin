@@ -2,31 +2,30 @@
 #
 # Generate working days sheet.
 
-dir=${XDG_VAR_HOME:-$HOME/var}/lib/workingdays;
+dir=${XDG_VAR_HOME:-$HOME/var}/lib/workingdays
 
-declare -A off=();
+declare -A off=()
 
-date_fmt=%-Y%t%-m%t%-d%t%-j%t%-q%t%-V%t%-u%t;
+date_fmt=%-Y%t%-m%t%-d%t%-j%t%-q%t%-V%t%-u%t
 
-for y in "${@:-$(date +%Y)}";
-do
-	{
-		dir=$dir/$y;
+for y in "${@:-$(printf '%(%Y)T')}"; do
+    {
+        dir=$dir/$y
 
-		printf %d "$y" 1>/dev/null && command mkdir -p "$dir" ||
-			exit;
+        printf %d "$y" 1>/dev/null && command -- mkdir -p -- "$dir" ||
+            exit
 
-		command touch "$dir/"{holiday,urlaub{stageanzahl,},sick}.txt;
+        command -- touch -- "$dir/"{holiday,urlaub{stageanzahl,},sick}.txt
 
-		esunday=$(exec date --date="$(exec ncal -e "$y")" +%F);
+        esunday=$(exec -- date --date="$(exec -- ncal -e "$y")" +%F)
 
-		# berlin:
-		#
-		# neujahr, internationaler_frauentag, tag_der_{arbeit,deutschen_einheit},
-		# [12]._weihnachtstag, karfreitag, ostermontag, christi_himmelfahrt, pfingstmontag,
-		# extra holidays and urlaub
-		eval "$(
-			date --file /dev/stdin +off["%F"]=\"${date_fmt}holiday\" <<-IN
+        # berlin:
+        #
+        # neujahr, internationaler_frauentag, tag_der_{arbeit,deutschen_einheit},
+        # [12]._weihnachtstag, karfreitag, ostermontag, christi_himmelfahrt, pfingstmontag,
+        # extra holidays and urlaub
+        eval "$(
+            date --file /dev/stdin +off["%F"]=\"${date_fmt}holiday\" <<-IN
 				$y-01-01
 				$y-03-08
 				$y-05-01
@@ -39,36 +38,36 @@ do
 				$esunday + 50 days
 			IN
 
-			for f in "$dir/"{holiday,urlaub,sick}.txt;
-			do
-				t=${f%.txt};
-				t=${t##*/};
-				exec sed -n 's:^\([^\t]\{4\}\)\t\([^\t]\{2\}\)\t\([^\t]\{2\}\)$:\1-\2-\3:p' "$f" |
-				exec date --file /dev/stdin +off["%F"]=\"$date_fmt$t\" &
-			done;
-			wait;
-		)";
+            for f in "$dir/"{holiday,urlaub,sick}.txt; do
+                t=${f%.txt}
+                t=${t##*/}
+                exec -- sed -n 's:^\([^\t]\{4\}\)\t\([^\t]\{2\}\)\t\([^\t]\{2\}\)$:\1-\2-\3:p' "$f" |
+                    exec -- date --file /dev/stdin +off["%F"]=\"$date_fmt$t\" &
+            done
+            wait
+        )"
 
-		for m in {01..12};
-		do
-			{
-				eval "days=({01..$(exec date --date="$y-$m-01 + 1 month - 1 day" +%d)})";
-				for d in "${days[@]}";
-				do
-					if [[ -n ${off["$y-$m-$d"]} ]];
-					then
-						printf '%s\n' "${off["$y-$m-$d"]}";
-					else
-						exec date --date=$y-$m-$d "+${date_fmt}work";
-					fi &
-				done;
-			} &
-		done |
-		exec sort -k 4,4n |
-		exec sed '/[67]\twork$/ s:work:weekend:' > "$dir/year.txt" ;
-	} &
-done;
+        {
+            for m in {01..12}; do
+                {
+                    declare -a days="({01..$(exec -- date --date="$y-$m-01 + 1 month - 1 day" +%d)})"
+                    for d in "${days[@]}"; do
+                        if [[ -n ${off["$y-$m-$d"]} ]]; then
+                            printf '%s\n' "${off["$y-$m-$d"]}"
+                        else
+                            exec -- date --date=$y-$m-$d "+${date_fmt}work"
+                        fi &
+                    done
+                    wait
+                } &
+            done
+            wait
+        } |
+            exec -- sort -k 4,4n |
+            exec -- sed '/[67]\twork$/ s:work:weekend:' >"$dir/year.txt"
+    } &
+done
 
-wait;
+wait
 
-# vim: set ft=sh noexpandtab :
+# vim: set ft=zsh :

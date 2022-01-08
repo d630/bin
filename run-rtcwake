@@ -3,57 +3,51 @@
 # Run rtcwake in mem mode and play music/radio on wakeup.
 
 function bye {
-	printf 'Bye-bye!\n' 1>&2;
-	exit 1;
-};
+    printf 'Bye-bye!\n' 1>&2
+    exit "${1:-0}"
+}
 
-if
-	test-xorg;
-then
-	function __menu {
-		menu dmenu2 "$1";
-	};
-elif
-	test-ctty;
-then
-	function __menu {
-		menu fzf "$1";
-	};
+if command -- test-xorg; then
+    function __menu {
+        command -- menu dmenu2 "$1"
+    }
+elif command -- test-ctty; then
+    function __menu {
+        command -- menu fzf "$1"
+    }
 else
-	bye
-fi;
+    bye 1
+fi
 
 declare -A music=(
-	[radio1]=http://www.radioeins.de/live.m3u
-	[open]=$XDG_MUSIC_DIR/open_your_eyes.mp3
+    [radio1]=http://www.radioeins.de/live.m3u
+    [open]=${XDG_MUSIC_DIR:?}/open_your_eyes.mp3
 )
 
 days=(
-	"$(date --date=now +%F)"
-	"$(date --date=tomorrow +%F)"
+    "$(exec -- date --date=now +%F)"
+    "$(exec -- date --date=tomorrow +%F)"
 )
 
 date_time=$(
-	for d in "${days[@]}";
-	do
-		printf '%s\n' "$d "{00..23}:{00..59}
-	done |
-	__menu "Date (now: $(date +%R))";
-);
-[[ -n $date_time ]] || bye;
+    for d in "${days[@]}"; do
+        printf '%s\n' "$d "{00..23}:{00..59}
+    done |
+        __menu "Date (now: $(date +%R))"
+)
+[[ -n $date_time ]] || bye
 
-key=$(printf "%s\n" "${!music[@]}" | __menu Play);
-[[ -n $key ]] || bye;
+key=$(printf "%s\n" "${!music[@]}" | __menu Play)
+[[ -n $key ]] || bye
 
-go=$(printf %s\\n exit "rtcwake $date_time $key" | __menu Run);
+go=$(printf %s\\n exit "rtcwake $date_time $key" | __menu Run)
 
-if
-	[[ -n $go && $go != exit ]];
-then
-	sudo rtcwake --mode mem --time "$(date -d "$date_time" +%s)" || exit 1;
-	sleep 10 && exec audio-player --loop=inf "${music[$key]}";
+if [[ -n $go && $go != exit ]]; then
+    command -- sudo rtcwake --mode mem --time "$(exec -- date -d "$date_time" +%s)" ||
+        exit 1
+    command -- sleep 10 && exec -- audio-player --loop=inf "${music[$key]}"
 else
-	bye;
-fi;
+    bye
+fi
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

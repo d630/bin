@@ -2,32 +2,32 @@
 #
 # List all users with their contact data.
 
-search='(|(departmentNumber=DEV*)(departmentNumber=MGMT))';
+if test "$1" = all; then
+    search='(&(departmentNumber=*)(!(givenName=Meetingroom)))'
+else
+    search='(|(departmentNumber=DEV*)(departmentNumber=MGMT))'
+fi
 
-test "$1" = all &&
-	search='(&(departmentNumber=*)(!(givenName=Meetingroom)))';
+exec ldapsearch -x -H ldap://ldap.wir.invalid -LLL -b 'ou=Users,dc=wir,dc=invalid' \
+    "$search" uid mail telephoneNumber |
+    exec mawk '
+        /dn: / {
+            split("", data)
 
-ldapsearch -x -H ldap://ldap.wir.invalid -LLL -b 'ou=Users,dc=wir,dc=invalid' \
-	"$search" \
-	uid mail telephoneNumber |
-mawk '
-	/dn: / {
-		split("", data)
+            while(getline && NF)
+                data[$1] = $2;
 
-		while(getline && NF)
-			data[$1] = $2;
+            if (!data["telephoneNumber:"])
+                data["telephoneNumber:"] = -1;
 
-		if (!data["telephoneNumber:"])
-			data["telephoneNumber:"] = -1;
-
-		printf(\
-			"%s\t%d\t%s\n",
-			data["uid:"],
-			data["telephoneNumber:"],
-			data["mail:"]\
-		);
-	}
-' |
-sort;
+            printf(\
+                "%s\t%d\t%s\n",
+                data["uid:"],
+                data["telephoneNumber:"],
+                data["mail:"]\
+            );
+        }
+    ' |
+    exec sort
 
 # vim: set ft=sh :

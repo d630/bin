@@ -2,44 +2,41 @@
 #
 # Build /etc/apt/sources.list with the help of netselect-apt.
 
-test "$(command id -u)" -ne 0 && {
-	echo 'damn. invoke me as root, please' 1>&2;
-	exit 1;
-};
+if test "$(exec id -u)" -ne 0; then
+    echo 'damn. invoke me as root, please' 1>&2
+    exit 1
+fi
 
 cd /tmp ||
-	exit 1;
+    exit 1
 
-command cp -fv /etc/apt/sources.list /etc/apt/sources.list.old;
-command cp -fv /etc/apt/preferences /etc/apt/preferences.old;
-command rm -frv /tmp/napt;
+command -- cp -fv /etc/apt/sources.list /etc/apt/sources.list.old
+command -- cp -fv /etc/apt/preferences /etc/apt/preferences.old
+command -- rm -frv /tmp/napt
 
-trap exit\ 1 INT TERM QUIT;
+trap exit\ 1 INT TERM QUIT
 
-for release in stable testing unstable experimental;
-do
-	command mkdir -p "/tmp/napt/$release";
+for release in stable testing unstable experimental; do
+    command -- mkdir -p "/tmp/napt/$release"
 
-	i=0
-	while
-		test "$i" -le 2;
-	do
-		command netselect-apt -t 10 "$release" > "/tmp/napt/$release/$i";
-		i=$((i + 1));
-	done;
+    i=0
+    while test "$i" -le 2; do
+        command -- netselect-apt -t 10 "$release" >"/tmp/napt/$release/$i"
+        i=$((i + 1))
+    done
 
-	server=$(
-		command grep -o -h 'https\?.*$' "/tmp/napt/$release/"?* |
-		command sort |
-		command uniq -cd |
-		command tac | {
-			read -r _ l;
-			printf '%s' "$l";
-		}
-	);
-	case $release in
-		(stable|bullseye)
-			command cat >> "/tmp/napt/01-$release-source.list" <<-IN
+    server=$(
+        exec grep -o -h -e 'https\?.*$' "/tmp/napt/$release/"?* |
+            exec sort |
+            exec uniq -cd |
+            exec tac | {
+            read -r _ l
+            printf '%s' "$l"
+        }
+    )
+    case $release in
+        stable | bullseye)
+            command -- cat >>"/tmp/napt/01-$release-source.list" <<-IN
 				#
 				# $release
 				#
@@ -66,75 +63,75 @@ do
 				#deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
 				#
 			IN
-			;;
-		(testing)
-			command cat >> "/tmp/napt/02-$release-source.list" <<-IN
+            ;;
+        testing)
+            command -- cat >>"/tmp/napt/02-$release-source.list" <<-IN
 				#
 				# $release
 				#
 				deb $server $release main contrib non-free
-				deb-src $server $release main contrib non-free
+				#deb-src $server $release main contrib non-free
 				#
 				# $release-security
 				#
 				deb http://security.debian.org/ $release-security main contrib non-free
-				deb-src http://security.debian.org/ $release-security main contrib non-free
+				#deb-src http://security.debian.org/ $release-security main contrib non-free
 				#
 				# $release-debug
 				#
-				deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
+				#deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
 				#
 			IN
-			;;
-		(unstable)
-			command cat >> "/tmp/napt/03-$release-source.list" <<-IN
+            ;;
+        unstable)
+            command -- cat >>"/tmp/napt/03-$release-source.list" <<-IN
 				#
 				# $release
 				#
 				deb $server $release main contrib non-free
-				deb-src $server $release main contrib non-free
+				#deb-src $server $release main contrib non-free
 				#
 				# $release-debug
 				#
-				deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
+				#deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
 				#
 			IN
-			;;
-		(experimental)
-			command cat >> "/tmp/napt/04-$release-source.list" <<-IN
+            ;;
+        experimental)
+            command -- cat >>"/tmp/napt/04-$release-source.list" <<-IN
 				#
 				# $release
 				#
-				deb $server $release main contrib non-free
-				deb-src $server $release main contrib non-free
+				#deb $server $release main contrib non-free
+				#deb-src $server $release main contrib non-free
 				#
 				# $release-debug
 				#
-				deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
+				#deb http://debug.mirrors.debian.org/debian-debug/ $release-debug main
 				#
 			IN
-			;;
-		(*)
-			printf 'unknown release: %s\n' "$release" 1>&2;
-			exit 1;
-			;;
-		esac
-done;
+            ;;
+        *)
+            printf 'unknown release: %s\n' "$release" 1>&2
+            exit 1
+            ;;
+    esac
+done
 
-command cat /tmp/napt/*-source.list > /etc/apt/sources.list;
+command -- cat /tmp/napt/*-source.list >/etc/apt/sources.list
 
-command cat > /etc/apt/preferences <<-IN
-		# Package: *
-		# Pin: release a=unstable
-		# Pin-Priority: 900
+command -- cat >/etc/apt/preferences <<IN
+# Package: *
+# Pin: release a=unstable
+# Pin-Priority: 900
 
-		# Package: *
-		# Pin: release a=testing
-		# Pin-Priority: 800
+# Package: *
+# Pin: release a=testing
+# Pin-Priority: 800
 
-		# Package: *
-		# Pin: release o=Debian
-		# Pin-Priority: -10
-	IN
+# Package: *
+# Pin: release o=Debian
+# Pin-Priority: -10
+IN
 
-# vim: set ft=sh :
+# vim: set ft=sh noexpandtab :

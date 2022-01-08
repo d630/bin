@@ -3,15 +3,17 @@
 # Control spotify via mpris player interface.
 
 case ${1:?} in
-	(Next|Previous|Pause|PlayPause|Stop)
-		exec dbus-send \
-			--print-reply \
-			--dest=org.mpris.MediaPlayer2.spotify \
-			/org/mpris/MediaPlayer2 \
-			"org.mpris.MediaPlayer2.Player.$1";;
-	(*)
-		printf 'errror: unknown method\n' 1>&2;
-		exit 1;;
-esac;
+    Next | Previous | Pause | PlayPause | Stop)
+        exec dbus-send \
+            --print-reply \
+            --dest=org.mpris.MediaPlayer2.spotify \
+            /org/mpris/MediaPlayer2 \
+            "org.mpris.MediaPlayer2.Player.$1"
+        ;;
+    *)
+        printf 'errror: unknown method\n' 1>&2
+        exit 1
+        ;;
+esac
 
 # vim: set ft=sh :

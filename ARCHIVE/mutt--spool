@@ -2,6 +2,6 @@
 #
 # Wrapper: mutt spool.
 
-LOCAL_CONFIG=spool exec mutt -n "$@";
+LOCAL_CONFIG=spool exec mutt -n "$@"
 
 # vim: set ft=sh :

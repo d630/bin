@@ -3,11 +3,11 @@
 # Add a bookmark to urimark in mutt.
 
 grep -oP -e \
-        '((http|https|gopher|ftp|ftps|webdav|webdavs|dav|davs):(//)?[^ <>"\t]*|(www|ftp)[0-9]?\.[-a-z0-9.]+)[^ .,;\t\n\r<">\):]?[^, <>"\t]*[^ .,;\t\n\r<">\):]' |
-while
-    read -r r;
-do
-    taskum add uri":$r";
-done;
+    '((http|https|gopher|ftp|ftps|webdav|webdavs|dav|davs):(//)?[^ <>"\t]*|(www|ftp)[0-9]?\.[-a-z0-9.]+)[^ .,;\t\n\r<">\):]?[^, <>"\t]*[^ .,;\t\n\r<">\):]' |
+    while
+        read -r r
+    do
+        taskum add uri":$r"
+    done
 
 # vim: set ft=sh :

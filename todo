@@ -2,7 +2,6 @@
 #
 # Wrapper: Use taskwarrior in my 'todo' context.
 
-export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-todo;
-exec task "$@";
+TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-todo exec task "$@"
 
 # vim: set ft=sh :

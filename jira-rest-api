@@ -2,13 +2,13 @@
 #
 # Wrapper: Jira REST API.
 
-server_address=${JIRA_SERVER_ADDRESS:-https://jira.wir.invalid};
+server_address=${JIRA_SERVER_ADDRESS:-https://jira.wir.invalid}
 
-unset -v JIRA_SERVER_ADDRESS;
+unset -v JIRA_SERVER_ADDRESS
 
-. "$(which rest-api)" ||
-    exit;
+. "$(command -v rest-api)" ||
+    exit
 
-\main "$@";
+\main "$@"
 
 # vim: set ft=sh :

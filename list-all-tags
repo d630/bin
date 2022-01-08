@@ -3,19 +3,19 @@
 # List all tags of all project repos.
 
 exec rest bitbucket libexec get_tags 2>/dev/null |
-exec jq -r '
-	.[] |
-	.project_key as $project |
-	.repo_slug as $repo |
-	.values[] |
-	[
-		$project,
-		$repo,
-		.displayId
-	] |
-	@tsv
-' |
-exec sort -k 1,1 -k 2,2 -k 3,3 |
-exec column -t;
+    exec jq -r '
+        .[] |
+        .project_key as $project |
+        .repo_slug as $repo |
+        .values[] |
+        [
+            $project,
+            $repo,
+            .displayId
+        ] |
+        @tsv
+    ' |
+    exec sort -k 1,1 -k 2,2 -k 3,3 |
+    exec column -t
 
 # vim: set ft=sh :

@@ -3,11 +3,11 @@
 # Run task colors: Display color info in terminal.
 
 printf 'TERM: %s\nCOLORS: %d\nLONGNAME: %s\n' \
-	"$TERM" \
-	"$(tput colors)" \
-	"$(tput longname)";
+    "$TERM" \
+    "$(exec tput colors)" \
+    "$(exec tput longname)"
 
-exec task rc._forcecolor=on colors;
+exec task rc._forcecolor=on colors
 # weechat -c;
 
 # vim: set ft=sh :

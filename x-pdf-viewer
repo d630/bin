@@ -2,10 +2,10 @@
 #
 # Default pdf viewer (gui).
 
-IFS=\|;
-set -f;
-set -- $X_PDF_VIEWER_OPTS ${1:+"$@"};
+IFS=\|
 
-exec "$X_PDF_VIEWER" "$@";
+set -f &&
+    set -- $X_PDF_VIEWER_OPTS ${1:+"$@"} &&
+    exec "$X_PDF_VIEWER" "$@"
 
 # vim: set ft=sh :

@@ -2,6 +2,6 @@
 #
 # Upgrade packages from Debian.
 
-exec sudo sh -c 'apt-get update && apt-get upgrade';
+exec sudo sh -c 'apt-get update && apt-get upgrade'
 
 # vim: set ft=sh :

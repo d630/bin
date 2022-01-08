@@ -2,55 +2,56 @@
 #
 # Add a task to Taskwarrior ('todo' context) via vim (yaml).
 
-export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-todo;
+export TASKRC=${XDG_CONFIG_HOME:?}/taskwarrior/taskrc-todo
 
-eval "$(date +'s=%s d=%Y-%m-%d t=%H:%M')";
-f=${TMPDIR:-${XDG_RUNTIME_DIR}/tmp}/$s.task;
+eval "$(exec date '+s=%s d=%Y-%m-%d t=%H:%M')"
+f=${TMPDIR:-${XDG_RUNTIME_DIR}/tmp}/$s.task
 
-trap 'rm "$f"' EXIT;
+trap 'exec rm -- "$f"' EXIT
 
-cat > "$f" <<-TEMPLATE
-	%YAML 1.1
-	---
-	description:
+command -- cat >"$f" <<TEMPLATE
+%YAML 1.1
+---
+description:
 
-	# role: me
-	# opposite: me
-	# contact: face-to-face
-	# location: somewhere
-	# participant: me
+# role: me
+# opposite: me
+# contact: face-to-face
+# location: somewhere
+# participant: me
 
-	entry: now
-	# due: ${d}_00:00
-	# scheduled: ${d}_00:00
-	# wait: ${d}_00:00
-	# until: ${d}_00:00
-	# recur:
+entry: now
+# due: ${d}_00:00
+# scheduled: ${d}_00:00
+# wait: ${d}_00:00
+# until: ${d}_00:00
+# recur:
 
-	# depends:
-	#     -
+# depends:
+#     -
 
-	# project:
-	# priority:
+# project:
+# priority:
 
-	tags:
-	    - todo
+tags:
+    - todo
 
-	# annotations:
-	#     -
-	#         entry: now
-	#         description:
-	...
+# annotations:
+#     -
+#         entry: now
+#         description:
+...
 TEMPLATE
 
-vim -f \
-	'+set ft=yaml' \
-	+3 \
-	"+startinsert!" \
-	"$f" < /dev/tty > /dev/tty;
+command -- vim -f \
+    '+set ft=yaml' \
+    +3 \
+    '+startinsert!' \
+    "$f" </dev/tty >/dev/tty ||
+    exit 1
 
-yaml2json < "$f" |
-jq 'if (.description | length) > 0 then . else empty end' |
-task import -;
+exec yaml2json <"$f" |
+    exec jq 'if (.description | length) > 0 then . else empty end' |
+    exec task import -
 
 # vim: set ft=sh :

@@ -4,19 +4,16 @@
 
 #wmctrl -i -a "$(wmctrl -lGpx | column -t | menu.sh "dmenu2" ">" | awk '{print $1}')"
 
-id=$(
-	wmctrl -lGpx |
-	menu dmenu2 \>
-);
+id=$(exec wmctrl -lGpx | exec menu dmenu2 \>)
 
-test -n "$id" && {
-	#xdotool windowmap $id
-	#wmctrl -i -r $id -b remove,hidden
-	#xdotool windowraise $id
-	#xdotool windowfocus $id
-	#xdotool mousemove --window $id 25 25
-	#xdotool click 1
-	wmctrl -i -a "${id%% *}";
-};
+if test -n "$id"; then
+    #xdotool windowmap $id
+    #wmctrl -i -r $id -b remove,hidden
+    #xdotool windowraise $id
+    #xdotool windowfocus $id
+    #xdotool mousemove --window $id 25 25
+    #xdotool click 1
+    wmctrl -i -a "${id%% *}"
+fi
 
 # vim: set ft=sh :

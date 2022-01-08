@@ -2,10 +2,10 @@
 #
 # Default file manager (gui).
 
-IFS=\|;
-set -f;
-set -- $X_FILE_BROWSER_OPTS ${1:+"$@"};
+IFS=\|
 
-exec "$X_FILE_BROWSER" "$@";
+set -f &&
+    set -- $X_FILE_BROWSER_OPTS ${1:+"$@"} &&
+    exec "$X_FILE_BROWSER" "$@"
 
 # vim: set ft=sh :

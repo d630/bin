@@ -2,7 +2,6 @@
 #
 # Wrapper: Use taskwarrior in my 'event' context.
 
-export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-event;
-exec task "$@";
+TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-event exec task "$@"
 
 # vim: set ft=sh :

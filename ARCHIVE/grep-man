@@ -3,7 +3,7 @@
 # Grep pattern in manpage.
 
 man -- "$1" |
-grep -i -C 2 --color=always "$2" |
-less -R;
+    grep -i -C 2 --color=always "$2" |
+    less -R
 
 # vim: set ft=sh :

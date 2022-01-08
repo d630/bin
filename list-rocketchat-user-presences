@@ -3,11 +3,11 @@
 # List all user presences in Rocket.Chat.
 
 exec rest rocketchat get users.presence 2>/dev/null |
-exec jq -r '
-	.users[] |
-	"\(.name)\t\(.username)\t\(.status)\t\(.statusText)"
-' |
-exec sort |
-exec column -t -s '	';
+    exec jq -r '
+        .users[] |
+        "\(.name)\t\(.username)\t\(.status)\t\(.statusText)"
+    ' |
+    exec sort |
+    exec column -t -s '	'
 
 # vim: set ft=sh :

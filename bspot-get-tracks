@@ -2,23 +2,23 @@
 #
 # Get track info of a public playlist.
 
-list=${1:?};
-token=${2:?};
+list=${1:?}
+token=${2:?}
 
-bspot getTracksObjects "$list" "$token" > "/tmp/$list.json";
+command -- bspot getTracksObjects "$list" "$token" >"/tmp/$list.json"
 
-jq -e -c '
-	.items[] |
-	[
-		([.track.artists[].name] | join(" / ") ),
-		.track.name, .track.track_number,
-		.track.disc_number,
-		.track.album.name,
-		.track.duration_ms,
-		.track.uri,
-		.added_at
-	]
+exec jq -e -c '
+    .items[] |
+    [
+        ([.track.artists[].name] | join(" / ") ),
+        .track.name, .track.track_number,
+        .track.disc_number,
+        .track.album.name,
+        .track.duration_ms,
+        .track.uri,
+        .added_at
+    ]
 ' "/tmp/$list.json" |
-LC_ALL=en_US.UTF-8 sort;
+    LC_ALL=en_US.UTF-8 command -- sort
 
 # vim: set ft=sh :

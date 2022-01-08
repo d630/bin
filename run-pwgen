@@ -2,16 +2,14 @@
 #
 # Run pwgen.
 
-until
-	test "${#p}" -ge 256;
-do
-	p=$(
-		pwgen -cnsyC -N 64 -r \'\"\`\$\\ |
-		tr -dc "${1:-[:graph:]}"
-	);
+until test "${#p}" -ge 256; do
+    p=$(
+        exec pwgen -cnsyC -N 64 -r \'\"\`\$\\ |
+            exec tr -dc "${1:-[:graph:]}"
+    )
 done
 
 printf '%s' "$p" |
-cut -b "1-${2:-64}";
+    exec cut -b "1-${2:-64}"
 
 # vim: set ft=sh :

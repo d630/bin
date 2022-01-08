@@ -2,6 +2,6 @@
 #
 # Deliver mails (msmtp).
 
-exec msmtpqw "$@";
+exec msmtpqw "$@"
 
 # vim: set ft=sh :

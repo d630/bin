@@ -3,13 +3,16 @@
 # MediathekView (german tv)
 
 case $1 in
-    (run)
-        java -jar /opt/MediathekView.jar;;
-    (load)
-        java -jar /opt/bin/MediathekView.jar -auto -noGui;;
-    (*)
-        printf 'Usage: mediathekieww (run|load)\n' 1>&2;
-        exit 1;
-esac;
+    run)
+        java -jar /opt/MediathekView.jar
+        ;;
+    load)
+        java -jar /opt/bin/MediathekView.jar -auto -noGui
+        ;;
+    *)
+        printf 'Usage: mediathekieww (run|load)\n' 1>&2
+        exit 1
+        ;;
+esac
 
 # vim: set ft=sh :

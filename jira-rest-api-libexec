@@ -2,45 +2,45 @@
 #
 # Libexec: Confluence REST API.
 
-export API=${API:-${api:-jira-rest-api}};
+export API=${API:-${api:-jira-rest-api}}
 
 # Get all mates' unresolved issues.
 f_get_mates_unresolved_issues() {
-    local mates=${1:-'error: mates missing'};
+    local mates=${1:-'error: mates missing'}
 
-    command "$API" get \
+    command -- "$API" get \
         "/rest/api/2/search?maxResults=999&jql=assignee%20IN%20($mates)%20and%20resolution=Unresolved"
 }
 
 # Get all user's watching issues.
 f_get_users_watched_issues() {
-    local user=${1:-'error: user missing'};
+    local user=${1:-'error: user missing'}
 
-    command "$API" get "/rest/api/2/search?maxResults=999&jql=watcher=$user";
+    command -- "$API" get "/rest/api/2/search?maxResults=999&jql=watcher=$user"
 }
 
 # Watch all issues a user's team members have been assigned to.
 f_watch_mates_issues() {
     local \
         user=${1:-'error: user missing'} \
-        mates=${2:-'error: mates missing'};
+        mates=${2:-'error: mates missing'}
 
     \f_get_mates_unresolved_issues "$mates" |
-    exec jq -r '"/rest/api/2/issue/\(.issues[].key)/watchers"' |
-    exec sort -u |
-    exec xargs -L 1 -n 1 -P 0 -I {} "$API" post "{}" "\"$user\"";
+        exec jq -r '"/rest/api/2/issue/\(.issues[].key)/watchers"' |
+        exec sort -u |
+        command -- xargs -n 1 -P 0 -I {} -- "$API" post "{}" "\"$user\""
 }
 
 # Remove user everywhere as watcher.
 f_unwatch_issues() {
-    local user=${1:-'error: user missing'};
+    local user=${1:-'error: user missing'}
 
     \f_get_users_watched_issues "$user" |
-    exec jq -r --arg user "$user" \
-        '"/rest/api/2/issue/\(.issues[].key)/watchers?username=\($user)"' |
-    exec xargs -L 1 -n 1 -P 0 "$API" delete;
+        exec jq -r --arg user "$user" \
+            '"/rest/api/2/issue/\(.issues[].key)/watchers?username=\($user)"' |
+        command -- xargs -n 1 -P 0 -- "$API" delete
 }
 
-${1:+"f_$@"};
+${1:+"f_$@"}
 
 # vim: set ft=sh :

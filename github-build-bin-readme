@@ -3,46 +3,45 @@
 # Build README.md in github.com/D630/bin.
 
 cd -- /home/stow/bin/bin ||
-	exit 1;
+    exit 1
 
-IFS=.: read -r _ _ p _  _ < <(git config --local --get remote.origin.url);
-P=https://github.com/$p;
+IFS=.: read -r _ _ p _ _ < <(exec -- git config --local --get remote.origin.url)
+P=https://github.com/$p
 
-export LC_ALL=C;
+export LC_ALL=C
 
-__find ()
+__find() {
+    # find . -maxdepth 1 -regextype posix-egrep \
+    #         \( -path "./.*" -o -name README.md \) \
+    #         -prune \
+    #         -o \( -type f -a -regex "\./.*\.(awk|py|sh)" \) \
+    #         -exec grep -H -m 1 '^# ' {} +;
+    # git ls-files -z '*.awk' '*.py' '*.sh' \
+    # | xargs -0 grep -H -m 1 '^# ';
+
+    exec -- git ls-files -z '[!A][!R]*' |
+        exec -- xargs -0 -- grep -E -Z -l -m 1 '^#!.*(awk|[bdtm][ack]sh|python|sh|perl).*' |
+        command -- xargs -0 -- grep -H -m 1 '^# '
+
+    # find . -maxdepth 1 \
+    #         \( -path "./.*" -o -name README.md \) \
+    #         -prune \
+    #         -o \( -type f -a -name "*.php" \) \
+    #         -exec grep -H -m 1 '// ' {} + \
+    # | sed 's/    \/\//#/';
+    # git ls-files -z '*.php' \
+    # | xargs -0 grep -H -m 1 '// ' \
+    # | sed 's/    \/\//#/';
+
+    exec -- git ls-files -z '[!A][!R]*' |
+        exec -- xargs -0 -- grep -E -Z -l -m 1 '^#!.*php.*' |
+        exec -- xargs -0 -- grep -H -m 1 '// ' |
+        exec -- sed 's:[[:space:]]*//:#:'
+}
+
 {
-	# find . -maxdepth 1 -regextype posix-egrep \
-	#         \( -path "./.*" -o -name README.md \) \
-	#         -prune \
-	#         -o \( -type f -a -regex "\./.*\.(awk|py|sh)" \) \
-	#         -exec grep -H -m 1 '^# ' {} +;
-	# git ls-files -z '*.awk' '*.py' '*.sh' \
-	# | xargs -0 grep -H -m 1 '^# ';
-
-	git ls-files -z '[!A][!R]*' |
-		xargs -0 grep -E -Z -l -m 1 '^#!.*(awk|[bdtm][ack]sh|python|sh|perl).*' |
-		xargs -0 grep -H -m 1 '^# ';
-
-	# find . -maxdepth 1 \
-	#         \( -path "./.*" -o -name README.md \) \
-	#         -prune \
-	#         -o \( -type f -a -name "*.php" \) \
-	#         -exec grep -H -m 1 '// ' {} + \
-	# | sed 's/    \/\//#/';
-	# git ls-files -z '*.php' \
-	# | xargs -0 grep -H -m 1 '// ' \
-	# | sed 's/    \/\//#/';
-
-	git ls-files -z '[!A][!R]*' |
-		xargs -0 grep -E -Z -l -m 1 '^#!.*php.*' |
-		xargs -0 grep -H -m 1 '// ' |
-		sed 's:[[:space:]]*//:#:';
-};
-
-{
-	header=$(</dev/fd/0);
-} <<'HEADER'
+    header=$(</dev/fd/0)
+} <<HEADER
 Short scripts, which do not belong to my dotfiles. Unless otherwise stated,
 these files are in the public domain.
 
@@ -51,15 +50,13 @@ List:
 HEADER
 
 __find |
-	sort |
-	{
-		printf %s\\n "$header";
-		while
-			IFS=: read -r p c;
-		do
-			printf '* [%s](%s/blob/master/%s): %s\n' \
-				"${p#./}" "$P" "${p#./}" "${c#\# }";
-		done;
-	} > ./README.md;
+    exec -- sort |
+    {
+        printf %s\\n "$header"
+        while IFS=: read -r p c; do
+            printf '* [%s](%s/blob/master/%s): %s\n' \
+                "${p#./}" "$P" "${p#./}" "${c#\# }"
+        done
+    } >./README.md
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

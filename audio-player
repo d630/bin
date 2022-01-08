@@ -2,10 +2,9 @@
 #
 # Default audio player (cli).
 
-IFS=\|;
-set -f;
-set -- $AUDIO_PLAYER_OPTS ${1:+"$@"};
-
-exec "$AUDIO_PLAYER" "$@";
+IFS=\|
+set -f &&
+    set -- $AUDIO_PLAYER_OPTS ${1:+"$@"} &&
+    exec "$AUDIO_PLAYER" "$@"
 
 # vim: set ft=sh :

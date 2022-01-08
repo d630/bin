@@ -2,6 +2,6 @@
 #
 # Xorg: Disable or enable touchpad.
 
-exec xinput --"${1:?}" "ETPS/2 Elantech Touchpad";
+exec xinput --"${1:?}" "ETPS/2 Elantech Touchpad"
 
 # vim: set ft=sh :

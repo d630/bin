@@ -2,7 +2,7 @@
 #
 # Print the X clipboard selection to stdout.
 
-xsel -l /dev/null --clipboard --output;
+exec xsel -l /dev/null --clipboard --output
 # xclip -quiet -loops 0 -selection clipboard -out;
 
 # vim: set ft=sh :

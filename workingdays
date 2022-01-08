@@ -3,231 +3,232 @@
 # Display some working day statistic.
 
 declare \
-	curr= \
-	curr_V= \
-	curr_d= \
-	curr_j= \
-	curr_m= \
-	curr_q= \
-	curr_y= \
-	dir=${XDG_VAR_HOME:-$HOME/var}/lib/workingdays;
+    curr= \
+    curr_V= \
+    curr_d= \
+    curr_j= \
+    curr_m= \
+    curr_q= \
+    curr_y= \
+    dir=${XDG_VAR_HOME:-$HOME/var}/lib/workingdays
 
-printf -v curr '%(%F)T' -1;
+printf -v curr '%(%F)T' -1
 eval "$(
-	exec date --date "${1:-$curr}" \
-		"+curr_y=%-Y curr_m=%-m curr_d=%-d curr_V=%-V curr_j=%-j curr_q=%-q"
-)";
+    exec -- date --date "${1:-$curr}" \
+        "+curr_y=%-Y curr_m=%-m curr_d=%-d curr_V=%-V curr_j=%-j curr_q=%-q"
+)"
 
 declare -a \
-	month=() \
-	quarter=() \
-	week=() \
-	year=();
+    month=() \
+    quarter=() \
+    week=() \
+    year=()
 
-mapfile -t year < <(exec sort -k 4,4n "$dir/$curr_y/year.txt") ||
-	exit;
+mapfile -t year < <(exec -- sort -k 4,4n "$dir/$curr_y/year.txt") ||
+    exit 1
 
 eval "$(
-	printf '%s\n' "${year[@]}" |
-	exec mawk -v curr_m=$curr_m -v curr_q=$curr_q -v curr_V=$curr_V '
-		$2 == curr_m {
-			if (! (0 in m)) {
-				m[0] = NR
-			}
-			m[1] = NR
-		}
-		$5 == curr_q {
-			if (! (0 in q)) {
-				q[0] = NR
-			}
-			q[1] = NR
-		}
-		$6 == curr_V {
-			if (! (0 in V)) {
-				V[0] = NR
-			}
-			V[1] = NR
-		}
+    printf '%s\n' "${year[@]}" |
+        exec mawk -v curr_m="$curr_m" -v curr_q="$curr_q" -v curr_V="$curr_V" '
+            $2 == curr_m {
+                if (! (0 in m)) {
+                    m[0] = NR
+                }
+                m[1] = NR
+            }
+            $5 == curr_q {
+                if (! (0 in q)) {
+                    q[0] = NR
+                }
+                q[1] = NR
+            }
+            $6 == curr_V {
+                if (! (0 in V)) {
+                    V[0] = NR
+                }
+                V[1] = NR
+            }
 
-		END {
-			printf("month=(%d %d) ", m[0], m[1])
-			printf("quarter=(%d %d) ", q[0], q[1])
-			printf("week=(%d %d)", V[0], V[1])
-		}
-	';
-)";
+            END {
+                printf("month=(%d %d) ", m[0], m[1])
+                printf("quarter=(%d %d) ", q[0], q[1])
+                printf("week=(%d %d)", V[0], V[1])
+            }
+        '
+)"
 
-count () {
-	declare -n _assoc=$1;
-	declare _key=$2;
-	declare -i _offset=$3 _len=$4;
+count() {
+    declare -n _assoc=$1
+    declare _key=$2
+    declare -i _offset=$3 _len=$4
 
-	_assoc+=(
-		["weekend|$_key"]=0
-		["holiday|$_key"]=0
-		["urlaub|$_key"]=0
-		["sick|$_key"]=0
-		["work|$_key"]=0
-	)
+    _assoc+=(
+        ["weekend|$_key"]=0
+        ["holiday|$_key"]=0
+        ["urlaub|$_key"]=0
+        ["sick|$_key"]=0
+        ["work|$_key"]=0
+    )
 
-	for _d in "${year[@]:_offset:_len}";
-	do
-		case $_d in
-			(*weekend)
-				_assoc["weekend|$_key"]+=1;;
-			(*holiday)
-				_assoc["holiday|$_key"]+=1;;
-			(*urlaub)
-				_assoc["urlaub|$_key"]+=1;;
-			(*sick)
-				_assoc["sick|$_key"]+=1;;
-			(*)
-				_assoc["work|$_key"]+=1;;
-		esac;
-	done;
-};
+    for _d in "${year[@]:_offset:_len}"; do
+        case $_d in
+            *weekend)
+                _assoc["weekend|$_key"]+=1
+                ;;
+            *holiday)
+                _assoc["holiday|$_key"]+=1
+                ;;
+            *urlaub)
+                _assoc["urlaub|$_key"]+=1
+                ;;
+            *sick)
+                _assoc["sick|$_key"]+=1
+                ;;
+            *)
+                _assoc["work|$_key"]+=1
+                ;;
+        esac
+    done
+}
 
 declare -i -A \
-	m=() \
-	q=() \
-	t=() \
-	w=() \
-	y=();
+    m=() \
+    q=() \
+    t=() \
+    w=() \
+    y=()
 
 declare -a counts=(
-	w done 'week - 1' 'curr_j - week'
-	w todo 'curr_j - 1' "${week[1]} - curr_j + 1"
-	m done 'month - 1' 'curr_j - month'
-	m todo 'curr_j - 1' "${month[1]} - curr_j + 1"
-	q done 'quarter - 1' 'curr_j - quarter'
-	q todo 'curr_j - 1' "${quarter[1]} - curr_j + 1"
-	y done 0 'curr_j - 1'
-	y todo 'curr_j - 1' "${#year[@]}"
-);
+    w done 'week - 1' 'curr_j - week'
+    w todo 'curr_j - 1' "${week[1]} - curr_j + 1"
+    m done 'month - 1' 'curr_j - month'
+    m todo 'curr_j - 1' "${month[1]} - curr_j + 1"
+    q done 'quarter - 1' 'curr_j - quarter'
+    q todo 'curr_j - 1' "${quarter[1]} - curr_j + 1"
+    y done 0 'curr_j - 1'
+    y todo 'curr_j - 1' "${#year[@]}"
+)
 
-for ((i=0; i < ${#counts[@]}; i+=4));
-do
-	count "${counts[@]:i:4}";
+for ((i = 0; i < ${#counts[@]}; i += 4)); do
+    count "${counts[@]:i:4}"
 done
 
-declare a=;
-unset -v assoc;
-for a in m q w y;
-do
-	declare -n assoc=$a
-	declare -a "$a$a=(
-		${assoc[work|done]} ${assoc[work|todo]}
-		${assoc[weekend|done]} ${assoc[weekend|todo]}
-		${assoc[holiday|done]} ${assoc[holiday|todo]}
-		${assoc[urlaub|done]} ${assoc[urlaub|todo]}
-		${assoc[sick|done]} ${assoc[sick|todo]}
-	)"
-done;
+declare a=
+unset -v assoc
+for a in m q w y; do
+    declare -n assoc=$a
+    declare -a "$a$a=(
+        ${assoc[work | done]} ${assoc[work | todo]}
+        ${assoc[weekend | done]} ${assoc[weekend | todo]}
+        ${assoc[holiday | done]} ${assoc[holiday | todo]}
+        ${assoc[urlaub | done]} ${assoc[urlaub | todo]}
+        ${assoc[sick | done]} ${assoc[sick | todo]}
+    )"
+done
 
 declare -A phrase=(
-	["work"]='working'
-	["weekend"]='enjoying your weekend'
-	["holiday"]='celebrating'
-	["urlaub"]='hanging around'
-	["sick"]='lying in bed'
-);
+    ['work']=working
+    ['weekend']='enjoying your weekend'
+    ['holiday']='celebrating'
+    ['urlaub']='hanging around'
+    ['sick']='lying in bed'
+)
 
-count t _ 'curr_j - 1' 1;
-declare k=;
-for k in "${!t[@]}";
-do
-	((${t[$k]})) && break;
+count t _ 'curr_j - 1' 1
+declare k=
+for k in "${!t[@]}"; do
+    ((${t[$k]})) && break
 done
 
 printf '%04d-%02d-%02d (day of year: %d)\n\nYou should be %s!\n\n' \
-	"$curr_y" "$curr_m" "$curr_d" "$curr_j" \
-	"${phrase[${k%??}]}";
+    "$curr_y" "$curr_m" "$curr_d" "$curr_j" \
+    "${phrase[${k%??}]}"
 
 printf '%s %d %d %d %d %d %d %d %d %d %d %d\n' \
-	week "$curr_V" "${ww[@]}" \
-	month "$curr_m" "${mm[@]}" \
-	quarter "$curr_q" "${qq[@]}" \
-	year "$curr_y" "${yy[@]}" |
-exec mawk '
-	BEGIN {
-		OFS = "\t"
-		print "/", "#", "TOTAL", "OFF", "(WE)", "(HOL)", "(UL)", "(SICK)", "ON", "(DONE)", "(TODO)"
-		print "-------", "----", "-----", "-----------", "-----------", "-----------", "-----------", "-----------", "-----------", "-----------", "-----------"
-	}
+    week "$curr_V" "${ww[@]}" \
+    month "$curr_m" "${mm[@]}" \
+    quarter "$curr_q" "${qq[@]}" \
+    year "$curr_y" "${yy[@]}" |
+    exec -- mawk '
+        BEGIN {
+            OFS = "\t"
+            print "/", "#", "TOTAL", "OFF", "(WE)", "(HOL)", "(UL)", "(SICK)", "ON", "(DONE)", "(TODO)"
+            print "-------", "----", "-----", "-----------", "-----------", "-----------", "-----------", "-----------", "-----------", "-----------", "-----------"
+        }
 
-	{
-		entity = $1
-		number = $2
+        {
+            entity = $1
+            number = $2
 
-		work_done = $3
-		work_todo = $4
-		work = work_done + work_todo
+            work_done = $3
+            work_todo = $4
+            work = work_done + work_todo
 
-		weekend_done = $5
-		weekend_todo = $6
-		weekend = weekend_done + weekend_todo
+            weekend_done = $5
+            weekend_todo = $6
+            weekend = weekend_done + weekend_todo
 
-		holiday_done = $7
-		holiday_todo = $8
-		holiday = holiday_done + holiday_todo
+            holiday_done = $7
+            holiday_todo = $8
+            holiday = holiday_done + holiday_todo
 
-		urlaub_done = $9
-		urlaub_todo = $10
-		urlaub = urlaub_done + urlaub_todo
+            urlaub_done = $9
+            urlaub_todo = $10
+            urlaub = urlaub_done + urlaub_todo
 
-		sick_done = $11
-		sick_todo = $12
-		sick = sick_done + sick_todo
+            sick_done = $11
+            sick_todo = $12
+            sick = sick_done + sick_todo
 
-		off= weekend + holiday + urlaub + sick
+            off= weekend + holiday + urlaub + sick
 
-		total = work + off
+            total = work + off
 
-		printf("%7s\t%4d\t%5d\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\n",
-			entity,
-			number,
+            printf("%7s\t%4d\t%5d\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\t%3d (%5.1f)\n",
+                entity,
+                number,
 
-			total,
+                total,
 
-			off, 100 / total * off,
-			weekend, 100 / off * weekend,
-			holiday, 100 / off * holiday,
-			urlaub, 100 / off * urlaub,
-			sick, 100 / off * sick,
+                off, 100 / total * off,
+                weekend, 100 / off * weekend,
+                holiday, 100 / off * holiday,
+                urlaub, 100 / off * urlaub,
+                sick, 100 / off * sick,
 
-			work, 100 / total * work,
-			work_done, work == 0 ? 0 : 100 / work * work_done,
-			work_todo, work == 0 ? 0 : 100 / work * work_todo \
-		)
-	}
-' |
-column -t -s $'\t';
+                work, 100 / total * work,
+                work_done, work == 0 ? 0 : 100 / work * work_done,
+                work_todo, work == 0 ? 0 : 100 / work * work_todo \
+            )
+        }
+    ' |
+    command -- column -t -s $'\t'
 
-echo;
+echo
 
-if [[ $curr_m-$curr_d != 12-31 ]]
-then
-	declare -a \
-		off=() \
-		work=();
+if [[ $curr_m-$curr_d != 12-31 ]]; then
+    declare -a \
+        off=() \
+        work=()
 
-	declare p=;
+    declare p=
 
-	for d in "${year[@]:curr_j}";
-	do
-		case $d in
-			(*weekend|*holiday|*urlaub|*sick)
-				! ((${#off[@]})) && read -r -a off <<<"$d" &&
-					printf 'Next off day: %04d-%02d-%02d (%s)\n' "${off[@]:0:3}" "${off[-1]}" &&
-						[[ -n $work ]] && break;;
-			(*work)
-				! ((${#work[@]})) && read -r -a work <<<"$d" &&
-					printf 'Next work day: %04d-%02d-%02d\n' "${work[@]:0:3}" && [[ -n $off ]] && break;;
-		esac;
-	done
+    for d in "${year[@]:curr_j}"; do
+        case $d in
+            *weekend | *holiday | *urlaub | *sick)
+                ! ((${#off[@]})) && read -r -a off <<<"$d" &&
+                    printf 'Next off day: %04d-%02d-%02d (%s)\n' "${off[@]:0:3}" "${off[-1]}" &&
+                    [[ -n $work ]] && break
+                ;;
+            *work)
+                ! ((${#work[@]})) && read -r -a work <<<"$d" &&
+                    printf 'Next work day: %04d-%02d-%02d\n' "${work[@]:0:3}" && [[ -n $off ]] && break
+                ;;
+        esac
+    done
 fi
 
 printf 'Unplanned urlaubstage: %d\n' \
-	"$(($(<"$dir/$curr_y/urlaubstageanzahl.txt") - ${y["urlaub|todo"]} - ${y["urlaub|done"]}))";
+    "$(($(<"$dir/$curr_y/urlaubstageanzahl.txt") - ${y["urlaub|todo"]} - ${y["urlaub|done"]}))"
 
-# vim: set ft=sh noexpandtab :
+# vim: set ft=zsh :

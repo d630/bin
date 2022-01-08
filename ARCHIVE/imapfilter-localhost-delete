@@ -4,7 +4,7 @@
 # TODO
 
 exec imapfilter \
-	-c "$HOME/".imapfilter/localhost-delete.lua \
-	-l "${XDG_VAR_HOME:?}/"log/imapfilter.log;
+    -c "$HOME/".imapfilter/localhost-delete.lua \
+    -l "${XDG_VAR_HOME:?}/"log/imapfilter.log
 
 # vim: set ft=sh :

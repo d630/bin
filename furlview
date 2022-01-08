@@ -14,60 +14,42 @@
 #
 # FILE is regular or piped, that is also <(foo)
 
-
-test-xorg ||
-	exit 1;
-
-function __x_web_browser {
-	daemonize run-chromium "$1";
-};
-
-function __fzf {
-	fzf --tac -e -i -m;
-};
-
-function __ugrep {
-	grep-url;
-};
+command -- test-xorg ||
+    exit 1
 
 function __select {
-	__ugrep |
-	__fzf;
-};
+    exec -- grep-url |
+        exec -- fzf --tac -e -i -m
+}
 
-function __is_file [[ -p $1 || -f $1 ]];
+function __is_file [[ -p $1 || -f $1 ]]
 
-if
-	__is_file /dev/stdin;
-then
-	mapfile -t furls < <(__select);
+if __is_file /dev/stdin; then
+    mapfile -t furls < <(__select)
 else
-	(($#)) || {
-		printf %s\\n aaarg? 1>&2;
-		exit 1;
-	};
-	mapfile -t furls < <(
-		for a in "$@";
-		do
-			if
-				__is_file "$a";
-			then
-				cat -- "$a";
-			else
-				printf \
-					"File '%s' is neather a regular file nor a named pipe, that is executable\n" \
-					"$a" 1>&2;
-			fi;
-		done |
-		__select;
-	);
-fi;
+    if ! (($#)); then
+        echo Error: Missing arguments 1>&2
+        exit 1
+    fi
 
-for u in "${furls[@]}";
-do
-	__x_web_browser "$u" &
-done;
+    mapfile -t furls < <(
+        for f in "$@"; do
+            if __is_file "$f"; then
+                command -- cat -- "$f"
+            else
+                printf \
+                    "Error: File '%s' is neather a regular file nor a named pipe\n" \
+                    "$f" 1>&2
+            fi
+        done |
+            __select
+    )
+fi
 
-wait;
+for u in "${furls[@]}"; do
+    command -- daemonize run-chromium "$u" &
+done
 
-# vim: set ft=sh :
+wait
+
+# vim: set ft=zsh :

@@ -2,43 +2,43 @@
 #
 # My preprocessor for less.
 
-test $# -gt 0 ||
-    exit 1;
+test "$#" -gt 0 ||
+    exit 1
 
-trap exit\ 0 PIPE;
-umask 077;
-space=' ' \
-tab='	' \
+trap exit\ 0 PIPE
+umask 077
+space=' '
+tab='	'
 newline='
-' \
-LESSMETACHARS="$space$tab$newline'"';*?"()<>[|&^`#\$%=~';
-export LESSMETACHARS;
+'
+LESSMETACHARS="$space$tab$newline'"';*?"()<>[|&^`#\$%=~'
+export LESSMETACHARS
 
 test -x "$HOME/.lessfilter" &&
-	"$HOME/.lessfilter" "$1" &&
-		exit 82;
+    "$HOME/.lessfilter" "$1" &&
+    exit 82
 
+set -f
 for i in $LESSIGNORE; do
-	case $1 in
-		(*.$i)
-			exit 82;;
-	esac;
-done;
+    case $1 in
+        *.$i)
+            exit 82
+            ;;
+    esac
+done
 
 if
-	test "${LESSCOLOR:-0}" -eq 2 ||
-		case $LESS in
-			(*-[rR]*)
-				:;;
-			(*)
-				! :;;
-		esac;
+    test "${LESSCOLOR:-0}" -eq 2 ||
+        case $LESS in
+            *-[rR]*) : ;;
+            *) ! : ;;
+        esac
 then
-	A=cdog;
+    A=cdog
 else
-	A=dog;
-fi;
+    A=dog
+fi
 
-exec open -A "$A" -A about -f "$1" 2>&1;
+exec open -A "$A" -A about -f "$1" 2>&1
 
 # vim: set ft=sh :

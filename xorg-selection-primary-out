@@ -2,8 +2,8 @@
 #
 # Print the X primary selection to stdout.
 
-xsel -l /dev/null -k;
-xsel -l /dev/null --primary --output;
+command -- xsel -l /dev/null -k
+command -- xsel -l /dev/null --primary --output
 # xclip -quiet -loops 0 -selection primary -out;
 
 # vim: set ft=sh :

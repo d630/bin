@@ -3,13 +3,15 @@
 # Run black.
 
 exec black \
-	--line-length '88' \
-	--target-version 'py37' \
-	--target-version 'py36' \
-	--target-version 'py35' \
-	--include '\.pyi?$' \
-	--exclude '/(\.eggs|\.git|\.hg|\.mypy_cache|\.nox|\.tox|\venv|\.venv|_build|buck-out|build|dist)/' \
-	--safe \
-	"$@";
+    --line-length '88' \
+    --target-version 'py39' \
+    --target-version 'py38' \
+    --target-version 'py37' \
+    --target-version 'py36' \
+    --target-version 'py35' \
+    --include '\.pyi?$' \
+    --exclude '/(\.eggs|\.git|\.hg|\.mypy_cache|\.nox|\.tox|\venv|\.venv|_build|buck-out|build|dist)/' \
+    --safe \
+    "$@"
 
 # vim: set ft=sh :

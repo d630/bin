@@ -2,7 +2,7 @@
 #
 # X-select color code from grabc into clipboard.
 
-run-grabc |
-xorg-selection-clipboard-in;
+exec run-grabc |
+    exec xorg-selection-clipboard-in
 
 # vim: set ft=sh :

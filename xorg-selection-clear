@@ -2,8 +2,10 @@
 #
 # Clear the X selection.
 
-xsel -l /dev/null --clear --primary;
-xsel -l /dev/null --clear --secondary;
-xsel -l /dev/null --clear --clipboard;
+for s in primary secondary clipboard; do
+    command -- xsel -l /dev/null --clear "--$s" &
+done
+
+wait
 
 # vim: set ft=sh :

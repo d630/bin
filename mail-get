@@ -2,28 +2,27 @@
 #
 # Get mails and give notification + sound (via run-logger).
 
-exec 9<"$0";
-flock -n 9 || {
-	printf 'sorry, I am already running\n' 1>&2;
-	exit 1;
-};
+exec 9<"$0"
+if ! flock -n 9; then
+    printf 'sorry, I am already running\n' 1>&2
+    exit 1
+fi
 
-mail-retrieve ${1:+"$@"};
-sleep 0.5
+command -- mail-retrieve ${1:+"$@"}
+command -- sleep 0.5
 
-mapfile -t reply < <(mail-inbox);
+mapfile -t reply < <(exec -- mail-inbox)
 
-((
-	${reply[0]##*[[:space:]]}
-	+ ${reply[1]##*[[:space:]]}
-	+ ${reply[2]##*[[:space:]]}
-	+ ${reply[3]##*[[:space:]]}
-	+ ${reply[4]##*[[:space:]]} > 0
-)) ||
-	exit 1;
+((\
+${reply[0]##*[[:space:]]} + \
+${reply[1]##*[[:space:]]} + \
+${reply[2]##*[[:space:]]} + \
+${reply[3]##*[[:space:]]} + \
+${reply[4]##*[[:space:]]} > 0)) ||
+    exit 1
 
-run-logger 6 .email.arrived \
-	"\n${reply[0]:-?}\n${reply[1]:-?}\n${reply[2]:-?}\n${reply[3]:-?}\n${reply[4]:-?}" 2>/dev/null;
-printf '%s\n' "${reply[@]}";
+printf '%s\n' "${reply[@]}"
+exec -- run-logger 6 .email.arrived \
+    "\n${reply[0]:-?}\n${reply[1]:-?}\n${reply[2]:-?}\n${reply[3]:-?}\n${reply[4]:-?}" 2>/dev/null
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

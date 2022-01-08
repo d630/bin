@@ -2,22 +2,23 @@
 #
 # Wrapper: Confluence REST API.
 
-. "$(which rest-api)" ||
-    exit;
+. "$(command -v -- rest-api)" ||
+    exit
 
-server_address=${CONFLUENCE_SERVER_ADDRESS:-https://confluence.wir.invalid};
+server_address=${CONFLUENCE_SERVER_ADDRESS:-https://confluence.wir.invalid}
 
-unset -v CONFLUENCE_SERVER_ADDRESS;
+unset -v CONFLUENCE_SERVER_ADDRESS
 
 get() {
-	case $endpoint in
-		(space)
-			endpoint=/rest/api/$endpoint?limit=500;;
-	esac;
+    case $endpoint in
+        space)
+            endpoint=/rest/api/$endpoint?limit=500
+            ;;
+    esac
 
-	\curl;
+    \curl
 }
 
-\main "$@";
+\main "$@"
 
 # vim: set ft=sh :

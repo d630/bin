@@ -2,18 +2,21 @@
 #
 # Test against daytime and adjust my theme config.
 
-f=${XDG_RUNTIME_DIR:?}/DAYLIGHT;
+f=${XDG_RUNTIME_DIR:?}/DAYLIGHT
 
 case $1 in
-	(dark|1)
-		rm -f -- "$f";
-		exec theme dark;;
-	(light|0)
-		: > "$f";
-		exec theme light;;
-	(*)
-		test-daylight;
-		exec "$0" "$?";;
-esac;
+    dark | 1)
+        command -- rm -f -- "$f"
+        exec theme dark
+        ;;
+    light | 0)
+        : >"$f"
+        exec theme light
+        ;;
+    *)
+        command -- test-daylight
+        exec "$0" "$?"
+        ;;
+esac
 
 # vim: set ft=sh :

@@ -2,21 +2,21 @@
 #
 # Display times.
 
-tput bold setaf 7;
-date +'%Y-%m-%d %H:%M:%S (%a; D%j; KW%V; Q%q)';
-tput sgr0;
+command -- tput bold setaf 7
+command -- date '+%Y-%m-%d %H:%M:%S (%a; D%j; KW%V; Q%q)'
+command -- tput sgr0
 
-printf '\nLifeday: ';
-get-lifeday;
+printf '\nLifeday: '
+command -- get-lifeday
 
-echo;
-ncal -w -M;
+echo
+command -- ncal -w -M
 echo
 # TASKRC=$XDG_CONFIG_HOME/taskrc-life \
 #     task rc._forcecolor=true calendar 2>/dev/null;
 
-sed "s/.*/TZ=& date +\\\'%Z %t%F %T %t&\\\'/" "$HOME/".tzlist |
-xargs -P 0 -I {} sh -c {};
-echo;
+exec sed "s/.*/TZ=& date \\\'+%Z %t%F %T %t&\\\'/" "$HOME/".tzlist |
+    command -- xargs -P 0 -I {} -- sh -c {}
+echo
 
 # vim: set ft=sh :

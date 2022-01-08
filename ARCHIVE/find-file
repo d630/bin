@@ -2,6 +2,6 @@
 #
 # Find file under the current directory with flag -ls.
 
-find . -type f -iname "*$*" -ls;
+find . -type f -iname "*$*" -ls
 
 # vim: set ft=sh :

@@ -2,48 +2,43 @@
 #
 # Take pub list1 and create public gpb lists.
 
-token=${1:?};
-file=${2:-$XDG_VAR_HOME/lib/bspot/bspot_create_gpb_lists.bash};
+token=${1:?}
+file=${2:-${XDG_VAR_HOME:?}/lib/bspot/bspot_create_gpb_lists.bash}
 
 # wants:
 # 	-A dates[%s|playlist-id]
 # 	-a dates_sorted (newest first)
 # 	list1
 . "$file" ||
-	exit 1;
+    exit 1
 
-while
-	read -r time uri;
-do
-	for d in "${dates_sorted[@]}";
-	do
-		((time >= ${d%|*})) &&
-			dates[$d]+=$uri, &&
-			break;
-	done;
+while read -r time uri; do
+    for d in "${dates_sorted[@]}"; do
+        ((time >= ${d%|*})) &&
+            dates[$d]+=$uri, &&
+            break
+    done
 done < <(
-	bspot getTracksObjects "$list1" "$token" |
-	jq -r '
-		.items[] |
-		"date --date=\(.added_at) +%s_\(([.track.artists[].uri]|join("/")))_\(.track.uri)"
-		' |
-	xargs -I {} -P 4 sh -c {} |
-	LC_ALL=C sort -t _ -k 1nr,1nr -k 2d,2d |
-	sed 's/^\([^_]*\)_\([^_]*\)_\([^_]*\)$/\1 \3/';
-);
+    exec -- bspot getTracksObjects "$list1" "$token" |
+        exec -- jq -r '
+            .items[] |
+            "date --date=\(.added_at) +%s_\(([.track.artists[].uri]|join("/")))_\(.track.uri)"
+        ' |
+        exec -- xargs -I {} -P 4 -- sh -c {} |
+        LC_ALL=C exec -- sort -t _ -k 1nr,1nr -k 2d,2d |
+        exec -- sed 's/^\([^_]*\)_\([^_]*\)_\([^_]*\)$/\1 \3/'
+)
 
-for k in "${!dates[@]}";
-do
-	list2=${k#*|};
-	[[ $list2 == END ]] &&
-		continue
-	mapfile -t -d , <<< "${dates[$k]}";
-	bspot clearList "$list2" "$token";
-	for ((i = ${#MAPFILE[@]} - 2; i >= 0; i--));
-	do
-		printf '%s\n' "${MAPFILE[$i]}";
-	done |
-	bspot addTracks "$list2" "$token";
-done;
+for k in "${!dates[@]}"; do
+    list2=${k#*|}
+    [[ $list2 == END ]] &&
+        continue
+    mapfile -t -d , <<<"${dates[$k]}"
+    command -- bspot clearList "$list2" "$token"
+    for ((i = ${#MAPFILE[@]} - 2; i >= 0; i--)); do
+        printf '%s\n' "${MAPFILE[$i]}"
+    done |
+        command -- bspot addTracks "$list2" "$token"
+done
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

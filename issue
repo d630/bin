@@ -2,7 +2,6 @@
 #
 # Wrapper: Use taskwarrior in my 'issue' context.
 
-export TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-issue;
-exec task "$@";
+TASKRC=$XDG_CONFIG_HOME/taskwarrior/taskrc-issue exec task "$@"
 
 # vim: set ft=sh :

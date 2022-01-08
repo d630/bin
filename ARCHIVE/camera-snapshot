@@ -2,7 +2,7 @@
 #
 # Take a quick camera snapshot.
 
-mkdir -p /tmp/camera-snapshots;
+mkdir -p /tmp/camera-snapshots
 
 exec ffmpeg \
     -f video4linux2 \
@@ -10,6 +10,6 @@ exec ffmpeg \
     -i /dev/video0 \
     -ss 0:0:2 \
     -frames 1 \
-    "/tmp/camshots/$(date +%s).jpg";
+    "/tmp/camshots/$(date +%s).jpg"
 
 # vim: set ft=sh :

@@ -3,6 +3,6 @@
 # X-select random password.
 
 printf "$(pyrandgen)" |
-xclip -i -l 1 -selection clipboard;
+    xclip -i -l 1 -selection clipboard
 
 # vim: set ft=sh :

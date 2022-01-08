@@ -2,17 +2,17 @@
 #
 # Run firefox.
 
-r=${XDG_CACHE_HOME:?}/run-firefox;
+r=${XDG_CACHE_HOME:?}/run-firefox
 
-test -r "$r" -a -n "$force_new" && {
-	t=$(mktemp -d);
-	rsync -var --delete "$t/" "$r/";
-	rm -rf -- "$t";
-};
+if test -r "$r" && test -n "$force_new"; then
+    t=$(exec mktemp -d)
+    command -- rsync -var --delete "$t/" "$r/"
+    command -- rm -rf -- "$t"
+fi
 
-test -r "$r/"user.js || {
-	mkdir -p -- "$r/cache";
-	cat > "$r/"user.js <<!
+if ! test -r "$r/user.js"; then
+    command -- mkdir -p -- "$r/cache"
+    command -- cat >"$r/user.js" <<!
 user_pref("accessibility.browsewithcaret", true);
 user_pref("accessibility.force_disabled", 1);
 user_pref("app.normandy.first_run", false);
@@ -101,12 +101,10 @@ user_pref("privacy.trackingprotection.fingerprinting.enabled", true);
 user_pref("signon.importedFromSqlite", true);
 user_pref("signon.rememberSignons", false);
 !
-};
+fi
 
-export XDG_CACHE_HOME=$r/cache;
+export XDG_CACHE_HOME=$r/cache
 
-exec firefox \
-	--profile "$r" \
-	${1:+"$@"};
+exec firefox --profile "$r" ${1:+"$@"}
 
 # vim: set ft=sh :

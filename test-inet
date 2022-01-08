@@ -2,9 +2,8 @@
 #
 # Test inet connection by trying to connect/ping to google.
 
-exec 1>/dev/null 2>&1;
+exec >/dev/null 2>&1
+echo >/dev/tcp/8.8.8.8/53 ||
+    exec -- ping -qnc1 -w4 8.8.8.8
 
-echo > /dev/tcp/8.8.8.8/53 ||
-	exec ping -qnc1 -w4 8.8.8.8;
-
-# vim: set ft=sh :
+# vim: set ft=zsh :

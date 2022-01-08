@@ -2,40 +2,27 @@
 #
 # Copy password from pass.
 
-function __select {
-	read -r file < <(
-		find "$HOME/".password-store/ \
-			-type f -name \*.gpg -printf %f\\n |
-		sed 's/.gpg$//g' |
-		sort |
-		menu "$1";
-	);
-};
-
-if
-	test-ctty;
-then
-	menu=fzf;
+if command -- test-ctty; then
+    menu=fzf
 else
-	menu=dmenu2;
-fi;
+    menu=dmenu2
+fi
 
-__select "$menu";
+read -r file < <(
+    exec -- find "$HOME/.password-store" \
+        -type f -name \*.gpg -printf %f\\n |
+        exec -- sed 's/.gpg$//g' |
+        exec -- sort |
+        exec -- menu "$menu"
+)
 
-if
-	[[ -f $HOME/.password-store/$file.gpg ]];
-then
-	if
-		[[ $1 == --type ]];
-	then
-		pass show "$file" |
-		xdotool type --clearmodifiers --file -;
-	else
-		PASSWORD_STORE_CLIP_TIME=10 pass show -c "$file";
-	fi;
-else
-	printf '%s:Error: Nothing has been chosen\n' "$BASH_SOURCE" 1>&2;
-	exit 1;
-fi;
+if [[ -f $HOME/.password-store/$file.gpg ]]; then
+    if [[ $1 == --type ]]; then
+        exec -- pass show "$file" |
+            exec -- xdotool type --clearmodifiers --file -
+    else
+        PASSWORD_STORE_CLIP_TIME=10 exec -- pass show -c "$file"
+    fi
+fi
 
-# vim: set ft=sh :
+# vim: set ft=zsh :

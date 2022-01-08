@@ -3,19 +3,20 @@
 # Wrapper: Use several REST APIs.
 
 case $1 in
-	(bitbucket|confluence|jira|rocketchat)
-		export API=$1-rest-api;
-		if test "${2:?error: operation missing}" = libexec;
-		then
-			shift 2;
-			exec "$API-libexec" "$@";
-		else
-			shift 1;
-			exec "$API" "$@";
-		fi;;
-	(*)
-		printf 'error: unknown service %s\n' "$1";
-		exit 1;;
-esac;
+    bitbucket | confluence | jira | rocketchat)
+        export API=$1-rest-api
+        if test "${2:?error: operation missing}" = libexec; then
+            shift 2
+            exec "$API-libexec" "$@"
+        else
+            shift 1
+            exec "$API" "$@"
+        fi
+        ;;
+    *)
+        printf 'error: unknown service %s\n' "$1" >&2
+        exit 1
+        ;;
+esac
 
 # vim: set ft=sh noexpandtab :

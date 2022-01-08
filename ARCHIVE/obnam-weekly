@@ -24,6 +24,6 @@ exec sudo \
     obnam force-lock --config"=$obnam_conf";
 
     obnam forget --config"=$obnam_conf" --keep=2w;
-';
+'
 
 # vim: set ft=sh :

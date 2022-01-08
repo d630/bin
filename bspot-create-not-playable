@@ -2,19 +2,18 @@
 #
 # Take pub list1 and create a list with unplayable tracks.
 
-list1=${1:?};
-list2=${2:?};
-token=${3:?};
-market=${4:-DE};
+list1=${1:?}
+list2=${2:?}
+token=${3:?}
+market=${4:-DE}
 
-list=/tmp/$list1.json;
+list=/tmp/$list1.json
 
-bspot getTracksInMarket "$list1" "$token" "$market" > "$list";
+command -- bspot getTracksInMarket "$list1" "$token" "$market" >"$list"
 
-bspot clearList "$list2" "$token";
+command -- bspot clearList "$list2" "$token"
 
-jq -e -r \
-	'.items[] | if .track.is_playable then empty else .track.uri end' "$list" |
-bspot addTracks "$list2" "$token";
+exec jq -e -r '.items[] | if .track.is_playable then empty else .track.uri end' "$list" |
+    command -- bspot addTracks "$list2" "$token"
 
 # vim: set ft=sh :
