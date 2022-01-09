@@ -2,7 +2,7 @@
 #
 # Adjust theme configuration.
 
-theme.bspwm {
+theme.bspwm() {
     command -- bspc config normal_border_color "$1"
 }
 
