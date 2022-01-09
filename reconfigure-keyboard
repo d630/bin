@@ -5,9 +5,9 @@
 : "${XDG_CONFIG_HOME:?}"
 
 if command -- test-xorg; then
-    : "${PRODUCT_NAME_SUM:=$(exec get-product-name-by-md5sum)}"
+    : "${PRODUCT_NAME_SUM:=$(exec get-product-name-as-sha256sum)}"
 
-    exec get-input-devices-by-md5sum |
+    exec get-input-device-names-as-md5sums |
         while IFS= read -r sum; do
             if test -e "$XDG_CONFIG_HOME/computer/plug/keyboard/$sum"; then
                 test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/keyboard" &&

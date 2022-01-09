@@ -7,30 +7,41 @@
 if command -- test-xorg; then
     echo X_DPI=96 audio=\;export X_DPI
 
-    case ${PRODUCT_NAME_SUM:=$(exec get-product-name-by-md5sum)} in
-        dd791b3dd44b647e91524123fa1c6d0f)
-            if exec xrandr --listmonitors | command -- grep -F -q HDMI-1; then
-                command -- xrandr \
-                    --output HDMI-1 --dpi 96 --auto \
-                    --output eDP-1 --off
-                echo audio=HDMI
-            else
-                command -- xrandr \
-                    --output eDP-1 --dpi 96 --mode 1920x1080 --rate 60.01 \
-                    --output HDMI-1 --off
-                echo audio=PCH
-            fi
-            ;;
-        1cca3393c5c595d3236c7ad1bd16f0a4)
-            if exec xrandr --listmonitors | command -- grep -F -q DP-4; then
-                command -- xrandr --output DP-4 --primary --mode 1920x1080 --rotate normal
-            fi
+    : "${XDG_CONFIG_HOME:?}" "${PRODUCT_NAME_SUM:=$(exec get-product-name-as-sha256sum)}"
 
-            if exec xrandr --listmonitors | command -- grep -F -q DP-5; then
-                command -- xrandr --output DP-5 --mode 1920x1080 --rotate normal --right-of DP-4
-            fi
-            ;;
-    esac
+    sums=$(
+        exec get-edid-as-sha256sums |
+            while IFS= read -r sum; do
+                if test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/plug/$sum-port-randr"; then
+                    args=--auto
+                    if test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/plug/$sum-randr-args"; then
+                        args=$(exec cat -- "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/plug/$sum-randr-args")
+                    fi
+                    eval command -- xrandr --output \
+                        "$(exec cat -- "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/plug/$sum-port-randr")" \
+                        "$args" &&
+                        echo "$sum"
+                fi
+            done
+    )
+
+    if test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/$sum-port-randr" && test -n "$sums"; then
+        command -- xrandr --output \
+            "$(exec cat -- "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/$sum-port-randr")" \
+            --off
+    fi
+
+    if test "$X_XCLIENT" = bspwm; then
+        command -- sh "$XDG_CONFIG_HOME/bspwm/bspwmrc"
+    fi
+
+    # if exec xrandr --listmonitors | command -- grep -F -q DP-4; then
+    #     command -- xrandr --output DP-4 --primary --mode 1920x1080 --rotate normal
+    # fi
+
+    # if exec xrandr --listmonitors | command -- grep -F -q DP-5; then
+    #     command -- xrandr --output DP-5 --mode 1920x1080 --rotate normal --right-of DP-4
+    # fi
 
     command -- xset s 3600 60
     command -- xset dpms 0 0 0 -dpms

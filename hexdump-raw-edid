@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Hexdump raw EDID monitor description usable with edid-decode(1).
+
+exec hexdump -ve '1/1 "%.2x"' "${1:?missing file arg}"
+
+# vim: set ft=sh :

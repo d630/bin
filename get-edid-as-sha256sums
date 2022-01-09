@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Get sha256sums of the connected monitor's EDID info.
+
+exec grep -l '^connected' /sys/class/drm/*/status |
+    while IFS= read -r REPLY; do
+        sum=$(exec hexdump-raw-edid "${REPLY%/*}/edid" | exec sha256sum)
+        echo "${sum%  *}"
+    done
+
+# vim: set ft=sh :

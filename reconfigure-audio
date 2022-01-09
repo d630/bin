@@ -20,8 +20,8 @@
 # w
 # S
 
-case ${PRODUCT_NAME_SUM:=$(exec -- get-product-name-by-md5sum)} in
-    dd791b3dd44b647e91524123fa1c6d0f)
+case ${PRODUCT_NAME_SUM:=$(exec -- get-product-name-as-sha256sum)} in
+    859f65dacaab259e685498324e0c1e31f11fa50d26ddf907960448e9123eb2bd)
         case ${1,,} in
             pch | hdmi)
                 exec -- ln -fsr -- "$HOME/.asoundrc_${1,,}" "$HOME/.asoundrc"

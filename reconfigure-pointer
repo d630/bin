@@ -2,12 +2,12 @@
 #
 # Reconfigure pointer.
 
-: "${XDG_CONFIG_HOME:?}" "${PRODUCT_NAME_SUM:=$(exec get-product-name-by-md5sum)}"
+: "${XDG_CONFIG_HOME:?}" "${PRODUCT_NAME_SUM:=$(exec get-product-name-as-sha256sum)}"
 
 command -- test-xorg ||
     exit 1
 
-exec get-input-devices-by-md5sum |
+exec get-input-device-names-as-md5sums |
     while IFS='' read -r sum; do
         if test -e "$XDG_CONFIG_HOME/computer/plug/pointer/$sum"; then
             test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/touchpad" &&

@@ -53,11 +53,14 @@ List:
 * [generate-bookmarks-file](https://github.com/d630/bin/blob/master/generate-bookmarks-file): Extract my Bookmarks from Firefox and generate bookmarks.md file.
 * [generate-my-confluence-how-to-article](https://github.com/d630/bin/blob/master/generate-my-confluence-how-to-article): Generate markdown version of my confluence how-to article and push it.
 * [generate-workingdays-sheet](https://github.com/d630/bin/blob/master/generate-workingdays-sheet): Generate working days sheet.
+* [get-basic-edid-identification](https://github.com/d630/bin/blob/master/get-basic-edid-identification): Get some EDID vendor and product information.
 * [get-battery-capacity](https://github.com/d630/bin/blob/master/get-battery-capacity): Get battery capacity.
-* [get-input-devices-by-md5sum](https://github.com/d630/bin/blob/master/get-input-devices-by-md5sum): Get md5sums of names in /proc/bus/input/devices.
+* [get-edid-as-sha256sums](https://github.com/d630/bin/blob/master/get-edid-as-sha256sums): Get sha256sums of the connected monitor's EDID info.
+* [get-input-device-names-as-md5sums](https://github.com/d630/bin/blob/master/get-input-device-names-as-md5sums): Get md5sums of names in /proc/bus/input/devices.
 * [get-lifeday](https://github.com/d630/bin/blob/master/get-lifeday): Get lifeday.
 * [get-nox](https://github.com/d630/bin/blob/master/get-nox): Get concubium and gallicinium.
-* [get-product-name-by-md5sum](https://github.com/d630/bin/blob/master/get-product-name-by-md5sum): Get md5sum of /sys/devices/virtual/dmi/id/product_name.
+* [get-product-name-as-sha256sum](https://github.com/d630/bin/blob/master/get-product-name-as-sha256sum): Get sha256sum of /sys/class/dmi/id/product_name.
+* [get-product-uuid-as-sha256sum](https://github.com/d630/bin/blob/master/get-product-uuid-as-sha256sum): Get sha256sum of /sys/class/dmi/id/product_uuid.
 * [get-sundata](https://github.com/d630/bin/blob/master/get-sundata): Get sunrise and sunset.
 * [get-wan-ip](https://github.com/d630/bin/blob/master/get-wan-ip): Get WAN IP.
 * [github-build-bin-readme](https://github.com/d630/bin/blob/master/github-build-bin-readme): Build README.md in github.com/D630/bin.
@@ -66,6 +69,7 @@ List:
 * [habit-editor](https://github.com/d630/bin/blob/master/habit-editor): Add a task to Taskwarrior ('habit' context) via vim (yaml).
 * [habit](https://github.com/d630/bin/blob/master/habit): Wrapper: Use taskwarrior in my 'habit' context.
 * [hblock](https://github.com/d630/bin/blob/master/hblock): Simple ad- and malware-blocking-list builder for dnsmasq.
+* [hexdump-raw-edid](https://github.com/d630/bin/blob/master/hexdump-raw-edid): Hexdump raw EDID monitor description usable with edid-decode(1).
 * [idea-file-info](https://github.com/d630/bin/blob/master/idea-file-info): Display Java file info. To be run as external tool within IDEA.
 * [image-viewer](https://github.com/d630/bin/blob/master/image-viewer): Default image viewer (tui).
 * [iplog](https://github.com/d630/bin/blob/master/iplog): Log WAN IP.
@@ -177,7 +181,7 @@ List:
 * [schlafe](https://github.com/d630/bin/blob/master/schlafe): My very creative suspend wrapper.
 * [sdmenu](https://github.com/d630/bin/blob/master/sdmenu): Run dmenu2-save menu.
 * [skel-home](https://github.com/d630/bin/blob/master/skel-home): Prepare home directory.
-* [sort-ipv4](https://github.com/d630/bin/blob/master/sort-ipv4): Sort ipv4 addreses.
+* [sort-ipv4](https://github.com/d630/bin/blob/master/sort-ipv4): Sort ipv4 addreses from stdin
 * [sound](https://github.com/d630/bin/blob/master/sound): Play specific sounds.
 * [spotify-mpris](https://github.com/d630/bin/blob/master/spotify-mpris): Control spotify via mpris player interface.
 * [ssudo](https://github.com/d630/bin/blob/master/ssudo): Use sudo with sdmenu via SUDO_ASKPASS.
@@ -210,11 +214,11 @@ List:
 * [webheader](https://github.com/d630/bin/blob/master/webheader): Get webheader via curl.
 * [wlan-down](https://github.com/d630/bin/blob/master/wlan-down): Wrapper: Set wlan off.
 * [wlan-up](https://github.com/d630/bin/blob/master/wlan-up): Wrapper: Set wlan on.
-* [wless](https://github.com/d630/bin/blob/master/wless): Open the result of which(1) in less.
+* [wless](https://github.com/d630/bin/blob/master/wless): Open the result of command -v in less.
 * [workingdays](https://github.com/d630/bin/blob/master/workingdays): Display some working day statistic.
 * [wots](https://github.com/d630/bin/blob/master/wots): Handle stow packages.
 * [wradio](https://github.com/d630/bin/blob/master/wradio): Simple wradio.
-* [wvim](https://github.com/d630/bin/blob/master/wvim): Open the result of which(1) in vim.
+* [wvim](https://github.com/d630/bin/blob/master/wvim): Open the result of command -v in vim.
 * [x-audio-player](https://github.com/d630/bin/blob/master/x-audio-player): Default audio player (gui).
 * [x-file-browser](https://github.com/d630/bin/blob/master/x-file-browser): Default file manager (gui).
 * [x-image-viewer](https://github.com/d630/bin/blob/master/x-image-viewer): Default image viewer (gui).

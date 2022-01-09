@@ -2,7 +2,7 @@
 #
 # Reconfigure camera.
 
-: "${XDG_CONFIG_HOME:?}" "${PRODUCT_NAME_SUM:=$(exec get-product-name-by-md5sum)}"
+: "${XDG_CONFIG_HOME:?}" "${PRODUCT_NAME_SUM:=$(exec get-product-name-as-sha256sum)}"
 
 command -- test-xorg ||
     exit 1

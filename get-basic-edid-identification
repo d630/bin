@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Get some EDID vendor and product information.
+
+exec edid-decode -S -s --skip-sha "${1:?missing file arg}" |
+    exec mawk '
+        /^Checksum: / {
+            exit
+        }
+
+        /^[ ]+(Manufacturer|Model|Serial Number|Made in|Display Product Name|Display Product Serial Number): / {
+            sub("^[ ]+", "")
+            print
+        }
+    '
+
+# vim: set ft=sh :

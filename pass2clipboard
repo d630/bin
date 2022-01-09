@@ -9,8 +9,7 @@ else
 fi
 
 read -r file < <(
-    exec -- find "$HOME/.password-store" \
-        -type f -name \*.gpg -printf %f\\n |
+    exec -- find "$HOME/.password-store/" -type f -name \*.gpg -printf %f\\n |
         exec -- sed 's/.gpg$//g' |
         exec -- sort |
         exec -- menu "$menu"

@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Get sha256sum of /sys/class/dmi/id/product_uuid.
+
+IFS= read -r comp </sys/class/dmi/id/product_uuid ||
+    exit 1
+
+comp=$(printf %s "$comp" | exec sha256sum)
+echo "${comp%  *}"
+
+# vim: set ft=sh :
