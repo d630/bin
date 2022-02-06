@@ -9,27 +9,33 @@ if command -- test-xorg; then
 
     : "${XDG_CONFIG_HOME:?}" "${PRODUCT_NAME_SUM:=$(exec get-product-name-as-sha256sum)}"
 
-    sums=$(
-        exec get-edid-as-sha256sums |
+    exec get-edid-as-sha256sums |
+        {
+            args=
+            native=
+            plug=
+
             while IFS= read -r sum; do
-                if test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/plug/$sum-port-randr"; then
-                    args=--auto
+                if test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/$sum-port-randr"; then
+                    native=$sum
+                elif test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/plug/$sum-port-randr"; then
                     if test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/plug/$sum-randr-args"; then
                         args=$(exec cat -- "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/plug/$sum-randr-args")
+                    else
+                        args=--auto
                     fi
                     eval command -- xrandr --output \
                         "$(exec cat -- "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/plug/$sum-port-randr")" \
-                        "$args" &&
-                        echo "$sum"
+                        "$args" && plug=$sum
                 fi
             done
-    )
 
-    if test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/$sum-port-randr" && test -n "$sums"; then
-        command -- xrandr --output \
-            "$(exec cat -- "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/$sum-port-randr")" \
-            --off
-    fi
+            if test -n "$native" && test -n "$plug"; then
+                command -- xrandr --output \
+                    "$(exec cat -- "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/$native-port-randr")" \
+                    --off
+            fi
+        }
 
     if test "$X_XCLIENT" = bspwm; then
         command -- sh "$XDG_CONFIG_HOME/bspwm/bspwmrc"

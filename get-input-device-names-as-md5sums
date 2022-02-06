@@ -3,6 +3,7 @@
 # Get md5sums of names in /proc/bus/input/devices.
 
 exec sed -n '/N: Name=/ { s/^[^=]*="\(.*\)"$/\1/; p }' /proc/bus/input/devices |
-    exec xargs -P 0 -I {} -- sh -c 'printf %s "{}" | exec md5sum | exec cut -d " " -f 1'
+    exec xargs -P 0 -I {} -- sh -c 'printf %s "{}" | exec md5sum | exec cut -d " " -f 1' |
+    LC_ALL=C exec sort -u
 
 # vim: set ft=sh :
