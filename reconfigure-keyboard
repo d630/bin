@@ -7,15 +7,16 @@
 if command -- test-xorg; then
     : "${PRODUCT_NAME_SUM:=$(exec get-product-name-as-sha256sum)}"
 
-    exec get-input-device-names-as-md5sums |
-        while IFS= read -r sum; do
-            if test -e "$XDG_CONFIG_HOME/computer/plug/keyboard/$sum"; then
-                test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/keyboard" &&
+    if test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/keyboard"; then
+        exec get-input-device-names-as-md5sums |
+            while IFS= read -r sum; do
+                if test -e "$XDG_CONFIG_HOME/computer/plug/keyboard/$sum"; then
                     command -- xinput --disable \
                         "$(exec cat -- "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/keyboard")"
-                break
-            fi
-        done
+                    break
+                fi
+            done
+    fi
 
     # command -- numlockx off
     command -- setxkbmap \
@@ -30,17 +31,17 @@ if command -- test-xorg; then
     command -- xset b off
 
 else
-    test -t 1 && command -- fgconsole 1>/dev/null 2>&1 ||
+    test -t 1 && command -- fgconsole >/dev/null 2>&1 ||
         exit 1
 
     case $TERM in
         linux*)
-            sudo sh -c "
+            sudo sh -c '
                 command -- kbdrate -s -d 250 -r 30.0
                 command -- kbd_mode -u
-                command -- loadkeys '$XDG_CONFIG_HOME/xmodmap/us-altgr-intl-german.rc.map'
+                command -- loadkeys "$1/xmodmap/us-altgr-intl-german.rc.map"
                 command -- setterm -bfreq 0 --blength 0
-            "
+            ' -- "$XDG_CONFIG_HOME"
             ;;
     esac
 fi

@@ -85,7 +85,7 @@ pinentry_gtk_2() {
 }
 
 spotify() {
-    desktop=^5
+    desktop=^6
 }
 
 telegram_desktop() {
@@ -182,7 +182,7 @@ case $instance.$class in
     *.Xmessage) xmessage ;;
     *.[Ff]irefox) firefox ;;
     *.mpv) mpv ;;
-    *.zoom) zoom ;;
+    *.zoom*) zoom ;;
     *org.remmina.Remmina) remmina ;;
     [lL]ibre[oO]ffice*) libreoffice ;;
     jetbrains-idea.jetbrains-idea) jetbrains_idea ;;

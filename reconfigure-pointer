@@ -7,14 +7,15 @@
 command -- test-xorg ||
     exit 1
 
-exec get-input-device-names-as-md5sums |
-    while IFS='' read -r sum; do
-        if test -e "$XDG_CONFIG_HOME/computer/plug/pointer/$sum"; then
-            test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/touchpad" &&
+if test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/touchpad"; then
+    exec get-input-device-names-as-md5sums |
+        while IFS='' read -r sum; do
+            if test -e "$XDG_CONFIG_HOME/computer/plug/pointer/$sum"; then
                 xinput --disable "$(exec cat -- "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/touchpad")"
-            break
-        fi
-    done
+                break
+            fi
+        done
+fi
 
 exec xset mouse 3 4
 

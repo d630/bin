@@ -16,7 +16,11 @@ command -- rm -frv /tmp/napt
 
 trap exit\ 1 INT TERM QUIT
 
-for release in stable testing unstable experimental; do
+if test "$#" -eq 0; then
+    set -- stable testing unstable experimental
+fi
+
+for release in "$@"; do
     command -- mkdir -p "/tmp/napt/$release"
 
     i=0
@@ -118,6 +122,7 @@ for release in stable testing unstable experimental; do
     esac
 done
 
+set -e
 command -- cat /tmp/napt/*-source.list >/etc/apt/sources.list
 
 command -- cat >/etc/apt/preferences <<IN
