@@ -25,8 +25,8 @@ if command -- test-xorg; then
         -variant altgr-intl \
         -option compose:menu,terminate:ctrl_alt_bksp
     command -- xmodmap "$XDG_CONFIG_HOME/xmodmap/us-altgr-intl-german.rc"
-    command -- xkbset m ma 60 10 10 5 2
-    command -- xkbset exp =m
+    # command -- xkbset m ma 60 10 10 5 2
+    # command -- xkbset exp =m
     command -- xset r rate 220 150
     command -- xset b off
 

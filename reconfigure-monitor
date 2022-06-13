@@ -24,9 +24,13 @@ if command -- test-xorg; then
                     else
                         args=--auto
                     fi
+                    if test -r "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/plug/$sum-dpi"; then
+                        X_DPI=$(exec cat -- "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/plug/$sum-dpi")
+                        echo X_DPI=$X_DPI
+                    fi
                     eval command -- xrandr --output \
                         "$(exec cat -- "$XDG_CONFIG_HOME/computer/$PRODUCT_NAME_SUM/monitor/plug/$sum-port-randr")" \
-                        "$args" && plug=$sum
+                         --dpi "$X_DPI" "$args" && plug=$sum
                 fi
             done
 
