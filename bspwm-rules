@@ -53,91 +53,11 @@ state='' \
 sticky='' \
 urgent=
 
-emacs() {
-    state=tiled
-}
-
-firefox() {
-    desktop=^2
-}
-
-gimp() {
-    follow=on
-}
-
-gitk() {
-    state=floating
-    layer=normal
-}
-
-mplayer() {
-    state=floating
-    layer=normal
-}
-
-pidgin() {
-    desktop=^3
-}
-
-pinentry_gtk_2() {
-    state=floating
-    layer=above
-}
-
-spotify() {
-    desktop=^6
-}
-
-telegram_desktop() {
-    desktop=^3
-}
-
-xcalc() {
-    state=floating
-    layer=normal
-}
-
-xmessage() {
-    state=floating
-    layer=normal
-}
-
-chromium() {
-    desktop=^2
-}
-
-surf() {
-    desktop=^2
-}
-
-libreoffice() {
-    state=tiled
-    layer=normal
-}
-
-mpv() {
-    state=floating
-    layer=normal
-}
-
-stj1() {
-    state=floating
-    layer=above
-    sticky=on
-}
-
-weechat() {
-    desktop=^3
-}
-
-signal() {
-    desktop=^3
-}
-
-remmina() {
-    desktop=^4
-}
-
+chromium() { desktop=^2; }
+emacs() { state=tiled; }
+firefox() { desktop=^2; }
+gimp() { follow=on; }
+gitk() { state=floating layer=normal; }
 jetbrains_idea() {
     local name
 
@@ -158,14 +78,24 @@ jetbrains_idea() {
 
     desktop=^3
 }
-
-zoom() {
-    desktop=^1
-}
-
-tigervnc() {
-    desktop=^1
-}
+libreoffice() { state=tiled layer=normal; }
+mplayer() { state=floating layer=normal; }
+mpv() { state=floating layer=normal; }
+pidgin() { desktop=^3; }
+pinentry_gtk_2() { state=floating layer=above; }
+remmina() { desktop=^4; }
+signal() { desktop=^3; }
+spotify() { desktop=^6; }
+stj1() { state=floating layer=above sticky=on; }
+surf() { desktop=^2; }
+telegram_desktop() { desktop=^3; }
+thunderbird() { desktop=^6; }
+tigervnc() { desktop=^1; }
+vmrc() { desktop=^2; }
+weechat() { desktop=^3; }
+xcalc() { state=floating layer=normal; }
+xmessage() { state=floating layer=normal; }
+zoom() { desktop=^1; }
 
 case $instance.$class in
     *.Chromium) chromium ;;
@@ -182,11 +112,13 @@ case $instance.$class in
     *.Xmessage) xmessage ;;
     *.[Ff]irefox) firefox ;;
     *.mpv) mpv ;;
+    *.thunderbird) thunderbird ;;
     *.zoom*) zoom ;;
     *org.remmina.Remmina) remmina ;;
     [lL]ibre[oO]ffice*) libreoffice ;;
     jetbrains-idea.jetbrains-idea) jetbrains_idea ;;
     stj*.st) stj1 ;;
+    vmrc.Vmrc) vmrc ;;
     weechatw.*) weechat ;;
     .)
         case $(exec ps -p "$(exec xdo pid "$id")" -o comm= 2>/dev/null) in

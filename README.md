@@ -131,6 +131,7 @@ List:
 * [pass2clipboard](https://github.com/d630/bin/blob/master/pass2clipboard): Copy password from pass.
 * [pdf-purge-metadata](https://github.com/d630/bin/blob/master/pdf-purge-metadata): Remove PDF metadata with pdftk and exiftool.
 * [power](https://github.com/d630/bin/blob/master/power): Notify, if battery power is (almost) gone.
+* [print-apt-conf](https://github.com/d630/bin/blob/master/print-apt-conf): Print APT config of a single file.
 * [pwgen2clipboard](https://github.com/d630/bin/blob/master/pwgen2clipboard): X-select generated password into clipboard.
 * [pycolor](https://github.com/d630/bin/blob/master/pycolor): Pick color code.
 * [pyfonts](https://github.com/d630/bin/blob/master/pyfonts): Display fonts.

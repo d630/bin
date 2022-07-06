@@ -14,8 +14,8 @@ export \
 GIT_WORK_TREE=$repo
 GIT_DIR=$repo/.git
 
-command -- generate-bookmarks-file &&
-    command -- pandoc bookmarks.md -f markdown -s -o bookmarks.html &&
+command -- generate-bookmarks-file >bookmarks.md &&
+    command -- pandoc --metadata title=bookmarks bookmarks.md -f markdown -s -o bookmarks.html &&
     command -- git add bookmarks.md bookmarks.html &&
     command -- git commit -m "$(exec fortune -as -n 80)" &&
     exec git push -u --tags origin master

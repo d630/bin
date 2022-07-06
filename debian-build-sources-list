@@ -76,10 +76,21 @@ for release in "$@"; do
 				deb $server $release main contrib non-free
 				#deb-src $server $release main contrib non-free
 				#
+				# $release-updates
+				#
+				deb $server $release-updates main contrib non-free
+				#deb-src $server $release-updates main contrib non-free
+				#
 				# $release-security
 				#
 				deb http://security.debian.org/ $release-security main contrib non-free
 				#deb-src http://security.debian.org/ $release-security main contrib non-free
+				#
+				#
+				# $release-backports
+				#
+				#deb $server $release-backports main contrib non-free
+				#deb-src $server $release-backports main contrib non-free
 				#
 				# $release-debug
 				#
@@ -92,7 +103,7 @@ for release in "$@"; do
 				#
 				# $release
 				#
-				deb $server $release main contrib non-free
+				# deb $server $release main contrib non-free
 				#deb-src $server $release main contrib non-free
 				#
 				# $release-debug

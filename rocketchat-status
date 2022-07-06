@@ -3,6 +3,7 @@
 # Set Rocket.Chat online status.
 
 case ${1:?error: status missing} in
+    command -- date
     away | busy | offline | online)
         exec rest rocketchat post /api/v1/users.setStatus "{
                 \"status\": \"$1\",

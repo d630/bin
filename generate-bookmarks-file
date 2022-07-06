@@ -5,6 +5,7 @@
 # https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Places/Database
 # https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XPCOM/Reference/Interface/nsINavBookmarksService
 
+import html
 import os
 import shutil
 import sqlite3
@@ -12,7 +13,6 @@ import sys
 from enum import Enum
 
 DB_PATH = os.environ.get("TMPDIR", "/tmp") + "/places.sqlite"
-MD_PATH = os.environ["HOME"] + "/src/bookmarks/bookmarks.md"
 FIREFOX_DB = os.environ["HOME"] + "/.mozilla/firefox/wje8tal1.default/places.sqlite"
 
 
@@ -27,19 +27,30 @@ class Bookmark:
         if mb_parent in FOLDERS:
             FOLDERS[mb_parent].append_bookmark(self)
 
-    def __str__(self):
-        return (
-            self.url if self.title is None else "[{}]({})".format(self.title, self.url)
+    def to_markdown(self):
+        return "[{}]({})".format(self.title or self.url, self.url)
+
+    def to_html(self):
+        return '<DT><A HREF="{}">{}</A></DT>'.format(
+            html.escape(self.url), html.escape(self.title, quote=False)
         )
 
 
 class Folder:
     def __init__(self, mb_id=None, mb_parent=None, mb_title=None, **kwargs):
+        self.id = mb_id
         self.title = mb_title
         self.parent = mb_parent
         self.folders = []
         self.bookmarks = []
 
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, mb_id):
+        self._id = mb_id
         FOLDERS[mb_id] = self
 
     @property
@@ -57,6 +68,12 @@ class Folder:
 
     def append_folder(self, dir):
         self.folders.append(dir)
+
+    def to_html(self):
+        return "<DT><H3>{}</H3></DT>".format(html.escape(self.title, quote=False))
+
+    def to_markdown(self):
+        return self.title
 
 
 class FolderTitle(Enum):
@@ -82,7 +99,7 @@ FOLDERS = {}
 TYPE2CLASS = [Bookmark, Folder, Separator, DynamicContainer]
 
 
-def get_and_map_data():
+def get_and_map_sql_data():
     con = sqlite3.connect(DB_PATH, detect_types=sqlite3.PARSE_DECLTYPES)
     con.row_factory = sqlite3.Row
 
@@ -109,26 +126,92 @@ def get_and_map_data():
     con.close()
 
 
+def read_markdown(reader, parent_id=0, id=0):
+    lvls = [None] * 8
+
+    while line := reader.readline():
+        if line := line.strip().removeprefix("---"):
+            parts = line.partition(" ")
+
+            if parts[0].startswith("#"):
+                lvl = len(parts[0])
+
+                if 0 <= lvl - 1 < len(lvls):
+                    parent_id = lvls[lvl - 1] or 0
+                Folder(mb_id=id, mb_parent=parent_id, mb_title=parts[2])
+
+                lvls[lvl] = id
+                id += 1
+
+            elif parts[0].startswith("-"):
+                url = parts[2]
+                title = ""
+
+                if url.startswith("["):
+                    url = url[1:]
+                    title = url[: url.find("]")]
+                    url = url[url.rfind("(") + 1 :]
+                    url = url.replace(")", "")
+
+                Bookmark(mb_parent=id - 1, mp_url=url, mp_title=title)
+
+
 def generate_markdown(writer, dir, headline=1):
     if headline == 7:
         sys.exit("\nerror: max header number reached!")
-
-    if headline == 2:
-        writer.write("\n{} {}\n\n---\n\n".format("#" * headline, dir.title))
+    elif headline == 2:
+        writer.write(f"\n## {dir.to_markdown()}\n\n---\n\n")
     else:
-        writer.write("\n{} {}\n".format("#" * headline, dir.title))
+        writer.write("\n{} {}\n\n".format("#" * headline, dir.to_markdown()))
 
     for bm in dir.bookmarks:
-        writer.write("- {}\n".format(bm.__str__()))
+        writer.write(f"- {bm.to_markdown()}\n")
 
     for folder in dir.folders:
         generate_markdown(writer, folder, headline + 1)
 
 
+def _generate_netscape_bookmark_file_1(writer, dir):
+    writer.write(f"{dir.to_html()}\n<DL><p>\n")
+
+    for bm in dir.bookmarks:
+        writer.write(f"{bm.to_html()}\n")
+
+    for folder in dir.folders:
+        _generate_netscape_bookmark_file_1(writer, folder)
+
+    writer.write("</DL><p>\n")
+
+
+def generate_netscape_bookmark_file_1(writer, dir):
+    head = """\
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<TITLE>Bookmarks</TITLE>
+<H1>Bookmarks Menu</H1>
+
+"""
+    writer.write(head)
+    _generate_netscape_bookmark_file_1(writer, dir)
+    writer.write("</DL>\n")
+
+
 if __name__ == "__main__":
-    shutil.copy(FIREFOX_DB, DB_PATH)
+    if len(sys.argv) == 2:
+        Folder(mb_id=FolderTitle.ROOT.value, mb_title="root")
 
-    get_and_map_data()
+        with open(sys.argv[1], "r", encoding="utf-8") as reader:
+            read_markdown(
+                reader, id=FolderTitle.MENU.value, parent_id=FolderTitle.ROOT.value
+            )
 
-    with open(MD_PATH, "w", encoding="utf-8") as writer:
-        generate_markdown(writer, FOLDERS[FolderTitle.MENU.value])
+        with open("/dev/stdout", "w", encoding="utf-8") as writer:
+            generate_netscape_bookmark_file_1(writer, FOLDERS[FolderTitle.MENU.value])
+    else:
+        shutil.copy(FIREFOX_DB, DB_PATH)
+
+        get_and_map_sql_data()
+
+        with open("/dev/stdout", "w", encoding="utf-8") as writer:
+            generate_markdown(writer, FOLDERS[FolderTitle.MENU.value])
+
+# vim: set ft=python :
